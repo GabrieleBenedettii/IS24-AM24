@@ -19,7 +19,7 @@ public class InitialDeck implements Deck{
     }
     public void loadCards(){
         Gson gson = new Gson();
-        Reader reader = new InputStreamReader(Objects.requireNonNull(HelloApplication.class.getResourceAsStream("/initalCard.json")));
+        Reader reader = new InputStreamReader(Objects.requireNonNull(HelloApplication.class.getResourceAsStream("cards/initialCards.json")));
         cards = new ArrayList<>(Arrays.asList(gson.fromJson(reader, InitialCard[].class)));
     }
 

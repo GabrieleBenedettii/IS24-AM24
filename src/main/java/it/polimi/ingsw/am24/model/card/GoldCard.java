@@ -1,5 +1,6 @@
 package it.polimi.ingsw.am24.model.card;
 
+import it.polimi.ingsw.am24.costants.Costants;
 import it.polimi.ingsw.am24.model.Kingdom;
 import it.polimi.ingsw.am24.model.Symbol;
 
@@ -64,5 +65,23 @@ public class GoldCard extends GameCard {
 
     public Symbol getPointsSymbol() {
         return pointsSymbol;
+    }
+
+    public String printCard() {
+        StringBuilder text = new StringBuilder("Kingdom: ");
+        text.append(Costants.getText(kingdom));
+        text.append("\nCorners: ");
+        for (CardCorner c: this.getCorners()) {
+            text.append(c.isHidden() ? Costants.HIDDEN + " " : (c.getSymbol()!=null ? Costants.getText(c.getSymbol()) : Costants.EMPTY) + " ");
+        }
+        text.append("\nRequirements: ");
+        for (Symbol s: requirements.keySet()) {
+            text.append(Costants.getText(s));
+            text.append(" -> ");
+            text.append(requirements.get(s));
+            text.append(" ");
+        }
+        //todo aggiungere la stampa dei punti
+        return text.toString();
     }
 }

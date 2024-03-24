@@ -1,0 +1,22 @@
+[
+  {
+    "points":"3",
+    "mainKingdom": "FUNGI",
+    "secondaryKingdom": "PLANT"
+  },
+  {
+    "points":"3",
+    "mainKingdom": "PLANT",
+    "secondaryKingdom": "INSECT"
+  },
+  {
+    "points":"3",
+    "mainKingdom": "ANIMAL",
+    "secondaryKingdom": "FUNGI"
+  },
+  {
+    "points":"3",
+    "mainKingdom": "INSECT",
+    "secondaryKingdom": "ANIMAL"
+  }
+]

@@ -19,7 +19,7 @@ public class ResourceDeck implements Deck{
     }
     public void loadCards() {
         Gson gson = new Gson();
-        Reader reader = new InputStreamReader(Objects.requireNonNull(HelloApplication.class.getResourceAsStream("/resCard.json")));
+        Reader reader = new InputStreamReader(Objects.requireNonNull(HelloApplication.class.getResourceAsStream("cards/resourceCards.json")));
         cards = new ArrayList<>(Arrays.asList(gson.fromJson(reader, ResourceCard[].class)));
     }
     public void shuffle(){

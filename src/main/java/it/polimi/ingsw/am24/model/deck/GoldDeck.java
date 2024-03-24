@@ -19,7 +19,7 @@ public class GoldDeck implements Deck{
     }
     public void loadCards() {
         Gson gson = new Gson();
-        Reader reader = new InputStreamReader(Objects.requireNonNull(HelloApplication.class.getResourceAsStream("/goldCard.json")));
+        Reader reader = new InputStreamReader(Objects.requireNonNull(HelloApplication.class.getResourceAsStream("cards/goldCards.json")));
         cards = new ArrayList<>(Arrays.asList(gson.fromJson(reader, GoldCard[].class)));
     }
     public void shuffle(){

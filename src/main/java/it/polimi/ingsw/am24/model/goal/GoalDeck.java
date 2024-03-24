@@ -19,8 +19,20 @@ public class GoalDeck {
 
     public void loadCards(){
         Gson gson = new Gson();
-        Reader reader = new InputStreamReader(Objects.requireNonNull(HelloApplication.class.getResourceAsStream("/goalCard.json")));
-        cards = new ArrayList<>(Arrays.asList(gson.fromJson(reader, GoalCard[].class)));
+        Reader reader = new InputStreamReader(Objects.requireNonNull(HelloApplication.class.getResourceAsStream("cards/doubleGold.json")));
+        cards = new ArrayList<>(Arrays.asList(gson.fromJson(reader, DoubleGold[].class)));
+
+        reader = new InputStreamReader(Objects.requireNonNull(HelloApplication.class.getResourceAsStream("cards/obliqueDisposition.json")));
+        cards.addAll(Arrays.asList(gson.fromJson(reader, ObliqueDisposition[].class)));
+
+        reader = new InputStreamReader(Objects.requireNonNull(HelloApplication.class.getResourceAsStream("cards/tripleGold.json")));
+        cards.addAll(Arrays.asList(gson.fromJson(reader, TripleGold[].class)));
+
+        reader = new InputStreamReader(Objects.requireNonNull(HelloApplication.class.getResourceAsStream("cards/tripleSymbol.json")));
+        cards.addAll(Arrays.asList(gson.fromJson(reader, TripleSymbol[].class)));
+
+        reader = new InputStreamReader(Objects.requireNonNull(HelloApplication.class.getResourceAsStream("cards/verticalDisposition.json")));
+        cards.addAll(Arrays.asList(gson.fromJson(reader, VerticalDisposition[].class)));
     }
     public void shuffle(){
         Collections.shuffle(cards);
