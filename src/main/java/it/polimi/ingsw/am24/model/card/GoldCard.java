@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class GoldCard extends GameCard {
-    private final Kingdom kingdom;
     private final Map<Symbol,Integer> requirements;
     private final int points;
     private final boolean pointsForCoveringCorners;
@@ -16,8 +15,7 @@ public class GoldCard extends GameCard {
     private boolean requirementsMet;
 
     public GoldCard(String frontImage, String backImage, Symbol[] symbols, Kingdom kingdom, int points, boolean pointsForCoveringCorners, Symbol pointsSymbol, Map<Symbol,Integer> requirements) {
-        super(frontImage, backImage, symbols);
-        this.kingdom = kingdom;
+        super(frontImage, backImage, symbols, kingdom);
         this.points = points;
         this.pointsForCoveringCorners = pointsForCoveringCorners;
         this.pointsSymbol = pointsSymbol;
@@ -47,10 +45,6 @@ public class GoldCard extends GameCard {
         return requirementsMet;
     }
 
-    public Kingdom getKingdom() {
-        return kingdom;
-    }
-
     public Map<Symbol, Integer> getRequirements() {
         return requirements;
     }
@@ -69,7 +63,7 @@ public class GoldCard extends GameCard {
 
     public String printCard() {
         StringBuilder text = new StringBuilder("Kingdom: ");
-        text.append(Costants.getText(kingdom));
+        text.append(Costants.getText(this.getKingdom()));
         text.append("\nCorners: ");
         for (CardCorner c: this.getCorners()) {
             text.append(c.isHidden() ? Costants.HIDDEN + " " : (c.getSymbol()!=null ? Costants.getText(c.getSymbol()) : Costants.EMPTY) + " ");

@@ -3,7 +3,7 @@ package it.polimi.ingsw.am24.model.goal;
 public abstract class GoalCard {
     private String frontImage;
     private String backImage;
-    int points;
+    private int points;
 
     public GoalCard(String frontImage, String backImage, Integer points) {
         this.frontImage = frontImage;

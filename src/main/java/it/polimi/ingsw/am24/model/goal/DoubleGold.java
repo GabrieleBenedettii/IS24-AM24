@@ -13,7 +13,8 @@ public class DoubleGold extends GoalCard {
         this.symbol = symbol;
     }
     public int calculatePoints(HashMap<Symbol,Integer> visibleSymbols){
-        return points;
+        int totalPoints = visibleSymbols.get(symbol) != null ? visibleSymbols.get(symbol)/this.getPoints() : 0;
+        return totalPoints;
     }
 
     public Gold getSymbol() {

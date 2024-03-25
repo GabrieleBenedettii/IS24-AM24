@@ -15,7 +15,8 @@ public class TripleSymbol extends GoalCard {
     }
 
     public int calculatePoints(HashMap<Symbol, Integer> visibleSymbols) {
-        return points;
+        int totalPoints = visibleSymbols.get(kingdom) != null ? visibleSymbols.get(kingdom)/this.getPoints() : 0;
+        return totalPoints;
     }
 
     public Kingdom getKingdom() {
