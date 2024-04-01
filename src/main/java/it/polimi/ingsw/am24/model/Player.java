@@ -46,8 +46,8 @@ public class Player {
     public GoalCard[] getGoals() {
         return goals;
     }
-    public void setHiddenGoal(int input){
-        this.hiddenGoal = goals[input];
+    public void setHiddenGoal(GoalCard obj){
+        this.hiddenGoal = obj;
     }
     public void setInitialCard(InitialCard card) {
         this.initialcard = card;
