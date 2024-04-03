@@ -19,17 +19,11 @@ public class GoalDeck {
 
     public void loadCards(){
         Gson gson = new Gson();
-        Reader reader = new InputStreamReader(Objects.requireNonNull(HelloApplication.class.getResourceAsStream("cards/doubleGold.json")));
-        cards = new ArrayList<>(Arrays.asList(gson.fromJson(reader, DoubleGold[].class)));
+        Reader reader = new InputStreamReader(Objects.requireNonNull(HelloApplication.class.getResourceAsStream("cards/SymbolGoal.json")));
+        cards = new ArrayList<>(Arrays.asList(gson.fromJson(reader, SymbolGoal[].class)));
 
         reader = new InputStreamReader(Objects.requireNonNull(HelloApplication.class.getResourceAsStream("cards/obliqueDisposition.json")));
         cards.addAll(Arrays.asList(gson.fromJson(reader, ObliqueDisposition[].class)));
-
-        reader = new InputStreamReader(Objects.requireNonNull(HelloApplication.class.getResourceAsStream("cards/tripleGold.json")));
-        cards.addAll(Arrays.asList(gson.fromJson(reader, TripleGold[].class)));
-
-        reader = new InputStreamReader(Objects.requireNonNull(HelloApplication.class.getResourceAsStream("cards/tripleSymbol.json")));
-        cards.addAll(Arrays.asList(gson.fromJson(reader, TripleSymbol[].class)));
 
         reader = new InputStreamReader(Objects.requireNonNull(HelloApplication.class.getResourceAsStream("cards/verticalDisposition.json")));
         cards.addAll(Arrays.asList(gson.fromJson(reader, VerticalDisposition[].class)));
@@ -37,8 +31,6 @@ public class GoalDeck {
     public void shuffle(){
         Collections.shuffle(cards);
     }
-    //public void removeCard(GameCard card){}
-    //non più utile se la rimozione della carta viene fatta solo con la pescata
     public GoalCard drawCard() {
         GoalCard card;
         card = cards.getFirst();

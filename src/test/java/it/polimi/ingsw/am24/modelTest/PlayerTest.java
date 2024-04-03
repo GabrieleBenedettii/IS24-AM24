@@ -38,9 +38,9 @@ public class PlayerTest {
 
     @Test
     public void testSetPlayingHand() {
-        ResourceCard card1 = new ResourceCard("front1", "back1", new Symbol[]{Symbol.ANIMAL}, Kingdom.PLANT, 3);
-        ResourceCard card2 = new ResourceCard("front2", "back2", new Symbol[]{Symbol.PLANT}, Kingdom.ANIMAL, 5);
-        GoldCard card3 = new GoldCard("front3", "back3", new Symbol[]{Symbol.INSECT}, Kingdom.PLANT, 7, true, Symbol.ANIMAL, new HashMap<>());
+        ResourceCard card1 = new ResourceCard(1, new Symbol[]{Symbol.ANIMAL}, Kingdom.PLANT, 3);
+        ResourceCard card2 = new ResourceCard(2, new Symbol[]{Symbol.PLANT}, Kingdom.ANIMAL, 5);
+        GoldCard card3 = new GoldCard(3, new Symbol[]{Symbol.INSECT}, Kingdom.PLANT, 7, true, Symbol.ANIMAL, new HashMap<>());
 
         player.setPlayingHand(card1, card2, card3);
 
@@ -73,7 +73,7 @@ public class PlayerTest {
 
     @Test
     public void testRemoveVisibleSymbol() {
-        player.addVisibleSymbols(new ArrayList<Symbol>() {{
+        player.addVisibleSymbols(new ArrayList<>() {{
             add(Symbol.PLANT);
             add(Symbol.PLANT);
             add(Symbol.ANIMAL);

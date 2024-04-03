@@ -1,6 +1,5 @@
 package it.polimi.ingsw.am24.model.card;
 
-import it.polimi.ingsw.am24.model.Kingdom;
 import it.polimi.ingsw.am24.model.Symbol;
 
 import java.util.ArrayList;
@@ -8,19 +7,15 @@ import java.util.ArrayList;
 public abstract class GameCard {
     private boolean front;
     private final ArrayList<CardCorner> corners;
-    private final String frontImage;
-    private final String backImage;
-    private final Kingdom kingdom;
+    private final int imageId;
 
-    public GameCard(String frontImage, String backImage, Symbol[] symbols, Kingdom kingdom) {
+    public GameCard(int imageId, Symbol[] symbols) {
         this.front = false;
         this.corners = new ArrayList<>();
         for (Symbol s: symbols) {
             this.corners.add(new CardCorner(s,true));
         }
-        this.frontImage = frontImage;
-        this.backImage = backImage;
-        this.kingdom = kingdom;
+        this.imageId = imageId;
     }
 
     public void setFront(boolean front) {
@@ -35,16 +30,8 @@ public abstract class GameCard {
         return corners.get(index);
     }
 
-    public String getFrontImage() {
-        return frontImage;
-    }
-
-    public String getBackImage() {
-        return backImage;
-    }
-
-    public Kingdom getKingdom() {
-        return kingdom;
+    public int getImageId() {
+        return imageId;
     }
 
     public String printCard() {

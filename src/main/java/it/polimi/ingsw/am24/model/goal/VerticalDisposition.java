@@ -1,54 +1,40 @@
 package it.polimi.ingsw.am24.model.goal;
 
 import it.polimi.ingsw.am24.model.Kingdom;
-import it.polimi.ingsw.am24.model.card.CardCorner;
 import it.polimi.ingsw.am24.model.card.GameCard;
-import it.polimi.ingsw.am24.model.card.InitialCard;
 
 public class VerticalDisposition extends GoalCard{
-    private Kingdom mainKingodm;
-    private Kingdom secondaryKingdom;
+    private final Kingdom mainKingdom;
+    private final Kingdom secondaryKingdom;
+    private final int secondaryKingdomCorner;
 
-    public VerticalDisposition(String frontImage, String backImage, Integer points, Kingdom mainKingodm, Kingdom secondaryKingdom) {
-        super(frontImage, backImage, points);
-        this.mainKingodm = mainKingodm;
+    public VerticalDisposition(int imageId, int points, Kingdom mainKingdom, Kingdom secondaryKingdom, int secondaryKingdomCorner) {
+        super(imageId, points);
+        this.mainKingdom = mainKingdom;
         this.secondaryKingdom = secondaryKingdom;
+        this.secondaryKingdomCorner = secondaryKingdomCorner;
     }
 
-    public int calculatePoints(InitialCard card){
-        int direction = mainKingodm == Kingdom.PLANT || mainKingodm == Kingdom.INSECT ? 0 : 1;
-        for (CardCorner child : card.getCorners()) {
-            if(child.getCoveringCard() != null)
-                depthFirstTraversal(child.getCoveringCard(),direction,0);
-        }
-        return this.getPoints();
-    }
-
-    int depthFirstTraversal(GameCard root, int direction, int points) {
-        if (root == null) {
-            return points;
-        }
-
-        /*GameCard card1 = root.getCorners().get(direction).getCoveringCard();
-        GameCard card2 = card1 != null ? card1.getCorners().get(direction).getCoveringCard() : null;
-        if(card1 != null && card2 != null && root.getKingdom() == kingdom && card1.getKingdom() == kingdom && card2.getKingdom() == kingdom) {
-            points += this.getPoints();
-        }*/
-
-        // Visita ricorsivamente i figli
-        for (CardCorner child : root.getCorners()) {
-            if(child.getCoveringCard() != null)
-                depthFirstTraversal(child.getCoveringCard(),direction,points);
-        }
-
+    public int calculatePoints(GameCard[][] board){
+        int points = 0;
+        //todo
         return points;
     }
 
     public Kingdom getMainKingdom() {
-        return mainKingodm;
+        return mainKingdom;
     }
 
     public Kingdom getSecondaryKingdom() {
         return secondaryKingdom;
+    }
+    public int getSecondaryKingdomCorner() {
+        return secondaryKingdomCorner;
+    }
+
+    public String printCard() {
+        String text = "Points: " + this.getPoints();
+        text += "\nDisposition: 2 vertical " + mainKingdom + " and 1 " + secondaryKingdom + " in corner " + secondaryKingdomCorner;
+        return text;
     }
 }

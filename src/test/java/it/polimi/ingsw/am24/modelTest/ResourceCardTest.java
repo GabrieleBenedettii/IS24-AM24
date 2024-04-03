@@ -5,22 +5,20 @@ import it.polimi.ingsw.am24.model.card.ResourceCard;
 import it.polimi.ingsw.am24.model.Symbol;
 import org.junit.jupiter.api.Test;
 
-import static junit.framework.TestCase.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ResourceCardTest {
     @Test
     public void testGetters() {
         // Definisci i valori per il test
-        String frontImage = "front";
-        String backImage = "back";
+        int imageId = 1;
         Symbol[] symbols = {Symbol.ANIMAL, Symbol.PLANT};
         Kingdom kingdom = Kingdom.PLANT;
         int points = 0;
         // Crea una nuova carta risorsa
-        ResourceCard resourceCard = new ResourceCard(frontImage, backImage, symbols, kingdom, points);
+        ResourceCard resourceCard = new ResourceCard(imageId, symbols, kingdom, points);
         // Verifica i valori restituiti dai metodi getter
-        assertEquals(frontImage, resourceCard.getFrontImage());
-        assertEquals(backImage, resourceCard.getBackImage());
+        assertEquals(imageId, resourceCard.getImageId());
         //assertArrayEquals(symbols, resourceCard.getCorners().toArray()); funziona ma bisogna scandire in modo diverso l'array dei corner
         assertEquals(kingdom, resourceCard.getKingdom());
         assertEquals(points, resourceCard.getPoints());
