@@ -12,10 +12,9 @@ public class Player {
     private int score;
     private ArrayList<GameCard> playingHand;
     private InitialCard initialcard;
-    private final GoalCard[] goals = new GoalCard[2];
     private GoalCard hiddenGoal;
     private HashMap<Symbol,Integer> visibleSymbols;
-
+    private Cell[][] gameboard;
     public Player(String nickname, PlayerColor color){
         this.nickname = nickname;
         this.color = color;
@@ -24,13 +23,24 @@ public class Player {
         for (Symbol s: Symbol.values()) {
             visibleSymbols.put(s,0);
         }
+        gameboard = new Cell[81][81];
+        for(int i = 0; i < 81; i++) {
+            for(int j = 0; j < 81; j++) {
+                gameboard[i][j] = new Cell();
+            }
+        }
     }
-    public void play(GameCard gameCard) {
-        playingHand.remove(gameCard);
+    public Cell[][] getGameboard() {
+        return gameboard;
     }
-    public void draw(GameCard gameCard) {
-        playingHand.add(gameCard);
-    }
+
+//    public void play(GameCard gameCard) {
+//        playingHand.remove(gameCard);
+//    }
+//    public void draw(GameCard gameCard) {
+//        playingHand.add(gameCard);
+//    }
+
     public void setPlayingHand(ResourceCard card1, ResourceCard card2, GoldCard card3) {
         playingHand.add(card1);
         playingHand.add(card2);
@@ -38,13 +48,6 @@ public class Player {
     }
     public GoalCard getHiddenGoal() {
         return hiddenGoal;
-    }
-    public void setGoals(GoalCard obj1, GoalCard obj2) {
-        goals[0] = obj1;
-        goals[1] = obj2;
-    }
-    public GoalCard[] getGoals() {
-        return goals;
     }
     public void setHiddenGoal(GoalCard obj){
         this.hiddenGoal = obj;
