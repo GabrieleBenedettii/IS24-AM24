@@ -3,16 +3,10 @@ package it.polimi.ingsw.am24.model.card;
 import it.polimi.ingsw.am24.costants.Costants;
 import it.polimi.ingsw.am24.model.Symbol;
 import it.polimi.ingsw.am24.model.Kingdom;
-public class ResourceCard extends GameCard{
-    private final int points;
+public class ResourceCard extends PlayableCard{
 
-    public ResourceCard(String frontImage, String backImage, Symbol[] symbols, Kingdom kingdom, int points) {
-        super(frontImage, backImage, symbols, kingdom);
-        this.points = points;
-    }
-
-    public int getPoints() {
-        return points;
+    public ResourceCard(int imageId, Symbol[] symbols, Kingdom kingdom, int points) {
+        super(imageId, symbols, kingdom, points);
     }
 
     public String printCard() {
@@ -23,7 +17,7 @@ public class ResourceCard extends GameCard{
             text.append(c.isHidden() ? Costants.HIDDEN + " " : (c.getSymbol()!=null ? Costants.getText(c.getSymbol()) : Costants.EMPTY) + " ");
         }
         text.append("\nPoints: ");
-        text.append(points);
+        text.append(this.getPoints());
         return text.toString();
     }
 }

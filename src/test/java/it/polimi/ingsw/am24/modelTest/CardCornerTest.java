@@ -1,12 +1,11 @@
 package it.polimi.ingsw.am24.modelTest;
 
 import it.polimi.ingsw.am24.model.card.CardCorner;
-import it.polimi.ingsw.am24.model.card.GameCard;
-import it.polimi.ingsw.am24.model.card.ResourceCard;
-import it.polimi.ingsw.am24.model.Kingdom;
 import it.polimi.ingsw.am24.model.Symbol;
 
 import org.junit.jupiter.api.Test;
+
+import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CardCornerTest {
@@ -21,15 +20,11 @@ public class CardCornerTest {
         assertEquals(symbol, cardCorner.getSymbol());
         assertEquals(hidden, cardCorner.isHidden());
 
-        // Imposta una carta coperta e una carta che copre
-        GameCard coveredCard = new ResourceCard("front1", "back1", new Symbol[]{Symbol.ANIMAL}, Kingdom.PLANT, 3);
-        GameCard coveringCard = new ResourceCard("front2", "back2", new Symbol[]{Symbol.PLANT}, Kingdom.ANIMAL, 5);
-        cardCorner.setCoveredCard(coveredCard);
-        cardCorner.setCoveringCard(coveringCard);
+        // Imposto l'angolo coperto
+        cardCorner.coverCorner();
 
         // Verifica che le carte coperte e che coprono siano state impostate correttamente
-        assertEquals(coveredCard, cardCorner.getCoveredCard());
-        assertEquals(coveringCard, cardCorner.getCoveringCard());
+        assertTrue( cardCorner.isCovered());
     }
     @Test
     public void testGetCornerText() {

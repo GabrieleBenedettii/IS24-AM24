@@ -1,0 +1,58 @@
+[
+  {
+    "points":"3",
+    "symbols":{
+      "FUNGI": 3
+    }
+  },
+  {
+    "points":"2",
+    "symbols":{
+      "PLANT": 3
+    }
+  },
+  {
+    "points":"2",
+    "symbols":{
+      "ANIMAL": 3
+    }
+  },
+  {
+    "points":"2",
+    "symbols":{
+      "INSECT": 3
+    }
+  },
+  {
+    "points":"2",
+    "symbols":{
+      "INSECT": 3
+    }
+  },
+  {
+    "points":"3",
+    "symbols":{
+      "QUILL": 1,
+      "MANUSCRIPT": 1,
+      "INK": 1
+    }
+  },
+  {
+    "points":"2",
+    "symbols":{
+      "QUILL": 2
+    }
+  },
+  {
+    "points":"2",
+    "symbols":{
+      "MANUSCRIPT": 1
+    }
+  },
+  {
+    "points":"2",
+    "symbols":{
+      "INK": 1
+    }
+  }
+]

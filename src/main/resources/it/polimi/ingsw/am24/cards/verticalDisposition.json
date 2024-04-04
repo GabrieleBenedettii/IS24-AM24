@@ -2,21 +2,25 @@
   {
     "points":"3",
     "mainKingdom": "FUNGI",
-    "secondaryKingdom": "PLANT"
+    "secondaryKingdom": "PLANT",
+    "secondaryKingdomCorner": 3
   },
   {
     "points":"3",
     "mainKingdom": "PLANT",
-    "secondaryKingdom": "INSECT"
+    "secondaryKingdom": "INSECT",
+    "secondaryKingdomCorner": 2
   },
   {
     "points":"3",
     "mainKingdom": "ANIMAL",
-    "secondaryKingdom": "FUNGI"
+    "secondaryKingdom": "FUNGI",
+    "secondaryKingdomCorner": 1
   },
   {
     "points":"3",
     "mainKingdom": "INSECT",
-    "secondaryKingdom": "ANIMAL"
+    "secondaryKingdom": "ANIMAL",
+    "secondaryKingdomCorner": 0
   }
 ]

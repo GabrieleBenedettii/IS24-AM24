@@ -7,18 +7,16 @@ import it.polimi.ingsw.am24.model.Symbol;
 import java.util.HashMap;
 import java.util.Map;
 
-public class GoldCard extends GameCard {
+public class GoldCard extends PlayableCard {
     private final Map<Symbol,Integer> requirements;
-    private final int points;
     private final boolean pointsForCoveringCorners;
-    private final Symbol pointsSymbol;
+    private final Symbol coveringSymbol;
     private boolean requirementsMet;
 
-    public GoldCard(String frontImage, String backImage, Symbol[] symbols, Kingdom kingdom, int points, boolean pointsForCoveringCorners, Symbol pointsSymbol, Map<Symbol,Integer> requirements) {
-        super(frontImage, backImage, symbols, kingdom);
-        this.points = points;
+    public GoldCard(int imageId, Symbol[] symbols, Kingdom kingdom, int points, boolean pointsForCoveringCorners, Symbol coveringSymbol, Map<Symbol,Integer> requirements) {
+        super(imageId, symbols, kingdom, points);
         this.pointsForCoveringCorners = pointsForCoveringCorners;
-        this.pointsSymbol = pointsSymbol;
+        this.coveringSymbol = coveringSymbol;
         this.requirements = requirements;
         this.requirementsMet = false;
     }
@@ -49,16 +47,12 @@ public class GoldCard extends GameCard {
         return requirements;
     }
 
-    public int getPoints() {
-        return points;
-    }
-
     public boolean getPointsForCoveringCorners() {
         return pointsForCoveringCorners;
     }
 
-    public Symbol getPointsSymbol() {
-        return pointsSymbol;
+    public Symbol getCoveringSymbol() {
+        return coveringSymbol;
     }
 
     public String printCard() {
@@ -75,7 +69,13 @@ public class GoldCard extends GameCard {
             text.append(requirements.get(s));
             text.append(" ");
         }
-        //todo aggiungere la stampa dei punti
+        text.append("\nPoints: ");
+        if(pointsForCoveringCorners)
+            text.append(this.getPoints() + " points for each covered corner");
+        else if(coveringSymbol != null)
+            text.append(this.getPoints() + " points for each " + coveringSymbol.toString());
+        else
+            text.append(this.getPoints());
         return text.toString();
     }
 }

@@ -3,46 +3,34 @@ package it.polimi.ingsw.am24.model.card;
 import it.polimi.ingsw.am24.model.Symbol;
 
 public class CardCorner {
-    private GameCard coveredCard;
-    private GameCard coveringCard;
     private final Symbol symbol;
-    private final boolean hidden;
+    private final boolean isHidden;
+    private boolean isCovered;
 
-    public CardCorner(/*Position position, */Symbol symbol, boolean hidden) {
-        //this.position = position;
-        this.coveredCard = null;
-        this.coveringCard = null;
+    public CardCorner(Symbol symbol, boolean hidden) {
         this.symbol = symbol;
-        this.hidden = hidden;
-    }
-
-    public GameCard getCoveredCard() {
-        return coveredCard;
-    }
-
-    public GameCard getCoveringCard() {
-        return coveringCard;
+        this.isHidden = hidden;
+        this.isCovered = false;
     }
 
     public Symbol getSymbol() {
         return symbol;
     }
 
-    public void setCoveredCard(GameCard coveredCard) {
-        this.coveredCard = coveredCard;
-    }
-
-    public void setCoveringCard(GameCard coveringCard) {
-        this.coveringCard = coveringCard;
+    public void coverCorner() {
+        this.isCovered = true;
     }
     public boolean isHidden() {
-        return hidden;
+        return isHidden;
+    }
+    public boolean isCovered() {
+        return isCovered;
     }
     public char getCornerText() {
         char text;
-        if(symbol != null && !hidden) {
+        if(symbol != null && !isHidden) {
             text = symbol.toString().charAt(0);
-        } else if (hidden) {
+        } else if (isHidden) {
             text = ' ';
         } else {
             text = '*';

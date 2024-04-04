@@ -1,18 +1,22 @@
 [
   {
     "points":"2",
-    "kingdom": "FUNGI"
+    "kingdom": "FUNGI",
+    "direction": 1
   },
   {
     "points":"2",
-    "kingdom": "PLANT"
+    "kingdom": "PLANT",
+    "direction": 0
   },
   {
     "points":"2",
-    "kingdom": "ANIMAL"
+    "kingdom": "ANIMAL",
+    "direction": 1
   },
   {
     "points":"2",
-    "kingdom": "INSECT"
+    "kingdom": "INSECT",
+    "direction": 0
   }
 ]

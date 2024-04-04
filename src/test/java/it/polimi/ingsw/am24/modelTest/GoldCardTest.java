@@ -7,7 +7,7 @@ import it.polimi.ingsw.am24.model.Kingdom;
 import it.polimi.ingsw.am24.model.Symbol;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class GoldCardTest {
     @Test
@@ -23,7 +23,7 @@ public class GoldCardTest {
         requirements.put(Symbol.FUNGI, 1);
 
         // Crea una nuova carta d'oro
-        GoldCard goldCard = new GoldCard("frontImage", "backImage", new Symbol[]{Symbol.ANIMAL, Symbol.PLANT}, Kingdom.PLANT, 2, false, Symbol.PLANT, requirements);
+        GoldCard goldCard = new GoldCard(1, new Symbol[]{Symbol.ANIMAL, Symbol.PLANT}, Kingdom.PLANT, 2, false, Symbol.PLANT, requirements);
 
         // Verifica che i requisiti siano soddisfatti
         goldCard.checkRequirementsMet(visibleSymbols);
@@ -42,7 +42,7 @@ public class GoldCardTest {
         requirements.put(Symbol.FUNGI, 5);
 
         // Crea una nuova carta d'oro
-        GoldCard goldCard = new GoldCard("frontImage", "backImage", new Symbol[]{Symbol.ANIMAL, Symbol.PLANT}, Kingdom.PLANT, 5, false, Symbol.PLANT, requirements);
+        GoldCard goldCard = new GoldCard(1, new Symbol[]{Symbol.ANIMAL, Symbol.PLANT}, Kingdom.PLANT, 5, false, Symbol.PLANT, requirements);
 
         // Verifica che i requisiti non siano soddisfatti
         goldCard.checkRequirementsMet(visibleSymbols);
@@ -52,13 +52,12 @@ public class GoldCardTest {
     public void constructorTest(){
         Map<Symbol, Integer> requirements = new HashMap<>();
         requirements.put(Symbol.FUNGI, 5);
-        GoldCard goldCard = new GoldCard("frontImage", "backImage", new Symbol[]{Symbol.ANIMAL, Symbol.PLANT}, Kingdom.PLANT, 5, false, Symbol.PLANT, requirements);
-        assertEquals("frontImage", goldCard.getFrontImage());
-        assertEquals("backImage", goldCard.getBackImage());
+        GoldCard goldCard = new GoldCard(1, new Symbol[]{Symbol.ANIMAL, Symbol.PLANT}, Kingdom.PLANT, 5, false, Symbol.PLANT, requirements);
+        assertEquals(1, goldCard.getImageId());
         assertEquals(Kingdom.PLANT, goldCard.getKingdom());
         assertEquals(goldCard.getPoints(), 5);
         assertEquals(goldCard.getRequirements(), requirements);
-        assertEquals(goldCard.getPointsForCoveringCorners(), false);
-        assertEquals(goldCard.getPointsSymbol(), Symbol.PLANT);
+        assertFalse(goldCard.getPointsForCoveringCorners());
+        assertEquals(goldCard.getCoveringSymbol(), Symbol.PLANT);
     }
 }
