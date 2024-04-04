@@ -7,7 +7,7 @@
   {
     "points":"2",
     "kingdom": "PLANT",
-    "direction": 0
+    "direction": -1
   },
   {
     "points":"2",
@@ -17,6 +17,6 @@
   {
     "points":"2",
     "kingdom": "INSECT",
-    "direction": 0
+    "direction": -1
   }
 ]

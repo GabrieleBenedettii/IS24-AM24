@@ -11,7 +11,7 @@ public class InitialCard extends GameCard{
     private InitialCard backCard;
 
     public InitialCard(int imageId, Symbol[] symbols, ArrayList<Kingdom> kingdoms) {
-        super(imageId,symbols);
+        super(imageId,symbols,null);
         this.kingdoms = kingdoms;
     }
 
@@ -40,6 +40,7 @@ public class InitialCard extends GameCard{
         for (CardCorner c: backCard.getCorners()) {
             print.append(c.isHidden() ? Costants.HIDDEN + " " : (c.getSymbol()!=null ? Costants.getText(c.getSymbol()) : Costants.EMPTY) + " ");
         }
+        print.append("Kingdom: " + this.getKingdom());
         return print.toString();
     }
 }

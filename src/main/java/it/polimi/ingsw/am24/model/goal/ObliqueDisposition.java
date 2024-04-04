@@ -1,13 +1,11 @@
 package it.polimi.ingsw.am24.model.goal;
 
-import it.polimi.ingsw.am24.model.Cell;
 import it.polimi.ingsw.am24.model.Kingdom;
 import it.polimi.ingsw.am24.model.card.GameCard;
-import it.polimi.ingsw.am24.model.card.PlayableCard;
 
 public class ObliqueDisposition extends GoalCard{
     private final Kingdom kingdom;
-    private final int direction;
+    private final int direction;    //direction = -1 -> top-left, direction = 1 -> top-right
 
     public ObliqueDisposition(int imageId, int points, Kingdom kingdom, int direction) {
         super(imageId, points);
@@ -19,13 +17,12 @@ public class ObliqueDisposition extends GoalCard{
         return kingdom;
     }
 
-    public int calculatePoints(Cell[][] board){
+    public int calculatePoints(GameCard[][] board){
         int points = 0;
-        for(int i = 0; i < board.length - 2; i = i + 2){
-            for(int j = 2; j < board[i].length; j = j + 2){
-                if(board[i][j].getCard().getKingdom().equals(kingdom) && board[i+1][j-1].getCard().getKingdom().equals(kingdom) && board[i+2][j-2].getCard().getKingdom().equals(kingdom)){
-                    points = points + 2;
-                }
+        for(int i = 1-direction; i < board.length - (1+direction); i++){
+            for(int j = 0; j < board[i].length - 2; j++){
+                if(kingdom.equals(board[i][j].getKingdom()) && kingdom.equals(board[i+1][j+direction].getKingdom()) && kingdom.equals(board[i+2][j+2*direction].getKingdom()))
+                    points += 2;
             }
         }
         return points;

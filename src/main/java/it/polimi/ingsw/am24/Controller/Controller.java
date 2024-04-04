@@ -2,8 +2,8 @@ package it.polimi.ingsw.am24.Controller;
 
 import it.polimi.ingsw.am24.model.Game;
 import it.polimi.ingsw.am24.model.Player;
-import it.polimi.ingsw.am24.model.card.GameCard;
 import it.polimi.ingsw.am24.model.card.InitialCard;
+import it.polimi.ingsw.am24.model.card.PlayableCard;
 import it.polimi.ingsw.am24.model.goal.GoalCard;
 
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ public class Controller {
         current.getPlayingHand().remove(index);
         setCardPlaced(true);
     }
-    public void drawCard(GameCard card){
+    public void drawCard(PlayableCard card){
         current.getPlayingHand().add(card);
         setCardDrawn(true);
     }

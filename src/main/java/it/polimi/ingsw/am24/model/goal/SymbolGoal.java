@@ -2,6 +2,8 @@ package it.polimi.ingsw.am24.model.goal;
 
 import it.polimi.ingsw.am24.model.Symbol;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 public class SymbolGoal extends GoalCard{
@@ -12,9 +14,11 @@ public class SymbolGoal extends GoalCard{
     }
 
     public int calculatePoints(HashMap<Symbol,Integer> visibleSymbols){
-        int points = 0;
-        //todo
-        return points;
+        ArrayList<Integer> num = new ArrayList<>();
+        for(Symbol s : symbols.keySet()) {
+            num.add(visibleSymbols.get(s)/symbols.get(s));
+        }
+        return Collections.min(num)*this.getPoints();
     }
 
     public String printCard() {
