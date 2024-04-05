@@ -62,4 +62,17 @@ public class Game {
     public ArrayList<GoalCard> getCommonGoals() {
         return commonGoals;
     }
+
+    public ResourceDeck getResourceDeck() {
+        return resourceDeck;
+    }
+    public GoldDeck getGoldDeck() {
+        return goldDeck;
+    }
+    public InitialDeck getInitialDeck() {
+        return initialDeck;
+    }
+    public GoalDeck getGoalDeck() {
+        return goalDeck;
+    }
 }

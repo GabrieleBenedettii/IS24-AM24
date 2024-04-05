@@ -21,7 +21,7 @@ public class ObliqueDisposition extends GoalCard{
         int points = 0;
         for(int i = 1-direction; i < board.length - (1+direction); i++){
             for(int j = 0; j < board[i].length - 2; j++){
-                if(kingdom.equals(board[i][j].getKingdom()) && kingdom.equals(board[i+1][j+direction].getKingdom()) && kingdom.equals(board[i+2][j+2*direction].getKingdom()))
+                if(kingdom.equals(board[i][j].getKingdom()) && kingdom.equals(board[i+direction][j+1].getKingdom()) && kingdom.equals(board[i+2*direction][j+2].getKingdom()))
                     points += 2;
             }
         }
