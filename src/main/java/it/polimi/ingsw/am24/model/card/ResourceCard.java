@@ -20,4 +20,7 @@ public class ResourceCard extends PlayableCard{
         text.append(this.getPoints());
         return text.toString();
     }
+    public String getType(){
+        return "resource";
+    }
 }

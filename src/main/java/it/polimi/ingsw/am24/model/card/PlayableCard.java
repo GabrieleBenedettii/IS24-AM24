@@ -14,4 +14,7 @@ public abstract class PlayableCard extends GameCard{
     public int getPoints() {
         return points;
     }
+    public String getType(){
+        return "";
+    }
 }
