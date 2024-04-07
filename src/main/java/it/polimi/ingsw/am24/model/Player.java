@@ -8,16 +8,15 @@ import java.util.HashMap;
 
 public class Player {
     private final String nickname;
-    private final PlayerColor color;
+    private PlayerColor color;
     private int score;
     private ArrayList<PlayableCard> playingHand;
     private InitialCard initialcard;
     private GoalCard hiddenGoal;
     private HashMap<Symbol,Integer> visibleSymbols;
     private GameCard[][] gameboard;
-    public Player(String nickname, PlayerColor color){
+    public Player(String nickname){
         this.nickname = nickname;
-        this.color = color;
         this.playingHand = new ArrayList<>();
         this.visibleSymbols = new HashMap<>();
         for (Symbol s: Symbol.values()) {
@@ -54,6 +53,9 @@ public class Player {
     }
     public void setHiddenGoal(GoalCard obj){
         this.hiddenGoal = obj;
+    }
+    public void setColor(PlayerColor color){
+        this.color = color;
     }
     public void setInitialCard(InitialCard card) {
         this.initialcard = card;

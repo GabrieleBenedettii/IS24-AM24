@@ -2,6 +2,7 @@ package it.polimi.ingsw.am24.model.card;
 
 import it.polimi.ingsw.am24.model.Kingdom;
 import it.polimi.ingsw.am24.model.Symbol;
+import it.polimi.ingsw.am24.modelView.GameCardView;
 
 import java.util.ArrayList;
 
@@ -42,6 +43,10 @@ public abstract class GameCard {
 
     public String printCard() {
         return "";
+    }
+
+    public GameCardView getView() {
+        return new GameCardView("GameCard", imageId, printCard());
     }
 }
 

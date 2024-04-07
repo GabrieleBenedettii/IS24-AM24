@@ -2,6 +2,7 @@ package it.polimi.ingsw.am24.model.goal;
 
 import it.polimi.ingsw.am24.model.Kingdom;
 import it.polimi.ingsw.am24.model.card.GameCard;
+import it.polimi.ingsw.am24.modelView.GameCardView;
 
 public class VerticalDisposition extends GoalCard{
     private final Kingdom mainKingdom;
@@ -42,5 +43,9 @@ public class VerticalDisposition extends GoalCard{
         String text = "Points: " + this.getPoints();
         text += "\nDisposition: 2 vertical " + mainKingdom + " and 1 " + secondaryKingdom + " in corner " + secondaryKingdomCorner;
         return text;
+    }
+
+    public GameCardView getView() {
+        return new GameCardView("Goal Card - Vertical disposition", this.getImageId(), this.printCard());
     }
 }

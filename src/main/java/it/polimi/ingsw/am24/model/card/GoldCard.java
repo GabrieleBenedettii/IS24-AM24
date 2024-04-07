@@ -3,6 +3,7 @@ package it.polimi.ingsw.am24.model.card;
 import it.polimi.ingsw.am24.costants.Costants;
 import it.polimi.ingsw.am24.model.Kingdom;
 import it.polimi.ingsw.am24.model.Symbol;
+import it.polimi.ingsw.am24.modelView.GameCardView;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -80,5 +81,9 @@ public class GoldCard extends PlayableCard {
     }
     public String getType(){
         return "gold";
+    }
+
+    public GameCardView getView() {
+        return new GameCardView("Gold Card", this.getImageId(), this.printCard());
     }
 }

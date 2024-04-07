@@ -1,5 +1,7 @@
 package it.polimi.ingsw.am24.model.goal;
 
+import it.polimi.ingsw.am24.modelView.GameCardView;
+
 public abstract class GoalCard {
     private final int imageId;
     private final int points;
@@ -20,4 +22,7 @@ public abstract class GoalCard {
         return "";
     }
 
+    public GameCardView getView() {
+        return new GameCardView("Goal Card", imageId, printCard());
+    }
 }

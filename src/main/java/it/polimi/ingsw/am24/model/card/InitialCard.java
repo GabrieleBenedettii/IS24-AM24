@@ -3,6 +3,7 @@ package it.polimi.ingsw.am24.model.card;
 import it.polimi.ingsw.am24.costants.Costants;
 import it.polimi.ingsw.am24.model.Kingdom;
 import it.polimi.ingsw.am24.model.Symbol;
+import it.polimi.ingsw.am24.modelView.GameCardView;
 
 import java.util.ArrayList;
 
@@ -42,5 +43,9 @@ public class InitialCard extends GameCard{
         }
         print.append("Kingdom: " + this.getKingdom());
         return print.toString();
+    }
+
+    public GameCardView getView() {
+        return new GameCardView("Initial Card", this.getImageId(), this.printCard());
     }
 }

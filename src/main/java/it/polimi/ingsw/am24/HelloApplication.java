@@ -2,6 +2,8 @@ package it.polimi.ingsw.am24;
 
 import it.polimi.ingsw.am24.Controller.Controller;
 
+import java.util.Scanner;
+
 public class HelloApplication /*extends Application*/ {
     /*@Override
     public void start(Stage stage) throws IOException {
@@ -13,7 +15,6 @@ public class HelloApplication /*extends Application*/ {
     }*/
 
     public static void main(String[] args) {
-        Controller controller = new Controller();
         //launch();
     }
 }

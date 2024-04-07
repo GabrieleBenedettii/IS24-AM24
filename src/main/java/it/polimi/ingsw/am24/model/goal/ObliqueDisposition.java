@@ -2,6 +2,7 @@ package it.polimi.ingsw.am24.model.goal;
 
 import it.polimi.ingsw.am24.model.Kingdom;
 import it.polimi.ingsw.am24.model.card.GameCard;
+import it.polimi.ingsw.am24.modelView.GameCardView;
 
 public class ObliqueDisposition extends GoalCard{
     private final Kingdom kingdom;
@@ -32,5 +33,9 @@ public class ObliqueDisposition extends GoalCard{
         String text = "Points: " + this.getPoints();
         text += "\nDisposition: 3 oblique " + kingdom + " " + (direction == 0 ? "top-left" : "top-right");
         return text;
+    }
+
+    public GameCardView getView() {
+        return new GameCardView("Goal Card - Oblique disposition", this.getImageId(), this.printCard());
     }
 }

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.am24.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import it.polimi.ingsw.am24.model.deck.*;
 import it.polimi.ingsw.am24.model.card.*;
@@ -22,11 +23,17 @@ public class Game {
     //COMMON GOALS
     private ArrayList<GoalCard> commonGoals;
 
+    private ArrayList<PlayerColor> availableColors;
+
     public Game() {
         this.visibleResCard = new ArrayList<>();
         this.visibleGoldCard = new ArrayList<>();
         this.commonGoals = new ArrayList<>();
-        this.start();
+        this.availableColors = new ArrayList<>();
+        availableColors.add(PlayerColor.GREEN);
+        availableColors.add(PlayerColor.YELLOW);
+        availableColors.add(PlayerColor.RED);
+        availableColors.add(PlayerColor.BLUE);
     }
 
     public void start(){
@@ -74,5 +81,20 @@ public class Game {
     }
     public GoalDeck getGoalDeck() {
         return goalDeck;
+    }
+    public GoalCard drawGoalCard() {
+        return goalDeck.drawCard();
+    }
+
+    public List<String> getAvailableColors() {
+        return availableColors.stream().map(c -> c.toString()).toList();
+    }
+
+    public void chooseColor(PlayerColor color) {
+        availableColors.remove(color);
+    }
+
+    public boolean isAvailable(PlayerColor color) {
+        return availableColors.contains(color);
     }
 }

@@ -1,7 +1,10 @@
 package it.polimi.ingsw.am24.model.goal;
 
 import it.polimi.ingsw.am24.model.Symbol;
+import it.polimi.ingsw.am24.modelView.GameCardView;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 public class SymbolGoal extends GoalCard{
@@ -12,9 +15,11 @@ public class SymbolGoal extends GoalCard{
     }
 
     public int calculatePoints(HashMap<Symbol,Integer> visibleSymbols){
-        int points = 0;
-        //todo
-        return points;
+        ArrayList<Integer> num = new ArrayList<>();
+        for(Symbol s : symbols.keySet()) {
+            num.add(visibleSymbols.get(s)/symbols.get(s));
+        }
+        return Collections.min(num)*this.getPoints();
     }
 
     public String printCard() {
@@ -22,5 +27,9 @@ public class SymbolGoal extends GoalCard{
         for (Symbol s : symbols.keySet())
             text.append("\n" + s.toString() + " -> " + symbols.get(s));
         return text.toString();
+    }
+
+    public GameCardView getView() {
+        return new GameCardView("Goal Card - Symbol goal", this.getImageId(), this.printCard());
     }
 }
