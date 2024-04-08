@@ -186,7 +186,7 @@ public class ServerImplementation extends UnicastRemoteObject implements Server 
                 }
             }));
         }
-        //message for the choice of the color
+        //message to choose a color
         else if(m instanceof ChosenColorMessage) {
             chooseColor(((ChosenColorMessage) m).getNickname(), ((ChosenColorMessage) m).getColor(), ((message) -> {
                 try {

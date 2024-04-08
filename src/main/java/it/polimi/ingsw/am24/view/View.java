@@ -10,5 +10,7 @@ public interface View {
 
     void addListener(ViewListener listener);
 
+    void removeListeners();
+
     void run();
 }

@@ -2,6 +2,7 @@ package it.polimi.ingsw.am24.view;
 
 import it.polimi.ingsw.am24.messages.*;
 import it.polimi.ingsw.am24.modelView.GameCardView;
+import it.polimi.ingsw.am24.modelView.PlayerView;
 
 import java.io.PrintStream;
 import java.rmi.NotBoundException;
@@ -18,7 +19,7 @@ public class CLI extends UserInterface {
     private boolean isGameEnded;
 
     private int numPlayers;
-    private int currentPlayer;
+    private boolean isMyTurn;
     private Queue<Message> receivedMessages;
     private final Object lockLogin;
     private final Object lockQueue;
@@ -37,7 +38,6 @@ public class CLI extends UserInterface {
     private void init() {
         nickname = null;
         numPlayers = 0;
-        currentPlayer = -1;
         isGameEnded = false;
 
         receivedMessages = new LinkedList<>();
@@ -73,17 +73,21 @@ public class CLI extends UserInterface {
                         ((PlayersInLobbyMessage) m).getPlayers().stream().forEach(p -> out.print(p + " "));
                     }
                     else if (m instanceof SecretObjectiveDealtMessage) {
-                        clearScreen();
+                        //clearScreen();
                         chooseSecretGoal(((SecretObjectiveDealtMessage) m).getViews());
                     }
-                    //if (gameEnded) break;
+                    else if (m instanceof InitialCardDealtMessage) {
+                        //clearScreen();
+                        chooseSide(((InitialCardDealtMessage) m).getViews());
+                    }
+                    if(isGameEnded) break;
                 }
                 }
             }.start();
 
             while(true){
                 synchronized (lockGame){
-                    while(!isGameEnded) {
+                    while(!isMyTurn && !isGameEnded) {
                         try {
                             lockGame.wait();
                         } catch (InterruptedException e) {
@@ -153,7 +157,7 @@ public class CLI extends UserInterface {
                 chooseColor(((AvailableColorsMessage) m).getAvailableColors());
             }
             else if (m instanceof SecretObjectiveDealtMessage) {
-                clearScreen();
+                //clearScreen();
                 chooseSecretGoal(((SecretObjectiveDealtMessage) m).getViews());
                 break;
             }
@@ -217,11 +221,24 @@ public class CLI extends UserInterface {
 
     private void chooseSecretGoal(GameCardView[] views) {
         for(int i = 0; i < views.length; i++) {
-            out.println(i + " - " + views[i].getCardDescription() + "\n");
+            out.println("\n" + i + " - " + views[i].getCardDescription());
         }
         out.print("Choose your secret goal: ");
         int choice = in.nextInt();
         in.nextLine();
+        doChooseHiddenGoal(nickname,views[choice].getCardId());
+        waitForResponse();
+    }
+
+    private void chooseSide(GameCardView[] views) {
+        for(int i = 0; i < views.length; i++) {
+            out.println("\n" + i + " - " + views[i].getCardDescription() + "\n");
+        }
+        out.print("Choose your initial card side: ");
+        int choice = in.nextInt();
+        in.nextLine();
+        doChooseInitialCardSide(nickname,choice);
+        waitForResponse();
     }
 
     private void addMessageToQueue(Message m){
@@ -242,13 +259,16 @@ public class CLI extends UserInterface {
         }
     }
 
+    //not working on intellij
     public void clearScreen() {
         try{
             if( System.getProperty("os.name").contains("Windows") )
                 new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
             else
                 out.println("\033[H\033[2J");
-        }catch (Exception e){
+        }
+        catch (Exception e){
+
         }
     }
 }

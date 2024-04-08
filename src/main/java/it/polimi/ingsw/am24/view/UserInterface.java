@@ -28,6 +28,12 @@ public abstract class UserInterface implements Runnable, View {
         }
     }
 
+    public void removeListeners(){
+        synchronized (listeners) {
+            listeners.clear();
+        }
+    }
+
     @Override
     public void notifyListeners(Message m) {
         synchronized (listeners) {
@@ -60,5 +66,15 @@ public abstract class UserInterface implements Runnable, View {
     //choice of the color from a player
     protected void doChooseColor(String nickname, String color) {
         notifyListeners(new ChosenColorMessage(nickname, color));
+    }
+
+    //choice of the hidden goal
+    protected void doChooseHiddenGoal(String nickname, int cardId) {
+        notifyListeners(new SecretObjectiveChosenMessage(nickname, cardId));
+    }
+
+    //choice of the initial card side
+    protected void doChooseInitialCardSide(String nickname, int isFront) {
+        notifyListeners(new InitialCardSideMessage(nickname, isFront == 0 ? true : false));
     }
 }

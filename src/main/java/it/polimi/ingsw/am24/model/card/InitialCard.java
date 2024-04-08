@@ -24,6 +24,7 @@ public class InitialCard extends GameCard{
         return kingdoms;
     }
 
+    @Override
     public String printCard() {
         StringBuilder print = new StringBuilder("FRONT\nKingdoms: ");
         for (Kingdom k: kingdoms) {
@@ -33,7 +34,11 @@ public class InitialCard extends GameCard{
         for (CardCorner c: this.getCorners()) {
             print.append(c.isHidden() ? Costants.HIDDEN + " " : (c.getSymbol()!=null ? Costants.getText(c.getSymbol()) : Costants.EMPTY) + " ");
         }
-        print.append("\nBACK\nKingdoms:");
+        return print.toString();
+    }
+
+    public String printBackCard() {
+        StringBuilder print = new StringBuilder("BACK\nKingdoms:");
         for (Kingdom k: backCard.kingdoms) {
             print.append(" ").append(Costants.getText(k)).append(" ");
         }
@@ -41,11 +46,14 @@ public class InitialCard extends GameCard{
         for (CardCorner c: backCard.getCorners()) {
             print.append(c.isHidden() ? Costants.HIDDEN + " " : (c.getSymbol()!=null ? Costants.getText(c.getSymbol()) : Costants.EMPTY) + " ");
         }
-        print.append("Kingdom: " + this.getKingdom());
         return print.toString();
     }
 
     public GameCardView getView() {
-        return new GameCardView("Initial Card", this.getImageId(), this.printCard());
+        return new GameCardView("Initial Card - front", this.getImageId(), this.printCard());
+    }
+
+    public GameCardView getBackView() {
+        return new GameCardView("Initial Card - back", this.getImageId(), this.printBackCard());
     }
 }

@@ -15,6 +15,7 @@ public class Player {
     private GoalCard hiddenGoal;
     private HashMap<Symbol,Integer> visibleSymbols;
     private GameCard[][] gameboard;
+
     public Player(String nickname){
         this.nickname = nickname;
         this.playingHand = new ArrayList<>();
@@ -25,11 +26,12 @@ public class Player {
         this.gameboard = new GameCard[81][81];
         this.score = 0;
     }
+
     public GameCard[][] getGameboard() {
         return gameboard;
     }
 
-    public boolean play(PlayableCard card, int x, int y) {
+    public boolean play(GameCard card, int x, int y) {
         //todo controllo se è possibile giocare la carta alla posizione x,y
         //controllare che ci sia almeno una carta nei 4 angoli e che gli eventuali angoli coperti non siano hidden
         //aggiornare visible symbols (solo se è possibile piazzare la carta)
@@ -48,9 +50,11 @@ public class Player {
         playingHand.add(card2);
         playingHand.add(card3);
     }
+
     public GoalCard getHiddenGoal() {
         return hiddenGoal;
     }
+
     public void setHiddenGoal(GoalCard obj){
         this.hiddenGoal = obj;
     }

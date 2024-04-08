@@ -1,6 +1,7 @@
 package it.polimi.ingsw.am24.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import it.polimi.ingsw.am24.model.deck.*;
@@ -24,12 +25,14 @@ public class Game {
     private ArrayList<GoalCard> commonGoals;
 
     private ArrayList<PlayerColor> availableColors;
+    private HashMap<Integer,GoalCard> drawnGoalCards;   //used to save the goal card's objects while players are choosing
 
     public Game() {
         this.visibleResCard = new ArrayList<>();
         this.visibleGoldCard = new ArrayList<>();
         this.commonGoals = new ArrayList<>();
         this.availableColors = new ArrayList<>();
+        this.drawnGoalCards = new HashMap<>();
         availableColors.add(PlayerColor.GREEN);
         availableColors.add(PlayerColor.YELLOW);
         availableColors.add(PlayerColor.RED);
@@ -49,7 +52,7 @@ public class Game {
         initialDeck.shuffle();
         goalDeck.shuffle();
 
-        //
+        //set the table
         visibleResCard.add(resourceDeck.drawCard());
         visibleResCard.add(resourceDeck.drawCard());
         visibleGoldCard.add(goldDeck.drawCard());
@@ -82,8 +85,36 @@ public class Game {
     public GoalDeck getGoalDeck() {
         return goalDeck;
     }
-    public GoalCard drawGoalCard() {
-        return goalDeck.drawCard();
+
+    public ArrayList<GoalCard> drawGoalCards() {
+        GoalCard goal1 = goalDeck.drawCard();
+        GoalCard goal2 = goalDeck.drawCard();
+        drawnGoalCards.put(goal1.getImageId(),goal1);
+        drawnGoalCards.put(goal2.getImageId(),goal2);
+        ArrayList<GoalCard> goals = new ArrayList<>();
+        goals.add(goal1);
+        goals.add(goal2);
+        return goals;
+    }
+
+    public InitialCard drawInitialCard() {
+        return initialDeck.drawCard();
+    }
+
+    public ResourceCard drawResourceCard() {
+        return resourceDeck.drawCard();
+    }
+
+    public GoldCard drawGoldCard() {
+        return goldDeck.drawCard();
+    }
+
+    public GoalCard chosenGoalCard(int index) {
+        synchronized (drawnGoalCards) {
+           GoalCard g = drawnGoalCards.get(index);
+           drawnGoalCards.remove(g);
+           return g;
+        }
     }
 
     public List<String> getAvailableColors() {
