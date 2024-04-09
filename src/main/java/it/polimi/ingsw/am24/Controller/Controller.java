@@ -5,32 +5,27 @@ import it.polimi.ingsw.am24.messages.*;
 import it.polimi.ingsw.am24.model.Game;
 import it.polimi.ingsw.am24.model.Player;
 import it.polimi.ingsw.am24.model.PlayerColor;
-import it.polimi.ingsw.am24.model.card.GameCard;
 import it.polimi.ingsw.am24.model.card.PlayableCard;
-import it.polimi.ingsw.am24.model.goal.GoalCard;
-import it.polimi.ingsw.am24.modelView.GameCardView;
-import org.controlsfx.control.tableview2.filter.filtereditor.SouthFilter;
+import it.polimi.ingsw.am24.modelView.GameView;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
+import java.util.*;
 
 public class Controller {
     private Game game;
-    private ArrayList<Player> players;
-    private ArrayList<GameListener> listeners;
-    private Player current;
+    private ArrayList<String> rotation;
+    private HashMap<String, Player> players;
+    private HashMap<String, GameListener> listeners;
+    private String currentPlayer;
     private int playerCount;
-    private boolean cardPlaced, cardDrawn, selectedSide;
     private boolean started;
     private int readyPlayers;   //used to know how many players have already done the side of initial card choice
                                 // and start the rotation
 
     public Controller(int numPlayers) {
         this.game = new Game();
-        this.players = new ArrayList<>();
-        this.listeners = new ArrayList<>();
+        this.rotation = new ArrayList<>();
+        this.players = new HashMap<>();
+        this.listeners = new HashMap<>();
         this.playerCount = numPlayers;
         this.readyPlayers = 0;
         started = false;
@@ -40,8 +35,9 @@ public class Controller {
     public boolean addNewPlayer(String nickname, GameListener listener){
         boolean res = false;
         synchronized (players) {
-            players.add(new Player(nickname));
-            listeners.add(listener);
+            rotation.add(nickname);
+            players.put(nickname, new Player(nickname));
+            listeners.put(nickname, listener);
             if(players.size() == playerCount){
                 started = true;
                 res = true;
@@ -55,20 +51,19 @@ public class Controller {
     public boolean chooseColor(String nickname, String color, GameListener listener) {
         //find the player
         synchronized (players) {
-            for (Player p : players) {
-                if (p.getNickname().equals(nickname)) {
-                    PlayerColor pc = PlayerColor.valueOf(color.toUpperCase());
-                    //if the color is still available, set color on the model and notify
-                    if (game.isAvailable(pc)) {
-                        p.setColor(pc);
-                        game.chooseColor(pc);
-                        notifyAllListeners();
-                        return true;
-                    } else {
-                        //if the color is not available, send the updated list
-                        listener.update(new AvailableColorsMessage(game.getAvailableColors()));
-                        return false;
-                    }
+            Player p = players.get(nickname);
+            if (p != null) {
+                PlayerColor pc = PlayerColor.valueOf(color.toUpperCase());
+                //if the color is still available, set color on the model and notify
+                if (game.isAvailable(pc)) {
+                    p.setColor(pc);
+                    game.chooseColor(pc);
+                    notifyAllListeners();
+                    return true;
+                } else {
+                    //if the color is not available, send the updated list
+                    listener.update(new AvailableColorsMessage(game.getAvailableColors()));
+                    return false;
                 }
             }
             return false;
@@ -78,7 +73,7 @@ public class Controller {
     //decks creation and card's distribution
     public void startGame() {
         game.start();
-        for (Player p : players) {
+        for (Player p : players.values()) {
             p.setInitialCard(game.drawInitialCard());
             p.setPlayingHand(game.drawResourceCard(), game.drawResourceCard(), game.drawGoldCard());
         }
@@ -87,12 +82,11 @@ public class Controller {
     //choice of the hidden goal by a player
     public boolean chooseGoal(String nickname, int goalId, GameListener listener){
         synchronized (players) {
-            for (Player p : players) {
-                if (p.getNickname().equals(nickname)) {
-                    p.setHiddenGoal(game.chosenGoalCard(goalId));
-                    listener.update(new InitialCardDealtMessage(p.getInitialcard().getView(), p.getInitialcard().getBackView()));
-                    return true;
-                }
+            Player p = players.get(nickname);
+            if (p != null) {
+                p.setHiddenGoal(game.chosenGoalCard(goalId));
+                listener.update(new InitialCardDealtMessage(p.getInitialcard().getView(), p.getInitialcard().getBackView()));
+                return true;
             }
             return false;
         }
@@ -101,28 +95,55 @@ public class Controller {
     //choice of the side of the initial card by a player
     public boolean chooseInitialCardSide(String nickname, boolean isFront, GameListener listener){
         synchronized (players) {
-            for (Player p : players) {
-                if (p.getNickname().equals(nickname)) {
-                    p.getInitialcard().setFront(isFront);
-                    p.play(isFront ? p.getInitialcard() : p.getInitialcard().getBackCard(),40,40);
-                    readyPlayers++;
-                    if(readyPlayers == playerCount)
-                        System.out.println("THE GAME IS STARTING!!!");
+            Player p = players.get(nickname);
+            if (p != null) {
+                p.getInitialcard().setFront(isFront);
+                p.playInitialCard(isFront);
+                readyPlayers++;
+                if(readyPlayers == playerCount) {
+                    Collections.shuffle(rotation);
+                    currentPlayer = rotation.get(0);
+                    System.out.println("THE GAME IS STARTING!!!");
+                    notifyAllListeners();
+                }
+                return true;
+            }
+            return false;
+        }
+    }
+
+    public boolean playCard(String nickname, int cardIndex, boolean isFront, int x, int y, GameListener listener){
+        synchronized (players) {
+            Player p = players.get(nickname);
+            if (p != null) {
+                boolean res = p.play(cardIndex, isFront, x, y);
+                if(res) {
+                    nextPlayer();
+                    notifyAllListeners();
                     return true;
+                }
+                else {
+                    notifyAllListeners();
+                    return false;
                 }
             }
             return false;
         }
     }
 
-    public void playCard(int index){
-        current.getPlayingHand().remove(index);
-        current.draw();
-    }
-    public void drawCard(PlayableCard card){
+    /*public void drawCard(PlayableCard card){
         current.getPlayingHand().add(card);
+    }*/
+
+    public void nextPlayer(){
+        currentPlayer = rotation.get((rotation.indexOf(currentPlayer) + 1) % playerCount);
     }
-    public void startEndPhase(){
+
+    public int getNumOfActivePlayers() {
+        return players.size();
+    }
+
+    /*public void startEndPhase(){
         if(current.getScore() >= 20){
             //triggera l'ultimo turno dei giocatori
             if(current.equals(players.getFirst())){
@@ -136,69 +157,32 @@ public class Controller {
     public void endGame(){}
     public int getPlayerCount() {
         return playerCount;
-    }
-
-    public Player nextPlayer(){
-        if(players.indexOf(current) == players.size()-1)
-            return players.getFirst();
-        return players.get(players.indexOf(current)+1);
-    }
-    public ArrayList<Player> getPlayers() {
-        return players;
-    }
-    public Player getCurrentPlayer() {
-        return current;
-    }
-    public void setCurrentPlayer(Player currentPlayer) {
-        this.current = currentPlayer;
-    }
-    public void shufflePlayerOrder(){
-        Collections.shuffle(players);
-    }
-
-    public boolean isCardPlaced() {
-        return cardPlaced;
-    }
-
-    public void setCardPlaced(boolean cardPlaced) {
-        this.cardPlaced = cardPlaced;
-    }
-
-    public boolean isCardDrawn() {
-        return cardDrawn;
-    }
-
-    public void setCardDrawn(boolean cardDraw) {
-        this.cardDrawn = cardDraw;
-    }
-
-    public boolean isSelectedSide() {
-        return selectedSide;
-    }
-
-    public void setSelectedSide(boolean selectedSide) {
-        this.selectedSide = selectedSide;
-    }
-
-    public int getNumOfActivePlayers() {
-        return players.size();
-    }
+    }*/
 
     //if the game is started, it sends the list of players in the lobby, otherwise it sends the secret cards
     private void notifyAllListeners(){
         synchronized (players){
-            if(started){
-                startGame();
-                for(GameListener gl : listeners){
-                    String nickname = players.get(listeners.indexOf(gl)).getNickname();
-                    Message m = new SecretObjectiveDealtMessage(game.drawGoalCards().stream().map(gc -> gc.getView()).toList());
-                    if(gl != null) gl.update(m);
+            if(started) {
+                //if the game is started and all players are ready for the rotation
+                if(readyPlayers == playerCount) {
+                    for (String p : listeners.keySet()) {
+                        Message m = new GameViewMessage(new GameView(currentPlayer, players.get(p).getPlayerView(), game.getPublicBoardView()));
+                        if (p != null && listeners.get(p) != null) listeners.get(p).update(m);
+                    }
+                }
+                //if the game is started, but they have to choose secret goal card and initial card side
+                else {
+                    startGame();
+                    for (String p : listeners.keySet()) {
+                        Message m = new SecretObjectiveDealtMessage(game.drawGoalCards().stream().map(gc -> gc.getView()).toList());
+                        if (p != null && listeners.get(p) != null) listeners.get(p).update(m);
+                    }
                 }
             }
             else{
-                Message m = new PlayersInLobbyMessage(players.stream().map(p -> p.getNickname()).toList());
-                for(GameListener gl : listeners){
-                    if(gl != null) gl.update(m);
+                Message m = new PlayersInLobbyMessage(players.keySet().stream().toList());
+                for(String p : listeners.keySet()){
+                    if(p != null && listeners.get(p) != null) listeners.get(p).update(m);
                 }
             }
         }

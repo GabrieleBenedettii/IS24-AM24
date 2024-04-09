@@ -81,9 +81,17 @@ public class GameServer extends UnicastRemoteObject implements Server {
 
     protected boolean chooseInitialCardSide(String nickname, boolean isFront, GameListener listener) {
         boolean res;
-        System.out.println(nickname + " -> " + isFront);
         synchronized (playerNicknames) {
             res = this.controller.chooseInitialCardSide(nickname, isFront, listener);
+        }
+        return res;
+    }
+
+    protected boolean playCard(String nickname, int cardIndex, boolean isFront, int x, int y, GameListener listener) {
+        boolean res;
+        System.out.println(nickname + " -> " + isFront);
+        synchronized (playerNicknames) {
+            res = this.controller.playCard(nickname, cardIndex, isFront, x, y, listener);
         }
         return res;
     }
@@ -120,6 +128,17 @@ public class GameServer extends UnicastRemoteObject implements Server {
                     c.update(message);
                 } catch (RemoteException e) {
                     System.err.println("Cannot send message to client of: " + ((InitialCardSideMessage) m).getNickname());
+                    System.err.println("Error: " + e.getMessage());
+                }
+            }));
+        }
+        else if(m instanceof PlayCardMessage) {
+            playCard(((PlayCardMessage) m).getNickname(), ((PlayCardMessage) m).getCardIndex(), ((PlayCardMessage) m).getFront(),
+                    ((PlayCardMessage) m).getX(), ((PlayCardMessage) m).getY(), ((message) -> {
+                try {
+                    c.update(message);
+                } catch (RemoteException e) {
+                    System.err.println("Cannot send message to client of: " + ((PlayCardMessage) m).getNickname());
                     System.err.println("Error: " + e.getMessage());
                 }
             }));

@@ -26,17 +26,16 @@ public class CardCorner {
     public boolean isCovered() {
         return isCovered;
     }
+
     public char getCornerText() {
-        char text;
+        char text = '-';
+        System.out.println(symbol + " -> " + isHidden);
         if(symbol != null && !isHidden) {
             text = symbol.toString().charAt(0);
-        } else if (isHidden && symbol != null) {
-            text = 'H';
-        } else if(!isHidden && symbol != null){
+        } else if (symbol == null && !isHidden) {
             text = 'E';
-        }
-        else{
-            text = '-';
+        } else if (isHidden){
+            text = 'H';
         }
         return text;
     }

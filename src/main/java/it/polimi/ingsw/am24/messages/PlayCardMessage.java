@@ -1,18 +1,37 @@
 package it.polimi.ingsw.am24.messages;
 
-import it.polimi.ingsw.am24.model.Player;
-import it.polimi.ingsw.am24.model.card.PlayableCard;
-
 public class PlayCardMessage extends Message{
-    private Player player;
-    private PlayableCard card;
-    private int posX;
-    private int posY;
+    private String nickname;
+    private boolean isFront;
+    private int cardIndex;
+    private int x;
+    private int y;
 
-    public PlayCardMessage(Player player, PlayableCard card, int posX, int posY) {
-        this.player = player;
-        this.card = card;
-        this.posX = posX;
-        this.posY = posY;
+    public PlayCardMessage(String nickname, int cardIndex, boolean isFront, int x, int y) {
+        this.nickname = nickname;
+        this.isFront = isFront;
+        this.cardIndex = cardIndex;
+        this.x = x;
+        this.y = y;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public boolean getFront() {
+        return isFront;
+    }
+
+    public int getCardIndex() {
+        return cardIndex;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
     }
 }

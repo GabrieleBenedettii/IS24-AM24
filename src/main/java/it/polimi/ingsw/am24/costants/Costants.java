@@ -17,10 +17,17 @@ public class Costants {
     public static final String TEXT_PURPLE = "\033[35m";
     public static final String TEXT_CYAN = "\033[36m";
     public static final String TEXT_WHITE = "\033[37m";
+
     public static final String TEXT_F = TEXT_RED + "F" + TEXT_RESET;
     public static final String TEXT_A = TEXT_CYAN + "A" + TEXT_RESET;
     public static final String TEXT_I = TEXT_PURPLE + "I" + TEXT_RESET;
     public static final String TEXT_P = TEXT_GREEN + "P" + TEXT_RESET;
+    public static final String TEXT_K = TEXT_YELLOW + "K" + TEXT_RESET;
+    public static final String TEXT_M = TEXT_YELLOW + "M" + TEXT_RESET;
+    public static final String TEXT_Q = TEXT_YELLOW + "Q" + TEXT_RESET;
+    public static final String TEXT_E = TEXT_WHITE + "E" + TEXT_RESET;
+    public static final String TEXT_H = TEXT_WHITE + "H" + TEXT_RESET;
+
     public static final String TEXT_FUNGI = TEXT_RED + "FUNGI" + TEXT_RESET;
     public static final String TEXT_ANIMAL = TEXT_BLUE + "ANIMAL" + TEXT_RESET;
     public static final String TEXT_PLANT = TEXT_GREEN + "PLANT" + TEXT_RESET;
@@ -54,6 +61,11 @@ public class Costants {
         firstLetterMap.put('A', TEXT_A);
         firstLetterMap.put('I', TEXT_I);
         firstLetterMap.put('P', TEXT_P);
+        firstLetterMap.put('K', TEXT_K);
+        firstLetterMap.put('M', TEXT_M);
+        firstLetterMap.put('Q', TEXT_Q);
+        firstLetterMap.put('E', TEXT_E);
+        firstLetterMap.put('H', TEXT_H);
     }
     public static String getText(Character c){ return firstLetterMap.get(c);}
     private static final HashMap<Symbol, String> symbolColorMap = new HashMap<>();

@@ -28,7 +28,7 @@ public class Player {
         for (Symbol s: Symbol.values()) {
             visibleSymbols.put(s,0);
         }
-        this.gameboard = new GameCard[81][81];
+        this.gameboard = new GameCard[21][41];
         this.score = 0;
     }
 
@@ -36,12 +36,16 @@ public class Player {
         return gameboard;
     }
 
-    public boolean play(GameCard card, int x, int y) {
+    public boolean play(int cardIndex, boolean front, int x, int y) {
         //todo controllo se è possibile giocare la carta alla posizione x,y
         //controllare che ci sia almeno una carta nei 4 angoli e che gli eventuali angoli coperti non siano hidden
         //aggiornare visible symbols (solo se è possibile piazzare la carta)
-        playingHand.remove(card);
+        playingHand.remove(playingHand.get(cardIndex));
         return true;    //ritornare un valore booleano per comunicare al client se è possibile il piazzamento
+    }
+
+    public void playInitialCard(boolean front) {
+        gameboard[10][20] = front ? initialcard : initialcard.getBackCard();
     }
 
     public void draw() {
@@ -100,17 +104,23 @@ public class Player {
             visibleSymbols.merge(s,-1,Integer::sum);
     }
     public PlayerView getPlayerView(){
-        String[][] temp = new String[81][81];
-        boolean[][] poss = new boolean[81][81];
-        for(int i = 0; i < 81; i++){
-            for(int j = 0; j < 81; j++){
-                temp[i][j] = gameboard[i][j].getStringForCard();
-                if((i%2 == 0 && j%2 != 0) || (i%2 != 0 && j%2 == 0) || !gameboard[i][j].printCard().isEmpty()){
+        String[][] temp = new String[21][41];
+        boolean[][] poss = new boolean[21][41];
+        for(int i = 0; i < 21; i++){
+            for(int j = 0; j < 41; j++){
+                if(gameboard[i][j] != null) {
+                    temp[i][j] = gameboard[i][j].getStringForCard();
+                    //todo poss = true if there's a not hidden corner in at least one card in diagonals
+                    //todo or if there's a card in a cell, put the diagonal cell true if there is not a card
+                    if((i%2 == 0 && j%2 != 0) || (i%2 != 0 && j%2 == 0) || !gameboard[i][j].printCard().isEmpty()){
+                        poss[i][j] = false;
+                    }
+                    else{
+                        poss[i][j] = true;
+                    }
+                }
+                else
                     poss[i][j] = false;
-                }
-                else{
-                    poss[i][j] = true;
-                }
             }
         }
         ArrayList<GameCardView> hand = new ArrayList<>();

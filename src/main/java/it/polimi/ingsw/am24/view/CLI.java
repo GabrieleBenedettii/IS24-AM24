@@ -1,7 +1,9 @@
 package it.polimi.ingsw.am24.view;
 
+import it.polimi.ingsw.am24.costants.Costants;
 import it.polimi.ingsw.am24.messages.*;
 import it.polimi.ingsw.am24.modelView.GameCardView;
+import it.polimi.ingsw.am24.modelView.GameView;
 import it.polimi.ingsw.am24.modelView.PlayerView;
 
 import java.io.PrintStream;
@@ -19,7 +21,8 @@ public class CLI extends UserInterface {
     private boolean isGameEnded;
 
     private int numPlayers;
-    private boolean isMyTurn;
+    private String current;
+    private GameView gameView;
     private Queue<Message> receivedMessages;
     private final Object lockLogin;
     private final Object lockQueue;
@@ -39,6 +42,7 @@ public class CLI extends UserInterface {
         nickname = null;
         numPlayers = 0;
         isGameEnded = false;
+        current = null;
 
         receivedMessages = new LinkedList<>();
     }
@@ -80,15 +84,27 @@ public class CLI extends UserInterface {
                         //clearScreen();
                         chooseSide(((InitialCardDealtMessage) m).getViews());
                     }
+                    else if (m instanceof GameViewMessage) {
+                        //clearScreen();
+                        synchronized (lockGame) {
+                            gameView = (((GameViewMessage) m).getGameView());
+                            current = gameView.getCurrent();
+                            out.println("THE GAME IS READY TO START!");
+                            lockGame.notifyAll();
+                        }
+                    }
                     if(isGameEnded) break;
                 }
                 }
             }.start();
 
             while(true){
+                //wait while it's not my turn
                 synchronized (lockGame){
-                    while(!isMyTurn && !isGameEnded) {
+                    while(!nickname.equals(current) && !isGameEnded) {
                         try {
+                            if(current != null)
+                                out.println("\n" + current + " is playing");
                             lockGame.wait();
                         } catch (InterruptedException e) {
                             System.err.println("Interrupted while waiting for server: " + e.getMessage());
@@ -97,7 +113,7 @@ public class CLI extends UserInterface {
                     }
                 }
                 if(isGameEnded) break;
-                //notifyListeners(doTurnAction());
+                notifyListeners(doTurn());
             }
         }
 
@@ -172,6 +188,68 @@ public class CLI extends UserInterface {
 
         doReconnect(this.nickname);
         waitForResponse();
+    }
+
+    private Message doTurn() {
+        printView();
+
+        int x = 0;
+        int y = 0;
+        do {
+            out.print("\nCommand -> ");
+            String[] command = in.nextLine().split(" ");
+            if(command[0].equals("playcard")) {
+                try {
+                    int card = Integer.parseInt(command[1]);
+                    boolean front = command[2].equals("front");
+                    x = Integer.parseInt(command[3]);
+                    y = Integer.parseInt(command[4]);
+                    if(!gameView.getPlayerView().getPossiblePlacements()[x][y])
+                        continue;
+                    return new PlayCardMessage(nickname, card, front, x, y);
+                }
+                catch (Exception e) {
+                    out.println("Wrong command!");
+                }
+            }
+        }while(!gameView.getPlayerView().getPossiblePlacements()[x][y]);
+        return null;
+    }
+
+    private void printView() {
+        out.println(nickname + "'s table");
+        out.print("\n    ");
+        for (int i = 0; i < gameView.getPlayerView().getBoard()[0].length; i++) {
+            out.print(i < 10 ? " " + i : i);
+            out.print("  ");
+        }
+        for (int i = 0; i < gameView.getPlayerView().getBoard().length; i++) {
+            out.print("\n  ");
+            for (int j = 0; j < gameView.getPlayerView().getBoard()[0].length*4+1; j++) {
+                out.print("~");
+            }
+            out.print("\n");
+            out.print((i < 10 ? " " + i : i));
+            for (int j = 0; j < gameView.getPlayerView().getBoard()[0].length; j++) {
+                out.print("|" + (gameView.getPlayerView().getPossiblePlacements()[i][j] ? Costants.BACKGROUND_BLACK : "") + (gameView.getPlayerView().getBoard()[i][j] != null ?
+                        gameView.getPlayerView().getBoard()[i][j].substring(0,21) + Costants.BACKGROUND_RESET : "   "));
+            }
+            out.print("|\n  ");
+            for (int j = 0; j < gameView.getPlayerView().getBoard()[0].length; j++) {
+                out.print("|" + (gameView.getPlayerView().getPossiblePlacements()[i][j] ? Costants.BACKGROUND_BLACK : "") + (gameView.getPlayerView().getBoard()[i][j] != null ?
+                        gameView.getPlayerView().getBoard()[i][j].substring(21) + Costants.BACKGROUND_RESET : "   "));
+            }
+            out.print("|");
+
+        }
+        out.print("\n  ");
+        for (int j = 0; j < gameView.getPlayerView().getBoard()[0].length*4+1; j++) {
+            out.print("~");
+        }
+
+        for(int i = 0; i <  gameView.getPlayerView().getPlayerHand().size(); i++) {
+            out.print("\n" + i + "- " + gameView.getPlayerView().getPlayerHand().get(i).getCardDescription());
+        }
     }
 
     private void waitForResponse() {
