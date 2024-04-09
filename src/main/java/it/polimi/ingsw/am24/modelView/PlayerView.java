@@ -12,16 +12,15 @@ public class PlayerView implements Serializable {
     private final int playerScore;
     private final GameCardView secretCard;
     private final ArrayList<GameCardView> playerHand;
-    private final BoardView board;
-    public PlayerView(Player player, Pair<Integer, Integer> placements, String[][] board){
-        this.board = new BoardView(board, placements);
-        this.playerName = player.getNickname();
-        this.playerScore = player.getScore();
-        this.secretCard = new GameCardView("goal", player.getHiddenGoal().getImageId(), player.getHiddenGoal().printCard());
-        this.playerHand = new ArrayList<GameCardView>();
-        for(PlayableCard p : player.getPlayingHand()){
-            playerHand.add(new GameCardView(p.getType(), p.getImageId(), p.printCard()));
-        };
+    private final String[][] board;
+    private final boolean[][] possiblePlacements;
+    public PlayerView(String player, int score, boolean[][] placements, String[][] board, GameCardView secret, ArrayList<GameCardView> hand){
+        this.board = board;
+        this.possiblePlacements = placements;
+        this.playerName = player;
+        this.playerScore = score;
+        this.secretCard = secret;
+        this.playerHand = hand;
     }
     public String getPlayerName() {
         return playerName;
@@ -32,10 +31,15 @@ public class PlayerView implements Serializable {
     public GameCardView getSecretCard() {
         return secretCard;
     }
-    public BoardView getBoard() {
-        return board;
-    }
     public ArrayList<GameCardView> getPlayerHand() {
         return playerHand;
+    }
+
+    public String[][] getBoard() {
+        return board;
+    }
+
+    public boolean[][] getPossiblePlacements() {
+        return possiblePlacements;
     }
 }

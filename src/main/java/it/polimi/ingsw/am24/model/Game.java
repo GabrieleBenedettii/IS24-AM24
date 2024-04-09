@@ -8,6 +8,10 @@ import it.polimi.ingsw.am24.model.deck.*;
 import it.polimi.ingsw.am24.model.card.*;
 import it.polimi.ingsw.am24.model.goal.GoalDeck;
 import it.polimi.ingsw.am24.model.goal.GoalCard;
+import it.polimi.ingsw.am24.modelView.GameCardView;
+import it.polimi.ingsw.am24.modelView.PublicBoardView;
+
+import static it.polimi.ingsw.am24.costants.Costants.getText;
 
 
 public class Game {
@@ -127,5 +131,16 @@ public class Game {
 
     public boolean isAvailable(PlayerColor color) {
         return availableColors.contains(color);
+    }
+    public PublicBoardView getPublicBoardView(){
+        String topGold = getText(goldDeck.getCards().getFirst().getKingdom());
+        String topRes = getText(resourceDeck.getCards().getFirst().getKingdom());
+        ArrayList<GameCardView> res = new ArrayList<>(), gold = new ArrayList<>(), goals = new ArrayList<>();
+        for(int i = 0; i < 2; i++){
+            goals.add(new GameCardView("goal", commonGoals.get(i).getImageId(), commonGoals.get(i).printCard()));
+            res.add(new GameCardView(visibleResCard.get(i).getType(), visibleResCard.get(i).getImageId(), visibleResCard.get(i).printCard()));
+            gold.add(new GameCardView(visibleGoldCard.get(i).getType(), visibleGoldCard.get(i).getImageId(), visibleGoldCard.get(i).printCard()));
+        }
+        return new PublicBoardView(goals, gold, res, topGold, topRes);
     }
 }

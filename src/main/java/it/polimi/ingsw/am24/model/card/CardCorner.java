@@ -30,10 +30,13 @@ public class CardCorner {
         char text;
         if(symbol != null && !isHidden) {
             text = symbol.toString().charAt(0);
-        } else if (isHidden) {
-            text = ' ';
-        } else {
-            text = '*';
+        } else if (isHidden && symbol != null) {
+            text = 'H';
+        } else if(!isHidden && symbol != null){
+            text = 'E';
+        }
+        else{
+            text = '-';
         }
         return text;
     }

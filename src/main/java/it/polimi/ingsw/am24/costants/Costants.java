@@ -17,7 +17,10 @@ public class Costants {
     public static final String TEXT_PURPLE = "\033[35m";
     public static final String TEXT_CYAN = "\033[36m";
     public static final String TEXT_WHITE = "\033[37m";
-
+    public static final String TEXT_F = TEXT_RED + "F" + TEXT_RESET;
+    public static final String TEXT_A = TEXT_CYAN + "A" + TEXT_RESET;
+    public static final String TEXT_I = TEXT_PURPLE + "I" + TEXT_RESET;
+    public static final String TEXT_P = TEXT_GREEN + "P" + TEXT_RESET;
     public static final String TEXT_FUNGI = TEXT_RED + "FUNGI" + TEXT_RESET;
     public static final String TEXT_ANIMAL = TEXT_BLUE + "ANIMAL" + TEXT_RESET;
     public static final String TEXT_PLANT = TEXT_GREEN + "PLANT" + TEXT_RESET;
@@ -30,7 +33,7 @@ public class Costants {
     public static final String HIDDEN = "HIDDEN";
     public static final String EMPTY = "EMPTY";
     public static final String CODEXNATURALIS =
-            "███████  ██████   ████     ███████ ███    ███\n"
+                     "███████  ██████   ████     ███████ ███    ███\n"
                     +"██       █    █   █  ██    █         ██  ██\n"
                     +"██       █    █   █   ██   ████        ██\n"
                     +"██       █    █   █  ██    █         ██  ██\n"
@@ -45,6 +48,14 @@ public class Costants {
     public static final String REGOLE = "Per il regolamento completo andare su: \n https://www.craniocreations.it/prodotto/codex-naturalis";
     public static int port;
     public static String ipAddress;
+    private static final HashMap<Character, String> firstLetterMap = new HashMap<Character, String>();
+    static {
+        firstLetterMap.put('F', TEXT_F);
+        firstLetterMap.put('A', TEXT_A);
+        firstLetterMap.put('I', TEXT_I);
+        firstLetterMap.put('P', TEXT_P);
+    }
+    public static String getText(Character c){ return firstLetterMap.get(c);}
     private static final HashMap<Symbol, String> symbolColorMap = new HashMap<>();
 
     static {

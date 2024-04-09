@@ -8,6 +8,8 @@ import it.polimi.ingsw.am24.modelView.GameCardView;
 import java.util.HashMap;
 import java.util.Map;
 
+import static it.polimi.ingsw.am24.costants.Costants.getText;
+
 public class GoldCard extends PlayableCard {
     private final Map<Symbol,Integer> requirements;
     private final boolean pointsForCoveringCorners;
@@ -55,7 +57,6 @@ public class GoldCard extends PlayableCard {
     public Symbol getCoveringSymbol() {
         return coveringSymbol;
     }
-
     public String printCard() {
         StringBuilder text = new StringBuilder("Kingdom: ");
         text.append(Costants.getText(this.getKingdom()));

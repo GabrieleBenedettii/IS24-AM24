@@ -6,15 +6,17 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class PublicBoardView implements Serializable {
-    private final ArrayList<GameCardView> goals = new ArrayList<>();
-    private final ArrayList<GameCardView> resourceCards = new ArrayList<>();
-    private final ArrayList<GameCardView> goldCards = new ArrayList<>();
-    public PublicBoardView(Game game){
-        for(int i = 0; i < 2; i++){
-            this.goals.add(new GameCardView("goal", game.getCommonGoals().get(i).getImageId(),game.getCommonGoals().get(i).printCard()));
-            this.goldCards.add(new GameCardView("gold", game.getVisibleGoldCard().get(i).getImageId(), game.getVisibleGoldCard().get(i).printCard()));
-            this.resourceCards.add(new GameCardView("resource", game.getVisibleResCard().get(i).getImageId(), game.getVisibleResCard().get(i).printCard()));
-        }
+    private final ArrayList<GameCardView> goals;
+    private final ArrayList<GameCardView> resourceCards;
+    private final ArrayList<GameCardView> goldCards;
+    private final String resourceDeck;
+    private final String goldDeck;
+    public PublicBoardView(ArrayList<GameCardView> goals, ArrayList<GameCardView> gold, ArrayList<GameCardView> res, String topGold, String topRes){
+        this.goals = goals;
+        this.resourceCards = res;
+        this.goldCards = gold;
+        this.goldDeck = topGold;
+        this.resourceDeck = topRes;
     }
     public ArrayList<GameCardView> getGoals() {
         return goals;
@@ -24,5 +26,11 @@ public class PublicBoardView implements Serializable {
     }
     public ArrayList<GameCardView> getGoldCards() {
         return goldCards;
+    }
+    public String getResourceDeck() {
+        return resourceDeck;
+    }
+    public String getGoldDeck() {
+        return goldDeck;
     }
 }

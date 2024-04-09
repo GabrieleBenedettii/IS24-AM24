@@ -6,6 +6,8 @@ import it.polimi.ingsw.am24.modelView.GameCardView;
 
 import java.util.ArrayList;
 
+import static it.polimi.ingsw.am24.costants.Costants.getText;
+
 public abstract class GameCard {
     private boolean front;
     private final ArrayList<CardCorner> corners;
@@ -47,6 +49,10 @@ public abstract class GameCard {
 
     public GameCardView getView() {
         return new GameCardView("GameCard", imageId, printCard());
+    }
+    public String getStringForCard(){
+        return getText(getCornerByIndex(0).getCornerText()) + "*" + getText(getCornerByIndex(1).getCornerText()) + "\n" +
+                getText(getCornerByIndex(2).getCornerText()) + "*" + getText(getCornerByIndex(3).getCornerText());
     }
 }
 
