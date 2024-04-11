@@ -3,8 +3,8 @@ package it.polimi.ingsw.am24.model.card;
 import it.polimi.ingsw.am24.model.Symbol;
 
 public class CardCorner {
-    private final Symbol symbol;
-    private final boolean isHidden;
+    private Symbol symbol;
+    private boolean isHidden;
     private boolean isCovered;
 
     public CardCorner(Symbol symbol, boolean hidden) {
@@ -27,10 +27,17 @@ public class CardCorner {
         return isCovered;
     }
 
+    public void setEmpty() {
+        this.isCovered = false;
+        this.isHidden = false;
+        this.symbol = null;
+    }
+
     public char getCornerText() {
         char text = '-';
-        System.out.println(symbol + " -> " + isHidden);
-        if(symbol != null && !isHidden) {
+        if(isCovered) {
+            text = ' ';
+        } else if(symbol != null && !isHidden) {
             text = symbol.toString().charAt(0);
         } else if (symbol == null && !isHidden) {
             text = 'E';

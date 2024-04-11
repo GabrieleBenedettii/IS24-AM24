@@ -23,10 +23,14 @@ public class CLI extends UserInterface {
     private int numPlayers;
     private String current;
     private GameView gameView;
+    private boolean haveAlreadyPlayed;
+
     private Queue<Message> receivedMessages;
+
     private final Object lockLogin;
     private final Object lockQueue;
     private final Object lockGame;
+    private final Object lockTurn;
 
     public CLI() {
         super();
@@ -35,6 +39,7 @@ public class CLI extends UserInterface {
         lockLogin = new Object();
         lockQueue = new Object();
         lockGame = new Object();
+        lockTurn = new Object();
         init();
     }
 
@@ -43,6 +48,7 @@ public class CLI extends UserInterface {
         numPlayers = 0;
         isGameEnded = false;
         current = null;
+        haveAlreadyPlayed = false;
 
         receivedMessages = new LinkedList<>();
     }
@@ -66,35 +72,44 @@ public class CLI extends UserInterface {
             new Thread(){
                 @Override
                 public void run() {
-                super.run();
-                while(true) {
-                    if (isMessagesQueueEmpty()) {
-                        continue;
-                    }
-                    Message m = popMessageFromQueue();
-
-                    if (m instanceof PlayersInLobbyMessage) {
-                        ((PlayersInLobbyMessage) m).getPlayers().stream().forEach(p -> out.print(p + " "));
-                    }
-                    else if (m instanceof SecretObjectiveDealtMessage) {
-                        //clearScreen();
-                        chooseSecretGoal(((SecretObjectiveDealtMessage) m).getViews());
-                    }
-                    else if (m instanceof InitialCardDealtMessage) {
-                        //clearScreen();
-                        chooseSide(((InitialCardDealtMessage) m).getViews());
-                    }
-                    else if (m instanceof GameViewMessage) {
-                        //clearScreen();
-                        synchronized (lockGame) {
-                            gameView = (((GameViewMessage) m).getGameView());
-                            current = gameView.getCurrent();
-                            out.println("THE GAME IS READY TO START!");
-                            lockGame.notifyAll();
+                    super.run();
+                    while(true) {
+                        if (isMessagesQueueEmpty()) {
+                            continue;
                         }
+                        Message m = popMessageFromQueue();
+
+                        if (m instanceof PlayersInLobbyMessage) {
+                            ((PlayersInLobbyMessage) m).getPlayers().stream().forEach(p -> out.print(p + " "));
+                        }
+                        else if (m instanceof SecretObjectiveDealtMessage) {
+                            //clearScreen();
+                            chooseSecretGoal(((SecretObjectiveDealtMessage) m).getViews());
+                        }
+                        else if (m instanceof InitialCardDealtMessage) {
+                            //clearScreen();
+                            chooseSide(((InitialCardDealtMessage) m).getViews());
+                        }
+                        else if (m instanceof GameViewMessage) {
+                            //clearScreen();
+                            synchronized (lockGame) {
+                                haveAlreadyPlayed = false;
+                                gameView = (((GameViewMessage) m).getGameView());
+                                current = gameView.getCurrent();
+                                lockGame.notifyAll();
+                            }
+                            synchronized (lockTurn) {
+                                lockTurn.notifyAll();
+                            }
+                        }
+                        else if (m instanceof CorrectPlayingCardMessage) {
+                            synchronized (lockTurn) {
+                                haveAlreadyPlayed = true;
+                                lockTurn.notifyAll();
+                            }
+                        }
+                        if(isGameEnded) break;
                     }
-                    if(isGameEnded) break;
-                }
                 }
             }.start();
 
@@ -113,7 +128,17 @@ public class CLI extends UserInterface {
                     }
                 }
                 if(isGameEnded) break;
-                notifyListeners(doTurn());
+                if(!haveAlreadyPlayed) notifyListeners(doTurn());
+                else notifyListeners(doDrawn());
+                //wait for the server response
+                synchronized (lockTurn) {
+                    try {
+                        lockTurn.wait();
+                    } catch (InterruptedException e) {
+                        System.err.println("Interrupted while waiting for server: " + e.getMessage());
+                        throw new RuntimeException(e);
+                    }
+                }
             }
         }
 
@@ -198,7 +223,7 @@ public class CLI extends UserInterface {
         do {
             out.print("\nCommand -> ");
             String[] command = in.nextLine().split(" ");
-            if(command[0].equals("playcard")) {
+            if(command[0].equals("play")) {
                 try {
                     int card = Integer.parseInt(command[1]);
                     boolean front = command[2].equals("front");
@@ -212,13 +237,21 @@ public class CLI extends UserInterface {
                     out.println("Wrong command!");
                 }
             }
-        }while(!gameView.getPlayerView().getPossiblePlacements()[x][y]);
-        return null;
+            else if (command[0].equals("show")) {
+                printTable(false);
+            }
+            else if (command[0].equals("visible")) {
+                printVisibleSymbols();
+            }
+            else if (command[0].equals("help")) {
+                //todo
+            }
+        }while(true);
     }
 
     private void printView() {
-        out.println(nickname + "'s table");
-        out.print("\n    ");
+        out.println("\n" + nickname + "'s table");
+        out.print("    ");
         for (int i = 0; i < gameView.getPlayerView().getBoard()[0].length; i++) {
             out.print(i < 10 ? " " + i : i);
             out.print("  ");
@@ -232,12 +265,12 @@ public class CLI extends UserInterface {
             out.print((i < 10 ? " " + i : i));
             for (int j = 0; j < gameView.getPlayerView().getBoard()[0].length; j++) {
                 out.print("|" + (gameView.getPlayerView().getPossiblePlacements()[i][j] ? Costants.BACKGROUND_BLACK : "") + (gameView.getPlayerView().getBoard()[i][j] != null ?
-                        gameView.getPlayerView().getBoard()[i][j].substring(0,21) + Costants.BACKGROUND_RESET : "   "));
+                        gameView.getPlayerView().getBoard()[i][j].substring(0,21) : "   " + Costants.BACKGROUND_RESET));
             }
             out.print("|\n  ");
             for (int j = 0; j < gameView.getPlayerView().getBoard()[0].length; j++) {
                 out.print("|" + (gameView.getPlayerView().getPossiblePlacements()[i][j] ? Costants.BACKGROUND_BLACK : "") + (gameView.getPlayerView().getBoard()[i][j] != null ?
-                        gameView.getPlayerView().getBoard()[i][j].substring(21) + Costants.BACKGROUND_RESET : "   "));
+                        gameView.getPlayerView().getBoard()[i][j].substring(21) : "   " + Costants.BACKGROUND_RESET));
             }
             out.print("|");
 
@@ -249,6 +282,54 @@ public class CLI extends UserInterface {
 
         for(int i = 0; i <  gameView.getPlayerView().getPlayerHand().size(); i++) {
             out.print("\n" + i + "- " + gameView.getPlayerView().getPlayerHand().get(i).getCardDescription());
+        }
+    }
+
+    private Message doDrawn () {
+        printTable(true);
+
+        do {
+            out.print("\nCommand -> ");
+            String[] command = in.nextLine().split(" ");
+            if(command[0].equals("drawcard")) {
+                try {
+                    //todo check card (0-5)
+                    int card = Integer.parseInt(command[1]);
+                    return new DrawCardMessage(nickname, card);
+                }
+                catch (Exception e) {
+                    out.println("Wrong command!");
+                }
+            }
+        }while(true);
+    }
+
+    private void printTable(boolean forChoice) {
+        int i = 0;
+        for(GameCardView gcv : gameView.getCommon().getResourceCards()) {
+            out.println(forChoice ? i + " -> " + gcv.getCardDescription() : gcv.getCardDescription());
+            i++;
+        }
+        for(GameCardView gcv : gameView.getCommon().getGoldCards()) {
+            out.println(forChoice ? i + " -> " + gcv.getCardDescription() : gcv.getCardDescription());
+            i++;
+        }
+        if (forChoice) {
+            out.println(i + " -> Pick a card from RESOURCE CARD DECK, first card color: " + gameView.getCommon().getResourceDeck());
+            out.println((i + 1) + " -> Pick a card from GOLD CARD DECK, first card color: " + gameView.getCommon().getGoldDeck());
+        }
+        else {
+            out.println("RESOURCE CARD DECK, first card color: " + gameView.getCommon().getResourceDeck());
+            out.println("GOLD CARD DECK, first card color: " + gameView.getCommon().getGoldDeck());
+            for(GameCardView gcv : gameView.getCommon().getGoals()) {
+                out.println(gcv.getCardDescription());
+            }
+        }
+    }
+
+    private void printVisibleSymbols() {
+        for(String s : gameView.getPlayerView().getVisibleSymbols().keySet()) {
+            out.println(s + " -> " + gameView.getPlayerView().getVisibleSymbols().get(s));
         }
     }
 

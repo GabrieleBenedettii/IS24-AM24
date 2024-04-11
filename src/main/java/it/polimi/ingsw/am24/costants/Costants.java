@@ -27,6 +27,7 @@ public class Costants {
     public static final String TEXT_Q = TEXT_YELLOW + "Q" + TEXT_RESET;
     public static final String TEXT_E = TEXT_WHITE + "E" + TEXT_RESET;
     public static final String TEXT_H = TEXT_WHITE + "H" + TEXT_RESET;
+    public static final String TEXT_S = TEXT_WHITE + " " + TEXT_RESET;
 
     public static final String TEXT_FUNGI = TEXT_RED + "FUNGI" + TEXT_RESET;
     public static final String TEXT_ANIMAL = TEXT_BLUE + "ANIMAL" + TEXT_RESET;
@@ -66,6 +67,7 @@ public class Costants {
         firstLetterMap.put('Q', TEXT_Q);
         firstLetterMap.put('E', TEXT_E);
         firstLetterMap.put('H', TEXT_H);
+        firstLetterMap.put(' ', TEXT_S);
     }
     public static String getText(Character c){ return firstLetterMap.get(c);}
     private static final HashMap<Symbol, String> symbolColorMap = new HashMap<>();

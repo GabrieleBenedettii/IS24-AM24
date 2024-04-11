@@ -6,6 +6,7 @@ import javafx.util.Pair;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class PlayerView implements Serializable {
     private final String playerName;
@@ -14,13 +15,16 @@ public class PlayerView implements Serializable {
     private final ArrayList<GameCardView> playerHand;
     private final String[][] board;
     private final boolean[][] possiblePlacements;
-    public PlayerView(String player, int score, boolean[][] placements, String[][] board, GameCardView secret, ArrayList<GameCardView> hand){
+    private final HashMap<String, Integer> visibleSymbols;
+
+    public PlayerView(String player, int score, boolean[][] placements, String[][] board, GameCardView secret, ArrayList<GameCardView> hand, HashMap<String, Integer> visibleSymbols){
         this.board = board;
         this.possiblePlacements = placements;
         this.playerName = player;
         this.playerScore = score;
         this.secretCard = secret;
         this.playerHand = hand;
+        this.visibleSymbols = visibleSymbols;
     }
     public String getPlayerName() {
         return playerName;
@@ -41,5 +45,8 @@ public class PlayerView implements Serializable {
 
     public boolean[][] getPossiblePlacements() {
         return possiblePlacements;
+    }
+    public HashMap<String, Integer> getVisibleSymbols() {
+        return visibleSymbols;
     }
 }

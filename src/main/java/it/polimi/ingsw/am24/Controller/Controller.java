@@ -20,6 +20,8 @@ public class Controller {
     private boolean started;
     private int readyPlayers;   //used to know how many players have already done the side of initial card choice
                                 // and start the rotation
+    private boolean beginEndGame;
+    private boolean isLastRound;
 
     public Controller(int numPlayers) {
         this.game = new Game();
@@ -28,6 +30,8 @@ public class Controller {
         this.listeners = new HashMap<>();
         this.playerCount = numPlayers;
         this.readyPlayers = 0;
+        beginEndGame = false;
+        isLastRound = false;
         started = false;
     }
 
@@ -118,6 +122,46 @@ public class Controller {
             if (p != null) {
                 boolean res = p.play(cardIndex, isFront, x, y);
                 if(res) {
+                    if(p.getScore() >= 20 && !beginEndGame) beginEndGame = true;
+                    listener.update(new CorrectPlayingCardMessage());
+                    return true;
+                }
+                else {
+                    notifyAllListeners();
+                    return false;
+                }
+            }
+            return false;
+        }
+    }
+
+    public boolean drawCard(String nickname, int cardIndex, GameListener listener){
+        synchronized (players) {
+            Player p = players.get(nickname);
+            if (p != null) {
+                boolean res = false;
+                switch (cardIndex) {
+                    case 0 -> {
+                        res = p.draw(game.getVisibleResCard().get(0));
+                        game.addResourceCard();
+                    }
+                    case 1 -> {
+                        res = p.draw(game.getVisibleResCard().get(1));
+                        game.addResourceCard();
+                    }
+                    case 2 -> {
+                        res = p.draw(game.getVisibleGoldCard().get(0));
+                        game.addGoldCard();
+                    }
+                    case 3 -> {
+                        res = p.draw(game.getVisibleGoldCard().get(1));
+                        game.addGoldCard();
+                    }
+                    case 4 -> res = p.draw(game.drawResourceCard());
+                    case 5 -> res = p.draw(game.drawGoldCard());
+                }
+
+                if(res) {
                     nextPlayer();
                     notifyAllListeners();
                     return true;
@@ -131,33 +175,23 @@ public class Controller {
         }
     }
 
-    /*public void drawCard(PlayableCard card){
-        current.getPlayingHand().add(card);
-    }*/
-
     public void nextPlayer(){
-        currentPlayer = rotation.get((rotation.indexOf(currentPlayer) + 1) % playerCount);
+        int nextPlayerIndex = rotation.indexOf(currentPlayer) + 1;
+        if(nextPlayerIndex == playerCount) {
+            if(isLastRound) {
+                //todo get the winner and game over
+            }
+            else if(beginEndGame) {
+                isLastRound = true;
+            }
+            nextPlayerIndex -= playerCount;
+        }
+        currentPlayer = rotation.get(nextPlayerIndex);
     }
 
     public int getNumOfActivePlayers() {
         return players.size();
     }
-
-    /*public void startEndPhase(){
-        if(current.getScore() >= 20){
-            //triggera l'ultimo turno dei giocatori
-            if(current.equals(players.getFirst())){
-                //finisco il giro
-            }
-            else{
-                //devo fare il giro fino al giocatore che precede il corrente
-            }
-        }
-    }
-    public void endGame(){}
-    public int getPlayerCount() {
-        return playerCount;
-    }*/
 
     //if the game is started, it sends the list of players in the lobby, otherwise it sends the secret cards
     private void notifyAllListeners(){

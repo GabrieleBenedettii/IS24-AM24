@@ -2,6 +2,7 @@ package it.polimi.ingsw.am24.model.deck;
 
 import com.google.gson.Gson;
 import it.polimi.ingsw.am24.HelloApplication;
+import it.polimi.ingsw.am24.model.Kingdom;
 import it.polimi.ingsw.am24.model.card.ResourceCard;
 
 import java.io.InputStreamReader;
@@ -31,7 +32,8 @@ public class ResourceDeck implements Deck{
         cards.removeFirst();
         return card;
     }
-    public ArrayList<ResourceCard> getCards(){
-        return cards;
+
+    public Kingdom getFirstCardKingdom(){
+        return cards.getFirst().getKingdom();
     }
 }

@@ -89,9 +89,16 @@ public class GameServer extends UnicastRemoteObject implements Server {
 
     protected boolean playCard(String nickname, int cardIndex, boolean isFront, int x, int y, GameListener listener) {
         boolean res;
-        System.out.println(nickname + " -> " + isFront);
         synchronized (playerNicknames) {
             res = this.controller.playCard(nickname, cardIndex, isFront, x, y, listener);
+        }
+        return res;
+    }
+
+    protected boolean drawCard(String nickname, int cardIndex, GameListener listener) {
+        boolean res;
+        synchronized (playerNicknames) {
+            res = this.controller.drawCard(nickname, cardIndex, listener);
         }
         return res;
     }
@@ -139,6 +146,16 @@ public class GameServer extends UnicastRemoteObject implements Server {
                     c.update(message);
                 } catch (RemoteException e) {
                     System.err.println("Cannot send message to client of: " + ((PlayCardMessage) m).getNickname());
+                    System.err.println("Error: " + e.getMessage());
+                }
+            }));
+        }
+        else if(m instanceof DrawCardMessage) {
+            drawCard(((DrawCardMessage) m).getNickname(), ((DrawCardMessage) m).getCard(), ((message) -> {
+                try {
+                    c.update(message);
+                } catch (RemoteException e) {
+                    System.err.println("Cannot send message to client of: " + ((DrawCardMessage) m).getNickname());
                     System.err.println("Error: " + e.getMessage());
                 }
             }));

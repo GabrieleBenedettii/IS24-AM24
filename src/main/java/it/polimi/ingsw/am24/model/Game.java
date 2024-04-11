@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import it.polimi.ingsw.am24.costants.Costants;
 import it.polimi.ingsw.am24.model.deck.*;
 import it.polimi.ingsw.am24.model.card.*;
 import it.polimi.ingsw.am24.model.goal.GoalDeck;
@@ -73,23 +74,6 @@ public class Game {
         return visibleGoldCard;
     }
 
-    public ArrayList<GoalCard> getCommonGoals() {
-        return commonGoals;
-    }
-
-    public ResourceDeck getResourceDeck() {
-        return resourceDeck;
-    }
-    public GoldDeck getGoldDeck() {
-        return goldDeck;
-    }
-    public InitialDeck getInitialDeck() {
-        return initialDeck;
-    }
-    public GoalDeck getGoalDeck() {
-        return goalDeck;
-    }
-
     public ArrayList<GoalCard> drawGoalCards() {
         GoalCard goal1 = goalDeck.drawCard();
         GoalCard goal2 = goalDeck.drawCard();
@@ -113,6 +97,14 @@ public class Game {
         return goldDeck.drawCard();
     }
 
+    public void addResourceCard() {
+        visibleResCard.add(resourceDeck.drawCard());
+    }
+
+    public void addGoldCard() {
+        visibleGoldCard.add(goldDeck.drawCard());
+    }
+
     public GoalCard chosenGoalCard(int index) {
         synchronized (drawnGoalCards) {
            GoalCard g = drawnGoalCards.get(index);
@@ -132,9 +124,10 @@ public class Game {
     public boolean isAvailable(PlayerColor color) {
         return availableColors.contains(color);
     }
+
     public PublicBoardView getPublicBoardView(){
-        String topGold = getText(goldDeck.getCards().getFirst().getKingdom());
-        String topRes = getText(resourceDeck.getCards().getFirst().getKingdom());
+        String topGold = Costants.getText(goldDeck.getFirstCardKingdom());
+        String topRes = Costants.getText(resourceDeck.getFirstCardKingdom());
         ArrayList<GameCardView> res = new ArrayList<>(), gold = new ArrayList<>(), goals = new ArrayList<>();
         for(int i = 0; i < 2; i++){
             goals.add(new GameCardView("goal", commonGoals.get(i).getImageId(), commonGoals.get(i).printCard()));

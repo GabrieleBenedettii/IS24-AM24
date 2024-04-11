@@ -14,7 +14,17 @@ public abstract class PlayableCard extends GameCard{
     public int getPoints() {
         return points;
     }
+
     public String getType(){
         return "";
+    }
+
+    public PlayableCard getCardSide(boolean front) {
+        if (!front) {
+            for (int i = 0; i < 4; i++) {
+                this.getCornerByIndex(i).setEmpty();
+            }
+        }
+        return this;
     }
 }
