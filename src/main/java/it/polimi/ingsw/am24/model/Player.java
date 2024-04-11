@@ -20,6 +20,7 @@ public class Player {
     private GoalCard hiddenGoal;
     private HashMap<Symbol,Integer> visibleSymbols;
     private GameCard[][] gameboard;
+    private Pair<Integer, Integer>[] diagonals;
 
     public Player(String nickname){
         this.nickname = nickname;
@@ -30,6 +31,11 @@ public class Player {
         }
         this.gameboard = new GameCard[21][41];
         this.score = 0;
+        diagonals = new Pair[4];
+        diagonals[0] = new Pair<>(-1,-1);
+        diagonals[1] = new Pair<>(-1,1);
+        diagonals[2] = new Pair<>(1,-1);
+        diagonals[3] = new Pair<>(1, 1);
     }
 
     public GameCard[][] getGameboard() {
@@ -106,21 +112,22 @@ public class Player {
     public PlayerView getPlayerView(){
         String[][] temp = new String[21][41];
         boolean[][] poss = new boolean[21][41];
-        for(int i = 0; i < 21; i++){
-            for(int j = 0; j < 41; j++){
+        for(int i = 1; i < 20; i++){
+            for(int j = 1; j < 40; j++){
+                temp[i][j] = gameboard[i][j].getStringForCard();
                 if(gameboard[i][j] != null) {
-                    temp[i][j] = gameboard[i][j].getStringForCard();
-                    //todo poss = true if there's a not hidden corner in at least one card in diagonals
-                    //todo or if there's a card in a cell, put the diagonal cell true if there is not a card
-                    if((i%2 == 0 && j%2 != 0) || (i%2 != 0 && j%2 == 0) || !gameboard[i][j].printCard().isEmpty()){
-                        poss[i][j] = false;
-                    }
-                    else{
-                        poss[i][j] = true;
+                    for(int k = 0; k < 4; k++){
+                        if(gameboard[i + diagonals[k].getKey()][j + diagonals[k].getValue()] == null && !gameboard[i + diagonals[k].getKey()][j + diagonals[k].getValue()].getCornerByIndex(k).isCovered()){
+                            poss[i + diagonals[k].getKey()][j + diagonals[k].getValue()] = true;
+                        }
+                        else{
+                            poss[i + diagonals[k].getKey()][j + diagonals[k].getValue()] = false;
+                        }
                     }
                 }
-                else
+                else {
                     poss[i][j] = false;
+                }
             }
         }
         ArrayList<GameCardView> hand = new ArrayList<>();
