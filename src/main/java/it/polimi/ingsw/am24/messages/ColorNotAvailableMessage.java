@@ -1,9 +1,9 @@
 package it.polimi.ingsw.am24.messages;
 
-public class ColorNotAvailable extends Message{
+public class ColorNotAvailableMessage extends Message{
     private final String message = "no color available";
 
-    public ColorNotAvailable() {
+    public ColorNotAvailableMessage() {
     }
 
     public String toString() {
