@@ -26,5 +26,7 @@ public class InitialCardTest {
         assertEquals(imageId, initialCard.getImageId());
         //assertArrayEquals(symbols, initialCard.getCorners().toArray());
         assertEquals(kingdoms, initialCard.getKingdoms());
+
+
     }
 }

@@ -32,4 +32,6 @@ public class GoldDeckTest {
         assert(!drawnCard.equals(null));
         assert(initialSize - 1 == goldDeck.getCards().size());
     }
+
 }
+

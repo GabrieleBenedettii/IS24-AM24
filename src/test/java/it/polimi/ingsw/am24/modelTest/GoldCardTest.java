@@ -60,4 +60,16 @@ public class GoldCardTest {
         assertFalse(goldCard.getPointsForCoveringCorners());
         assertEquals(goldCard.getCoveringSymbol(), Symbol.PLANT);
     }
+
+    public void testPrintCard() {
+        // Definisci i requisiti della carta
+        Map<Symbol, Integer> requirements = new HashMap<>();
+        requirements.put(Symbol.FUNGI, 5);
+
+        // Crea una nuova carta d'oro
+        GoldCard goldCard = new GoldCard(1, new Symbol[]{Symbol.ANIMAL, Symbol.PLANT}, Kingdom.PLANT, 5, false, Symbol.PLANT, requirements);
+        String text = new String();
+        text="Kingdom: \nCorners: ";
+        assertEquals(text,goldCard.printCard());
+    }
 }

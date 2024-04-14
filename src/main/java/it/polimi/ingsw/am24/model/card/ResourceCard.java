@@ -23,4 +23,6 @@ public class ResourceCard extends PlayableCard{
     public String getType(){
         return "resource";
     }
+
+
 }

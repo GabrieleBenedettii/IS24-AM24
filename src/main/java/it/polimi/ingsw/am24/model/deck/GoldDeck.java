@@ -35,4 +35,8 @@ public class GoldDeck implements Deck{
     public Kingdom getFirstCardKingdom(){
         return cards.getFirst().getKingdom();
     }
+
+    public ArrayList<GoldCard> getCards() {
+        return cards;
+    }
 }

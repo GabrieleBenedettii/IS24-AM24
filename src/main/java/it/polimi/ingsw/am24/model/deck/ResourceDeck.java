@@ -36,4 +36,8 @@ public class ResourceDeck implements Deck{
     public Kingdom getFirstCardKingdom(){
         return cards.getFirst().getKingdom();
     }
+
+    public ArrayList<ResourceCard> getCards() {
+        return cards;
+    }
 }
