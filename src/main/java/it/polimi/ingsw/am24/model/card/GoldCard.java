@@ -23,21 +23,20 @@ public class GoldCard extends PlayableCard {
         this.requirements = requirements;
         this.requirementsMet = false;
     }
-    public void checkRequirementsMet(HashMap<Symbol, Integer> visibleSymbols){
-        boolean temp = true;
+    public void checkRequirementsMet(HashMap<Symbol, Integer> visibleSymbols, boolean placeble){
         for(Symbol s : requirements.keySet()){
             if(visibleSymbols.containsKey(s)) {
                 if(requirements.get(s) > (visibleSymbols.get(s))){
-                    temp = false;
+                    placeble = false;
                     break;
                 }
             }
             else{
-                temp = false;
+                placeble = false;
                 break;
             }
         }
-        if(temp){
+        if(placeble){
             requirementsMet = true;
         }
     }

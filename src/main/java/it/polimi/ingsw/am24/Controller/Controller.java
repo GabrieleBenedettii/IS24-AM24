@@ -50,7 +50,12 @@ public class Controller {
         }
         return res;
     }
-
+    //return the player with the given nickname
+    public Player getPlayer(String nickname){
+        synchronized (players) {
+            return players.get(nickname);
+        }
+    }
     //choice of the color by a player
     public boolean chooseColor(String nickname, String color, GameListener listener) {
         //find the player

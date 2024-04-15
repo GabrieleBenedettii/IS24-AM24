@@ -40,8 +40,16 @@ public class Player {
     }
 
     public boolean play(int cardIndex, boolean front, int x, int y) {
-        //todo check if x and y are in the possible placements
-        //todo check requirements
+        if(!possiblePlacements[x][y]){
+            return false;
+        }
+        if(playingHand.get(cardIndex).getType().equals("gold")){
+            boolean placeble = false;
+            playingHand.get(cardIndex).checkRequirementsMet(visibleSymbols, placeble);
+            if(!placeble){
+                return false;
+            }
+        }
         gameboard[x][y] = playingHand.get(cardIndex).getCardSide(front);
         playingHand.remove(cardIndex);
         //cover all the covered corners and remove covered symbols from visible symbols

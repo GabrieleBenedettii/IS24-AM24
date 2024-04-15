@@ -3,6 +3,8 @@ package it.polimi.ingsw.am24.model.card;
 import it.polimi.ingsw.am24.model.Kingdom;
 import it.polimi.ingsw.am24.model.Symbol;
 
+import java.util.HashMap;
+
 public abstract class PlayableCard extends GameCard{
     private final int points;
 
@@ -26,5 +28,7 @@ public abstract class PlayableCard extends GameCard{
             }
         }
         return this;
+    }
+    public void checkRequirementsMet(HashMap<Symbol, Integer> visibleSymbols, boolean placeble){
     }
 }

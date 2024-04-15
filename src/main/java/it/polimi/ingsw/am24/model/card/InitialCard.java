@@ -56,4 +56,7 @@ public class InitialCard extends GameCard{
     public GameCardView getBackView() {
         return new GameCardView("Initial Card - back", this.getImageId(), this.printBackCard());
     }
+    public int getId(){
+        return getImageId();
+    }
 }

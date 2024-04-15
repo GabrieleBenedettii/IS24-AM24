@@ -26,7 +26,7 @@ public class GoldCardTest {
         GoldCard goldCard = new GoldCard(1, new Symbol[]{Symbol.ANIMAL, Symbol.PLANT}, Kingdom.PLANT, 2, false, Symbol.PLANT, requirements);
 
         // Verifica che i requisiti siano soddisfatti
-        goldCard.checkRequirementsMet(visibleSymbols);
+        goldCard.checkRequirementsMet(visibleSymbols, false);
         assertTrue(goldCard.isRequirementsMet());
     }
 
@@ -45,7 +45,7 @@ public class GoldCardTest {
         GoldCard goldCard = new GoldCard(1, new Symbol[]{Symbol.ANIMAL, Symbol.PLANT}, Kingdom.PLANT, 5, false, Symbol.PLANT, requirements);
 
         // Verifica che i requisiti non siano soddisfatti
-        goldCard.checkRequirementsMet(visibleSymbols);
+        goldCard.checkRequirementsMet(visibleSymbols, false);
         assertFalse(goldCard.isRequirementsMet());
     }
     @Test
