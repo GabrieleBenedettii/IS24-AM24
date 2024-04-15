@@ -1,4 +1,4 @@
-package it.polimi.ingsw.am24.modelTest;
+package it.polimi.ingsw.am24.modelTest.cardTest;
 
 import it.polimi.ingsw.am24.model.card.CardCorner;
 import it.polimi.ingsw.am24.model.Symbol;
@@ -40,4 +40,5 @@ public class CardCornerTest {
         CardCorner hiddenCorner = new CardCorner(null, false);
         assertEquals('*', hiddenCorner.getCornerText());
     }
+
 }

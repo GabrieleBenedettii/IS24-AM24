@@ -1,4 +1,4 @@
-package it.polimi.ingsw.am24.modelTest;
+package it.polimi.ingsw.am24.modelTest.GoalTest;
 
 import it.polimi.ingsw.am24.model.goal.GoalCard;
 import it.polimi.ingsw.am24.model.goal.GoalDeck;

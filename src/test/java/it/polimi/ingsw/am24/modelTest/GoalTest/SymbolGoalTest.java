@@ -1,12 +1,12 @@
-package it.polimi.ingsw.am24.modelTest;
+package it.polimi.ingsw.am24.modelTest.GoalTest;
 
 import it.polimi.ingsw.am24.model.Kingdom;
 import it.polimi.ingsw.am24.model.Symbol;
-import it.polimi.ingsw.am24.model.card.GoldCard;
+import it.polimi.ingsw.am24.model.goal.ObliqueDisposition;
 import it.polimi.ingsw.am24.model.goal.SymbolGoal;
+import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -40,4 +40,5 @@ public class SymbolGoalTest {
         text="";
         assertEquals(text,symbolgoal.printCard());
     }
+
 }

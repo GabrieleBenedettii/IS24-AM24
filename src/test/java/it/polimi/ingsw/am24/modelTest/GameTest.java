@@ -1,15 +1,8 @@
 package it.polimi.ingsw.am24.modelTest;
 
-import it.polimi.ingsw.am24.model.Game;
-import it.polimi.ingsw.am24.model.Player;
-import it.polimi.ingsw.am24.model.PlayerColor;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-public class GameTest {
-    private Game game = new Game();
-
+class GameTest {
 //    @Test
 //    public void testStart() { //da rivedere in seguito alla divisione del goaldeck
 //        // Inizia il gioco

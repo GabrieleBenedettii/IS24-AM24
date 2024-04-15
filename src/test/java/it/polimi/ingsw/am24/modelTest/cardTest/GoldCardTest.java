@@ -1,4 +1,4 @@
-package it.polimi.ingsw.am24.modelTest;
+package it.polimi.ingsw.am24.modelTest.cardTest;
 
 import java.util.HashMap;
 import java.util.Map;

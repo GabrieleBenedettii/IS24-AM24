@@ -1,4 +1,4 @@
-package it.polimi.ingsw.am24.modelTest;
+package it.polimi.ingsw.am24.modelTest.cardTest;
 
 import it.polimi.ingsw.am24.model.card.InitialCard;
 import it.polimi.ingsw.am24.model.Kingdom;

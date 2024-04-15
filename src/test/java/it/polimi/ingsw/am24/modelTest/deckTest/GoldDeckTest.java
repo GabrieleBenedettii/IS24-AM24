@@ -1,4 +1,4 @@
-package it.polimi.ingsw.am24.modelTest;
+package it.polimi.ingsw.am24.modelTest.deckTest;
 
 import it.polimi.ingsw.am24.model.deck.GoldDeck;
 import it.polimi.ingsw.am24.model.card.GoldCard;
