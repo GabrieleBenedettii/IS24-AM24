@@ -22,6 +22,7 @@ public class Controller {
                                 // and start the rotation
     private boolean beginEndGame;
     private boolean isLastRound;
+    private String winner;
 
     public Controller(int numPlayers) {
         this.game = new Game();
@@ -181,10 +182,17 @@ public class Controller {
     }
 
     public void nextPlayer(){
+        int max = 0;
         int nextPlayerIndex = rotation.indexOf(currentPlayer) + 1;
         if(nextPlayerIndex == playerCount) {
             if(isLastRound) {
-                //todo get the winner and game over
+                for(String p : players.keySet()) {
+                    players.get(p).addPoints(players.get(p).getHiddenGoal().calculatePoints(players.get(p)));
+                    players.get(p).addPoints(game.getCommonGoal(0).calculatePoints(players.get(p)));
+                    players.get(p).addPoints(game.getCommonGoal(1).calculatePoints(players.get(p)));
+                    winner = calculateWinner();
+                }
+                notifyAllListenersEndGame();
             }
             else if(beginEndGame) {
                 isLastRound = true;
@@ -192,6 +200,19 @@ public class Controller {
             nextPlayerIndex -= playerCount;
         }
         currentPlayer = rotation.get(nextPlayerIndex);
+    }
+
+    public String calculateWinner() {
+        int max = 0;
+        String win = "";
+        for (String p : players.keySet()) {
+            if (players.get(p).getScore() > max) {
+                win = p;
+            } else if (players.get(p).getScore() == max) {
+                win = win + "," + p;
+            }
+        }
+        return win;
     }
 
     public int getNumOfActivePlayers() {
@@ -223,6 +244,15 @@ public class Controller {
                 for(String p : listeners.keySet()){
                     if(p != null && listeners.get(p) != null) listeners.get(p).update(m);
                 }
+            }
+        }
+    }
+
+    private void notifyAllListenersEndGame() {
+        synchronized (players) {
+            for (String p : listeners.keySet()) {
+                Message m = new EndGameMessage(winner);
+                if (p != null && listeners.get(p) != null) listeners.get(p).update(m);
             }
         }
     }

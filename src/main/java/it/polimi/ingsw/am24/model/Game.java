@@ -125,6 +125,10 @@ public class Game {
         return availableColors.contains(color);
     }
 
+    public GoalCard getCommonGoal(int index) {
+        return commonGoals.get(index);
+    }
+
     public PublicBoardView getPublicBoardView(){
         String topGold = Costants.getText(goldDeck.getFirstCardKingdom());
         String topRes = Costants.getText(resourceDeck.getFirstCardKingdom());

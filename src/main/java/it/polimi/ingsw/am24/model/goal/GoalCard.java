@@ -1,5 +1,6 @@
 package it.polimi.ingsw.am24.model.goal;
 
+import it.polimi.ingsw.am24.model.Player;
 import it.polimi.ingsw.am24.modelView.GameCardView;
 
 public abstract class GoalCard {
@@ -16,6 +17,9 @@ public abstract class GoalCard {
     }
     public Integer getPoints() {
         return points;
+    }
+    public int calculatePoints(Player p) {
+        return 0;
     }
 
     public String printCard() {

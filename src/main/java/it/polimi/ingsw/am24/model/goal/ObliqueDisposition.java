@@ -19,11 +19,16 @@ public class ObliqueDisposition extends GoalCard{
     }
 
     public int calculatePoints(GameCard[][] board){
+        boolean[][] alreadyUsed = new boolean[21][41];
         int points = 0;
         for(int i = 1-direction; i < board.length - (1+direction); i++){
             for(int j = 0; j < board[i].length - 2; j++){
-                if(kingdom.equals(board[i][j].getKingdom()) && kingdom.equals(board[i+direction][j+1].getKingdom()) && kingdom.equals(board[i+2*direction][j+2].getKingdom()))
+                if(!alreadyUsed[i][j] && kingdom.equals(board[i][j].getKingdom()) && kingdom.equals(board[i+direction][j+1].getKingdom()) && kingdom.equals(board[i+2*direction][j+2].getKingdom())) {
                     points += 2;
+                    alreadyUsed[i][j] = true;
+                    alreadyUsed[i+direction][j+1] = true;
+                    alreadyUsed[i+2*direction][j+2] = true;
+                }
             }
         }
         return points;
