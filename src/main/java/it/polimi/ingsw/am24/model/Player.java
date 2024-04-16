@@ -44,19 +44,21 @@ public class Player {
             return false;
         }
         if(playingHand.get(cardIndex).getType().equals("gold")){
-            boolean placeble = false;
-            playingHand.get(cardIndex).checkRequirementsMet(visibleSymbols, placeble);
-            if(!placeble){
+            boolean placeable = false;
+            playingHand.get(cardIndex).checkRequirementsMet(visibleSymbols, placeable);
+            if(!placeable){
                 return false;
             }
         }
         gameboard[x][y] = playingHand.get(cardIndex).getCardSide(front);
         playingHand.remove(cardIndex);
         //cover all the covered corners and remove covered symbols from visible symbols
+        int coveredCorners = 0;
         for(int k = 0; k < 4; k++){
             possiblePlacements[x + diagonals[k].getKey()][y + diagonals[k].getValue()] = gameboard[x + diagonals[k].getKey()][y + diagonals[k].getValue()] == null && !gameboard[x][y].getCornerByIndex(k).isHidden();
             if(gameboard[x + diagonals[k].getKey()][y + diagonals[k].getValue()] != null) {
                 gameboard[x + diagonals[k].getKey()][y + diagonals[k].getValue()].getCornerByIndex(3 - k).coverCorner();
+                coveredCorners++;
                 if(gameboard[x + diagonals[k].getKey()][y + diagonals[k].getValue()].getCornerByIndex(3 - k).getSymbol() != null)
                     visibleSymbols.merge(gameboard[x + diagonals[k].getKey()][y + diagonals[k].getValue()].getCornerByIndex(3 - k).getSymbol(),-1,Integer::sum);
             }
@@ -68,6 +70,21 @@ public class Player {
                 if(gameboard[x][y].getCornerByIndex(k).getSymbol() != null && !gameboard[x][y].getCornerByIndex(k).isHidden())
                     visibleSymbols.merge(gameboard[x][y].getCornerByIndex(k).getSymbol(),1,Integer::sum);
             }
+        }
+        //add points
+        if(playingHand.get(cardIndex).getType().equals("gold")) {
+            if(((GoldCard) playingHand.get(cardIndex)).getPointsForCoveringCorners()) {
+                addPoints(coveredCorners*playingHand.get(cardIndex).getPoints());
+            }
+            else if(((GoldCard) playingHand.get(cardIndex)).getCoveringSymbol() != null) {
+                addPoints(playingHand.get(cardIndex).getPoints()*visibleSymbols.get(((GoldCard) playingHand.get(cardIndex)).getCoveringSymbol()));
+            }
+            else {
+                addPoints(playingHand.get(cardIndex).getPoints());
+            }
+        }
+        else {
+            addPoints(playingHand.get(cardIndex).getPoints());
         }
         possiblePlacements[x][y] = false;
         return true;
