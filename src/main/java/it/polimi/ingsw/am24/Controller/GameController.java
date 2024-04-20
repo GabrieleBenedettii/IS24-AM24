@@ -5,12 +5,11 @@ import it.polimi.ingsw.am24.messages.*;
 import it.polimi.ingsw.am24.model.Game;
 import it.polimi.ingsw.am24.model.Player;
 import it.polimi.ingsw.am24.model.PlayerColor;
-import it.polimi.ingsw.am24.model.card.PlayableCard;
 import it.polimi.ingsw.am24.modelView.GameView;
 
 import java.util.*;
 
-public class Controller {
+public class GameController /*implements GameControllerInterface*/{
     private Game game;
     private ArrayList<String> rotation;
     private HashMap<String, Player> players;
@@ -24,7 +23,7 @@ public class Controller {
     private boolean isLastRound;
     private String winner;
 
-    public Controller(int numPlayers) {
+    public GameController(int numPlayers) {
         this.game = new Game();
         this.rotation = new ArrayList<>();
         this.players = new HashMap<>();

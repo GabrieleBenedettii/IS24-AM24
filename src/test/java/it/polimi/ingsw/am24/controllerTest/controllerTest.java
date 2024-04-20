@@ -1,17 +1,18 @@
 package it.polimi.ingsw.am24.controllerTest;
 
 import it.polimi.ingsw.am24.Controller.Controller;
+import it.polimi.ingsw.am24.Controller.GameController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.testng.AssertJUnit.*;
 
 public class controllerTest {
-    private Controller controller;
+    private GameController controller;
 
     @BeforeEach
     void setUp() {
-        controller = new Controller(4); // Numero di giocatori per il test
+        controller = new GameController(4); // Numero di giocatori per il test
     }
 
     @Test
@@ -101,5 +102,18 @@ public class controllerTest {
         controller.addNewPlayer("Player2", null);
         controller.addNewPlayer("Player3", null);
         assertEquals(3, controller.getNumOfActivePlayers()); // Controlla il numero corretto di giocatori attivi
+    }
+
+    @Test
+    void calculateWinner(){
+        controller.addNewPlayer("Player1", null);
+        controller.addNewPlayer("Player2", null);
+        controller.addNewPlayer("Player3", null);
+
+        controller.getPlayer("Player1").addPoints(5);
+        controller.getPlayer("Player2").addPoints(6);
+        controller.getPlayer("Player3").addPoints(7);
+
+        assertEquals("Player3",controller.calculateWinner());
     }
 }

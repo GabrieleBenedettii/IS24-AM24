@@ -1,6 +1,6 @@
 package it.polimi.ingsw.am24.network;
 
-import it.polimi.ingsw.am24.Controller.Controller;
+import it.polimi.ingsw.am24.Controller.GameController;
 import it.polimi.ingsw.am24.listeners.GameListener;
 import it.polimi.ingsw.am24.messages.*;
 import javafx.util.Pair;
@@ -11,14 +11,14 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class GameServer extends UnicastRemoteObject implements Server {
-    private final Controller controller;
+    private final GameController gameController;
     private ServerImplementation server;
     private final String[] playerNicknames;
     private final Queue<Pair<Message,Client>> receivedMessages = new LinkedList<>();
 
     public GameServer(int numPlayers) throws RemoteException {
         super();
-        this.controller = new Controller(numPlayers);
+        this.gameController = new GameController(numPlayers);
         this.playerNicknames = new String[numPlayers];
 
         //thread for reading messages from the queue
@@ -51,7 +51,7 @@ public class GameServer extends UnicastRemoteObject implements Server {
     protected boolean addPlayer(String nickname, GameListener listener) {
         boolean res;
         synchronized (playerNicknames) {
-            res = this.controller.addNewPlayer(nickname, listener);
+            res = this.gameController.addNewPlayer(nickname, listener);
             for(int i = 0; i < playerNicknames.length; i++){
                 if(playerNicknames[i] == null){
                     playerNicknames[i] = nickname;
@@ -65,7 +65,7 @@ public class GameServer extends UnicastRemoteObject implements Server {
     protected boolean chooseColor(String nickname, String color, GameListener listener) {
         boolean res;
         synchronized (playerNicknames) {
-            res = this.controller.chooseColor(nickname, color, listener);
+            res = this.gameController.chooseColor(nickname, color, listener);
             listener.update(new ChangeServerMessage(this));
         }
         return res;
@@ -74,7 +74,7 @@ public class GameServer extends UnicastRemoteObject implements Server {
     protected boolean chooseHiddenGoal(String nickname, int cardId, GameListener listener) {
         boolean res;
         synchronized (playerNicknames) {
-            res = this.controller.chooseGoal(nickname, cardId, listener);
+            res = this.gameController.chooseGoal(nickname, cardId, listener);
         }
         return res;
     }
@@ -82,7 +82,7 @@ public class GameServer extends UnicastRemoteObject implements Server {
     protected boolean chooseInitialCardSide(String nickname, boolean isFront, GameListener listener) {
         boolean res;
         synchronized (playerNicknames) {
-            res = this.controller.chooseInitialCardSide(nickname, isFront, listener);
+            res = this.gameController.chooseInitialCardSide(nickname, isFront, listener);
         }
         return res;
     }
@@ -90,7 +90,7 @@ public class GameServer extends UnicastRemoteObject implements Server {
     protected boolean playCard(String nickname, int cardIndex, boolean isFront, int x, int y, GameListener listener) {
         boolean res;
         synchronized (playerNicknames) {
-            res = this.controller.playCard(nickname, cardIndex, isFront, x, y, listener);
+            res = this.gameController.playCard(nickname, cardIndex, isFront, x, y, listener);
         }
         return res;
     }
@@ -98,7 +98,7 @@ public class GameServer extends UnicastRemoteObject implements Server {
     protected boolean drawCard(String nickname, int cardIndex, GameListener listener) {
         boolean res;
         synchronized (playerNicknames) {
-            res = this.controller.drawCard(nickname, cardIndex, listener);
+            res = this.gameController.drawCard(nickname, cardIndex, listener);
         }
         return res;
     }
@@ -163,7 +163,7 @@ public class GameServer extends UnicastRemoteObject implements Server {
     }
 
     protected int getNumOfActivePlayers() {
-        return this.controller.getNumOfActivePlayers();
+        return this.gameController.getNumOfActivePlayers();
     }
 
     //check if a nickname is in this lobby
