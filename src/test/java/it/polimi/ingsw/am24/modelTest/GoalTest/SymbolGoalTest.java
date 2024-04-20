@@ -12,33 +12,44 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SymbolGoalTest {
 
+    @Test
     public void testCalculatePoints()
     {
-        HashMap<Symbol, Integer> visibleSymbols = new HashMap<>();
-        visibleSymbols.put(Symbol.ANIMAL, 3);
-        visibleSymbols.put(Symbol.FUNGI, 3);
-        int points = 0;
+        HashMap<Symbol, Integer> visibleSymbolsK = new HashMap<>();
+        HashMap<Symbol, Integer> visibleSymbolsG = new HashMap<>();
+        HashMap<Symbol, Integer> visibleSymbolsT = new HashMap<>();
 
-        HashMap<Symbol, Integer> symbol  = new HashMap<>();
-        symbol.put(Symbol.ANIMAL, 2);
+        visibleSymbolsK.put(Symbol.ANIMAL, 3);
+        visibleSymbolsG.put(Symbol.QUILL, 2);
+        visibleSymbolsT.put(Symbol.INK, 1);
+        visibleSymbolsT.put(Symbol.MANUSCRIPT, 1);
+        visibleSymbolsT.put(Symbol.QUILL, 1);
 
-        SymbolGoal symbolgoal =new SymbolGoal(1,2,symbol);
+        int pointsK;
+        int pointsG;
+        int pointsT;
 
-        points=symbolgoal.calculatePoints(visibleSymbols);
-        assert(points == 2);
+        HashMap<Symbol, Integer> symbolK  = new HashMap<>();
+        HashMap<Symbol, Integer> symbolG  = new HashMap<>();
+        HashMap<Symbol, Integer> symbolT  = new HashMap<>();
+
+        symbolK.put(Symbol.ANIMAL, 3);
+        symbolG.put(Symbol.QUILL, 2);
+        symbolT.put(Symbol.INK, 1);
+        symbolT.put(Symbol.MANUSCRIPT, 1);
+        symbolT.put(Symbol.QUILL, 1);
+
+
+        SymbolGoal symbolgoalK =new SymbolGoal(1,2,symbolK);
+        SymbolGoal symbolgoalG =new SymbolGoal(1,2,symbolG);
+        SymbolGoal symbolgoalT =new SymbolGoal(1,2,symbolT);
+
+        pointsK=symbolgoalK.calculatePoints(visibleSymbolsK);
+        pointsG=symbolgoalG.calculatePoints(visibleSymbolsG);
+        pointsT=symbolgoalT.calculatePoints(visibleSymbolsT);
+
+        assert(pointsK == 2);
+        assert(pointsG == 2);
+        assert(pointsT == 3);
     }
-
-    public void testPrintCard() {
-        // Definisci i requisiti della carta
-        HashMap<Symbol, Integer> symbol  = new HashMap<>();
-        symbol.put(Symbol.ANIMAL, 2);
-
-        // Crea una nuova carta d'oro
-        SymbolGoal symbolgoal =new SymbolGoal(1,2,symbol);
-
-        String text = new String();
-        text="";
-        assertEquals(text,symbolgoal.printCard());
-    }
-
 }
