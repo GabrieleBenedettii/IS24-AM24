@@ -128,6 +128,7 @@ public class CLI extends UserInterface {
                     }
                 }
                 if(isGameEnded) break;
+
                 if(!haveAlreadyPlayed) notifyListeners(doTurn());
                 else notifyListeners(doDrawn());
                 //wait for the server response
@@ -244,7 +245,7 @@ public class CLI extends UserInterface {
                 printVisibleSymbols();
             }
             else if (command[0].equals("help")) {
-                //todo
+                printHelp();
             }
         }while(true);
     }
@@ -285,13 +286,13 @@ public class CLI extends UserInterface {
         }
     }
 
-    private Message doDrawn () {
+    private Message doDrawn() {
         printTable(true);
 
         do {
             out.print("\nCommand -> ");
             String[] command = in.nextLine().split(" ");
-            if(command[0].equals("drawcard")) {
+            if(command[0].equals("draw")) {
                 try {
                     //todo check card (0-5)
                     int card = Integer.parseInt(command[1]);
@@ -331,6 +332,14 @@ public class CLI extends UserInterface {
         for(String s : gameView.getPlayerView().getVisibleSymbols().keySet()) {
             out.println(s + " -> " + gameView.getPlayerView().getVisibleSymbols().get(s));
         }
+    }
+
+    private void printHelp() {
+        out.println("Play a card -> play <card> <\"front\"/\"back\"> <x> <y>");
+        out.println("Show table -> show");
+        out.println("Show own visible symbols -> visible");
+        out.println("Draw a card (after play a card) -> draw <option>");
+        out.println("Help -> help");
     }
 
     private void waitForResponse() {
