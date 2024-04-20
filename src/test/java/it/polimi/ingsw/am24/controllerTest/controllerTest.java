@@ -1,6 +1,5 @@
 package it.polimi.ingsw.am24.controllerTest;
 
-import it.polimi.ingsw.am24.Controller.Controller;
 import it.polimi.ingsw.am24.Controller.GameController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
