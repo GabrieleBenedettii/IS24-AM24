@@ -7,9 +7,10 @@ import it.polimi.ingsw.am24.model.Player;
 import it.polimi.ingsw.am24.model.PlayerColor;
 import it.polimi.ingsw.am24.modelView.GameView;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class GameController /*implements GameControllerInterface*/{
+public class GameController implements Serializable, Runnable, GameControllerInterface{
     private Game game;
     private ArrayList<String> rotation;
     private HashMap<String, Player> players;
@@ -33,6 +34,7 @@ public class GameController /*implements GameControllerInterface*/{
         beginEndGame = false;
         isLastRound = false;
         started = false;
+        new Thread(this).start();
     }
 
     //add new player and set the game started if the player added is the last
@@ -50,10 +52,23 @@ public class GameController /*implements GameControllerInterface*/{
         }
         return res;
     }
+
+
+
     //return the player with the given nickname
     public Player getPlayer(String nickname){
         synchronized (players) {
             return players.get(nickname);
+        }
+    }
+
+    public HashMap<String, Player> getPlayers() {
+        return players;
+    }
+
+    public void removePlayer(String nickname) {
+        synchronized (players){
+            players.remove(getPlayer(nickname));
         }
     }
     //choice of the color by a player
@@ -201,6 +216,10 @@ public class GameController /*implements GameControllerInterface*/{
         currentPlayer = rotation.get(nextPlayerIndex);
     }
 
+    public boolean isMyTurn(String nickname){
+        return currentPlayer.equals(getPlayer(nickname));
+    }
+
     public String calculateWinner() {
         int max = 0;
         String win = "";
@@ -216,6 +235,10 @@ public class GameController /*implements GameControllerInterface*/{
 
     public int getNumOfActivePlayers() {
         return players.size();
+    }
+
+    public void disconnectPlater(){
+        //Todo ?
     }
 
     //if the game is started, it sends the list of players in the lobby, otherwise it sends the secret cards
@@ -260,6 +283,11 @@ public class GameController /*implements GameControllerInterface*/{
     private void notifyListener(GameListener listener) {
         Message m = new AvailableColorsMessage(game.getAvailableColors());
         listener.update(m);
+    }
+
+    @Override
+    public void run() {
+
     }
 }
 
