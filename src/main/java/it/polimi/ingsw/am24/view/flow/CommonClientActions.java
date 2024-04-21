@@ -1,21 +1,18 @@
 package it.polimi.ingsw.am24.view.flow;
 
-import it.polimi.ingsw.am24.messages.Message;
-import it.polimi.ingsw.am24.model.card.PlayableCard;
-
 import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
 public interface CommonClientActions {
-    void createGame(String nickname) throws IOException, NotBoundException;
+    void createGame(String nickname, int numPlayers) throws IOException, NotBoundException;
     void joinFirstGameAvailable(String nickname) throws IOException, NotBoundException;
-    void joinGame(String nickname, int gameId) throws IOException, NotBoundException;
-    void reconnectGame(String nickname, int gameId) throws IOException, NotBoundException;
-    void leaveGame(String nickname, int gameId) throws IOException, NotBoundException;
-    boolean isMyTurn() throws RemoteException;
-    void drawCardfromPublicBoard(PlayableCard card);
-    void positionCard(int row, int column);
-    void sendMessage(Message msg) throws RemoteException;
-    void heartbeat() throws RemoteException;
+    void chooseColor(String nickname, String color) throws IOException;
+    void chooseHiddenGoal(String nickname, int choice) throws IOException;
+    void chooseInitialCardSide(String nickname, int choice) throws IOException;
+    void drawCard(String nickname, int choice) throws IOException;
+    void playCard(String nickname, int cardIndex, boolean front, int x, int y) throws IOException;
+    //void sendMessage(ChatMessage msg) throws RemoteException;
+    //void leaveGame(String nickname, int gameId) throws IOException, NotBoundException;
+    //boolean isMyTurn() throws RemoteException;
 }

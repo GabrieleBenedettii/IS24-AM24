@@ -1,15 +1,15 @@
 package it.polimi.ingsw.am24.messages;
 
-import it.polimi.ingsw.am24.network.Server;
+import it.polimi.ingsw.am24.network.rmi.LobbyControllerInterface;
 
 public class ChangeServerMessage extends Message {
-    private Server server;
+    private LobbyControllerInterface server;
 
-    public ChangeServerMessage(Server server) {
+    public ChangeServerMessage(LobbyControllerInterface server) {
         this.server = server;
     }
 
-    public Server getServer() {
+    public LobbyControllerInterface getServer() {
         return server;
     }
 }

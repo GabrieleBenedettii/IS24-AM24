@@ -2,6 +2,8 @@ package it.polimi.ingsw.am24.Controller;
 
 import it.polimi.ingsw.am24.listeners.GameListener;
 import it.polimi.ingsw.am24.messages.InvalidNumOfPlayersMessage;
+import it.polimi.ingsw.am24.network.rmi.GameControllerInterface;
+import it.polimi.ingsw.am24.network.rmi.LobbyControllerInterface;
 
 import java.io.Serializable;
 import java.rmi.RemoteException;
@@ -11,10 +13,18 @@ import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class LobbyController implements Serializable, LobbyControllerInterface {
-    private Queue<GameController> games;     //Lista delle lobby attive
+    private Queue<GameController> games; //active lobbies
+    private static LobbyController instance = null;
 
-    public LobbyController(Queue<GameController> games) {
+    public LobbyController() {
         this.games = new LinkedBlockingQueue<GameController>();
+    }
+
+    public synchronized static LobbyController getInstance() {
+        if (instance == null) {
+            instance = new LobbyController();
+        }
+        return instance;
     }
 
     //Includes: createGame and joinFirstAvaiableLobby
@@ -26,7 +36,7 @@ public class LobbyController implements Serializable, LobbyControllerInterface {
 
         //todo set min and max num of player on a setting file
         if(numOfPlayers < 1 || numOfPlayers>4) {
-            listener.update(new InvalidNumOfPlayersMessage());
+            listener.invalidNumPlayers();
             return null;
         }
         //todo create message for null nickname
@@ -48,9 +58,10 @@ public class LobbyController implements Serializable, LobbyControllerInterface {
                 }
                 //otherwise add the player in an existing lobby
                 else {
+                    //todo check if the lobby is full
                     if(games.peek() != null) {
                         GameController lobby = games.peek();
-                        if(lobby.addNewPlayer(nickname, listener)) {
+                        if(!lobby.isFull() && lobby.addNewPlayer(nickname, listener)) {
                             while (games.peek() != null && games.peek().getNumOfActivePlayers() == 0)
                                 games.poll();
                             System.out.println("Player added to an existing lobby");
@@ -64,6 +75,7 @@ public class LobbyController implements Serializable, LobbyControllerInterface {
                 }
             }
         }
+        return null;
     }
 
 /*

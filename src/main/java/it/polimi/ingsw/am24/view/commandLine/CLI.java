@@ -1,32 +1,30 @@
 package it.polimi.ingsw.am24.view.commandLine;
 
 import it.polimi.ingsw.am24.costants.Costants;
-import it.polimi.ingsw.am24.messages.*;
 import it.polimi.ingsw.am24.modelView.GameCardView;
 import it.polimi.ingsw.am24.modelView.GameView;
-import it.polimi.ingsw.am24.modelView.PublicBoardView;
 import it.polimi.ingsw.am24.view.flow.UI;
-import it.polimi.ingsw.am24.view.flow.UserInterface;
-import javafx.scene.Cursor;
 
 import java.io.PrintStream;
 import java.nio.charset.Charset;
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
 import java.util.*;
 
 public class CLI extends UI {
     private PrintStream out;
-    //private Queue<String> message = new LinkedList<String>();
     private Queue<String> message;
 
 
     public CLI() {
-        message = new LinkedList<String>();
+        message = new LinkedList<>();
+        out = new PrintStream(System.out, true);
+    }
+
+    public void show_insert_nickname() {
+        out.print("\nInsert nickname -> ");
     }
 
     @Override
-    protected void show_gameView(GameView gameView) {
+    public void show_gameView(GameView gameView) {
         out.println("current points: " + gameView.getPlayerView().getPlayerScore());
         out.println("\n" + gameView.getCurrent() + "'s table");
         out.print("    ");
@@ -64,7 +62,7 @@ public class CLI extends UI {
     }
 
     @Override
-    protected void show_table(GameView gameView,boolean forChoice) {
+    public void show_table(GameView gameView,boolean forChoice) {
         int i = 0;
         for(GameCardView gcv : gameView.getCommon().getResourceCards()) {
             out.println(forChoice ? i + " -> " + gcv.getCardDescription() : gcv.getCardDescription());
@@ -88,14 +86,14 @@ public class CLI extends UI {
     }
 
     @Override
-    protected void show_visibleSymbols(GameView gameView) {
+    public void show_visibleSymbols(GameView gameView) {
         for(String s : gameView.getPlayerView().getVisibleSymbols().keySet()) {
             out.println(s + " -> " + gameView.getPlayerView().getVisibleSymbols().get(s));
         }
     }
 
     @Override
-    protected void show_menu() {
+    public void show_menu() {
         out.println("Play a card -> play <card> <\"front\"/\"back\"> <x> <y>");
         out.println("Show table -> show");
         out.println("Show own visible symbols -> visible");
@@ -104,35 +102,35 @@ public class CLI extends UI {
     }
 
     @Override
-    protected void show_lobby(){
+    public void show_lobby(){
         out.println("1 - create a new lobby");
         out.println("2 - join an existing lobby");
         out.print("Do you want to: ");
     }
 
     @Override
-    protected void show_available_colors(ArrayList<String> colors) {
+    public void show_available_colors(ArrayList<String> colors) {
         out.print("Available colors: ");
         for(String s: colors) out.print(s + " ");
     }
 
     @Override
-    protected void show_hidden_goal(GameCardView[] views) {
-        for(int i = 0; i < views.length; i++) {
-            out.println("\n" + i + " - " + views[i].getCardDescription());
+    public void show_hidden_goal(ArrayList<GameCardView> views) {
+        for(int i = 0; i < views.size(); i++) {
+            out.println("\n" + i + " - " + views.get(i).getCardDescription());
         }
         out.print("Choose your secret goal: ");
 
     }
     @Override
-    protected void show_inital_side(GameCardView[] views) {
-        for(int i = 0; i < views.length; i++) {
-            out.println("\n" + i + " - " + views[i].getCardDescription() + "\n");
+    public void show_initial_side(ArrayList<GameCardView> views) {
+        for(int i = 0; i < views.size(); i++) {
+            out.println("\n" + i + " - " + views.get(i).getCardDescription() + "\n");
         }
         out.print("Choose your initial card side: ");
     }
 
-    protected void show_current_player(String nickname)
+    public void show_current_player(String nickname)
     {
         out.print("please wait, "+ nickname +" is playing.");
     }
@@ -152,7 +150,7 @@ public class CLI extends UI {
     }
 
     @Override
-    protected void show_winner_and_rank(boolean winner, HashMap<String, Integer> rank) {
+    public void show_winner_and_rank(boolean winner, HashMap<String, Integer> rank) {
         out.println(winner ? "you Win" : "Game Over");
         for(String player : rank.keySet()){
             out.println(rank.get(player)+ " : " +player);
@@ -160,30 +158,30 @@ public class CLI extends UI {
     }
 
     @Override
-    protected void show_wrong_card_play() {
+    public void show_wrong_card_play() {
         out.println("invalid card placement");
     }
 
     @Override
-    protected void show_joined_players(ArrayList<String> players) {
+    public void show_joined_players(ArrayList<String> players) {
         players.forEach((p) -> out.println(p));
     }
 
     @Override
-    protected void show_message() {
+    public void show_message() {
         for (String msg : message){
             out.println(msg);
         }
     }
 
     @Override
-    protected void add_message(String sender, String text, String time) {
+    public void add_message(String sender, String text, String time) {
         String msg = "["+time+"] "+sender+" : "+text;
         message.add(msg);
     }
 
     @Override
-    protected void show_logo() {
+    public void show_logo() {
         clearScreen();
         new PrintStream(System.out, true, System.console() != null
                 ? System.console().charset()
