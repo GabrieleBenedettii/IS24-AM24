@@ -3,7 +3,7 @@ package it.polimi.ingsw.am24.network;
 import it.polimi.ingsw.am24.messages.ChangeServerMessage;
 import it.polimi.ingsw.am24.view.View;
 import it.polimi.ingsw.am24.messages.Message;
-import it.polimi.ingsw.am24.view.CLI;
+import it.polimi.ingsw.am24.view.commandLine.CLI;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;

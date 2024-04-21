@@ -1,10 +1,13 @@
-package it.polimi.ingsw.am24.view;
+package it.polimi.ingsw.am24.view.flow;
 
 import it.polimi.ingsw.am24.messages.*;
 import it.polimi.ingsw.am24.listeners.ViewListener;
+import it.polimi.ingsw.am24.modelView.GameView;
+import it.polimi.ingsw.am24.modelView.PublicBoardView;
 import it.polimi.ingsw.am24.network.Client;
 import it.polimi.ingsw.am24.network.ClientImplementation;
 import it.polimi.ingsw.am24.network.Server;
+import it.polimi.ingsw.am24.view.View;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -77,4 +80,8 @@ public abstract class UserInterface implements Runnable, View {
     protected void doChooseInitialCardSide(String nickname, int isFront) {
         notifyListeners(new InitialCardSideMessage(nickname, isFront == 0 ? true : false));
     }
+    protected abstract void showLogo();
+    protected abstract void showNewGameMessage(String firstPlayer);
+    protected abstract void showJoinFirstAvailableGameMessage(String player);
+    protected abstract void show_noConnectionError();
 }

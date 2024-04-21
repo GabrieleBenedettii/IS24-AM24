@@ -237,7 +237,7 @@ public class GameController implements Serializable, Runnable, GameControllerInt
         return players.size();
     }
 
-    public void disconnectPlater(){
+    public void disconnectPlayer(){
         //Todo ?
     }
 

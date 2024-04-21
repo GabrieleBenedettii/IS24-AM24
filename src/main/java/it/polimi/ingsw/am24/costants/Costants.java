@@ -40,23 +40,15 @@ public class Costants {
     public static final String BACKGROUND_BLACK = "\033[40m";
     public static final String HIDDEN = "HIDDEN";
     public static final String EMPTY = "EMPTY";
-    public static final String CODEXNATURALIS =
-                     "███████  ██████   ████     ███████ ███    ███\n"
-                    +"██       █    █   █  ██    █         ██  ██\n"
-                    +"██       █    █   █   ██   ████        ██\n"
-                    +"██       █    █   █  ██    █         ██  ██\n"
-                    +"███████  ██████   ████     ███████ ███    ███\n"
-                    +"\n"
-                    +"██   █  ████  ████████ ██   ██  █████    ████  ██     ██ ███████\n"
-                    +"█ █  █ ██  ██    ██    ██   ██  █   ██  ██  ██ ██     ██ ██\n"
-                    +"█  █ █ ██████    ██    ██   ██  ████    ██████ ██     ██ ███████\n"
-                    +"█   ██ ██  ██    ██    ██   ██  █  ██   ██  ██ ██     ██      ██\n"
-                    +"█    █ ██  ██    ██     █████   █   ██  ██  ██ ██████ ██ ███████\n";
-    public static final String AUTORI = "Benedetti Gabriele, Buccheri Giuseppe, Belfiore Mattia, Canepari Michele";
+    public static final String AUTORI = "Belfiore Mattia, Benedetti Gabriele, Buccheri Giuseppe, Canepari Michele";
     public static final String REGOLE = "Per il regolamento completo andare su: \n https://www.craniocreations.it/prodotto/codex-naturalis";
     public static int port;
     public static String ipAddress;
     private static final HashMap<Character, String> firstLetterMap = new HashMap<Character, String>();
+    public final static Object gameIdTime = "Created";
+    public final static Object gameIdData = "GameId";
+    public final static int offSet = 40500;
+
     static {
         firstLetterMap.put('F', TEXT_F);
         firstLetterMap.put('A', TEXT_A);

@@ -1,12 +1,15 @@
-package it.polimi.ingsw.am24.view;
+package it.polimi.ingsw.am24.view.commandLine;
 
 import it.polimi.ingsw.am24.costants.Costants;
 import it.polimi.ingsw.am24.messages.*;
 import it.polimi.ingsw.am24.modelView.GameCardView;
 import it.polimi.ingsw.am24.modelView.GameView;
-import it.polimi.ingsw.am24.modelView.PlayerView;
+import it.polimi.ingsw.am24.modelView.PublicBoardView;
+import it.polimi.ingsw.am24.view.flow.UserInterface;
+import javafx.scene.Cursor;
 
 import java.io.PrintStream;
+import java.nio.charset.Charset;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.LinkedList;
@@ -63,6 +66,7 @@ public class CLI extends UserInterface {
 
     @Override
     public void run() {
+        showLogo();
         while(!setupConnection());
 
         while(true) {
@@ -251,6 +255,7 @@ public class CLI extends UserInterface {
     }
 
     private void printView() {
+        out.println("current points: " + gameView.getPlayerView().getPlayerScore());
         out.println("\n" + nickname + "'s table");
         out.print("    ");
         for (int i = 0; i < gameView.getPlayerView().getBoard()[0].length; i++) {
@@ -368,9 +373,11 @@ public class CLI extends UserInterface {
                 numPlayers = in.nextInt();
                 in.nextLine();
                 doConnect(nickname, numPlayers);
+                showNewGameMessage(nickname);
                 break;
             case 2:
                 doConnect(this.nickname, 1);
+                showJoinFirstAvailableGameMessage(nickname);
                 break;
         }
         waitForResponse();
@@ -439,4 +446,83 @@ public class CLI extends UserInterface {
 
         }
     }
+
+    @Override
+    protected void showLogo() {
+        clearScreen();
+        new PrintStream(System.out, true, System.console() != null
+                ? System.console().charset()
+                : Charset.defaultCharset()
+        ).println("""
+                                                                                                           \s
+                                                                                                           \s
+                  ,----..                                                                                  \s
+                 /   /   \\                                   ,--,                                          \s
+                |   :     :  __  ,-.                 ,---, ,--.'|    ,---.                                 \s
+                .   |  ;. /,' ,'/ /|             ,-+-. /  ||  |,    '   ,'\\                                \s
+                .   ; /--` '  | |' | ,--.--.    ,--.'|'   |`--'_   /   /   |                               \s
+                ;   | ;    |  |   ,'/       \\  |   |  ,"' |,' ,'| .   ; ,. :                               \s
+                |   : |    '  :  / .--.  .-. | |   | /  | |'  | | '   | |: :                               \s
+                .   | '___ |  | '   \\__\\/: . . |   | |  | ||  | : '   | .; :                               \s
+                '   ; : .'|;  : |   ," .--.; | |   | |  |/ '  : |_|   :    |                               \s
+                '   | '/  :|  , ;  /  /  ,.  | |   | |--'  |  | '.'\\   \\  /                                \s
+                |   :    /  ---'  ;  :   .'   \\|   |/      ;  :    ;`----'                                 \s
+                 \\   \\ .'         |  ,     .-./'---'       |  ,   /                                        \s
+                  `---`            `--`---'                 ---`-'                                         \s
+                  ,----..                                   ___                                            \s
+                 /   /   \\                                ,--.'|_    ,--,                                  \s
+                |   :     :  __  ,-.                      |  | :,' ,--.'|    ,---.        ,---,            \s
+                .   |  ;. /,' ,'/ /|                      :  : ' : |  |,    '   ,'\\   ,-+-. /  | .--.--.   \s
+                .   ; /--` '  | |' | ,---.     ,--.--.  .;__,'  /  `--'_   /   /   | ,--.'|'   |/  /    '  \s
+                ;   | ;    |  |   ,'/     \\   /       \\ |  |   |   ,' ,'| .   ; ,. :|   |  ,"' |  :  /`./  \s
+                |   : |    '  :  / /    /  | .--.  .-. |:__,'| :   '  | | '   | |: :|   | /  | |  :  ;_    \s
+                .   | '___ |  | ' .    ' / |  \\__\\/: . .  '  : |__ |  | : '   | .; :|   | |  | |\\  \\    `. \s
+                '   ; : .'|;  : | '   ;   /|  ," .--.; |  |  | '.'|'  : |_|   :    ||   | |  |/  `----.   \\\s
+                '   | '/  :|  , ; '   |  / | /  /  ,.  |  ;  :    ;|  | '.'\\   \\  / |   | |--'  /  /`--'  /\s
+                |   :    /  ---'  |   :    |;  :   .'   \\ |  ,   / ;  :    ;`----'  |   |/     '--'.     / \s
+                 \\   \\ .'          \\   \\  / |  ,     .-./  ---`-'  |  ,   /         '---'        `--'---'  \s
+                  `---`             `----'   `--`---'               ---`-'                                 \s
+                """);
+        out.println(Costants.AUTORI);
+        new PrintStream(System.out, true, System.console() != null
+                ? System.console().charset()
+                : Charset.defaultCharset()
+        ).println("""
+                ████████╗███████╗██████╗░░███████╗██╗░░░██╗
+                ██╔═════╝██╔══██║██╔══=██║██╔════╝╚██╗░██╔╝
+                ██║░░░░░░██║░░██║██║░░░██║█████╗░░░╚████║░░
+                ██║░░░░░░██║░░██║██║░░░██║██╔══╝░░░██║░██╚╗
+                ████████╗███████║██████╔=╝███████╗██╔╝░░██║
+                ╚═══════╝╚══════╝╚═════╝░░╚══════╝╚═╝░░░╚═╝
+                ███╗░░██╗ █████╗ ████████╗██╗░░░░██╗██████╗░██████╗░██╗░░░░░██╗░██████╗
+                ████╗░██║██╔══██╗╚══██╔══╝██║░░░░██║██╔══██╗██╔══██╗██║░░░░░██║██╔════╝
+                ██╔██╗██║███████║░░░██║░░░██║░░░░██║██████╔╝███████║██║░░░░░██║╚█████╗░
+                ██║╚████║██╔══██║░░░██║░░░██║░░░░██║██╔══██╗██╔══██║██║░░░░░██║░╚═══██╗
+                ██║░╚███║██║░░██║░░░██║░░░█████████║██║░░██║██║░░██║███████╗██║██████╔╝
+                ╚═╝░░╚══╝╚═╝░░╚═╝░░░╚═╝░░░╚═══════=╝╚═╝░░╚═╝╚═╝░░╚═╝╚══════╝╚═╝╚═════╝░
+                """);
+        out.println(Costants.REGOLE);
+    }
+
+    @Override
+    protected void showNewGameMessage(String firstPlayer) {
+
+    }
+
+    @Override
+    protected void showJoinFirstAvailableGameMessage(String player) {
+
+    }
+    @Override
+    protected void show_noConnectionError() {
+        this.clearScreen();
+        System.out.println("CONNECTION TO SERVER LOST!");
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        System.exit(-1);
+    }
+
 }
