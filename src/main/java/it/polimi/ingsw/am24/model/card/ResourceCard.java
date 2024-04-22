@@ -12,11 +12,11 @@ public class ResourceCard extends PlayableCard{
     public String printCard() {
         StringBuilder text = new StringBuilder("Kingdom: ");
         text.append(Costants.getText(this.getKingdom()));
-        text.append("\nCorners: ");
+        text.append("\n\tCorners: ");
         for (CardCorner c: this.getCorners()) {
             text.append(c.isHidden() ? Costants.HIDDEN + " " : (c.getSymbol()!=null ? Costants.getText(c.getSymbol()) : Costants.EMPTY) + " ");
         }
-        text.append("\nPoints: ");
+        text.append("\n\tPoints: ");
         text.append(this.getPoints());
         return text.toString();
     }

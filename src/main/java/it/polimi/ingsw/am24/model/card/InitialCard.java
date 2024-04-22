@@ -26,11 +26,11 @@ public class InitialCard extends GameCard{
 
     @Override
     public String printCard() {
-        StringBuilder print = new StringBuilder("FRONT\nKingdoms: ");
+        StringBuilder print = new StringBuilder("FRONT\n\tKingdoms: ");
         for (Kingdom k: kingdoms) {
             print.append(" ").append(Costants.getText(k)).append(" ");
         }
-        print.append("\nCorners: ");
+        print.append("\n\tCorners: ");
         for (CardCorner c: this.getCorners()) {
             print.append(c.isHidden() ? Costants.HIDDEN + " " : (c.getSymbol()!=null ? Costants.getText(c.getSymbol()) : Costants.EMPTY) + " ");
         }
@@ -38,11 +38,11 @@ public class InitialCard extends GameCard{
     }
 
     public String printBackCard() {
-        StringBuilder print = new StringBuilder("BACK\nKingdoms:");
+        StringBuilder print = new StringBuilder("BACK\n\tKingdoms:");
         for (Kingdom k: backCard.kingdoms) {
             print.append(" ").append(Costants.getText(k)).append(" ");
         }
-        print.append("\nCorners: ");
+        print.append("\n\tCorners: ");
         for (CardCorner c: backCard.getCorners()) {
             print.append(c.isHidden() ? Costants.HIDDEN + " " : (c.getSymbol()!=null ? Costants.getText(c.getSymbol()) : Costants.EMPTY) + " ");
         }

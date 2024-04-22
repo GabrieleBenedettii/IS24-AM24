@@ -26,7 +26,7 @@ public class SymbolGoal extends GoalCard{
     public String printCard() {
         StringBuilder text = new StringBuilder("Points: " + this.getPoints());
         for (Symbol s : symbols.keySet())
-            text.append("\n   ").append(Costants.getText(s)).append(" -> ").append(symbols.get(s));
+            text.append("\n\t").append(Costants.getText(s)).append(" -> ").append(symbols.get(s));
         return text.toString();
     }
 

@@ -37,7 +37,7 @@ public class ObliqueDisposition extends GoalCard{
 
     public String printCard() {
         String text = "Points: " + this.getPoints();
-        text += "\n\tDisposition: 3 oblique" + Costants.getText(kingdom) + " from " + (direction == 0 ? "bottom-right to top-left" : "bottom-left to top-right");
+        text += "\n\tDisposition: 3 oblique " + Costants.getText(kingdom) + " from " + (direction == 0 ? "bottom-right to top-left" : "bottom-left to top-right");
         return text;
     }
 

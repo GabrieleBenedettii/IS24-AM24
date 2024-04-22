@@ -58,24 +58,25 @@ public class CLI extends UI {
         }
 
         for(int i = 0; i <  gameView.getPlayerView().getPlayerHand().size(); i++) {
-            out.print("\n" + i + "- " + gameView.getPlayerView().getPlayerHand().get(i).getCardDescription());
+            out.print("\n" + i + " - " + gameView.getPlayerView().getPlayerHand().get(i).getCardDescription());
         }
+        out.print("\nCommand -> ");
     }
 
     @Override
     public void show_table(GameView gameView,boolean forChoice) {
         int i = 0;
         for(GameCardView gcv : gameView.getCommon().getResourceCards()) {
-            out.println(forChoice ? i + " -> " + gcv.getCardDescription() : gcv.getCardDescription());
+            out.println(forChoice ? i + " - " + gcv.getCardDescription() : gcv.getCardDescription());
             i++;
         }
         for(GameCardView gcv : gameView.getCommon().getGoldCards()) {
-            out.println(forChoice ? i + " -> " + gcv.getCardDescription() : gcv.getCardDescription());
+            out.println(forChoice ? i + " - " + gcv.getCardDescription() : gcv.getCardDescription());
             i++;
         }
         if (forChoice) {
-            out.println(i + " -> Pick a card from RESOURCE CARD DECK, first card color: " + gameView.getCommon().getResourceDeck());
-            out.println((i + 1) + " -> Pick a card from GOLD CARD DECK, first card color: " + gameView.getCommon().getGoldDeck());
+            out.println(i + " - Pick a card from RESOURCE CARD DECK, first card color: " + gameView.getCommon().getResourceDeck());
+            out.println((i + 1) + " - Pick a card from GOLD CARD DECK, first card color: " + gameView.getCommon().getGoldDeck());
         }
         else {
             out.println("RESOURCE CARD DECK, first card color: " + gameView.getCommon().getResourceDeck());
@@ -84,6 +85,7 @@ public class CLI extends UI {
                 out.println(gcv.getCardDescription());
             }
         }
+        out.print("Command -> ");
     }
 
     @Override
@@ -127,6 +129,7 @@ public class CLI extends UI {
             if (s.equals("YELLOW")) out.print(Costants.TEXT_YELLOW + s + " " + Costants.TEXT_RESET);
             if (s.equals("GREEN")) out.print(Costants.TEXT_GREEN + s + " " + Costants.TEXT_RESET);
         }
+        out.print("\nChoose your color -> ");
     }
 
     @Override
@@ -140,7 +143,7 @@ public class CLI extends UI {
     @Override
     public void show_initial_side(ArrayList<GameCardView> views) {
         for(int i = 0; i < views.size(); i++) {
-            out.println("\n" + i + " - " + views.get(i).getCardDescription() + "\n");
+            out.println("\n" + i + " - " + views.get(i).getCardDescription());
         }
         out.print("Choose your initial card side: ");
     }
