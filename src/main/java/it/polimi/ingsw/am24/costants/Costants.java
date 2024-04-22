@@ -98,4 +98,12 @@ public class Costants {
     public static void setIpAddress(String ip) {
         Costants.ipAddress = ip;
     }
+    public static  final HashMap<Integer, String> corner =new HashMap<>();
+
+    static {
+        corner.put(0,"top-left");
+        corner.put(1,"top-right");
+        corner.put(2,"bottom-left");
+        corner.put(3,"bottom-right");
+    }
 }

@@ -19,6 +19,7 @@ public class CLI extends UI {
         out = new PrintStream(System.out, true);
     }
 
+    @Override
     public void show_insert_nickname() {
         out.print("\nInsert nickname -> ");
     }
@@ -103,15 +104,29 @@ public class CLI extends UI {
 
     @Override
     public void show_lobby(){
-        out.println("1 - create a new lobby");
-        out.println("2 - join an existing lobby");
-        out.print("Do you want to: ");
+        out.println("Select an option: ");
+        out.println("\t(1) create a new lobby");
+        out.println("\t(2) join an existing lobby");
+        out.print("Choice -> ");
+    }
+
+    @Override
+    public void show_network_type(){
+        out.println("Select an option: ");
+        out.println("\t(1) RMI");
+        out.println("\t(2) Socket (not done yet)");
+        out.print("Choice -> ");
     }
 
     @Override
     public void show_available_colors(ArrayList<String> colors) {
         out.print("Available colors: ");
-        for(String s: colors) out.print(s + " ");
+        for(String s: colors) {
+            if (s.equals("BLUE")) out.print(Costants.TEXT_BLUE + s + " " + Costants.TEXT_RESET);
+            if (s.equals("RED")) out.print(Costants.TEXT_RED + s + " " + Costants.TEXT_RESET);
+            if (s.equals("YELLOW")) out.print(Costants.TEXT_YELLOW + s + " " + Costants.TEXT_RESET);
+            if (s.equals("GREEN")) out.print(Costants.TEXT_GREEN + s + " " + Costants.TEXT_RESET);
+        }
     }
 
     @Override
@@ -130,6 +145,7 @@ public class CLI extends UI {
         out.print("Choose your initial card side: ");
     }
 
+    @Override
     public void show_current_player(String nickname)
     {
         out.print("please wait, "+ nickname +" is playing.");
@@ -178,6 +194,11 @@ public class CLI extends UI {
     public void add_message(String sender, String text, String time) {
         String msg = "["+time+"] "+sender+" : "+text;
         message.add(msg);
+    }
+
+    @Override
+    public void show_chosenNickname(String nickname) {
+        out.println("your nickname: "+nickname);
     }
 
     @Override

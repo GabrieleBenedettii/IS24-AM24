@@ -1,5 +1,6 @@
 package it.polimi.ingsw.am24.model.goal;
 
+import it.polimi.ingsw.am24.costants.Costants;
 import it.polimi.ingsw.am24.model.Symbol;
 import it.polimi.ingsw.am24.modelView.GameCardView;
 
@@ -25,7 +26,7 @@ public class SymbolGoal extends GoalCard{
     public String printCard() {
         StringBuilder text = new StringBuilder("Points: " + this.getPoints());
         for (Symbol s : symbols.keySet())
-            text.append("\n" + s.toString() + " -> " + symbols.get(s));
+            text.append("\n   ").append(Costants.getText(s)).append(" -> ").append(symbols.get(s));
         return text.toString();
     }
 

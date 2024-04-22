@@ -1,6 +1,8 @@
 package it.polimi.ingsw.am24.main;
 
 import it.polimi.ingsw.am24.view.GameFlow;
+import it.polimi.ingsw.am24.view.commandLine.CLI;
+import it.polimi.ingsw.am24.view.flow.UI;
 import javafx.application.Application;
 
 import java.io.IOException;
@@ -17,6 +19,8 @@ public class Client {
         killLoggers();
 
         String input;
+
+        UI ui =new CLI();
 
         do {
             System.out.print("Insert remote IP (leave empty for localhost) -> ");
@@ -43,7 +47,7 @@ public class Client {
             System.setProperty("java.rmi.server.hostname", input);*/
 
         do {
-            System.out.print("\nSelect option:\n\t (1) RMI\n\t (2) SOCKET (not done yet)\nChoice -> ");
+            ui.show_network_type();
             input = new Scanner(System.in).nextLine();
             try {
                 selection = Integer.parseInt(input);

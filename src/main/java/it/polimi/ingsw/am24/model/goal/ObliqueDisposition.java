@@ -1,5 +1,6 @@
 package it.polimi.ingsw.am24.model.goal;
 
+import it.polimi.ingsw.am24.costants.Costants;
 import it.polimi.ingsw.am24.model.Kingdom;
 import it.polimi.ingsw.am24.model.card.GameCard;
 import it.polimi.ingsw.am24.modelView.GameCardView;
@@ -36,7 +37,7 @@ public class ObliqueDisposition extends GoalCard{
 
     public String printCard() {
         String text = "Points: " + this.getPoints();
-        text += "\nDisposition: 3 oblique " + kingdom + " " + (direction == 0 ? "top-left" : "top-right");
+        text += "\n\tDisposition: 3 oblique" + Costants.getText(kingdom) + " from " + (direction == 0 ? "bottom-right to top-left" : "bottom-left to top-right");
         return text;
     }
 

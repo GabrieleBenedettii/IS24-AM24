@@ -217,12 +217,12 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
         askNickname();
 
         switch (choice) {
-            case "c" -> {
+            case "1" -> {
                 Integer numPlayers = askNumPlayers();
                 if(numPlayers < 2 || numPlayers > 4) return false;
                 createGame(nickname, numPlayers);
             }
-            case "j" -> joinFirstGameAvailable(nickname);
+            case "2" -> joinFirstGameAvailable(nickname);
             /*case "js" -> {
                 Integer gameId = askGameId();
                 if (gameId == -1)
