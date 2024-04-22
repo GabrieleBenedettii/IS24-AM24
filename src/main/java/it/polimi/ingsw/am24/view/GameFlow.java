@@ -25,7 +25,7 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
 
     private GameStatus status = GameStatus.BEGIN;
 
-    private Queue<Event> events = new LinkedList<>();
+    private final Queue<Event> events = new LinkedList<>();
 
     private final UI ui;
 
@@ -38,7 +38,6 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
     private ArrayList<String> availableColors;
     private ArrayList<GameCardView> cards;
     private GameView gameView;
-    private String lastPlayerJoined;
 
     public GameFlow(String connectionType) {
         switch (connectionType) {
@@ -141,41 +140,32 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
 
     private void statusWait(Event event) throws IOException, InterruptedException {
         switch (event.getType()) {
-            case AVAILABLE_COLORS -> {
-                askColor();
-            }
-            case HIDDEN_GOAL_CHOICE -> {
-                askSecretGoalDealt();
-            }
-            case INITIAL_CARD_SIDE -> {
-                askInitialCardSide();
-            }
+            case AVAILABLE_COLORS -> askColor();
+            case HIDDEN_GOAL_CHOICE -> askSecretGoalDealt();
+            case INITIAL_CARD_SIDE -> askInitialCardSide();
         }
     }
 
     private void statusRunning(Event event) throws IOException, InterruptedException {
         switch (event.getType()) {
             case BEGIN_PLAY -> {
-                if(gameView.getCurrent().equals(nickname))
-                    ui.show_gameView(gameView);
-                else
-                    ui.show_current_player(gameView.getCurrent());
-
                 this.inputParser.setPlayer(nickname);
                 this.inputParser.setIdGame(gameView.getGameId());
 
-                askCardPlay();
+                if(gameView.getCurrent().equals(nickname)) {
+                    ui.show_gameView(gameView);
+                    askCardPlay();
+                }
+                else
+                    ui.show_current_player(gameView.getCurrent());
             }
             case BEGIN_DRAW -> {
-                if(gameView.getCurrent().equals(nickname))
+                if(gameView.getCurrent().equals(nickname)) {
                     ui.show_table(gameView, true);
+                    askCardDraw();
+                }
                 else
                     ui.show_current_player(gameView.getCurrent());
-
-                this.inputParser.setPlayer(nickname);
-                this.inputParser.setIdGame(gameView.getGameId());
-
-                askCardDraw();
             }
             /*case SENT_MESSAGE -> {
                 //todo fix
@@ -371,9 +361,9 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
                 if (!command_args[2].equals("front") && !command_args[2].equals("back")) continue;
                 boolean front = command_args[2].equals("front");
 
-                int x = 0;
-                int y = 0;
-                int cardIndex = 0;
+                int x;
+                int y;
+                int cardIndex;
                 try {
                     cardIndex = Integer.parseInt(command_args[1]);
                     x = Integer.parseInt(command_args[3]);
@@ -388,7 +378,7 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
 
                 playCard(nickname,cardIndex,front,x,y);
             }
-        } while(true);
+        } while(false);
     }
 
     private void askCardDraw() {
@@ -412,7 +402,7 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
                     System.out.println("Wrong command!");
                 }
             }
-        }while(true);
+        }while(false);
     }
 
     //EVENTS RECEIVED FROM THE SERVER
@@ -455,12 +445,14 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
 
     @Override
     public void beginTurn(GameView gameView) {
+        this.status = GameStatus.RUNNING;
         addEvent(EventType.BEGIN_PLAY);
         this.gameView = gameView;
     }
 
     @Override
     public void beginDraw() {
+        this.status = GameStatus.RUNNING;
         addEvent(EventType.BEGIN_DRAW);
     }
 

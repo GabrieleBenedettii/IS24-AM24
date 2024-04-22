@@ -2,7 +2,6 @@ package it.polimi.ingsw.am24.view.flow;
 
 import java.io.IOException;
 import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
 
 public interface CommonClientActions {
     void createGame(String nickname, int numPlayers) throws IOException, NotBoundException;

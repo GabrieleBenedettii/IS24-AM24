@@ -5,7 +5,6 @@ import it.polimi.ingsw.am24.network.GameListenersHandlerClient;
 import it.polimi.ingsw.am24.view.flow.CommonClientActions;
 import it.polimi.ingsw.am24.view.flow.Flow;
 
-import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -28,7 +27,7 @@ public class RMIClient implements CommonClientActions {
 
     private Registry registry;
 
-    private Flow flow;
+    private final Flow flow;
 
     public RMIClient(Flow flow) {
         super();
@@ -41,7 +40,6 @@ public class RMIClient implements CommonClientActions {
     public void connect() {
         boolean retry = false;
         int attempt = 1;
-        int i;
 
         do {
             try {
@@ -51,13 +49,12 @@ public class RMIClient implements CommonClientActions {
                 listener = (GameListener) UnicastRemoteObject.exportObject(gameListenersHandler, 0);
 
                 System.out.println("Client RMI ready");
-                retry = false;
-
             } catch (Exception e) {
                 if (!retry) {
                     System.out.println("[ERROR] CONNECTING TO RMI SERVER: \n\tClient RMI exception: " + e + "\n");
                 }
                 System.out.print("[#" + attempt + "]Waiting to reconnect to RMI Server on port: '" + port + "' with name: '" + serverName + "'");
+                retry = true;
 
                 /*i = 0;
                 while (i < DefaultValue.seconds_between_reconnection) {

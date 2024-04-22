@@ -1,7 +1,6 @@
 package it.polimi.ingsw.am24.Controller;
 
 import it.polimi.ingsw.am24.listeners.GameListener;
-import it.polimi.ingsw.am24.messages.InvalidNumOfPlayersMessage;
 import it.polimi.ingsw.am24.network.rmi.GameControllerInterface;
 import it.polimi.ingsw.am24.network.rmi.LobbyControllerInterface;
 
@@ -13,11 +12,11 @@ import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class LobbyController implements Serializable, LobbyControllerInterface {
-    private Queue<GameController> games; //active lobbies
+    private final Queue<GameController> games; //active lobbies
     private static LobbyController instance = null;
 
     public LobbyController() {
-        this.games = new LinkedBlockingQueue<GameController>();
+        this.games = new LinkedBlockingQueue<>();
     }
 
     public synchronized static LobbyController getInstance() {
@@ -46,7 +45,6 @@ public class LobbyController implements Serializable, LobbyControllerInterface {
         System.out.println("Register request for player with nickname:  " + nickname + " parameters were valid. Logging player in");
 
         synchronized(playingNicknames) {
-            //todo add the search of the nickname in the disconnected array
             synchronized (games){
                 //if the numOfPlayers is more than 1 or there is no lobby-> create a new lobby
                 if(numOfPlayers != 1){
@@ -58,20 +56,14 @@ public class LobbyController implements Serializable, LobbyControllerInterface {
                 }
                 //otherwise add the player in an existing lobby
                 else {
-                    //todo check if the lobby is full
-                    if(games.peek() != null) {
-                        GameController lobby = games.peek();
-                        if(!lobby.isFull() && lobby.addNewPlayer(nickname, listener)) {
-                            while (games.peek() != null && games.peek().getNumOfActivePlayers() == 0)
-                                games.poll();
+                    for(GameController g : games) {
+                        if(!g.isFull()) {
+                            g.addNewPlayer(nickname, listener);
                             System.out.println("Player added to an existing lobby");
+                            return g;
                         }
-                        playingNicknames.add(nickname);
-                        return lobby;
                     }
-                    else{
-                        System.out.println("No lobby found");
-                    }
+                    System.out.println("No lobby found");
                 }
             }
         }

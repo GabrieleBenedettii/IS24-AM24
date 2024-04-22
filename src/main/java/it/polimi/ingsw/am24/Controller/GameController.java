@@ -131,7 +131,7 @@ public class GameController implements GameControllerInterface, Serializable, Ru
                 if(readyPlayers == playerCount) {
                     Collections.shuffle(rotation);
                     currentPlayer = rotation.get(0);
-                    System.out.println("THE GAME IS STARTING!!!");
+                    System.out.println("THE GAME [" + gameId + "] IS STARTING!!!");
                     notifyAllListeners();
                 }
                 return true;

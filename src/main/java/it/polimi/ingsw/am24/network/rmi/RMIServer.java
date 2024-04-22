@@ -3,7 +3,6 @@ package it.polimi.ingsw.am24.network.rmi;
 import it.polimi.ingsw.am24.Controller.LobbyController;
 import it.polimi.ingsw.am24.listeners.GameListener;
 
-import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -28,7 +27,6 @@ public class RMIServer extends UnicastRemoteObject implements LobbyControllerInt
             getRegistry().rebind(serverName, server);
             System.out.println("Server RMI ready");
         } catch (RemoteException e) {
-            e.printStackTrace();
             System.err.println("[ERROR] STARTING RMI SERVER: \n\tServer RMI exception: " + e);
         }
         return getInstance();
