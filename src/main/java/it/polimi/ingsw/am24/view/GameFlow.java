@@ -249,18 +249,6 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
         }
     }
 
-    //METHODS THAT THE CLIENT CAN REQUEST TO THE SERVER
-
-    @Override
-    public void createGame(String nickname, int numPlayers) {
-        //ui.show_creatingNewGameMsg(nickname);
-        try {
-            actions.createGame(nickname, numPlayers);
-        } catch (IOException | NotBoundException e) {
-            System.out.println("Error during creating game");
-        }
-    }
-
     private Integer askNumPlayers() {
         String temp;
         Integer numPlayers = null;
@@ -281,50 +269,6 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
         } while (numPlayers == null);
         return numPlayers;
     }
-
-    @Override
-    public void joinFirstGameAvailable(String nickname) {
-        //ui.show_joiningFirstAvailableMsg(nickname);
-        try {
-            actions.joinFirstGameAvailable(nickname);
-        } catch (IOException | NotBoundException e) {
-            System.out.println("Error during joining game");
-        }
-    }
-
-    @Override
-    public void chooseColor(String nickname, String color) throws IOException {
-        actions.chooseColor(nickname, color);
-    }
-
-    @Override
-    public void chooseHiddenGoal(String nickname, int choice) throws IOException {
-        actions.chooseHiddenGoal(nickname, choice);
-    }
-
-    @Override
-    public void chooseInitialCardSide(String nickname, int choice) throws IOException {
-        actions.chooseInitialCardSide(nickname, choice);
-    }
-
-    @Override
-    public void playCard(String nickname, int cardIndex, boolean front, int x, int y) throws IOException {
-        actions.playCard(nickname, cardIndex, front, x, y);
-    }
-
-    @Override
-    public void drawCard(String nickname, int choice) throws IOException {
-        actions.drawCard(nickname, choice);
-    }
-
-    /*@Override
-    public void sendMessage(ChatMessage msg) {
-        try {
-            actions.sendMessage(msg);
-        } catch (RemoteException e) {
-            System.out.println("Error sending message");
-        }
-    }*/
 
     private void askSecretGoalDealt() {
         ui.show_hidden_goal(cards);
@@ -404,6 +348,62 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
             }
         }while(false);
     }
+
+    //METHODS THAT THE CLIENT CAN REQUEST TO THE SERVER
+
+    @Override
+    public void createGame(String nickname, int numPlayers) {
+        //ui.show_creatingNewGameMsg(nickname);
+        try {
+            actions.createGame(nickname, numPlayers);
+        } catch (IOException | NotBoundException e) {
+            System.out.println("Error during creating game");
+        }
+    }
+
+    @Override
+    public void joinFirstGameAvailable(String nickname) {
+        //ui.show_joiningFirstAvailableMsg(nickname);
+        try {
+            actions.joinFirstGameAvailable(nickname);
+        } catch (IOException | NotBoundException e) {
+            System.out.println("Error during joining game");
+        }
+    }
+
+    @Override
+    public void chooseColor(String nickname, String color) throws IOException {
+        actions.chooseColor(nickname, color);
+    }
+
+    @Override
+    public void chooseHiddenGoal(String nickname, int choice) throws IOException {
+        actions.chooseHiddenGoal(nickname, choice);
+    }
+
+    @Override
+    public void chooseInitialCardSide(String nickname, int choice) throws IOException {
+        actions.chooseInitialCardSide(nickname, choice);
+    }
+
+    @Override
+    public void playCard(String nickname, int cardIndex, boolean front, int x, int y) throws IOException {
+        actions.playCard(nickname, cardIndex, front, x, y);
+    }
+
+    @Override
+    public void drawCard(String nickname, int choice) throws IOException {
+        actions.drawCard(nickname, choice);
+    }
+
+    /*@Override
+    public void sendMessage(ChatMessage msg) {
+        try {
+            actions.sendMessage(msg);
+        } catch (RemoteException e) {
+            System.out.println("Error sending message");
+        }
+    }*/
 
     //EVENTS RECEIVED FROM THE SERVER
 

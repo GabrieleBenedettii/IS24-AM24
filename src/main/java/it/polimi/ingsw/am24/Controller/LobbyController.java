@@ -26,7 +26,7 @@ public class LobbyController implements Serializable, LobbyControllerInterface {
         return instance;
     }
 
-    //Includes: createGame and joinFirstAvaiableLobby
+    //Includes: createGame and joinFirstAvailableLobby
     public synchronized GameControllerInterface joinGame(String nickname, int numOfPlayers, GameListener listener) throws RemoteException {
 
         final List<String> playingNicknames = new ArrayList<>();

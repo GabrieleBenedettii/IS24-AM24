@@ -10,11 +10,11 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class GameListenersHandlerClient implements GameListener, Serializable {
+public class GameListenerClient implements GameListener, Serializable {
 
     private Flow flow;
 
-    public GameListenersHandlerClient(Flow flow) {
+    public GameListenerClient(Flow flow) {
         this.flow = flow;
     }
 

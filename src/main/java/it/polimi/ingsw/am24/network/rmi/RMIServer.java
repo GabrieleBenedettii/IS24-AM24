@@ -55,15 +55,12 @@ public class RMIServer extends UnicastRemoteObject implements LobbyControllerInt
 
     @Override
     public GameControllerInterface joinGame(String nickname, int numPlayers, GameListener listener) throws RemoteException {
-
-        //Return the GameController already existed => not necessary to re-Export Object
         GameControllerInterface ris = server.controller.joinGame(nickname, numPlayers, listener);
         if (ris != null) {
-            //ris.setPlayerIdentity((PlayerInterface) UnicastRemoteObject.exportObject(ris.getPlayerIdentity(),0));
             try {
                 UnicastRemoteObject.exportObject(ris, 0);
             }catch (RemoteException e){
-                //Already exported, due to another RMI Client running on the same machine
+
             }
             System.out.println("[RMI] " + nickname + " joined in first available game");
         }
