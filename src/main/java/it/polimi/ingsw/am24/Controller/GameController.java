@@ -1,11 +1,13 @@
 package it.polimi.ingsw.am24.Controller;
 
+import it.polimi.ingsw.am24.Exceptions.FullLobbyException;
+import it.polimi.ingsw.am24.Exceptions.InvalidPositioningException;
+import it.polimi.ingsw.am24.Exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.am24.listeners.GameListener;
-import it.polimi.ingsw.am24.messages.*;
 import it.polimi.ingsw.am24.model.Game;
 import it.polimi.ingsw.am24.model.Player;
 import it.polimi.ingsw.am24.model.PlayerColor;
-import it.polimi.ingsw.am24.modelView.GameCardView;
+import it.polimi.ingsw.am24.model.goal.GoalCard;
 import it.polimi.ingsw.am24.modelView.GameView;
 import it.polimi.ingsw.am24.network.rmi.GameControllerInterface;
 
@@ -15,19 +17,21 @@ import java.util.*;
 
 public class GameController implements GameControllerInterface, Serializable, Runnable {
     private static int gameCounter = 10000;
-    private int gameId;
-    private Game game;
-    private ArrayList<String> rotation;
-    private HashMap<String, Player> players;
-    private HashMap<String, GameListener> listeners;
+    private final int gameId;
+    private final Game game;
+    private final ArrayList<String> rotation;
+    private final HashMap<String, Player> players;
+    private final HashMap<String, GameListener> listeners;
     private String currentPlayer;
-    private int playerCount;
+    private final int playerCount;
     private boolean started;
     private int readyPlayers;   //used to know how many players have already done the side of initial card choice
                                 // and start the rotation
     private boolean beginEndGame;
     private boolean isLastRound;
     private String winner;
+
+    private final Object lockPlayers = new Object();
 
     public GameController(int numPlayers) {
         this.game = new Game();
@@ -44,41 +48,35 @@ public class GameController implements GameControllerInterface, Serializable, Ru
     }
 
     //add new player and set the game started if the player added is the last
-    public boolean addNewPlayer(String nickname, GameListener listener) throws RemoteException {
-        boolean res = false;
-        synchronized (players) {
+    public void addPlayer(String nickname, GameListener listener) throws RemoteException, FullLobbyException {
+        if(players.size() == playerCount) throw new FullLobbyException();
+        synchronized (lockPlayers) {
             rotation.add(nickname);
             players.put(nickname, new Player(nickname));
             listeners.put(nickname, listener);
             if(players.size() == playerCount){
                 started = true;
-                res = true;
             }
             notifyListener(listener);
         }
-        return res;
     }
 
     //return the player with the given nickname
     public Player getPlayer(String nickname){
-        synchronized (players) {
+        synchronized (lockPlayers) {
             return players.get(nickname);
         }
     }
 
-    public HashMap<String, Player> getPlayers() {
-        return players;
-    }
-
     public void removePlayer(String nickname) {
-        synchronized (players){
-            players.remove(getPlayer(nickname));
+        synchronized (lockPlayers){
+            players.remove(nickname);
         }
     }
     //choice of the color by a player
     public boolean chooseColor(String nickname, String color, GameListener listener) throws RemoteException {
         //find the player
-        synchronized (players) {
+        synchronized (lockPlayers) {
             Player p = players.get(nickname);
             if (p != null) {
                 PlayerColor pc = PlayerColor.valueOf(color.toUpperCase());
@@ -109,7 +107,7 @@ public class GameController implements GameControllerInterface, Serializable, Ru
 
     //choice of the hidden goal by a player
     public boolean chooseGoal(String nickname, int goalId, GameListener listener) throws RemoteException {
-        synchronized (players) {
+        synchronized (lockPlayers) {
             Player p = players.get(nickname);
             if (p != null) {
                 p.setHiddenGoal(game.chosenGoalCard(goalId));
@@ -122,7 +120,7 @@ public class GameController implements GameControllerInterface, Serializable, Ru
 
     //choice of the side of the initial card by a player
     public boolean chooseInitialCardSide(String nickname, boolean isFront, GameListener listener) throws RemoteException {
-        synchronized (players) {
+        synchronized (lockPlayers) {
             Player p = players.get(nickname);
             if (p != null) {
                 p.getInitialcard().setFront(isFront);
@@ -130,7 +128,7 @@ public class GameController implements GameControllerInterface, Serializable, Ru
                 readyPlayers++;
                 if(readyPlayers == playerCount) {
                     Collections.shuffle(rotation);
-                    currentPlayer = rotation.get(0);
+                    currentPlayer = rotation.getFirst();
                     System.out.println("THE GAME [" + gameId + "] IS STARTING!!!");
                     notifyAllListeners();
                 }
@@ -141,18 +139,19 @@ public class GameController implements GameControllerInterface, Serializable, Ru
     }
 
     public boolean playCard(String nickname, int cardIndex, boolean isFront, int x, int y, GameListener listener) throws RemoteException {
-        synchronized (players) {
+        synchronized (lockPlayers) {
             Player p = players.get(nickname);
             if (p != null) {
-                boolean res = p.play(cardIndex, isFront, x, y);
-                if(res) {
+                try {
+                    p.play(cardIndex, isFront, x, y);
                     if(p.getScore() >= 20 && !beginEndGame) beginEndGame = true;
                     listener.beginDraw();
                     return true;
-                }
-                else {
-                    notifyAllListeners();
+                } catch (InvalidPositioningException e) {
+                    listener.invalidPositioning();
                     return false;
+                } catch (RequirementsNotMetException e) {
+                    listener.requirementsNotMet();
                 }
             }
             return false;
@@ -160,47 +159,39 @@ public class GameController implements GameControllerInterface, Serializable, Ru
     }
 
     public boolean drawCard(String nickname, int cardIndex, GameListener listener) throws RemoteException {
-        synchronized (players) {
+        synchronized (lockPlayers) {
             Player p = players.get(nickname);
             if (p != null) {
-                boolean res = false;
                 switch (cardIndex) {
                     case 0 -> {
-                        res = p.draw(game.getVisibleResCard().get(0));
+                        p.draw(game.getVisibleResCard().getFirst());
                         game.addResourceCard();
                     }
                     case 1 -> {
-                        res = p.draw(game.getVisibleResCard().get(1));
+                        p.draw(game.getVisibleResCard().get(1));
                         game.addResourceCard();
                     }
                     case 2 -> {
-                        res = p.draw(game.getVisibleGoldCard().get(0));
+                        p.draw(game.getVisibleGoldCard().getFirst());
                         game.addGoldCard();
                     }
                     case 3 -> {
-                        res = p.draw(game.getVisibleGoldCard().get(1));
+                        p.draw(game.getVisibleGoldCard().get(1));
                         game.addGoldCard();
                     }
-                    case 4 -> res = p.draw(game.drawResourceCard());
-                    case 5 -> res = p.draw(game.drawGoldCard());
+                    case 4 -> p.draw(game.drawResourceCard());
+                    case 5 -> p.draw(game.drawGoldCard());
                 }
 
-                if(res) {
-                    nextPlayer();
-                    notifyAllListeners();
-                    return true;
-                }
-                else {
-                    notifyAllListeners();
-                    return false;
-                }
+                nextPlayer();
+                notifyAllListeners();
+                return true;
             }
             return false;
         }
     }
 
     public void nextPlayer() throws RemoteException {
-        int max = 0;
         int nextPlayerIndex = rotation.indexOf(currentPlayer) + 1;
         if(nextPlayerIndex == playerCount) {
             if(isLastRound) {
@@ -220,10 +211,6 @@ public class GameController implements GameControllerInterface, Serializable, Ru
         currentPlayer = rotation.get(nextPlayerIndex);
     }
 
-    public boolean isMyTurn(String nickname){
-        return currentPlayer.equals(getPlayer(nickname));
-    }
-
     public String calculateWinner() {
         int max = 0;
         String win = "";
@@ -237,12 +224,8 @@ public class GameController implements GameControllerInterface, Serializable, Ru
         return win;
     }
 
-    public int getNumOfActivePlayers() {
+    public int getNumOfPlayers() {
         return players.size();
-    }
-
-    public boolean isFull() {
-        return playerCount == players.size();
     }
 
     public void disconnectPlayer(){
@@ -251,7 +234,7 @@ public class GameController implements GameControllerInterface, Serializable, Ru
 
     //if the game is started, it sends the list of players in the lobby, otherwise it sends the secret cards
     private void notifyAllListeners() throws RemoteException {
-        synchronized (players){
+        synchronized (lockPlayers){
             if(started) {
                 //if the game is started and all players are ready for the rotation
                 if(readyPlayers == playerCount) {
@@ -263,7 +246,7 @@ public class GameController implements GameControllerInterface, Serializable, Ru
                 else {
                     startGame();
                     for (String p : listeners.keySet()) {
-                        if (p != null && listeners.get(p) != null) listeners.get(p).hiddenGoalChoice(new ArrayList<>(game.drawGoalCards().stream().map(gc -> gc.getView()).toList()));
+                        if (p != null && listeners.get(p) != null) listeners.get(p).hiddenGoalChoice(new ArrayList<>(game.drawGoalCards().stream().map(GoalCard::getView).toList()));
                     }
                 }
             }
@@ -276,7 +259,7 @@ public class GameController implements GameControllerInterface, Serializable, Ru
     }
 
     private void notifyAllListenersEndGame() throws RemoteException {
-        synchronized (players) {
+        synchronized (lockPlayers) {
             HashMap<String, Integer> rank = new HashMap<>();
             for (String p : listeners.keySet()) {
                 rank.put(p, players.get(p).getScore());

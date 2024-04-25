@@ -1,5 +1,6 @@
 package it.polimi.ingsw.am24.Controller;
 
+import it.polimi.ingsw.am24.Exceptions.FullLobbyException;
 import it.polimi.ingsw.am24.listeners.GameListener;
 import it.polimi.ingsw.am24.network.rmi.GameControllerInterface;
 import it.polimi.ingsw.am24.network.rmi.LobbyControllerInterface;
@@ -13,10 +14,13 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 public class LobbyController implements Serializable, LobbyControllerInterface {
     private final Queue<GameController> games; //active lobbies
+    private final List<String> playingNicknames;
     private static LobbyController instance = null;
+    private final Object lock = new Object();
 
     public LobbyController() {
         this.games = new LinkedBlockingQueue<>();
+        this.playingNicknames = new ArrayList<>();
     }
 
     public synchronized static LobbyController getInstance() {
@@ -29,43 +33,50 @@ public class LobbyController implements Serializable, LobbyControllerInterface {
     //Includes: createGame and joinFirstAvailableLobby
     public synchronized GameControllerInterface joinGame(String nickname, int numOfPlayers, GameListener listener) throws RemoteException {
 
-        final List<String> playingNicknames = new ArrayList<>();
-
         System.out.println("Register request for player with nickname:  " + nickname + " and numOfPlayers: " + numOfPlayers);
 
         //todo set min and max num of player on a setting file
-        if(numOfPlayers < 1 || numOfPlayers>4) {
+        if(numOfPlayers < 1 || numOfPlayers > 4) {
             listener.invalidNumPlayers();
             return null;
         }
-        //todo create message for null nickname
-        if(nickname == null) {
+        if(nickname == null || nickname.isEmpty()) {
+            //listener.nicknameNotValid();
+            return null;
+        }
+        if(playingNicknames.contains(nickname)) {
+            listener.nicknameAlreadyUsed();
             return null;
         }
         System.out.println("Register request for player with nickname:  " + nickname + " parameters were valid. Logging player in");
 
-        synchronized(playingNicknames) {
-            synchronized (games){
-                //if the numOfPlayers is more than 1 or there is no lobby-> create a new lobby
-                if(numOfPlayers != 1){
-                    GameController lobby = new GameController(numOfPlayers);
-                    lobby.addNewPlayer(nickname, listener);
+        synchronized(lock) {
+            //if the numOfPlayers is more than 1 or there is no lobby-> create a new lobby
+            if(numOfPlayers != 1){
+                GameController lobby = new GameController(numOfPlayers);
+                try {
+                    lobby.addPlayer(nickname, listener);
                     playingNicknames.add(nickname);
                     games.add(lobby);
                     return lobby;
-                }
-                //otherwise add the player in an existing lobby
-                else {
-                    for(GameController g : games) {
-                        if(!g.isFull()) {
-                            g.addNewPlayer(nickname, listener);
-                            System.out.println("Player added to an existing lobby");
-                            return g;
-                        }
-                    }
-                    System.out.println("No lobby found");
+                } catch (FullLobbyException ignored) {
+                    //it can't happen
                 }
             }
+            //otherwise add the player in an existing lobby
+            else {
+                for(GameController g : games) {
+                    try {
+                        g.addPlayer(nickname, listener);
+                        System.out.println("Player added to an existing lobby");
+                        return g;
+                    } catch (FullLobbyException e) {
+                        //I need to continue
+                    }
+                }
+                listener.noLobbyAvailable();
+            }
+
         }
         return null;
     }
@@ -94,7 +105,7 @@ public class LobbyController implements Serializable, LobbyControllerInterface {
         return games.size();
     }
 */
-    public void printGames(){
+    /*public void printGames(){
         int i = 1;
         System.out.println("Active games: ");
         for (GameController g: games){
@@ -104,6 +115,5 @@ public class LobbyController implements Serializable, LobbyControllerInterface {
             }
             i++;
         }
-    }
-
+    }*/
 }

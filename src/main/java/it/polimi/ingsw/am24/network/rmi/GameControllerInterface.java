@@ -18,8 +18,6 @@ public interface GameControllerInterface extends Remote {
 
     boolean drawCard(String p, int cardIndex, GameListener listener) throws RemoteException;
 
-    boolean isMyTurn(String nickname) throws RemoteException;
-
     //void sentMessage(ChatMessage msg) throws RemoteException;
 
     //int getNumOnlinePlayers() throws RemoteException;

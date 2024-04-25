@@ -12,7 +12,7 @@ import java.util.HashMap;
 
 public class GameListenerClient implements GameListener, Serializable {
 
-    private Flow flow;
+    private final Flow flow;
 
     public GameListenerClient(Flow flow) {
         this.flow = flow;
@@ -26,6 +26,11 @@ public class GameListenerClient implements GameListener, Serializable {
     @Override
     public void playerJoined(ArrayList<String> players) throws RemoteException {
         flow.playerJoined(players);
+    }
+
+    @Override
+    public void noLobbyAvailable() throws RemoteException {
+        flow.noLobbyAvailable();
     }
 
     @Override
@@ -51,6 +56,16 @@ public class GameListenerClient implements GameListener, Serializable {
     @Override
     public void beginTurn(GameView gameView) throws RemoteException {
         flow.beginTurn(gameView);
+    }
+
+    @Override
+    public void invalidPositioning() throws RemoteException {
+        flow.invalidPositioning();
+    }
+
+    @Override
+    public void requirementsNotMet() throws RemoteException {
+        flow.requirementsNotMet();
     }
 
     @Override

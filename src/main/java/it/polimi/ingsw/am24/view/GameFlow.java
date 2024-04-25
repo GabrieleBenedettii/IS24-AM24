@@ -95,11 +95,11 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
                     statusNotInAGame(event);
                 }
             }
-            /*try {
+            try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
-            }*/
+            }
         }
     }
 
@@ -114,27 +114,15 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
             case NICKNAME_ALREADY_USED -> {
                 nickname = null;
                 events.add(new Event(EventType.APP_MENU));
-                //ui.addImportantEvent("WARNING> Nickname already used!");
+                //todo create ui message
+                System.out.println("Nickname already used");
             }
             case NO_LOBBY_AVAILABLE -> {
                 nickname = null;
                 events.add(new Event(EventType.APP_MENU));
+                //todo create ui message
+                System.out.println("No lobby is available, please create a new one");
             }
-            /*case JOIN_UNABLE_GAME_FULL -> {
-                nickname = null;
-                events.add(null, APP_MENU);
-                ui.addImportantEvent("WARNING> Game is Full!");
-            }*/
-            /*case GENERIC_ERROR_WHEN_ENTRYING_GAME -> {
-                nickname = null;
-                ui.show_returnToMenuMsg();
-                try {
-                    this.inputParser.getDataToProcess().popData();
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-                events.add(null, APP_MENU);
-            }*/
         }
     }
 
@@ -418,6 +406,11 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
     }
 
     @Override
+    public void noLobbyAvailable() {
+        events.add(new Event(EventType.NO_LOBBY_AVAILABLE));
+    }
+
+    @Override
     public void nicknameAlreadyUsed() {
         events.add(new Event(EventType.NICKNAME_ALREADY_USED));
     }
@@ -448,6 +441,18 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
         this.status = GameStatus.RUNNING;
         addEvent(EventType.BEGIN_PLAY);
         this.gameView = gameView;
+    }
+
+    @Override
+    public void invalidPositioning() {
+        System.out.println("Invalid positioning!!!");
+        addEvent(EventType.BEGIN_PLAY);
+    }
+
+    @Override
+    public void requirementsNotMet() {
+        System.out.println("You can't place this card!!!");
+        addEvent(EventType.BEGIN_PLAY);
     }
 
     @Override

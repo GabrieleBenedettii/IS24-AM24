@@ -1,5 +1,7 @@
 package it.polimi.ingsw.am24.model;
 
+import it.polimi.ingsw.am24.Exceptions.InvalidPositioningException;
+import it.polimi.ingsw.am24.Exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.am24.model.card.*;
 import it.polimi.ingsw.am24.model.goal.GoalCard;
 import it.polimi.ingsw.am24.modelView.GameCardView;
@@ -18,7 +20,7 @@ public class Player {
     private GoalCard hiddenGoal;
     private final HashMap<Symbol,Integer> visibleSymbols;
 
-    private final GameCard[][] gameboard;
+    private final GameCard[][] gameBoard;
     private final boolean[][] possiblePlacements;
     private final Pair<Integer, Integer>[] diagonals;
 
@@ -29,7 +31,7 @@ public class Player {
         for (Symbol s: Symbol.values()) {
             visibleSymbols.put(s,0);
         }
-        this.gameboard = new GameCard[21][41];
+        this.gameBoard = new GameCard[21][41];
         this.possiblePlacements = new boolean[21][41];
         this.score = 0;
         diagonals = new Pair[4];
@@ -39,36 +41,37 @@ public class Player {
         diagonals[3] = new Pair<>(1, 1);
     }
 
-    public boolean play(int cardIndex, boolean front, int x, int y) {
+    public void play(int cardIndex, boolean front, int x, int y) throws InvalidPositioningException, RequirementsNotMetException {
         if(!possiblePlacements[x][y]){
-            return false;
+            throw new InvalidPositioningException();
         }
         if(playingHand.get(cardIndex).getType().equals("gold")){
             boolean placeable = false;
             playingHand.get(cardIndex).checkRequirementsMet(visibleSymbols, placeable);
             if(!placeable){
-                return false;
+                throw new RequirementsNotMetException();
             }
         }
-        gameboard[x][y] = playingHand.get(cardIndex).getCardSide(front);
-        playingHand.remove(cardIndex);
+
+        gameBoard[x][y] = playingHand.get(cardIndex).getCardSide(front);
+
         //cover all the covered corners and remove covered symbols from visible symbols
         int coveredCorners = 0;
         for(int k = 0; k < 4; k++){
-            possiblePlacements[x + diagonals[k].getKey()][y + diagonals[k].getValue()] = gameboard[x + diagonals[k].getKey()][y + diagonals[k].getValue()] == null && !gameboard[x][y].getCornerByIndex(k).isHidden();
-            if(gameboard[x + diagonals[k].getKey()][y + diagonals[k].getValue()] != null) {
-                gameboard[x + diagonals[k].getKey()][y + diagonals[k].getValue()].getCornerByIndex(3 - k).coverCorner();
+            possiblePlacements[x + diagonals[k].getKey()][y + diagonals[k].getValue()] = gameBoard[x + diagonals[k].getKey()][y + diagonals[k].getValue()] == null && !gameBoard[x][y].getCornerByIndex(k).isHidden();
+            if(gameBoard[x + diagonals[k].getKey()][y + diagonals[k].getValue()] != null) {
+                gameBoard[x + diagonals[k].getKey()][y + diagonals[k].getValue()].getCornerByIndex(3 - k).coverCorner();
                 coveredCorners++;
-                if(gameboard[x + diagonals[k].getKey()][y + diagonals[k].getValue()].getCornerByIndex(3 - k).getSymbol() != null)
-                    visibleSymbols.merge(gameboard[x + diagonals[k].getKey()][y + diagonals[k].getValue()].getCornerByIndex(3 - k).getSymbol(),-1,Integer::sum);
+                if(gameBoard[x + diagonals[k].getKey()][y + diagonals[k].getValue()].getCornerByIndex(3 - k).getSymbol() != null)
+                    visibleSymbols.merge(gameBoard[x + diagonals[k].getKey()][y + diagonals[k].getValue()].getCornerByIndex(3 - k).getSymbol(),-1,Integer::sum);
             }
         }
         //add all the new visible symbols
-        if(!front) visibleSymbols.merge(Symbol.valueOf(gameboard[x][y].getKingdom().toString()), 1, Integer::sum);
+        if(!front) visibleSymbols.merge(Symbol.valueOf(gameBoard[x][y].getKingdom().toString()), 1, Integer::sum);
         else {
             for(int k = 0; k < 4; k++) {
-                if(gameboard[x][y].getCornerByIndex(k).getSymbol() != null && !gameboard[x][y].getCornerByIndex(k).isHidden())
-                    visibleSymbols.merge(gameboard[x][y].getCornerByIndex(k).getSymbol(),1,Integer::sum);
+                if(gameBoard[x][y].getCornerByIndex(k).getSymbol() != null && !gameBoard[x][y].getCornerByIndex(k).isHidden())
+                    visibleSymbols.merge(gameBoard[x][y].getCornerByIndex(k).getSymbol(),1,Integer::sum);
             }
         }
         //add points
@@ -86,16 +89,17 @@ public class Player {
         else {
             addPoints(playingHand.get(cardIndex).getPoints());
         }
+
         possiblePlacements[x][y] = false;
-        return true;
+        playingHand.remove(cardIndex);
     }
 
     public void playInitialCard(boolean front) {
-        gameboard[10][20] = front ? initialcard : initialcard.getBackCard();
+        gameBoard[10][20] = front ? initialcard : initialcard.getBackCard();
         for(int k = 0; k < 4; k++) {
-            possiblePlacements[10 + diagonals[k].getKey()][20 + diagonals[k].getValue()] = !gameboard[10][20].getCornerByIndex(k).isHidden();
-            if(gameboard[10][20].getCornerByIndex(k).getSymbol() != null && !gameboard[10][20].getCornerByIndex(k).isHidden())
-                visibleSymbols.merge(gameboard[10][20].getCornerByIndex(k).getSymbol(), 1, Integer::sum);
+            possiblePlacements[10 + diagonals[k].getKey()][20 + diagonals[k].getValue()] = !gameBoard[10][20].getCornerByIndex(k).isHidden();
+            if(gameBoard[10][20].getCornerByIndex(k).getSymbol() != null && !gameBoard[10][20].getCornerByIndex(k).isHidden())
+                visibleSymbols.merge(gameBoard[10][20].getCornerByIndex(k).getSymbol(), 1, Integer::sum);
         }
 
         if(!front) {
@@ -104,9 +108,8 @@ public class Player {
         }
     }
 
-    public boolean draw(PlayableCard card) {
+    public void draw(PlayableCard card) {
         playingHand.add(card);
-        return true;
     }
 
     public void setPlayingHand(ResourceCard card1, ResourceCard card2, GoldCard card3) {
@@ -146,6 +149,7 @@ public class Player {
     public InitialCard getInitialcard() {
         return initialcard;
     }
+
     public HashMap<Symbol,Integer> getVisibleSymbols() {
         return visibleSymbols;
     }
@@ -154,7 +158,7 @@ public class Player {
         String[][] temp = new String[21][41];
         for(int i = 1; i < 20; i++){
             for(int j = 1; j < 40; j++){
-                temp[i][j] = gameboard[i][j] != null ? gameboard[i][j].getStringForCard() : null;
+                temp[i][j] = gameBoard[i][j] != null ? gameBoard[i][j].getStringForCard() : null;
             }
         }
         ArrayList<GameCardView> hand = new ArrayList<>();

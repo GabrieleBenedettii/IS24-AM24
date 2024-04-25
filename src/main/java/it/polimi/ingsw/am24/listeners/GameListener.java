@@ -17,6 +17,8 @@ public interface GameListener extends Remote {
 
     void playerJoined(ArrayList<String> players) throws RemoteException;
 
+    void noLobbyAvailable() throws RemoteException;
+
     void nicknameAlreadyUsed() throws RemoteException;
 
    // void genericErrorWhenEnteringGame(String why) throws RemoteException;
@@ -28,6 +30,10 @@ public interface GameListener extends Remote {
     void initialCardSide(GameCardView front, GameCardView back) throws RemoteException;
 
     void beginTurn(GameView gameView) throws RemoteException;
+
+    void invalidPositioning() throws RemoteException;
+
+    void requirementsNotMet() throws RemoteException;
 
     void beginDraw() throws RemoteException;
 
