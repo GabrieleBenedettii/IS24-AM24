@@ -16,6 +16,7 @@ import it.polimi.ingsw.am24.view.input.InputReaderCLI;
 
 import java.io.IOException;
 import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 import java.util.*;
 
 public class GameFlow extends Flow implements Runnable, CommonClientActions {
@@ -137,7 +138,7 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
     private void statusRunning(Event event) throws IOException, InterruptedException {
         switch (event.getType()) {
             case BEGIN_PLAY -> {
-                this.inputParser.setPlayer(nickname);
+                this.inputParser.setNickname(nickname);
                 this.inputParser.setIdGame(gameView.getGameId());
 
                 if(gameView.getCurrent().equals(nickname)) {
@@ -260,22 +261,32 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
 
     private void askSecretGoalDealt() {
         ui.show_hidden_goal(cards);
-        try {
-            int choice = Integer.parseInt(this.inputParser.getDataToProcess().pop());
-            actions.chooseHiddenGoal(nickname, cards.get(choice).getCardId());
-        } catch (Exception e) {
-            System.out.println("Nan");
-        }
+        boolean retry;
+        do {
+            try {
+                int choice = Integer.parseInt(this.inputParser.getDataToProcess().pop());
+                actions.chooseHiddenGoal(nickname, cards.get(choice).getCardId());
+                retry = false;
+            } catch (Exception e) {
+                System.out.println("Nan");
+                retry = true;
+            }
+        } while(retry);
     }
 
     private void askInitialCardSide() {
         ui.show_initial_side(cards);
-        try {
-            int choice = Integer.parseInt(this.inputParser.getDataToProcess().pop());
-            actions.chooseInitialCardSide(nickname, choice);
-        } catch (Exception e) {
-            System.out.println("Nan");
-        }
+        boolean retry;
+        do {
+            try {
+                int choice = Integer.parseInt(this.inputParser.getDataToProcess().pop());
+                actions.chooseInitialCardSide(nickname, choice);
+                retry = false;
+            } catch (Exception e) {
+                System.out.println("Nan");
+                retry = true;
+            }
+        } while(retry);
     }
 
     private void askCardPlay() throws IOException {
@@ -286,6 +297,7 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
                 command = this.inputParser.getDataToProcess().pop();
             } catch (Exception e) {
                 System.out.println("Wrong command");
+                continue;
             }
             String[] command_args = command.split(" ");
 
@@ -384,14 +396,15 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
         actions.drawCard(nickname, choice);
     }
 
-    /*@Override
-    public void sendMessage(ChatMessage msg) {
-        try {
-            actions.sendMessage(msg);
-        } catch (RemoteException e) {
-            System.out.println("Error sending message");
-        }
-    }*/
+    @Override
+    public void sendPublicMessage(String sender, String message) throws RemoteException {
+        actions.sendPublicMessage(sender, message);
+    }
+
+    @Override
+    public void sendPrivateMessage(String sender, String receiver, String message) throws RemoteException {
+        actions.sendPrivateMessage(sender, receiver, message);
+    }
 
     //EVENTS RECEIVED FROM THE SERVER
 
@@ -468,14 +481,13 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
         ui.show_wrong_card_play();
     }
 
-    /*@Override
-    public void sentMessage(ChatMessage msg) {
+    @Override
+    public void sentMessage(String message) {
         //Show the message only if is for everyone or is for me (or I sent it)
-        if (msg.getReceiver().equals("") || msg.getReceiver().equals(nickname) || msg.getSender().equals(nickname)) {
-            ui.add_message(msg.getSender(), msg.getMessage(), msg.getTime());
-            addEvent(EventType.SENT_MESSAGE);
-        }
-    }*/
+        //ui.add_message(message);
+        //addEvent(EventType.SENT_MESSAGE);
+        System.out.println("\nNew message: " + message);
+    }
 
     @Override
     public void gameEnded(String winner, HashMap<String,Integer> rank) {

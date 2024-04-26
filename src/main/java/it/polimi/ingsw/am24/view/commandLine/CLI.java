@@ -11,11 +11,11 @@ import java.util.*;
 
 public class CLI extends UI {
     private PrintStream out;
-    private Queue<String> message;
+    private Queue<String> messages;
 
 
     public CLI() {
-        message = new LinkedList<>();
+        messages = new LinkedList<>();
         out = new PrintStream(System.out, true);
     }
 
@@ -188,15 +188,14 @@ public class CLI extends UI {
 
     @Override
     public void show_message() {
-        for (String msg : message){
+        for (String msg : messages){
             out.println(msg);
         }
     }
 
     @Override
-    public void add_message(String sender, String text, String time) {
-        String msg = "["+time+"] "+sender+" : "+text;
-        message.add(msg);
+    public void add_message(String message) {
+        messages.add(message);
     }
 
     @Override

@@ -1,15 +1,12 @@
 package it.polimi.ingsw.am24.listeners;
 
-import it.polimi.ingsw.am24.messages.Message;
 import it.polimi.ingsw.am24.modelView.GameCardView;
 import it.polimi.ingsw.am24.modelView.GameView;
 
-import java.io.IOException;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public interface GameListener extends Remote {
 
@@ -20,8 +17,6 @@ public interface GameListener extends Remote {
     void noLobbyAvailable() throws RemoteException;
 
     void nicknameAlreadyUsed() throws RemoteException;
-
-   // void genericErrorWhenEnteringGame(String why) throws RemoteException;
 
     void availableColors(ArrayList<String> colors) throws RemoteException;
 
@@ -41,5 +36,5 @@ public interface GameListener extends Remote {
 
     void gameEnded(String winner, HashMap<String,Integer> rank) throws RemoteException;
 
-    //void sentMessage(ChatMessage msg) throws RemoteException;
+    void sentMessage(String message) throws RemoteException;
 }

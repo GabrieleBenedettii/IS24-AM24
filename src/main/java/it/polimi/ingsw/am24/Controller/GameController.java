@@ -3,6 +3,7 @@ package it.polimi.ingsw.am24.Controller;
 import it.polimi.ingsw.am24.Exceptions.FullLobbyException;
 import it.polimi.ingsw.am24.Exceptions.InvalidPositioningException;
 import it.polimi.ingsw.am24.Exceptions.RequirementsNotMetException;
+import it.polimi.ingsw.am24.chat.Chat;
 import it.polimi.ingsw.am24.listeners.GameListener;
 import it.polimi.ingsw.am24.model.Game;
 import it.polimi.ingsw.am24.model.Player;
@@ -33,6 +34,8 @@ public class GameController implements GameControllerInterface, Serializable, Ru
 
     private final Object lockPlayers = new Object();
 
+    private final Chat chat;
+
     public GameController(int numPlayers) {
         this.game = new Game();
         this.rotation = new ArrayList<>();
@@ -44,6 +47,7 @@ public class GameController implements GameControllerInterface, Serializable, Ru
         isLastRound = false;
         started = false;
         gameId = gameCounter++;
+        chat = new Chat();
         new Thread(this).start();
     }
 
@@ -217,6 +221,7 @@ public class GameController implements GameControllerInterface, Serializable, Ru
         for (String p : players.keySet()) {
             if (players.get(p).getScore() > max) {
                 win = p;
+                max = players.get(p).getScore();
             } else if (players.get(p).getScore() == max) {
                 win = win + "," + p;
             }
@@ -230,6 +235,18 @@ public class GameController implements GameControllerInterface, Serializable, Ru
 
     public void disconnectPlayer(){
         //Todo ?
+    }
+
+    public void sentPublicMessage(String sender, String message) throws RemoteException {
+        //if(!players.keySet().contains(nickname)) throw new
+        chat.addPublicMessage(sender, message);
+        notifyAllListeners_sentMessage();
+    }
+
+    public void sentPrivateMessage(String sender, String receiver, String message) throws RemoteException {
+        //if(!players.keySet().contains(nickname)) throw new
+        chat.addPrivateMessage(sender, receiver, message);
+        notifyAllListeners_sentMessage();
     }
 
     //if the game is started, it sends the list of players in the lobby, otherwise it sends the secret cards
@@ -266,6 +283,15 @@ public class GameController implements GameControllerInterface, Serializable, Ru
             }
             for (String p : listeners.keySet()) {
                 if (p != null && listeners.get(p) != null) listeners.get(p).gameEnded(winner, rank);
+            }
+        }
+    }
+
+    private void notifyAllListeners_sentMessage() throws RemoteException {
+        synchronized (chat) {
+            for (String p : listeners.keySet()) {
+                if(chat.getLast().getReceiver().isEmpty() || chat.getLast().getReceiver().equals(p))
+                    listeners.get(p).sentMessage(chat.getLastMessage());
             }
         }
     }

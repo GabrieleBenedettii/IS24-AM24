@@ -82,5 +82,10 @@ public class GameListenerClient implements GameListener, Serializable {
     public void gameEnded(String winner, HashMap<String,Integer> rank) throws RemoteException {
         flow.gameEnded(winner, rank);
     }
+
+    @Override
+    public void sentMessage(String message) throws RemoteException {
+        flow.sentMessage(message);
+    }
 }
 

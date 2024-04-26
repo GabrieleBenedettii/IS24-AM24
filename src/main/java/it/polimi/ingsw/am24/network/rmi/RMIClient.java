@@ -130,5 +130,15 @@ public class RMIClient implements CommonClientActions {
     public void drawCard(String nickname, int choice) throws RemoteException {
         gameController.drawCard(nickname, choice, listener);
     }
+
+    @Override
+    public void sendPublicMessage(String sender, String message) throws RemoteException {
+        gameController.sentPublicMessage(sender, message);
+    }
+
+    @Override
+    public void sendPrivateMessage(String sender, String receiver, String message) throws RemoteException {
+        gameController.sentPrivateMessage(sender, receiver, message);
+    }
 }
 

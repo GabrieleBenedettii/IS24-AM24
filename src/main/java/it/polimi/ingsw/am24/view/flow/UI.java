@@ -23,7 +23,7 @@ public abstract class UI {
     public abstract void show_wrong_card_play();
     public abstract void show_joined_players(ArrayList<String> player);
     public abstract void show_message();
-    public abstract void add_message(String sender, String message, String time);
+    public abstract void add_message(String message);
     public abstract void show_chosenNickname(String nickname);
     public abstract void show_network_type();
 }

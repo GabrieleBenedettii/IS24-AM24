@@ -1,6 +1,9 @@
 package it.polimi.ingsw.am24.view.input;
 
+import it.polimi.ingsw.am24.chat.ChatMessage;
 import it.polimi.ingsw.am24.view.GameFlow;
+
+import java.rmi.RemoteException;
 
 public class InputParser extends Thread {
 
@@ -34,20 +37,28 @@ public class InputParser extends Thread {
                 throw new RuntimeException(e);
             }
 
+            String[] substrings;
             //I popped an input from the buffer
-            /*if (nickname != null && txt.startsWith("/cs")) {
-                txt = txt.charAt(3) == ' ' ? txt.substring(4) : txt.substring(3);
-                if(txt.contains(" ")){
-                    String receiver = txt.substring(0, txt.indexOf(" "));
-                    String msg = txt.substring(receiver.length() + 1);
-                    gameFlow.sendMessage(new MessagePrivate(msg, nickname, receiver));
+            if (nickname != null && txt.startsWith("/cs")) {
+                substrings = txt.split(" ");
+                String receiver = substrings[1];
+                String message = txt.substring(receiver.length() + 4);
+                try {
+                    gameFlow.sendPrivateMessage(nickname, receiver, message);
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
                 }
-            } else if (nickname != null && txt.startsWith("/c")) {
+            }
+            else if (nickname != null && txt.startsWith("/c")) {
                 //I send a message
-                txt = txt.charAt(2) == ' ' ? txt.substring(3) : txt.substring(2);
-                gameFlow.sendMessage(new Message(txt, nickname));
-
-            } else if (txt.startsWith("/quit") || (txt.startsWith("/leave"))) {
+                String message = txt.substring(3);
+                try {
+                    gameFlow.sendPublicMessage(nickname, message);
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            /*else if (txt.startsWith("/quit") || (txt.startsWith("/leave"))) {
                 assert nickname != null;
                 System.exit(1);
                 //gameFlow.leave(p.getNickname(), gameId);
@@ -66,7 +77,7 @@ public class InputParser extends Thread {
         this.gameId = gameId;
     }
 
-    public void setPlayer(String nickname) {
+    public void setNickname(String nickname) {
         this.nickname = nickname;
     }
 
