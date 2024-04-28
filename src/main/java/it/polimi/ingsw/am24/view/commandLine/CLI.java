@@ -26,26 +26,58 @@ public class CLI extends UI {
 
     @Override
     public void show_gameView(GameView gameView) {
+        int firstRow =  gameView.getPlayerView().getBoard().length, lastRow = 0, firstColumn=  gameView.getPlayerView().getBoard()[0].length, lastColumn = 0;
+        for(int r = 0; r < gameView.getPlayerView().getBoard().length; r++){
+            for(int c = 0; c < gameView.getPlayerView().getBoard()[0].length; c++){
+                if(gameView.getPlayerView().getBoard()[r][c] != null){
+                    if(r <= firstRow){
+                        firstRow = r;
+                    }
+                    if(r >= lastRow){
+                        lastRow = r;
+                    }
+                    if(c <= firstColumn){
+                        firstColumn = c;
+                    }
+                    if(c >= lastColumn){
+                        lastColumn = c;
+                    }
+                }
+            }
+        }
+        if(firstRow > 0){
+            firstRow--;
+        }
+        if(firstColumn > 0){
+            firstColumn--;
+        }
+        if(lastRow < gameView.getPlayerView().getBoard().length-1){
+            lastRow++;
+        }
+        if(lastColumn < gameView.getPlayerView().getBoard()[0].length-1){
+            lastColumn++;
+        }
+        System.out.println(firstRow + "-" + lastRow + "\n" + firstColumn + "-" + lastColumn);
         out.println("current points: " + gameView.getPlayerView().getPlayerScore());
         out.println("\n" + gameView.getCurrent() + "'s table");
         out.print("    ");
-        for (int i = 0; i < gameView.getPlayerView().getBoard()[0].length; i++) {
+        for (int i = firstColumn; i <= lastColumn; i++) {
             out.print(i < 10 ? " " + i : i);
             out.print("  ");
         }
-        for (int i = 0; i < gameView.getPlayerView().getBoard().length; i++) {
+        for (int i = firstRow; i <= lastRow; i++) {
             out.print("\n  ");
-            for (int j = 0; j < gameView.getPlayerView().getBoard()[0].length*4+1; j++) {
+            for (int j = 0; j < (lastColumn-firstColumn+1)*4+1; j++) {
                 out.print("~");
             }
             out.print("\n");
             out.print((i < 10 ? " " + i : i));
-            for (int j = 0; j < gameView.getPlayerView().getBoard()[0].length; j++) {
+            for (int j = firstColumn; j < lastColumn+1; j++) {
                 out.print("|" + (gameView.getPlayerView().getPossiblePlacements()[i][j] ? Costants.BACKGROUND_BLACK : "") + (gameView.getPlayerView().getBoard()[i][j] != null ?
                         gameView.getPlayerView().getBoard()[i][j].substring(0,21) : "   " + Costants.BACKGROUND_RESET));
             }
             out.print("|\n  ");
-            for (int j = 0; j < gameView.getPlayerView().getBoard()[0].length; j++) {
+            for (int j = firstColumn; j < lastColumn+1; j++) {
                 out.print("|" + (gameView.getPlayerView().getPossiblePlacements()[i][j] ? Costants.BACKGROUND_BLACK : "") + (gameView.getPlayerView().getBoard()[i][j] != null ?
                         gameView.getPlayerView().getBoard()[i][j].substring(21) : "   " + Costants.BACKGROUND_RESET));
             }
@@ -53,7 +85,7 @@ public class CLI extends UI {
 
         }
         out.print("\n  ");
-        for (int j = 0; j < gameView.getPlayerView().getBoard()[0].length*4+1; j++) {
+        for (int j = 0; j < (lastColumn-firstColumn+1)*4+1; j++) {
             out.print("~");
         }
 
@@ -239,7 +271,6 @@ public class CLI extends UI {
                  \\   \\ .'          \\   \\  / |  ,     .-./  ---`-'  |  ,   /         '---'        `--'---'  \s
                   `---`             `----'   `--`---'               ---`-'                                 \s
                 """);
-        out.println(Costants.AUTORI);
         new PrintStream(System.out, true, System.console() != null
                 ? System.console().charset()
                 : Charset.defaultCharset()
@@ -257,6 +288,7 @@ public class CLI extends UI {
                 ██║░╚███║██║░░██║░░░██║░░░█████████║██║░░██║██║░░██║███████╗██║██████╔╝
                 ╚═╝░░╚══╝╚═╝░░╚═╝░░░╚═╝░░░╚═══════=╝╚═╝░░╚═╝╚═╝░░╚═╝╚══════╝╚═╝╚═════╝░
                 """);
+        out.println(Costants.AUTORI);
         out.println(Costants.REGOLE);
     }
 }
