@@ -187,7 +187,7 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
     }
 
     private void askNickname() {
-        String invalidChars = "~!@#$%^&*()-_=+[]{}|;:',.<>?0123456789";
+        String invalidChars = "~!@#$%^&*()-_=+[]{}|;:',.<>?";
         boolean validNickname = false;
         do {
             ui.show_insert_nickname();
@@ -220,7 +220,6 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
         switch (choice) {
             case "1" -> {
                 Integer numPlayers = askNumPlayers();
-                if(numPlayers < 2 || numPlayers > 4) return false;
                 createGame(nickname, numPlayers);
             }
             case "2" -> joinFirstGameAvailable(nickname);
@@ -321,40 +320,58 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
         //ui.show_player_view();
         do {
             try {
+                System.out.print("\nCommand -> ");
                 command = this.inputParser.getDataToProcess().pop();
                 String[] command_args = command.split(" ");
-                if(command_args.length != 5) {
-                    System.out.println("Invalid command. Please enter in the format: play <cardIndex> <front/back> <x> <y>");
-                    continue;
+
+                switch (command_args[0]) {
+                    case "/play" -> {
+                        if(command_args.length != 5) {
+                            System.out.println("Invalid command. Please enter in the format: play <cardIndex> <front/back> <x> <y>");
+                            continue;
+                        }
+                        int cardIndex, x, y;
+                        boolean front;
+                        try {
+                            cardIndex = Integer.parseInt(command_args[1]);
+                            x = Integer.parseInt(command_args[3]);
+                            y = Integer.parseInt(command_args[4]);
+                            front = command_args[2].equalsIgnoreCase("front");
+                        } catch (NumberFormatException e) {
+                            System.out.println("Invalid input. Please enter valid integers for card index, x, and y coordinates.");
+                            continue;
+                        }
+                        if (cardIndex < 0 || cardIndex >= gameView.getPlayerView().getPlayerHand().size()) {
+                            System.out.println("Invalid card index. Please enter a valid index.");
+                            continue;
+                        }
+                        if (x < 0 || x >= gameView.getPlayerView().getBoard().length || y < 0 || y >= gameView.getPlayerView().getBoard()[0].length) {
+                            System.out.println("Invalid coordinates. Please enter valid coordinates within the board.");
+                            continue;
+                        }
+                        if (!gameView.getPlayerView().getPossiblePlacements()[x][y]) {
+                            System.out.println("Invalid positioning. You cannot place a card in this position.");
+                            continue;
+                        }
+                        playCard(nickname, cardIndex, front, x, y);
+                    }
+                    case "/table" -> {
+                        ui.show_table(gameView, false);
+                        continue;
+                    }
+                    case "/visible" -> {
+                        ui.show_visibleSymbols(gameView);
+                        continue;
+                    }
+                    case "/help" -> {
+                        ui.show_menu();
+                        continue;
+                    }
+                    default -> {
+                        System.out.println("Invalid command. Type \"/help\" for help");
+                        continue;
+                    }
                 }
-                if(!command_args[0].equals("play")) {
-                    System.out.println("Invalid command. Please use 'play' command to play a card.");
-                    continue;
-                }
-                int cardIndex, x, y;
-                boolean front;
-                try {
-                    cardIndex = Integer.parseInt(command_args[1]);
-                    x = Integer.parseInt(command_args[3]);
-                    y = Integer.parseInt(command_args[4]);
-                    front = command_args[2].equalsIgnoreCase("front");
-                } catch (NumberFormatException e) {
-                    System.out.println("Invalid input. Please enter valid integers for card index, x, and y coordinates.");
-                    continue;
-                }
-                if (cardIndex < 0 || cardIndex >= gameView.getPlayerView().getPlayerHand().size()) {
-                    System.out.println("Invalid card index. Please enter a valid index.");
-                    continue;
-                }
-                if (x < 0 || x >= gameView.getPlayerView().getBoard().length || y < 0 || y >= gameView.getPlayerView().getBoard()[0].length) {
-                    System.out.println("Invalid coordinates. Please enter valid coordinates within the board.");
-                    continue;
-                }
-                if (!gameView.getPlayerView().getPossiblePlacements()[x][y]) {
-                    System.out.println("Invalid positioning. You cannot place a card in this position.");
-                    continue;
-                }
-                playCard(nickname, cardIndex, front, x, y);
             } catch (Exception e) {
                 System.out.println("An error occurred. Please try again.");
                 continue;
@@ -399,9 +416,10 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
         //ui.show_public_board_view();
         do {
             try {
+                System.out.print("\nCommand -> ");
                 command = this.inputParser.getDataToProcess().pop();
                 String[] command_args = command.split(" ");
-                if (!command_args[0].equalsIgnoreCase("draw") || command_args.length < 2) {
+                if (!command_args[0].equalsIgnoreCase("/draw") || command_args.length < 2) {
                     System.out.println("Invalid command. Please enter in the format: draw <cardIndex>");
                     continue;
                 }

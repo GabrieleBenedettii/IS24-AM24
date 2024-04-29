@@ -26,25 +26,38 @@ public class CLI extends UI {
 
     @Override
     public void show_gameView(GameView gameView) {
-        int firstRow =  gameView.getPlayerView().getBoard().length, lastRow = 0, firstColumn=  gameView.getPlayerView().getBoard()[0].length, lastColumn = 0;
+        int firstRow = gameView.getPlayerView().getBoard().length, lastRow = 0, firstColumn = gameView.getPlayerView().getBoard()[0].length, lastColumn = 0;
         for(int r = 0; r < gameView.getPlayerView().getBoard().length; r++){
             for(int c = 0; c < gameView.getPlayerView().getBoard()[0].length; c++){
                 if(gameView.getPlayerView().getBoard()[r][c] != null){
                     if(r <= firstRow){
-                        firstRow = r > 1 ? r - 2 : r;
+                        firstRow = r;
                     }
                     if(r >= lastRow){
-                        lastRow = r < gameView.getPlayerView().getBoard().length - 2 ? r + 2 : r;
+                        lastRow = r;
                     }
                     if(c <= firstColumn){
-                        firstColumn = c > 1 ? c - 2 : c;
+                        firstColumn = c;
                     }
                     if(c >= lastColumn){
-                        lastColumn = c < gameView.getPlayerView().getBoard()[0].length - 2 ? c + 2 : c;
+                        lastColumn = c;
                     }
                 }
             }
         }
+        if(firstRow > 1){
+            firstRow -= 2;
+        }
+        if(lastRow < gameView.getPlayerView().getBoard().length - 2){
+            lastRow += 2;
+        }
+        if(firstColumn > 1){
+            firstColumn -= 2;
+        }
+        if(lastColumn < gameView.getPlayerView().getBoard()[0].length - 2){
+            lastColumn += 2;
+        }
+
         out.println("current points: " + gameView.getPlayerView().getPlayerScore());
         out.println("\n" + gameView.getCurrent() + "'s table");
         out.print("    ");
@@ -79,7 +92,6 @@ public class CLI extends UI {
         for(int i = 0; i <  gameView.getPlayerView().getPlayerHand().size(); i++) {
             out.print("\n" + i + " - " + gameView.getPlayerView().getPlayerHand().get(i).getCardDescription());
         }
-        out.print("\nCommand -> ");
     }
 
     @Override
@@ -104,7 +116,6 @@ public class CLI extends UI {
                 out.println(gcv.getCardDescription());
             }
         }
-        out.print("Command -> ");
     }
 
     @Override
@@ -116,11 +127,11 @@ public class CLI extends UI {
 
     @Override
     public void show_menu() {
-        out.println("Play a card -> play <card> <\"front\"/\"back\"> <x> <y>");
-        out.println("Show table -> show");
-        out.println("Show own visible symbols -> visible");
-        out.println("Draw a card (after play a card) -> draw <option>");
-        out.println("Help -> help");
+        out.println("Play a card -> /play <card> <\"front\"/\"back\"> <x> <y>");
+        out.println("Show table -> /table");
+        out.println("Show own visible symbols -> /visible");
+        out.println("Draw a card (after play a card) -> /draw <option>");
+        out.println("Help -> /help");
     }
 
     @Override

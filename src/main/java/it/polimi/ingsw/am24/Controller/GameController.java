@@ -290,7 +290,7 @@ public class GameController implements GameControllerInterface, Serializable, Ru
     private void notifyAllListeners_sentMessage() throws RemoteException {
         synchronized (chat) {
             for (String p : listeners.keySet()) {
-                if(chat.getLast().getReceiver().isEmpty() || chat.getLast().getReceiver().equals(p))
+                if(chat.getLast().getReceiver().isEmpty() || chat.getLast().getReceiver().equals(p) || !chat.getLast().getSender().equals(p))
                     listeners.get(p).sentMessage(chat.getLastMessage());
             }
         }

@@ -25,10 +25,14 @@ public class ChatMessage implements Serializable {
     }
 
     public String getMessage() {
-        String ret = receiver != null ? "[PRIVATE]" : "[PUBLIC]";
+        String ret = !receiver.isEmpty() ? "[PRIVATE]" : "[PUBLIC]";
         ret += " [" + time.format(DateTimeFormatter.ofPattern("HH:mm")) + "]";
         ret += " from " + sender + ": " + message;
         return ret;
+    }
+
+    public String getSender() {
+        return sender;
     }
 
     public String getReceiver() {

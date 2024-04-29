@@ -62,7 +62,7 @@ public class RMIServer extends UnicastRemoteObject implements LobbyControllerInt
             }catch (RemoteException e){
 
             }
-            System.out.println("[RMI] " + nickname + " joined in first available game");
+            System.out.println("[RMI] " + nickname + (numPlayers == 1 ? " created a new lobby" : " joined in first available game"));
         }
         return ris;
     }
