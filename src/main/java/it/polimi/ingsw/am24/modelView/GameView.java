@@ -1,5 +1,7 @@
 package it.polimi.ingsw.am24.modelView;
 
+import it.polimi.ingsw.am24.view.flow.utility.GameStatus;
+
 import java.io.Serializable;
 
 public class GameView implements Serializable {
@@ -7,12 +9,14 @@ public class GameView implements Serializable {
     private final int gameId;
     private final PlayerView playerView;
     private final PublicBoardView common;
+    private final GameStatus gameStatus;
 
-    public GameView(String current, int gameId, PlayerView playerView, PublicBoardView common) {
+    public GameView(String current, int gameId, PlayerView playerView, PublicBoardView common, GameStatus gameStatus) {
         this.current = current;
         this.gameId = gameId;
         this.playerView = playerView;
         this.common = common;
+        this.gameStatus = gameStatus;
     }
 
     public String getCurrent() {
@@ -29,5 +33,9 @@ public class GameView implements Serializable {
 
     public PublicBoardView getCommon() {
         return common;
+    }
+
+    public GameStatus getGameStatus() {
+        return gameStatus;
     }
 }

@@ -11,6 +11,7 @@ import it.polimi.ingsw.am24.model.PlayerColor;
 import it.polimi.ingsw.am24.model.goal.GoalCard;
 import it.polimi.ingsw.am24.modelView.GameView;
 import it.polimi.ingsw.am24.network.rmi.GameControllerInterface;
+import it.polimi.ingsw.am24.view.flow.utility.GameStatus;
 
 import java.io.Serializable;
 import java.rmi.RemoteException;
@@ -255,8 +256,9 @@ public class GameController implements GameControllerInterface, Serializable, Ru
             if(started) {
                 //if the game is started and all players are ready for the rotation
                 if(readyPlayers == playerCount) {
+                    GameStatus status = (isLastRound ? GameStatus.LAST_ROUND : (beginEndGame ? GameStatus.LAST_LAST_ROUND : GameStatus.RUNNING));
                     for (String p : listeners.keySet()) {
-                        if (p != null && listeners.get(p) != null) listeners.get(p).beginTurn(new GameView(currentPlayer, gameId, players.get(p).getPlayerView(), game.getPublicBoardView()));
+                        if (p != null && listeners.get(p) != null) listeners.get(p).beginTurn(new GameView(currentPlayer, gameId, players.get(p).getPlayerView(), game.getPublicBoardView(), status));
                     }
                 }
                 //if the game is started, but they have to choose secret goal card and initial card side

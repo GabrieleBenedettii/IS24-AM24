@@ -31,8 +31,6 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
 
     private final UI ui;
 
-    private boolean ended = false;
-
     protected InputParser inputParser;
     protected InputReader inputReader;
 
@@ -75,7 +73,7 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
                                 throw new RuntimeException(e);
                             }
                         }
-                        case RUNNING, LAST_LAST_ROUND, LAST_ROUND -> {
+                        case RUNNING -> {
                             try {
                                 statusRunning(event);
                             } catch (IOException | InterruptedException e) {
@@ -182,10 +180,6 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
         }
     }
 
-    public boolean isEnded() {
-        return ended;
-    }
-
     private void askNickname() {
         String invalidChars = "~!@#$%^&*()-_=+[]{}|;:',.<>?";
         boolean validNickname = false;
@@ -208,7 +202,6 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
 
     private boolean askSelectGame() {
         String choice;
-        ended = false;
         ui.show_lobby();
         try {
             choice = this.inputParser.getDataToProcess().pop();
@@ -582,7 +575,7 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
 
     @Override
     public void gameEnded(String winner, HashMap<String,Integer> rank) {
-        ended = true;
+        this.status = GameStatus.ENDED;
         addEvent(EventType.GAME_ENDED);
         ui.show_winner_and_rank(winner.equals(nickname), rank);
         //resetGameId(fileDisconnection, gameModel);
@@ -590,7 +583,7 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
 
     private void addEvent(EventType type) {
         events.add(new Event(type));
-        if (type.equals(EventType.AVAILABLE_COLORS) || type.equals(EventType.PLAYER_JOINED) || (status != null && (status.equals(GameStatus.RUNNING) || status.equals(GameStatus.LAST_LAST_ROUND) || status.equals(GameStatus.LAST_ROUND)) ))
+        if (type.equals(EventType.AVAILABLE_COLORS) || type.equals(EventType.PLAYER_JOINED) || (status != null && status.equals(GameStatus.RUNNING)))
             joined = true;
 
         if(type.equals(EventType.APP_MENU))
