@@ -31,33 +31,20 @@ public class CLI extends UI {
             for(int c = 0; c < gameView.getPlayerView().getBoard()[0].length; c++){
                 if(gameView.getPlayerView().getBoard()[r][c] != null){
                     if(r <= firstRow){
-                        firstRow = r;
+                        firstRow = r > 1 ? r - 2 : r;
                     }
                     if(r >= lastRow){
-                        lastRow = r;
+                        lastRow = r < gameView.getPlayerView().getBoard().length - 2 ? r + 2 : r;
                     }
                     if(c <= firstColumn){
-                        firstColumn = c;
+                        firstColumn = c > 1 ? c - 2 : c;
                     }
                     if(c >= lastColumn){
-                        lastColumn = c;
+                        lastColumn = c < gameView.getPlayerView().getBoard()[0].length - 2 ? c + 2 : c;
                     }
                 }
             }
         }
-        if(firstRow > 0){
-            firstRow--;
-        }
-        if(firstColumn > 0){
-            firstColumn--;
-        }
-        if(lastRow < gameView.getPlayerView().getBoard().length-1){
-            lastRow++;
-        }
-        if(lastColumn < gameView.getPlayerView().getBoard()[0].length-1){
-            lastColumn++;
-        }
-        System.out.println(firstRow + "-" + lastRow + "\n" + firstColumn + "-" + lastColumn);
         out.println("current points: " + gameView.getPlayerView().getPlayerScore());
         out.println("\n" + gameView.getCurrent() + "'s table");
         out.print("    ");
@@ -238,7 +225,7 @@ public class CLI extends UI {
     @Override
     public void show_logo() {
         clearScreen();
-        new PrintStream(System.out, true, System.console() != null
+        /*new PrintStream(System.out, true, System.console() != null
                 ? System.console().charset()
                 : Charset.defaultCharset()
         ).println("""
@@ -270,7 +257,7 @@ public class CLI extends UI {
                 |   :    /  ---'  |   :    |;  :   .'   \\ |  ,   / ;  :    ;`----'  |   |/     '--'.     / \s
                  \\   \\ .'          \\   \\  / |  ,     .-./  ---`-'  |  ,   /         '---'        `--'---'  \s
                   `---`             `----'   `--`---'               ---`-'                                 \s
-                """);
+                """);*/
         new PrintStream(System.out, true, System.console() != null
                 ? System.console().charset()
                 : Charset.defaultCharset()
