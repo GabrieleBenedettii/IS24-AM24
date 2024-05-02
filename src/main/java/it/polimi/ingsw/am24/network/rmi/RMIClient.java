@@ -1,7 +1,6 @@
 package it.polimi.ingsw.am24.network.rmi;
 
 import it.polimi.ingsw.am24.listeners.GameListener;
-import it.polimi.ingsw.am24.network.GameListenerClient;
 import it.polimi.ingsw.am24.view.flow.CommonClientActions;
 import it.polimi.ingsw.am24.view.flow.Flow;
 
@@ -23,7 +22,7 @@ public class RMIClient implements CommonClientActions {
 
     private static GameListener listener;
 
-    private final GameListenerClient gameListenersHandler;
+    private final GameListenerClientRMI gameListenersHandler;
 
     private Registry registry;
 
@@ -31,7 +30,7 @@ public class RMIClient implements CommonClientActions {
 
     public RMIClient(Flow flow) {
         super();
-        gameListenersHandler = new GameListenerClient(flow);
+        gameListenersHandler = new GameListenerClientRMI(flow);
         connect();
 
         this.flow=flow;
@@ -51,7 +50,7 @@ public class RMIClient implements CommonClientActions {
                 System.out.println("Client RMI ready");
             } catch (Exception e) {
                 if (!retry) {
-                    System.out.println("[ERROR] CONNECTING TO RMI SERVER: \n\tClient RMI exception: " + e + "\n");
+                    System.out.println("[ERROR] CONNECTING TO RMI SERVER: \nClient RMI exception: " + e + "\n");
                 }
                 System.out.print("[#" + attempt + "]Waiting to reconnect to RMI Server on port: '" + port + "' with name: '" + serverName + "'");
                 retry = true;

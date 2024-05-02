@@ -3,6 +3,7 @@ package it.polimi.ingsw.am24.view;
 import it.polimi.ingsw.am24.modelView.GameCardView;
 import it.polimi.ingsw.am24.modelView.GameView;
 import it.polimi.ingsw.am24.network.rmi.RMIClient;
+import it.polimi.ingsw.am24.network.socket.SocketClient;
 import it.polimi.ingsw.am24.view.commandLine.CLI;
 import it.polimi.ingsw.am24.view.flow.CommonClientActions;
 import it.polimi.ingsw.am24.view.flow.Flow;
