@@ -1,15 +1,13 @@
 package it.polimi.ingsw.am24.network.socket;
 
-import it.polimi.ingsw.am24.messages.AddPlayerMessage;
-import it.polimi.ingsw.am24.messages.Message;
+import it.polimi.ingsw.am24.messages.clientToServer.AddPlayerMessage;
+import it.polimi.ingsw.am24.messages.SocketServerMessage;
 import it.polimi.ingsw.am24.network.rmi.GameControllerInterface;
-import it.polimi.ingsw.am24.Controller.LobbyController;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.rmi.RemoteException;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -21,7 +19,7 @@ public class ClientHandler extends Thread {
     private GameControllerInterface gameController;
     private GameListenerClientSocket listener;
 
-    private Queue<Message> messagesQueue = new LinkedList<Message>();
+    private Queue<SocketServerMessage> messagesQueue = new LinkedList<SocketServerMessage>();
 
     public ClientHandler(Socket client) throws IOException {
         this.client = client;
@@ -34,11 +32,11 @@ public class ClientHandler extends Thread {
     public void run() {
         Thread executeMessagesThread = new Thread(this::executeMessages);
         executeMessagesThread.start();
-        Message msg;
+        SocketServerMessage msg;
 
         while(!this.isInterrupted()) {
             try {
-                msg =(Message) in.readObject();
+                msg =(SocketServerMessage) in.readObject();
                 messagesQueue.add(msg);
 
             } catch (IOException | ClassNotFoundException e) {
@@ -48,7 +46,7 @@ public class ClientHandler extends Thread {
     }
 
     private void executeMessages() {
-        Message msg;
+        SocketServerMessage msg;
 
         //try {
             while (!this.isInterrupted()) {

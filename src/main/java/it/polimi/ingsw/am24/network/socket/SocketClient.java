@@ -1,6 +1,7 @@
 package it.polimi.ingsw.am24.network.socket;
 
 import it.polimi.ingsw.am24.messages.*;
+import it.polimi.ingsw.am24.messages.clientToServer.AddPlayerMessage;
 import it.polimi.ingsw.am24.network.GameListenerClient;
 import it.polimi.ingsw.am24.view.flow.Flow;
 
@@ -43,7 +44,7 @@ public class SocketClient extends Thread /*implements CommonClientActions*/ {
     public void run() {
         while(true) {
             try {
-                Message message = (Message) in.readObject();
+                SocketClientMessage message = (SocketClientMessage) in.readObject();
                 //todo add an execute method in all message classes
                 //message.execute(listener);
             } catch (IOException | ClassNotFoundException e) {

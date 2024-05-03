@@ -1,7 +1,6 @@
 package it.polimi.ingsw.am24.network.socket;
 
-import it.polimi.ingsw.am24.listeners.GameListener;
-import it.polimi.ingsw.am24.messages.NoLobbyMessage;
+import it.polimi.ingsw.am24.messages.servetToClient.NoLobbyAvaiableMessage;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -19,7 +18,7 @@ public class GameListenerClientSocket implements /*GameListener,*/ Serializable 
     //@Override
     public void noLobbyAvailable() throws RemoteException {
         try {
-            out.writeObject(new NoLobbyMessage());
+            out.writeObject(new NoLobbyAvaiableMessage());
             out.flush();
             out.reset();
 
