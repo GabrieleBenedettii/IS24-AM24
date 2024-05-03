@@ -1,4 +1,4 @@
-package it.polimi.ingsw.am24.network.rmi;
+package it.polimi.ingsw.am24.network;
 
 import it.polimi.ingsw.am24.listeners.GameListener;
 import it.polimi.ingsw.am24.modelView.GameCardView;
@@ -10,11 +10,11 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class GameListenerClientRMI implements GameListener, Serializable {
+public class GameListenerClient implements GameListener, Serializable {
 
     private final Flow flow;
 
-    public GameListenerClientRMI(Flow flow) {
+    public GameListenerClient(Flow flow) {
         this.flow = flow;
     }
 

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.am24.network.rmi;
 
 import it.polimi.ingsw.am24.listeners.GameListener;
+import it.polimi.ingsw.am24.network.GameListenerClient;
 import it.polimi.ingsw.am24.view.flow.CommonClientActions;
 import it.polimi.ingsw.am24.view.flow.Flow;
 
@@ -22,7 +23,7 @@ public class RMIClient implements CommonClientActions {
 
     private static GameListener listener;
 
-    private final GameListenerClientRMI gameListenersHandler;
+    private final GameListenerClient gameListenersHandler;
 
     private Registry registry;
 
@@ -30,7 +31,7 @@ public class RMIClient implements CommonClientActions {
 
     public RMIClient(Flow flow) {
         super();
-        gameListenersHandler = new GameListenerClientRMI(flow);
+        gameListenersHandler = new GameListenerClient(flow);
         connect();
 
         this.flow=flow;

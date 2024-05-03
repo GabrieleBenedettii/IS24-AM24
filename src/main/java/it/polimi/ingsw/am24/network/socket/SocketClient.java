@@ -1,8 +1,7 @@
 package it.polimi.ingsw.am24.network.socket;
 
 import it.polimi.ingsw.am24.messages.*;
-import it.polimi.ingsw.am24.network.rmi.GameListenerClientRMI;
-import it.polimi.ingsw.am24.view.flow.CommonClientActions;
+import it.polimi.ingsw.am24.network.GameListenerClient;
 import it.polimi.ingsw.am24.view.flow.Flow;
 
 import java.io.IOException;
@@ -17,13 +16,13 @@ public class SocketClient extends Thread /*implements CommonClientActions*/ {
     private Socket client;
     private ObjectInputStream in;
     private ObjectOutputStream out;
-    private GameListenerClientRMI listener;
+    private GameListenerClient listener;
     private Flow flow;
 
     public SocketClient(Flow flow) {
         this.flow = flow;
         connect();
-        listener = new GameListenerClientRMI(flow);
+        listener = new GameListenerClient(flow);
         this.start();
     }
 
