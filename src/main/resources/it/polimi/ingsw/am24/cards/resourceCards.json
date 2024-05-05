@@ -1,5 +1,6 @@
 [
   {
+    "cardID":1,
     "kingdom":"FUNGI",
     "points":0,
     "corners":[
@@ -22,6 +23,7 @@
     ]
   },
   {
+    "cardID":2,
     "kingdom":"FUNGI",
     "points":0,
     "corners":[
@@ -44,6 +46,7 @@
     ]
   },
   {
+    "cardID":3,
     "kingdom":"FUNGI",
     "points":0,
     "corners":[
@@ -66,6 +69,7 @@
     ]
   },
   {
+    "cardID":4,
     "kingdom":"FUNGI",
     "points":0,
     "corners":[
@@ -88,6 +92,7 @@
     ]
   },
   {
+    "cardID":5,
     "kingdom":"FUNGI",
     "points":0,
     "corners":[
@@ -110,6 +115,7 @@
     ]
   },
   {
+    "cardID":6,
     "kingdom":"FUNGI",
     "points":0,
     "corners":[
@@ -132,6 +138,7 @@
     ]
   },
   {
+    "cardID":7,
     "kingdom":"FUNGI",
     "points":0,
     "corners":[
@@ -154,6 +161,7 @@
     ]
   },
   {
+    "cardID":8,
     "kingdom":"FUNGI",
     "points":1,
     "corners":[
@@ -176,6 +184,7 @@
     ]
   },
   {
+    "cardID":9,
     "kingdom":"FUNGI",
     "points":1,
     "corners":[
@@ -198,6 +207,7 @@
     ]
   },
   {
+    "cardID":10,
     "kingdom":"FUNGI",
     "points":1,
     "corners":[
@@ -220,6 +230,7 @@
     ]
   },
   {
+    "cardID":11,
     "kingdom":"PLANT",
     "points":0,
     "corners":[
@@ -242,6 +253,7 @@
     ]
   },
   {
+    "cardID":12,
     "kingdom":"PLANT",
     "points":0,
     "corners":[
@@ -264,6 +276,7 @@
     ]
   },
   {
+    "cardID":13,
     "kingdom":"PLANT",
     "points":0,
     "corners":[
@@ -286,6 +299,7 @@
     ]
   },
   {
+    "cardID":14,
     "kingdom":"PLANT",
     "points":0,
     "corners":[
@@ -308,6 +322,7 @@
     ]
   },
   {
+    "cardID":15,
     "kingdom":"PLANT",
     "points":0,
     "corners":[
@@ -330,6 +345,7 @@
     ]
   },
   {
+    "cardID":16,
     "kingdom":"PLANT",
     "points":0,
     "corners":[
@@ -352,6 +368,7 @@
     ]
   },
   {
+    "cardID":17,
     "kingdom":"PLANT",
     "points":0,
     "corners":[
@@ -374,6 +391,7 @@
     ]
   },
   {
+    "cardID":18,
     "kingdom":"PLANT",
     "points":1,
     "corners":[
@@ -396,6 +414,7 @@
     ]
   },
   {
+    "cardID":19,
     "kingdom":"PLANT",
     "points":1,
     "corners":[
@@ -418,6 +437,7 @@
     ]
   },
   {
+    "cardID":20,
     "kingdom":"PLANT",
     "points":1,
     "corners":[
@@ -440,6 +460,7 @@
     ]
   },
   {
+    "cardID":21,
     "kingdom":"ANIMAL",
     "points":0,
     "corners":[
@@ -462,6 +483,7 @@
     ]
   },
   {
+    "cardID":22,
     "kingdom":"ANIMAL",
     "points":0,
     "corners":[
@@ -484,6 +506,7 @@
     ]
   },
   {
+    "cardID":23,
     "kingdom":"ANIMAL",
     "points":0,
     "corners":[
@@ -506,6 +529,7 @@
     ]
   },
   {
+    "cardID":24,
     "kingdom":"ANIMAL",
     "points":0,
     "corners":[
@@ -528,6 +552,7 @@
     ]
   },
   {
+    "cardID":25,
     "kingdom":"ANIMAL",
     "points":0,
     "corners":[
@@ -550,6 +575,7 @@
     ]
   },
   {
+    "cardID":26,
     "kingdom":"ANIMAL",
     "points":0,
     "corners":[
@@ -572,6 +598,7 @@
     ]
   },
   {
+    "cardID":27,
     "kingdom":"ANIMAL",
     "points":0,
     "corners":[
@@ -594,6 +621,7 @@
     ]
   },
   {
+    "cardID":28,
     "kingdom":"ANIMAL",
     "points":0,
     "corners":[
@@ -616,6 +644,7 @@
     ]
   },
   {
+    "cardID":29,
     "kingdom":"ANIMAL",
     "points":1,
     "corners":[
@@ -638,6 +667,7 @@
     ]
   },
   {
+    "cardID":30,
     "kingdom":"ANIMAL",
     "points":1,
     "corners":[
@@ -660,6 +690,7 @@
     ]
   },
   {
+    "cardID":31,
     "kingdom":"ANIMAL",
     "points":1,
     "corners":[
@@ -682,6 +713,7 @@
     ]
   },
   {
+    "cardID":32,
     "kingdom":"ANIMAL",
     "points":1,
     "corners":[
@@ -704,6 +736,7 @@
     ]
   },
   {
+    "cardID":33,
     "kingdom":"INSECT",
     "points":0,
     "corners":[
@@ -726,6 +759,7 @@
     ]
   },
   {
+    "cardID":34,
     "kingdom":"INSECT",
     "points":0,
     "corners":[
@@ -748,6 +782,7 @@
     ]
   },
   {
+    "cardID":35,
     "kingdom":"INSECT",
     "points":0,
     "corners":[
@@ -770,6 +805,7 @@
     ]
   },
   {
+    "cardID":36,
     "kingdom":"INSECT",
     "points":0,
     "corners":[
@@ -792,6 +828,7 @@
     ]
   },
   {
+    "cardID":37,
     "kingdom":"INSECT",
     "points":0,
     "corners":[
@@ -814,6 +851,7 @@
     ]
   },
   {
+    "cardID":38,
     "kingdom":"INSECT",
     "points":0,
     "corners":[
@@ -836,6 +874,7 @@
     ]
   },
   {
+    "cardID":39,
     "kingdom":"INSECT",
     "points":0,
     "corners":[
@@ -858,6 +897,7 @@
     ]
   },
   {
+    "cardID":40,
     "kingdom":"INSECT",
     "points":1,
     "corners":[
@@ -880,6 +920,7 @@
     ]
   },
   {
+    "cardID":41,
     "kingdom":"INSECT",
     "points":1,
     "corners":[
@@ -902,6 +943,7 @@
     ]
   },
   {
+    "cardID":42,
     "kingdom":"INSECT",
     "points":1,
     "corners":[

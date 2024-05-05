@@ -1,5 +1,6 @@
 [
   {
+    "cardID":43,
     "kingdom":"FUNGI",
     "requirements":{
       "FUNGI":2,
@@ -28,6 +29,7 @@
     ]
   },
   {
+    "cardID":44,
     "kingdom":"FUNGI",
     "requirements":{
       "FUNGI":2,
@@ -56,6 +58,7 @@
     ]
   },
   {
+    "cardID":45,
     "kingdom":"FUNGI",
     "requirements":{
       "FUNGI":2,
@@ -84,6 +87,7 @@
     ]
   },
   {
+    "cardID":46,
     "kingdom":"FUNGI",
     "requirements":{
       "FUNGI":3,
@@ -112,6 +116,7 @@
     ]
   },
   {
+    "cardID":47,
     "kingdom":"FUNGI",
     "requirements":{
       "FUNGI":3,
@@ -140,6 +145,7 @@
     ]
   },
   {
+    "cardID":48,
     "kingdom":"FUNGI",
     "requirements":{
       "FUNGI":3,
@@ -168,6 +174,7 @@
     ]
   },
   {
+    "cardID":49,
     "kingdom":"FUNGI",
     "requirements":{
       "FUNGI":3
@@ -195,6 +202,7 @@
     ]
   },
   {
+    "cardID":50,
     "kingdom":"FUNGI",
     "requirements":{
       "FUNGI":3
@@ -222,6 +230,7 @@
     ]
   },
   {
+    "cardID":51,
     "kingdom":"FUNGI",
     "requirements":{
       "FUNGI":3
@@ -249,6 +258,7 @@
     ]
   },
   {
+    "cardID":52,
     "kingdom":"FUNGI",
     "requirements":{
       "FUNGI":5
@@ -276,6 +286,7 @@
     ]
   },
   {
+    "cardID":53,
     "kingdom":"PLANT",
     "requirements":{
       "PLANT":2,
@@ -304,6 +315,7 @@
     ]
   },
   {
+    "cardID":54,
     "kingdom":"PLANT",
     "requirements":{
       "PLANT":2,
@@ -332,6 +344,7 @@
     ]
   },
   {
+    "cardID":55,
     "kingdom":"PLANT",
     "requirements":{
       "PLANT":2,
@@ -360,6 +373,7 @@
     ]
   },
   {
+    "cardID":56,
     "kingdom":"PLANT",
     "requirements":{
       "PLANT":3,
@@ -388,6 +402,7 @@
     ]
   },
   {
+    "cardID":57,
     "kingdom":"PLANT",
     "requirements":{
       "PLANT":3,
@@ -416,6 +431,7 @@
     ]
   },
   {
+    "cardID":58,
     "kingdom":"PLANT",
     "requirements":{
       "PLANT":3,
@@ -444,6 +460,7 @@
     ]
   },
   {
+    "cardID":59,
     "kingdom":"PLANT",
     "requirements":{
       "PLANT":3
@@ -471,6 +488,7 @@
     ]
   },
   {
+    "cardID":60,
     "kingdom":"PLANT",
     "requirements":{
       "PLANT":3
@@ -498,6 +516,7 @@
     ]
   },
   {
+    "cardID":61,
     "kingdom":"PLANT",
     "requirements":{
       "PLANT":3
@@ -525,6 +544,7 @@
     ]
   },
   {
+    "cardID":62,
     "kingdom":"PLANT",
     "requirements":{
       "PLANT":5
@@ -552,6 +572,7 @@
     ]
   },
   {
+    "cardID":63,
     "kingdom":"ANIMAL",
     "requirements":{
       "ANIMAL":2,
@@ -580,6 +601,7 @@
     ]
   },
   {
+    "cardID":64,
     "kingdom":"ANIMAL",
     "requirements":{
       "ANIMAL":2,
@@ -608,6 +630,7 @@
     ]
   },
   {
+    "cardID":65,
     "kingdom":"ANIMAL",
     "requirements":{
       "ANIMAL":2,
@@ -636,6 +659,7 @@
     ]
   },
   {
+    "cardID":66,
     "kingdom":"ANIMAL",
     "requirements":{
       "ANIMAL":3,
@@ -664,6 +688,7 @@
     ]
   },
   {
+    "cardID":67,
     "kingdom":"ANIMAL",
     "requirements":{
       "ANIMAL":3,
@@ -692,6 +717,7 @@
     ]
   },
   {
+    "cardID":68,
     "kingdom":"ANIMAL",
     "requirements":{
       "ANIMAL":3,
@@ -720,6 +746,7 @@
     ]
   },
   {
+    "cardID":69,
     "kingdom":"ANIMAL",
     "requirements":{
       "ANIMAL":3
@@ -747,6 +774,7 @@
     ]
   },
   {
+    "cardID":70,
     "kingdom":"ANIMAL",
     "requirements":{
       "ANIMAL":3
@@ -774,6 +802,7 @@
     ]
   },
   {
+    "cardID":71,
     "kingdom":"ANIMAL",
     "requirements":{
       "ANIMAL":3
@@ -801,6 +830,7 @@
     ]
   },
   {
+    "cardID":72,
     "kingdom":"ANIMAL",
     "requirements":{
       "ANIMAL":5
@@ -828,6 +858,7 @@
     ]
   },
   {
+    "cardID":73,
     "kingdom":"INSECT",
     "requirements":{
       "INSECT":2,
@@ -856,6 +887,7 @@
     ]
   },
   {
+    "cardID":74,
     "kingdom":"INSECT",
     "requirements":{
       "INSECT":2,
@@ -884,6 +916,7 @@
     ]
   },
   {
+    "cardID":75,
     "kingdom":"INSECT",
     "requirements":{
       "INSECT":2,
@@ -912,6 +945,7 @@
     ]
   },
   {
+    "cardID":76,
     "kingdom":"INSECT",
     "requirements":{
       "INSECT":3,
@@ -940,6 +974,7 @@
     ]
   },
   {
+    "cardID":77,
     "kingdom":"INSECT",
     "requirements":{
       "INSECT":3,
@@ -968,6 +1003,7 @@
     ]
   },
   {
+    "cardID":78,
     "kingdom":"INSECT",
     "requirements":{
       "INSECT":3,
@@ -996,6 +1032,7 @@
     ]
   },
   {
+    "cardID":79,
     "kingdom":"INSECT",
     "requirements":{
       "INSECT":3
@@ -1023,6 +1060,7 @@
     ]
   },
   {
+    "cardID":80,
     "kingdom":"INSECT",
     "requirements":{
       "INSECT":3
@@ -1050,6 +1088,7 @@
     ]
   },
   {
+    "cardID":81,
     "kingdom":"INSECT",
     "requirements":{
       "INSECT":3
@@ -1077,6 +1116,8 @@
     ]
   },
   {
+    "cardID":82,
+    "cardID":83,
     "kingdom":"INSECT",
     "requirements":{
       "INSECT":5
