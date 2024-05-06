@@ -1,0 +1,151 @@
+.cranioLogo{
+    -fx-background-image: url("/it/polimi/ingsw/am24/images/misc/CranioLogo.png");
+    -fx-background-repeat: stretch;
+    -fx-background-size: cover;
+}
+.soundOn{
+    -fx-background-image: url("images/misc/icons/soundON.png");
+    -fx-background-repeat: stretch;
+    -fx-background-size: cover;
+}
+.soundOff{
+    -fx-background-image: url("images/misc/icons/soundOFF.png");
+    -fx-background-repeat: stretch;
+    -fx-background-size: cover;
+}
+.scoreBoard{
+    -fx-background-image: url("images/misc/PLATEU-SCORE-IMP.PNG");
+    -fx-background-repeat: stretch;
+    -fx-background-size: cover;
+}
+.green {
+    -fx-background-color:
+            linear-gradient(#f0ff35, #a9ff00),
+            radial-gradient(center 50% -40%, radius 200%, #b8ee36 45%, #80c800 50%);
+    -fx-background-radius: 6, 5;
+    -fx-background-insets: 0, 1;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-text-fill: #395306;
+}
+.yellow {
+    -fx-background-color:
+            linear-gradient(#dcca8a, #c7a740),
+            radial-gradient(center 50% -40%, radius 200%, rgba(228,236,43,1) 0%, rgba(218,200,24,1) 100%);
+    -fx-background-radius: 6, 5;
+    -fx-background-insets: 0, 1;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-text-fill: #311c09;
+}
+.red {
+    -fx-background-color:
+            linear-gradient(#ff5400, #be1d00),
+            radial-gradient(center 50% -40%, radius 200%, #ff2121 25%, #5c0606 75%);
+    -fx-background-radius: 6, 5;
+    -fx-background-insets: 0, 1;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-text-fill: #301f1f;
+}
+.blue {
+    -fx-background-color:
+            linear-gradient(#1123bd, #1165bd),
+            radial-gradient(center 50% -40%, radius 200%, #00caff 25%, #0284ec 75%);
+    -fx-background-radius: 6, 5;
+    -fx-background-insets: 0, 1;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-text-fill: #000000;
+}
+.nicknameBackground{
+    -fx-background-image: url("images/misc/NicknameBackground.jpeg");
+    -fx-background-repeat: stretch;
+    -fx-background-size: cover;
+}
+.Button-1-Text {
+    -fx-fill: white;
+    -fx-effect: dropshadow( gaussian , #4c00a3 , 0,0,0,5 );
+}
+.Button-1 {
+    -fx-padding: 8 15 15 15;
+    -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;
+    -fx-background-radius: 8;
+    -fx-background-color:
+            linear-gradient(from 0% 93% to 0% 100%, #854cc7 0%, #412365 100%),
+            #854cc7,
+            #412365,
+            radial-gradient(center 50% 50%, radius 100%, #854cc7, #412365);
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
+    -fx-font-weight: bold;
+    -fx-font-size:22;
+}
+.Button-1:hover {
+    -fx-background-color:
+            linear-gradient(from 0% 93% to 0% 100%, #26a8ab 0%, #00caff 100%),
+            #26a8ab,
+            #00caff,
+            radial-gradient(center 50% 50%, radius 100%, #26a8ab, #00caff);
+    -fx-font-size:22px !important;
+}
+.Button-1:pressed {
+    -fx-padding: 10 15 13 15;
+    -fx-background-insets: 2 0 0 0,2 0 3 0, 2 0 4 0, 2 0 5 0;
+}
+.ready {
+    -fx-background-image:
+            linear-gradient(from 0% 100% to 0% 100%, #266b02 0%, #1dfd1d 50%, #266b02 100%),
+            #266b02,
+            #1dfd1d,
+            #266b02;
+    -fx-background-repeat: stretch;
+    -fx-background-size: cover;
+}
+.backgroundmenu{
+    -fx-background-image: url("images/misc/codex.jpg");
+    -fx-background-repeat: stretch;
+    -fx-background-size: cover;
+}
+.buttonSelect {
+    -fx-padding: 8 15 15 15;
+    -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;
+    -fx-background-radius: 8;
+    -fx-background-color:
+            linear-gradient(from 0% 93% to 0% 100%, #26a8ab 0%, #00caff 100%),
+            #26a8ab,
+            #00caff,
+            radial-gradient(center 50% 50%, radius 100%, #26a8ab, #00caff);
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
+    -fx-font-weight: bold;
+    -fx-font-size:22;
+}
+.buttonSelect:hover {
+    -fx-background-color:
+            linear-gradient(from 0% 93% to 0% 100%, #854cc7 0%, #412365 100%),
+            #854cc7,
+            #412365,
+            radial-gradient(center 50% 50%, radius 100%, #854cc7, #412365);
+    -fx-font-size:22px !important;
+}
+.buttonSelect:pressed {
+    -fx-padding: 10 15 13 15;
+    -fx-background-insets: 2 0 0 0,2 0 3 0, 2 0 4 0, 2 0 5 0;
+}
+.displayBackground{
+    -fx-background-image: url("images/misc/displayBackground.jpeg");
+    -fx-background-repeat: stretch;
+    -fx-background-size: cover;
+}
+.displayButton {
+    -fx-padding: 8 15 15 15;
+    -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;
+    -fx-background-radius: 8;
+    -fx-background-color:
+            linear-gradient(from 0% 93% to 0% 100%, #5b4c08 0%, #cfa241 100%),
+            #5b4c08,
+            #cfa241,
+            radial-gradient(center 50% 50%, radius 100%, #5b4c08, #cfa241);
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
+    -fx-font-weight: bold;
+    -fx-font-size:12;
+}
+.displayButton:pressed {
+    -fx-padding: 10 15 13 15;
+    -fx-background-insets: 2 0 0 0,2 0 3 0, 2 0 4 0, 2 0 5 0;
+}
