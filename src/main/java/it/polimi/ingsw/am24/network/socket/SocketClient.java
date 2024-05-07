@@ -15,57 +15,55 @@ import java.rmi.RemoteException;
 
 public class SocketClient extends Thread implements CommonClientActions {
     //todo implement all common client actions methods
-    private final String ip = "127.0.0.1";
-    private final int port = 8888;
     private Socket client;
     private ObjectInputStream in;
     private ObjectOutputStream out;
     private GameListenerClient listener;
-    private Flow flow;
+    private final Flow flow;
 
     public SocketClient(Flow flow) {
         this.flow = flow;
-        connect();
+        connect("127.0.0.1", 8888);
         listener = new GameListenerClient(flow);
         this.start();
     }
 
-    private void connect() {
+    private void connect(String ip, int port) {
+        boolean retry = true;
         do {
             try {
                 client = new Socket(ip, port);
-                in = new ObjectInputStream(client.getInputStream());
                 out = new ObjectOutputStream(client.getOutputStream());
-                break;
-            } catch(IOException e) {
-                System.out.println("[ERROR] CONNECTING TO SOCKET SERVER: \nClient SOCKET exception: " + e + "\n");
+                in = new ObjectInputStream(client.getInputStream());
+                retry = false;
+            } catch (IOException e) {
+                System.out.println("[ERROR] connecting to socket server: \nClient SOCKET exception: " + e + "\n");
             }
-        } while(true);
+        } while(retry);
     }
 
     @Override
     public void run() {
         while(true) {
             try {
-                SocketClientMessage message = (SocketClientMessage) in.readObject();
-                //todo add an execute method in all message classes
-                //message.execute(listener);
+                SocketServerMessage message = (SocketServerMessage) in.readObject();
+                message.execute(listener);
             } catch (IOException | ClassNotFoundException e) {
                 System.out.println("[ERROR] Connection lost: " + e + "\n");
             }
         }
     }
 
-    //@Override
+    @Override
     public void createGame(String nickname, int numPlayers) throws IOException {
-        out.writeObject(new AddPlayerMessage(nickname, numPlayers));
+        out.writeObject(new CreateGameMessage(nickname, numPlayers));
         out.flush();
         out.reset();
     }
 
     @Override
     public void joinFirstGameAvailable(String nickname) throws IOException, NotBoundException {
-        out.writeObject(new AddPlayerMessage(nickname, 1));
+        out.writeObject(new JoinFirstGameAvailableMessage(nickname));
         out.flush();
         out.reset();
     }

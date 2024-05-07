@@ -8,6 +8,10 @@ import it.polimi.ingsw.am24.network.rmi.LobbyControllerInterface;
 import java.rmi.RemoteException;
 
 public class JoinFirstGameAvailableMessage extends SocketClientMessage {
+    public JoinFirstGameAvailableMessage(String nickname) {
+        this.nickname = nickname;
+    }
+
     @Override
     public GameControllerInterface execute(GameListener listener, LobbyControllerInterface controller) throws RemoteException {
         return controller.joinGame(nickname, 1, listener);

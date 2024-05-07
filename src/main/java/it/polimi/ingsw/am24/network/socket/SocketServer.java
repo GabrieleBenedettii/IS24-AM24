@@ -2,20 +2,22 @@ package it.polimi.ingsw.am24.network.socket;
 
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SocketServer extends Thread {
-    private int port = 8888;
     private ServerSocket server;
     private List<ClientHandler> clients;
 
-    public void start() {
+    public void start(int port) {
+
         try {
             server = new ServerSocket(port);
+            clients = new ArrayList<>();
             this.start();
             System.out.println("Server socket ready");
         } catch (IOException e) {
-            System.out.println("[ERROR] Error starting socket server: " + e);
+            System.err.println("[ERROR] starting socket server: " + e);
         }
     }
 

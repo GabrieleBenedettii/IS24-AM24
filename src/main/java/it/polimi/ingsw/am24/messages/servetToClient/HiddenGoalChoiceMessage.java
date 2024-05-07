@@ -12,8 +12,8 @@ public class HiddenGoalChoiceMessage extends SocketServerMessage {
     private final ArrayList<GameCardView> views = new ArrayList<>();
 
     public HiddenGoalChoiceMessage(List<GameCardView> views) {
-        this.views.set(0, views.get(0));
-        this.views.set(1, views.get(1));
+        this.views.add(views.get(0));
+        this.views.add(views.get(1));
     }
 
     @Override

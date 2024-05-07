@@ -12,8 +12,8 @@ public class InitialCardSideMessage extends SocketServerMessage {
     private final ArrayList<GameCardView> views = new ArrayList<>();
 
     public InitialCardSideMessage(GameCardView front, GameCardView back) {
-        this.views.set(0,front);
-        this.views.set(1,back);
+        this.views.add(front);
+        this.views.add(back);
     }
 
     @Override

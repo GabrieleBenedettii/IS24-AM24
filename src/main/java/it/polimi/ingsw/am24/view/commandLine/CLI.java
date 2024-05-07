@@ -146,7 +146,7 @@ public class CLI extends UI {
     public void show_network_type(){
         out.println("Select an option: ");
         out.println("\t(1) RMI");
-        out.println("\t(2) Socket (not done yet)");
+        out.println("\t(2) Socket");
         out.print("Choice -> ");
     }
 
@@ -235,7 +235,7 @@ public class CLI extends UI {
 
     @Override
     public void show_logo() {
-        clearScreen();
+        //clearScreen();
         /*new PrintStream(System.out, true, System.console() != null
                 ? System.console().charset()
                 : Charset.defaultCharset()
@@ -286,7 +286,7 @@ public class CLI extends UI {
                 ██║░╚███║██║░░██║░░░██║░░░█████████║██║░░██║██║░░██║███████╗██║██████╔╝
                 ╚═╝░░╚══╝╚═╝░░╚═╝░░░╚═╝░░░╚═══════=╝╚═╝░░╚═╝╚═╝░░╚═╝╚══════╝╚═╝╚═════╝░
                 """);
-        out.println(Costants.AUTORI);
-        out.println(Costants.REGOLE);
+        out.println(Costants.AUTHORS);
+        out.println(Costants.RULES);
     }
 }

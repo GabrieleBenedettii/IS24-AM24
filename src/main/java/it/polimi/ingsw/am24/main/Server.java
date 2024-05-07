@@ -1,6 +1,7 @@
 package it.polimi.ingsw.am24.main;
 
 import it.polimi.ingsw.am24.network.rmi.RMIServer;
+import it.polimi.ingsw.am24.network.socket.SocketServer;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -29,8 +30,8 @@ public class Server {
 
         RMIServer.bind();
 
-        /*Server serverSOCKET = new Server();
-        serverSOCKET.start(DefaultValue.Default_port_Socket);*/
+        SocketServer socketServer = new SocketServer();
+        socketServer.start(8888);
     }
 
     private static boolean isValidIP(String input) {

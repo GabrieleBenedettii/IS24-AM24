@@ -43,7 +43,7 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
     public GameFlow(String connectionType) {
         switch (connectionType) {
             case "RMI" -> actions = new RMIClient(this);
-            //case "SOCKET" -> actions = new SocketClient(this);
+            case "SOCKET" -> actions = new SocketClient(this);
         }
 
         ui = new CLI();

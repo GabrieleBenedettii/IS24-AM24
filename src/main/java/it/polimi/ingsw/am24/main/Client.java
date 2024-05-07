@@ -76,7 +76,7 @@ public class Client {
 
         System.out.println("Starting the game!");
 
-        new GameFlow("RMI");
+        new GameFlow(selection == 1 ? "RMI" : "SOCKET");
         //Starts the UI
         //selection == 1 ? new GameFlow(conSel) : Application.launch(GUIApplication.class, conSel.toString());
     }

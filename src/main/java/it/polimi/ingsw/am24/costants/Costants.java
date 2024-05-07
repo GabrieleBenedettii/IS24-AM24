@@ -40,8 +40,8 @@ public class Costants {
     public static final String BACKGROUND_BLACK = "\033[40m";
     public static final String HIDDEN = "HIDDEN";
     public static final String EMPTY = "EMPTY";
-    public static final String AUTORI = "Belfiore Mattia, Benedetti Gabriele, Buccheri Giuseppe, Canepari Michele";
-    public static final String REGOLE = "Per il regolamento completo andare su: \n https://www.craniocreations.it/prodotto/codex-naturalis";
+    public static final String AUTHORS = "Belfiore Mattia, Benedetti Gabriele, Buccheri Giuseppe, Canepari Michele";
+    public static final String RULES = "For the complete rules go to: \nhttps://www.craniocreations.it/prodotto/codex-naturalis";
     public static int port;
     public static String ipAddress;
     private static final HashMap<Character, String> firstLetterMap = new HashMap<Character, String>();

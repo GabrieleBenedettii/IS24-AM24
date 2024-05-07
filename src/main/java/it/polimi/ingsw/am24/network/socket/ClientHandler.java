@@ -1,13 +1,18 @@
 package it.polimi.ingsw.am24.network.socket;
 
+import it.polimi.ingsw.am24.Controller.LobbyController;
+import it.polimi.ingsw.am24.messages.SocketClientMessage;
 import it.polimi.ingsw.am24.messages.clientToServer.AddPlayerMessage;
 import it.polimi.ingsw.am24.messages.SocketServerMessage;
+import it.polimi.ingsw.am24.messages.clientToServer.CreateGameMessage;
+import it.polimi.ingsw.am24.messages.clientToServer.JoinFirstGameAvailableMessage;
 import it.polimi.ingsw.am24.network.rmi.GameControllerInterface;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.rmi.RemoteException;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -19,7 +24,7 @@ public class ClientHandler extends Thread {
     private GameControllerInterface gameController;
     private GameListenerClientSocket listener;
 
-    private Queue<SocketServerMessage> messagesQueue = new LinkedList<SocketServerMessage>();
+    private Queue<SocketClientMessage> messagesQueue = new LinkedList<SocketClientMessage>();
 
     public ClientHandler(Socket client) throws IOException {
         this.client = client;
@@ -32,11 +37,11 @@ public class ClientHandler extends Thread {
     public void run() {
         Thread executeMessagesThread = new Thread(this::executeMessages);
         executeMessagesThread.start();
-        SocketServerMessage msg;
+        SocketClientMessage msg;
 
         while(!this.isInterrupted()) {
             try {
-                msg =(SocketServerMessage) in.readObject();
+                msg = (SocketClientMessage) in.readObject();
                 messagesQueue.add(msg);
 
             } catch (IOException | ClassNotFoundException e) {
@@ -46,20 +51,21 @@ public class ClientHandler extends Thread {
     }
 
     private void executeMessages() {
-        SocketServerMessage msg;
+        SocketClientMessage msg;
 
-        //try {
-            while (!this.isInterrupted()) {
-                msg = messagesQueue.poll();
-                //todo add an execute method in all message classes
-                if (msg instanceof AddPlayerMessage) {
-                    //gameController = msg.execute(LobbyController.getInstance(), listener);
-                } else {
-                    //msg.execute(gameController, listener);
-                }
+        while (!this.isInterrupted()) {
+            msg = messagesQueue.poll();
+            if(msg == null) continue;
+
+            try {
+                if (msg.isForLobbyController())
+                    gameController = msg.execute(listener, LobbyController.getInstance());
+                else
+                    msg.execute(listener, gameController);
+
+            } catch (RemoteException e) {
+                System.out.println("[ERROR] error during executing message: " + e);
             }
-        /*} catch (RemoteException e) {
-            throw new RuntimeException();
-        }*/
+        }
     }
 }
