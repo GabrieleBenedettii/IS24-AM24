@@ -1,6 +1,7 @@
 package it.polimi.ingsw.am24.model.deck;
 
 import com.google.gson.Gson;
+import it.polimi.ingsw.am24.Exceptions.EmptyDeckException;
 import it.polimi.ingsw.am24.HelloApplication;
 import it.polimi.ingsw.am24.model.Kingdom;
 import it.polimi.ingsw.am24.model.card.ResourceCard;
@@ -26,7 +27,9 @@ public class ResourceDeck implements Deck{
     public void shuffle(){
         Collections.shuffle(cards);
     }
-    public ResourceCard drawCard(){
+
+    public ResourceCard drawCard() throws EmptyDeckException {
+        if(cards.isEmpty()) throw new EmptyDeckException();
         ResourceCard card;
         card = cards.getFirst();
         cards.removeFirst();
@@ -39,5 +42,9 @@ public class ResourceDeck implements Deck{
 
     public ArrayList<ResourceCard> getCards() {
         return cards;
+    }
+
+    public int deckSize() {
+        return cards.size();
     }
 }

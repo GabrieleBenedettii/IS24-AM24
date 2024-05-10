@@ -1,12 +1,9 @@
 package it.polimi.ingsw.am24.model.goal;
 
-import it.polimi.ingsw.am24.costants.Costants;
+import it.polimi.ingsw.am24.constants.Constants;
 import it.polimi.ingsw.am24.model.Kingdom;
 import it.polimi.ingsw.am24.model.card.GameCard;
-import it.polimi.ingsw.am24.model.card.InitialCard;
 import it.polimi.ingsw.am24.modelView.GameCardView;
-
-import java.util.HashMap;
 
 public class VerticalDisposition extends GoalCard{
     private final Kingdom mainKingdom;
@@ -49,7 +46,7 @@ public class VerticalDisposition extends GoalCard{
 
     public String printCard() {
         String text = "Points: " + this.getPoints();
-        text += "\n\tDisposition: 2 vertical " + Costants.getText(mainKingdom) + " and 1 " + Costants.getText(secondaryKingdom) + " in the " + Costants.corner.get(secondaryKingdomCorner) + " corner";
+        text += "\n\tDisposition: 2 vertical " + Constants.getText(mainKingdom) + " and 1 " + Constants.getText(secondaryKingdom) + " in the " + Constants.corner.get(secondaryKingdomCorner) + " corner";
         return text;
     }
 

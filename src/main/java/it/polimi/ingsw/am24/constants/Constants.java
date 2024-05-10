@@ -1,11 +1,11 @@
-package it.polimi.ingsw.am24.costants;
+package it.polimi.ingsw.am24.constants;
 
 import it.polimi.ingsw.am24.model.Kingdom;
 import it.polimi.ingsw.am24.model.Symbol;
 
 import java.util.HashMap;
 
-public class Costants {
+public class Constants {
     public static final int MIN_PLAYERS = 2;
     public static final int MAX_PLAYERS = 4;
     public static final String TEXT_UNDERLINE = "\033[4m";
@@ -93,10 +93,10 @@ public class Costants {
 
 
     public static void setPort(int port) {
-        Costants.port = port;
+        Constants.port = port;
     }
     public static void setIpAddress(String ip) {
-        Costants.ipAddress = ip;
+        Constants.ipAddress = ip;
     }
     public static  final HashMap<Integer, String> corner =new HashMap<>();
 

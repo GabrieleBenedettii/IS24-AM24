@@ -4,6 +4,7 @@ import it.polimi.ingsw.am24.listeners.GameListener;
 import it.polimi.ingsw.am24.messages.servetToClient.*;
 import it.polimi.ingsw.am24.modelView.GameCardView;
 import it.polimi.ingsw.am24.modelView.GameView;
+import it.polimi.ingsw.am24.modelView.PublicBoardView;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -71,9 +72,9 @@ public class GameListenerClientSocket implements GameListener, Serializable {
     }
 
     @Override
-    public void hiddenGoalChoice(ArrayList<GameCardView> cardViews) throws RemoteException {
+    public void hiddenGoalChoice(ArrayList<GameCardView> cardViews, PublicBoardView publicBoardView) throws RemoteException {
         try {
-            out.writeObject(new HiddenGoalChoiceMessage(cardViews));
+            out.writeObject(new HiddenGoalChoiceMessage(cardViews, publicBoardView));
             out.flush();
             out.reset();
 

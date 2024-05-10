@@ -4,9 +4,8 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.Objects;
-import java.util.concurrent.ConcurrentSkipListSet;
 
-import it.polimi.ingsw.am24.costants.Costants;
+import it.polimi.ingsw.am24.constants.Constants;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -27,13 +26,13 @@ public class DisconnectionFile {
         try (InputStream is = new FileInputStream(file);
              Reader reader = new InputStreamReader(Objects.requireNonNull(is, "Couldn't find json file"), StandardCharsets.UTF_8)) {
             JSONObject obj = (JSONObject) parser.parse(reader);
-            gameId = (String) obj.get(Costants.gameIdData);
-            time = (String) obj.get(Costants.gameIdTime);
+            gameId = (String) obj.get(Constants.gameIdData);
+            time = (String) obj.get(Constants.gameIdTime);
         } catch (ParseException | IOException ex) {
             return -1;
         }
         assert gameId != null;
-        if (LocalDateTime.parse(time).isBefore(LocalDateTime.now().plusSeconds(Costants.offSet)))
+        if (LocalDateTime.parse(time).isBefore(LocalDateTime.now().plusSeconds(Constants.offSet)))
             return Integer.parseInt(gameId);
         else
             return -1;
@@ -41,8 +40,8 @@ public class DisconnectionFile {
 
     public void setLastGameId(String nickname, int gameId) {
         JSONObject data = new JSONObject();
-        data.put(Costants.gameIdData, Integer.toString(gameId));
-        data.put(Costants.gameIdTime, LocalDateTime.now().toString());
+        data.put(Constants.gameIdData, Integer.toString(gameId));
+        data.put(Constants.gameIdTime, LocalDateTime.now().toString());
             //creates a directory if not present
         new File(path).mkdirs();
 

@@ -1,6 +1,6 @@
 package it.polimi.ingsw.am24.model.card;
 
-import it.polimi.ingsw.am24.costants.Costants;
+import it.polimi.ingsw.am24.constants.Constants;
 import it.polimi.ingsw.am24.model.Kingdom;
 import it.polimi.ingsw.am24.model.Symbol;
 import it.polimi.ingsw.am24.modelView.GameCardView;
@@ -28,11 +28,11 @@ public class InitialCard extends GameCard{
     public String printCard() {
         StringBuilder print = new StringBuilder("FRONT\n\tKingdoms: ");
         for (Kingdom k: kingdoms) {
-            print.append(" ").append(Costants.getText(k)).append(" ");
+            print.append(" ").append(Constants.getText(k)).append(" ");
         }
         print.append("\n\tCorners: ");
         for (CardCorner c: this.getCorners()) {
-            print.append(c.isHidden() ? Costants.HIDDEN + " " : (c.getSymbol()!=null ? Costants.getText(c.getSymbol()) : Costants.EMPTY) + " ");
+            print.append(c.isHidden() ? Constants.HIDDEN + " " : (c.getSymbol()!=null ? Constants.getText(c.getSymbol()) : Constants.EMPTY) + " ");
         }
         return print.toString();
     }
@@ -40,11 +40,11 @@ public class InitialCard extends GameCard{
     public String printBackCard() {
         StringBuilder print = new StringBuilder("BACK\n\tKingdoms:");
         for (Kingdom k: backCard.kingdoms) {
-            print.append(" ").append(Costants.getText(k)).append(" ");
+            print.append(" ").append(Constants.getText(k)).append(" ");
         }
         print.append("\n\tCorners: ");
         for (CardCorner c: backCard.getCorners()) {
-            print.append(c.isHidden() ? Costants.HIDDEN + " " : (c.getSymbol()!=null ? Costants.getText(c.getSymbol()) : Costants.EMPTY) + " ");
+            print.append(c.isHidden() ? Constants.HIDDEN + " " : (c.getSymbol()!=null ? Constants.getText(c.getSymbol()) : Constants.EMPTY) + " ");
         }
         return print.toString();
     }

@@ -1,6 +1,6 @@
 package it.polimi.ingsw.am24.model.card;
 
-import it.polimi.ingsw.am24.costants.Costants;
+import it.polimi.ingsw.am24.constants.Constants;
 import it.polimi.ingsw.am24.model.Kingdom;
 import it.polimi.ingsw.am24.model.Symbol;
 import it.polimi.ingsw.am24.modelView.GameCardView;
@@ -51,8 +51,8 @@ public abstract class GameCard {
     }
 
     public String getStringForCard(){
-        return Costants.getText(getCornerByIndex(0).getCornerText()) + "*" + Costants.getText(getCornerByIndex(1).getCornerText()) +
-                Costants.getText(getCornerByIndex(2).getCornerText()) + "*" + Costants.getText(getCornerByIndex(3).getCornerText());
+        return Constants.getText(getCornerByIndex(0).getCornerText()) + "*" + Constants.getText(getCornerByIndex(1).getCornerText()) +
+                Constants.getText(getCornerByIndex(2).getCornerText()) + "*" + Constants.getText(getCornerByIndex(3).getCornerText());
     }
 }
 
