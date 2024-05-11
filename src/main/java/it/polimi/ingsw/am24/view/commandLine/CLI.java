@@ -174,8 +174,10 @@ public class CLI extends UI {
     @Override
     public void show_network_type(){
         out.println("Select an option: ");
-        out.println("\t(1) RMI");
-        out.println("\t(2) Socket");
+        out.println("\t(1) CLI+RMI");
+        out.println("\t(2) CLI+Socket");
+        out.println("\t(3) GUI+RMI");
+        out.println("\t(4) GUI+Socket");
         out.print("Choice -> ");
     }
 

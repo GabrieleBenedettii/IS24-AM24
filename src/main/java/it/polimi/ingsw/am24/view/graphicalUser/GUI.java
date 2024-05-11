@@ -1,6 +1,6 @@
 package it.polimi.ingsw.am24.view.graphicalUser;
 
-import it.polimi.ingsw.am24.costants.Costants;
+import it.polimi.ingsw.am24.constants.Constants;
 import it.polimi.ingsw.am24.modelView.GameCardView;
 import it.polimi.ingsw.am24.modelView.GameView;
 import it.polimi.ingsw.am24.view.flow.UI;
@@ -67,6 +67,11 @@ public class GUI extends UI {
     }
 
     @Override
+    public void show_start_table(GameView gameView) {
+
+    }
+
+    @Override
     public void show_lobby() {
 
     }
@@ -94,7 +99,7 @@ public class GUI extends UI {
     @Override
     public void show_logo() {
         callPlatformRunLater(() -> this.guiApplication.setActiveScene(Scenes.LOGO));
-        PauseTransition pause = new PauseTransition(Duration.seconds(Costants.logoTime));
+        PauseTransition pause = new PauseTransition(Duration.seconds(Constants.logoTime));
         pause.setOnFinished(event -> {
             alreadyShowedPublisher = true;
 

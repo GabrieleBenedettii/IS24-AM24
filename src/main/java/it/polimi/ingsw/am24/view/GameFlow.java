@@ -61,7 +61,7 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
     public GameFlow(GUIapp application, String connectionType) {
         switch (connectionType) {
             case "RMI" -> actions = new RMIClient(this);
-            //case "SOCKET" -> actions = new SocketClient(this);
+            case "SOCKET" -> actions = new SocketClient(this);
         }
         this.inputReader = new InputReaderGUI();
 
