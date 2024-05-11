@@ -27,7 +27,7 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
 
     private CommonClientActions actions;
 
-    private GameStatus status = GameStatus.BEGIN;
+    private GameStatus status = GameStatus.NOT_STARTED;
 
     private final Queue<Event> events = new LinkedList<>();
 
@@ -68,7 +68,7 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
                 if (event != null) {
                     //if something happened
                     switch (status) {
-                        case BEGIN -> {
+                        case FIRST_PHASE -> {
                             try {
                                 statusWait(event);
                             } catch (IOException | InterruptedException e) {
@@ -311,8 +311,8 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
         } while (retry);
     }
 
-    private void askCardPlay() throws IOException {
-        String command = "";
+    private void askCardPlay() {
+        String command;
         //ui.show_player_view();
         do {
             try {
@@ -408,7 +408,7 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
     }
 
     private void askCardDraw() {
-        String command = "";
+        String command;
         //ui.show_public_board_view();
         do {
             try {
@@ -518,7 +518,7 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
     @Override
     public void availableColors(ArrayList<String> colors) {
         this.availableColors = colors;
-        this.status = GameStatus.BEGIN;
+        this.status = GameStatus.FIRST_PHASE;
         addEvent(EventType.AVAILABLE_COLORS);
     }
 

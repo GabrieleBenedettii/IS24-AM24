@@ -68,6 +68,12 @@ public class LobbyControllerTest {
     }
 
     @Test
+    @DisplayName("Check get instance")
+    void getInstance(){
+        assertEquals(LobbyController.getInstance(), lobbyController);
+    }
+
+    @Test
     @DisplayName("Check correct lobby creation")
     void checkLobbyCreation() throws RemoteException {
         GameControllerInterface gc1 = lobbyController.joinGame("p1",2,gl);

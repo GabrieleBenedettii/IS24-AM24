@@ -5,6 +5,7 @@ import it.polimi.ingsw.am24.listeners.GameListener;
 import it.polimi.ingsw.am24.modelView.GameCardView;
 import it.polimi.ingsw.am24.modelView.GameView;
 import it.polimi.ingsw.am24.modelView.PublicBoardView;
+import it.polimi.ingsw.am24.view.flow.utility.GameStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -86,6 +87,12 @@ public class GameControllerTest {
     }
 
     @Test
+    @DisplayName("Choose a color with a wrong name")
+    void chooseColorWrongName() throws RemoteException {
+        assertFalse(controller.chooseColor("p5", "BLUE", gl));
+    }
+
+    @Test
     @DisplayName("Check if all the players get all the initial cards")
     void startGame() {
         controller.startGame();
@@ -105,6 +112,7 @@ public class GameControllerTest {
     void chooseGoal() throws RemoteException {
         controller.startGame();
         controller.getGame().drawGoalCards();
+        assertFalse(controller.chooseGoal("p5", 50, gl));
         assertFalse(controller.chooseGoal("p1", 50, gl));
     }
 
@@ -112,6 +120,7 @@ public class GameControllerTest {
     @DisplayName("A player chooses the initial card side")
     void chooseInitialCardSide() throws RemoteException {
         controller.startGame();
+        assertFalse(controller.chooseInitialCardSide("p5", true, gl));
         assertTrue(controller.chooseInitialCardSide("p1", true, gl));
     }
 
@@ -131,13 +140,26 @@ public class GameControllerTest {
         assertFalse(controller.playCard("p1", 0, true, 0, 0, gl));
         assertFalse(controller.playCard("p1", 2, true, 9, 19, gl));
         assertTrue(controller.playCard("p1", 0, true, 9, 19, gl));
+        assertFalse(controller.playCard("p5", 0, true, 0, 0, gl));
     }
 
     @Test
     @DisplayName("Check the drawing card phase")
     void drawCard() throws RemoteException {
         controller.startGame();
+        assertFalse(controller.drawCard("p5", 0, gl));
         assertTrue(controller.drawCard("p1", 0, gl));
+        assertTrue(controller.drawCard("p2", 1, gl));
+        assertTrue(controller.drawCard("p3", 2, gl));
+        assertTrue(controller.drawCard("p4", 3, gl));
+    }
+
+    @Test
+    @DisplayName("Check the drawing card phase, draw from decks")
+    void drawCardFromDecks() throws RemoteException {
+        controller.startGame();
+        assertTrue(controller.drawCard("p1", 4, gl));
+        assertTrue(controller.drawCard("p2", 5, gl));
     }
 
     @Test
@@ -176,11 +198,75 @@ public class GameControllerTest {
     }
 
     @Test
-    void calculateWinner(){
+    @DisplayName("Check public chat messages")
+    void publicChatMessages() throws RemoteException {
+        assertFalse(controller.sentPublicMessage("p5", "Hello"));
+        assertTrue(controller.sentPublicMessage("p1", "Hello"));
+    }
+
+    @Test
+    @DisplayName("Check private chat messages")
+    void privateChatMessages() throws RemoteException {
+        assertFalse(controller.sentPrivateMessage("p5", "p1","Hello"));
+        assertTrue(controller.sentPrivateMessage("p1", "p2", "Hello"));
+    }
+
+    @Test
+    @DisplayName("Check game id")
+    void checkGameId(){
+        assertNotEquals(0,controller.getGameId());
+    }
+
+    @Test
+    @DisplayName("Check single winner")
+    void calculateSingleWinner(){
         controller.getPlayer("p1").addPoints(5);
         controller.getPlayer("p2").addPoints(6);
         controller.getPlayer("p3").addPoints(7);
 
         assertEquals("p3",controller.calculateWinner());
+    }
+
+    @Test
+    @DisplayName("Check multiple winners")
+    void calculateMultipleWinner(){
+        controller.getPlayer("p1").addPoints(20);
+        controller.getPlayer("p2").addPoints(20);
+        controller.getPlayer("p3").addPoints(20);
+
+        assertEquals("p1,p2,p3",controller.calculateWinner());
+    }
+
+    @Test
+    @DisplayName("Final phase")
+    void finalPhase() throws RemoteException {
+        controller.startGame();
+        controller.chooseInitialCardSide("p1", true, gl);
+        controller.chooseInitialCardSide("p2", true, gl);
+        controller.chooseInitialCardSide("p3", true, gl);
+        controller.chooseInitialCardSide("p4", true, gl);
+        List<Integer> goalsIds = controller.getGame().getDrawnGoalCardsIds();
+        controller.chooseGoal("p1",goalsIds.get(0),gl);
+        controller.chooseGoal("p2",goalsIds.get(1),gl);
+        controller.chooseGoal("p3",goalsIds.get(2),gl);
+        controller.chooseGoal("p4",goalsIds.get(3),gl);
+
+        controller.setCurrentPlayer("p1");
+        controller.getPlayer("p1").addPoints(20);
+        controller.playCard("p1",0, true, 9, 19, gl);
+        assertEquals(GameStatus.LAST_LAST_ROUND, controller.getStatus());
+        controller.drawCard("p1", 0, gl);
+
+        while(controller.getStatus() == GameStatus.LAST_LAST_ROUND) {
+            controller.playCard(controller.getCurrentPlayer(), 0, true, 9, 19, gl);
+            controller.drawCard(controller.getCurrentPlayer(), 0, gl);
+        }
+        assertEquals(GameStatus.LAST_ROUND, controller.getStatus());
+
+        while(controller.getStatus() == GameStatus.LAST_ROUND) {
+            controller.playCard(controller.getCurrentPlayer(), 0, true, 11, 19, gl);
+            controller.drawCard(controller.getCurrentPlayer(), 0, gl);
+        }
+        assertEquals(GameStatus.ENDED,controller.getStatus());
     }
 }

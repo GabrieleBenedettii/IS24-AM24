@@ -21,6 +21,7 @@ public class LobbyController implements Serializable, LobbyControllerInterface {
     public LobbyController() {
         this.games = new LinkedBlockingQueue<>();
         this.playingNicknames = new ArrayList<>();
+        instance = this;
     }
 
     public synchronized static LobbyController getInstance() {

@@ -18,9 +18,9 @@ public interface GameControllerInterface extends Remote {
 
     boolean drawCard(String p, int cardIndex, GameListener listener) throws RemoteException;
 
-    void sentPublicMessage(String sender, String message) throws RemoteException;
+    boolean sentPublicMessage(String sender, String message) throws RemoteException;
 
-    void sentPrivateMessage(String sender, String receiver, String message) throws RemoteException;
+    boolean sentPrivateMessage(String sender, String receiver, String message) throws RemoteException;
 
     //int getNumOnlinePlayers() throws RemoteException;
 

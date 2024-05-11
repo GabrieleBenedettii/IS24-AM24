@@ -24,11 +24,9 @@ public class GameController implements GameControllerInterface, Serializable, Ru
     private final HashMap<String, GameListener> listeners;
     private String currentPlayer;
     private final int playerCount;
-    private boolean started;
     private int readyPlayers;   //used to know how many players have already done the side of initial card choice
                                 // and start the rotation
-    private boolean beginEndGame;
-    private boolean isLastRound;
+    private GameStatus status;
     private String winner;
 
     private final Object lockPlayers = new Object();
@@ -42,9 +40,7 @@ public class GameController implements GameControllerInterface, Serializable, Ru
         this.listeners = new HashMap<>();
         this.playerCount = numPlayers;
         this.readyPlayers = 0;
-        beginEndGame = false;
-        isLastRound = false;
-        started = false;
+        status = GameStatus.NOT_STARTED;
         gameId = gameCounter++;
         chat = new Chat();
         new Thread(this).start();
@@ -58,7 +54,7 @@ public class GameController implements GameControllerInterface, Serializable, Ru
             players.put(nickname, new Player(nickname));
             listeners.put(nickname, listener);
             if(players.size() == playerCount){
-                started = true;
+                status = GameStatus.FIRST_PHASE;
             }
             notifyListener(listener);
         }
@@ -71,11 +67,12 @@ public class GameController implements GameControllerInterface, Serializable, Ru
         }
     }
 
-    public void removePlayer(String nickname) {
+    /*public void removePlayer(String nickname) {
         synchronized (lockPlayers){
             players.remove(nickname);
         }
-    }
+    }*/
+
     //choice of the color by a player
     public boolean chooseColor(String nickname, String color, GameListener listener) throws RemoteException {
         //find the player
@@ -127,6 +124,7 @@ public class GameController implements GameControllerInterface, Serializable, Ru
                     Collections.shuffle(rotation);
                     currentPlayer = rotation.getFirst();
                     System.out.println("THE GAME [" + gameId + "] IS STARTING!!!");
+                    status = GameStatus.RUNNING;
                     notifyAllListeners();
                 }
                 return true;
@@ -155,7 +153,7 @@ public class GameController implements GameControllerInterface, Serializable, Ru
             if (p != null) {
                 try {
                     p.play(cardIndex, isFront, x, y);
-                    if(p.getScore() >= 20 && !beginEndGame) beginEndGame = true;
+                    if(p.getScore() >= 20 && !status.equals(GameStatus.LAST_LAST_ROUND) && !status.equals(GameStatus.LAST_ROUND)) status = GameStatus.LAST_LAST_ROUND;
                     listener.beginDraw();
                     return true;
                 } catch (InvalidPositioningException e) {
@@ -196,7 +194,7 @@ public class GameController implements GameControllerInterface, Serializable, Ru
                     }
 
                     //one between the two decks is empty, the final part begins
-                    if(game.goldDeckSize() == 0 || game.resDeckSize() == 0) beginEndGame = true;
+                    if(game.goldDeckSize() == 0 || game.resDeckSize() == 0) status = GameStatus.LAST_LAST_ROUND;
 
                     nextPlayer();
                     notifyAllListeners();
@@ -212,8 +210,9 @@ public class GameController implements GameControllerInterface, Serializable, Ru
     public void nextPlayer() throws RemoteException {
         int nextPlayerIndex = rotation.indexOf(currentPlayer) + 1;
         if(nextPlayerIndex == playerCount) {
-            if(isLastRound) {
+            if(status.equals(GameStatus.LAST_ROUND)) {
                 for(String p : players.keySet()) {
+                    status = GameStatus.ENDED;
                     players.get(p).addPoints(players.get(p).getHiddenGoal().calculatePoints(players.get(p)));
                     players.get(p).addPoints(game.getCommonGoal(0).calculatePoints(players.get(p)));
                     players.get(p).addPoints(game.getCommonGoal(1).calculatePoints(players.get(p)));
@@ -221,8 +220,8 @@ public class GameController implements GameControllerInterface, Serializable, Ru
                 }
                 notifyAllListenersEndGame();
             }
-            else if(beginEndGame) {
-                isLastRound = true;
+            else if(status.equals(GameStatus.LAST_LAST_ROUND)) {
+                status = GameStatus.LAST_ROUND;
             }
             nextPlayerIndex -= playerCount;
         }
@@ -259,29 +258,30 @@ public class GameController implements GameControllerInterface, Serializable, Ru
         this.currentPlayer = currentPlayer;
     }
 
-    public void disconnectPlayer(){
+    /*public void disconnectPlayer(){
         //Todo ?
-    }
+    }*/
 
-    public void sentPublicMessage(String sender, String message) throws RemoteException {
-        //if(!players.keySet().contains(nickname)) throw new
+    public boolean sentPublicMessage(String sender, String message) throws RemoteException {
+        if(!players.containsKey(sender)) return false;
         chat.addPublicMessage(sender, message);
         notifyAllListeners_sentMessage();
+        return true;
     }
 
-    public void sentPrivateMessage(String sender, String receiver, String message) throws RemoteException {
-        //if(!players.keySet().contains(nickname)) throw new
+    public boolean sentPrivateMessage(String sender, String receiver, String message) throws RemoteException {
+        if(!players.containsKey(sender)) return false;
         chat.addPrivateMessage(sender, receiver, message);
         notifyAllListeners_sentMessage();
+        return true;
     }
 
     //if the game is started, it sends the list of players in the lobby, otherwise it sends the secret cards
     private void notifyAllListeners() throws RemoteException {
         synchronized (lockPlayers){
-            if(started) {
+            if(status.equals(GameStatus.FIRST_PHASE)) {
                 //if the game is started and all players are ready for the rotation
                 if(readyPlayers == playerCount) {
-                    GameStatus status = (isLastRound ? GameStatus.LAST_ROUND : (beginEndGame ? GameStatus.LAST_LAST_ROUND : GameStatus.RUNNING));
                     for (String p : listeners.keySet()) {
                         if (p != null && listeners.get(p) != null) listeners.get(p).beginTurn(new GameView(currentPlayer, gameId, players.get(p).getPlayerView(), game.getPublicBoardView(), status));
                     }
@@ -333,6 +333,10 @@ public class GameController implements GameControllerInterface, Serializable, Ru
 
     public int getGameId() {
         return gameId;
+    }
+
+    public GameStatus getStatus() {
+        return status;
     }
 
     @Override
