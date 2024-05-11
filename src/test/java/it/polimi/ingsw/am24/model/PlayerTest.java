@@ -1,13 +1,9 @@
-package it.polimi.ingsw.am24.modelTest;
+package it.polimi.ingsw.am24.model;
 
-import it.polimi.ingsw.am24.model.Kingdom;
-import it.polimi.ingsw.am24.model.Player;
-import it.polimi.ingsw.am24.model.PlayerColor;
 import it.polimi.ingsw.am24.model.card.GameCard;
 import it.polimi.ingsw.am24.model.card.GoldCard;
 import it.polimi.ingsw.am24.model.card.InitialCard;
 import it.polimi.ingsw.am24.model.card.ResourceCard;
-import it.polimi.ingsw.am24.model.goal.GoalCard;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

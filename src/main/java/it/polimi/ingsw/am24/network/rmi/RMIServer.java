@@ -1,6 +1,6 @@
 package it.polimi.ingsw.am24.network.rmi;
 
-import it.polimi.ingsw.am24.Controller.LobbyController;
+import it.polimi.ingsw.am24.controller.LobbyController;
 import it.polimi.ingsw.am24.listeners.GameListener;
 
 import java.rmi.RemoteException;

@@ -1,9 +1,6 @@
-package it.polimi.ingsw.am24.Controller;
+package it.polimi.ingsw.am24.controller;
 
-import it.polimi.ingsw.am24.Exceptions.EmptyDeckException;
-import it.polimi.ingsw.am24.Exceptions.FullLobbyException;
-import it.polimi.ingsw.am24.Exceptions.InvalidPositioningException;
-import it.polimi.ingsw.am24.Exceptions.RequirementsNotMetException;
+import it.polimi.ingsw.am24.Exceptions.*;
 import it.polimi.ingsw.am24.chat.Chat;
 import it.polimi.ingsw.am24.listeners.GameListener;
 import it.polimi.ingsw.am24.model.Game;
@@ -120,7 +117,11 @@ public class GameController implements GameControllerInterface, Serializable, Ru
         synchronized (lockPlayers) {
             Player p = players.get(nickname);
             if (p != null) {
-                p.setHiddenGoal(game.chosenGoalCard(goalId));
+                try {
+                    p.setHiddenGoal(game.chosenGoalCard(goalId));
+                } catch (WrongHiddenGoalException e) {
+                    return false;
+                }
                 readyPlayers++;
                 if(readyPlayers == playerCount) {
                     Collections.shuffle(rotation);
@@ -244,6 +245,18 @@ public class GameController implements GameControllerInterface, Serializable, Ru
 
     public int getNumOfPlayers() {
         return players.size();
+    }
+
+    public Game getGame() {
+        return game;
+    }
+
+    public String getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public void setCurrentPlayer(String currentPlayer) {
+        this.currentPlayer = currentPlayer;
     }
 
     public void disconnectPlayer(){

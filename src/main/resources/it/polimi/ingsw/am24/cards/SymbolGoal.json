@@ -1,35 +1,34 @@
 [
   {
+    "imageId": 95,
     "points":"3",
     "symbols":{
       "FUNGI": 3
     }
   },
   {
+    "imageId": 96,
     "points":"2",
     "symbols":{
       "PLANT": 3
     }
   },
   {
+    "imageId": 97,
     "points":"2",
     "symbols":{
       "ANIMAL": 3
     }
   },
   {
+    "imageId": 98,
     "points":"2",
     "symbols":{
       "INSECT": 3
     }
   },
   {
-    "points":"2",
-    "symbols":{
-      "INSECT": 3
-    }
-  },
-  {
+    "imageId": 99,
     "points":"3",
     "symbols":{
       "QUILL": 1,
@@ -38,18 +37,21 @@
     }
   },
   {
+    "imageId": 100,
     "points":"2",
     "symbols":{
       "QUILL": 2
     }
   },
   {
+    "imageId": 101,
     "points":"2",
     "symbols":{
       "MANUSCRIPT": 2
     }
   },
   {
+    "imageId": 102,
     "points":"2",
     "symbols":{
       "INK": 2

@@ -1,11 +1,7 @@
 package it.polimi.ingsw.am24.network.socket;
 
-import it.polimi.ingsw.am24.Controller.LobbyController;
+import it.polimi.ingsw.am24.controller.LobbyController;
 import it.polimi.ingsw.am24.messages.SocketClientMessage;
-import it.polimi.ingsw.am24.messages.clientToServer.AddPlayerMessage;
-import it.polimi.ingsw.am24.messages.SocketServerMessage;
-import it.polimi.ingsw.am24.messages.clientToServer.CreateGameMessage;
-import it.polimi.ingsw.am24.messages.clientToServer.JoinFirstGameAvailableMessage;
 import it.polimi.ingsw.am24.network.rmi.GameControllerInterface;
 
 import java.io.IOException;

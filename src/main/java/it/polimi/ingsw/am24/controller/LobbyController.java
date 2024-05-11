@@ -1,4 +1,4 @@
-package it.polimi.ingsw.am24.Controller;
+package it.polimi.ingsw.am24.controller;
 
 import it.polimi.ingsw.am24.Exceptions.FullLobbyException;
 import it.polimi.ingsw.am24.listeners.GameListener;

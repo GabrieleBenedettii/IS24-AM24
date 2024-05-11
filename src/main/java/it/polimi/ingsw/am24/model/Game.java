@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import it.polimi.ingsw.am24.Exceptions.EmptyDeckException;
+import it.polimi.ingsw.am24.Exceptions.WrongHiddenGoalException;
 import it.polimi.ingsw.am24.constants.Constants;
 import it.polimi.ingsw.am24.model.deck.*;
 import it.polimi.ingsw.am24.model.card.*;
@@ -123,11 +124,12 @@ public class Game {
         visibleGoldCard.add(goldDeck.drawCard());
     }
 
-    public GoalCard chosenGoalCard(int index) {
+    public GoalCard chosenGoalCard(int index) throws WrongHiddenGoalException {
         synchronized (drawnGoalCards) {
-           GoalCard g = drawnGoalCards.get(index);
-           drawnGoalCards.remove(g);
-           return g;
+            if(!drawnGoalCards.containsKey(index)) throw new WrongHiddenGoalException();
+            GoalCard g = drawnGoalCards.get(index);
+            drawnGoalCards.remove(g);
+            return g;
         }
     }
 
@@ -145,6 +147,10 @@ public class Game {
 
     public GoalCard getCommonGoal(int index) {
         return commonGoals.get(index);
+    }
+
+    public List<Integer> getDrawnGoalCardsIds() {
+        return drawnGoalCards.keySet().stream().toList();
     }
 
     public PublicBoardView getPublicBoardView(){

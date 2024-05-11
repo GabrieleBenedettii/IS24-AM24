@@ -1,8 +1,8 @@
-package it.polimi.ingsw.am24.modelTest.cardTest;
+package it.polimi.ingsw.am24.model.card;
 
 import java.util.HashMap;
 import java.util.Map;
-import it.polimi.ingsw.am24.model.card.GoldCard;
+
 import it.polimi.ingsw.am24.model.Kingdom;
 import it.polimi.ingsw.am24.model.Symbol;
 import org.junit.jupiter.api.Test;

@@ -1,8 +1,7 @@
-package it.polimi.ingsw.am24.modelTest.GoalTest;
+package it.polimi.ingsw.am24.model.goal;
 
 import it.polimi.ingsw.am24.model.Kingdom;
 import it.polimi.ingsw.am24.model.card.ResourceCard;
-import it.polimi.ingsw.am24.model.goal.ObliqueDisposition;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

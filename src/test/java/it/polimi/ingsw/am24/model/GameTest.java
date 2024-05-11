@@ -1,6 +1,4 @@
-package it.polimi.ingsw.am24.modelTest;
-
-import static org.junit.jupiter.api.Assertions.*;
+package it.polimi.ingsw.am24.model;
 
 class GameTest {
 //    @Test

@@ -1,7 +1,5 @@
-package it.polimi.ingsw.am24.modelTest.GoalTest;
+package it.polimi.ingsw.am24.model.goal;
 
-import it.polimi.ingsw.am24.model.goal.GoalCard;
-import it.polimi.ingsw.am24.model.goal.GoalDeck;
 import org.junit.Before;
 import org.junit.Test;
 

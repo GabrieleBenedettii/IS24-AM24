@@ -1,6 +1,5 @@
-package it.polimi.ingsw.am24.modelTest.deckTest;
+package it.polimi.ingsw.am24.model.deck;
 
-import it.polimi.ingsw.am24.model.deck.InitialDeck;
 import it.polimi.ingsw.am24.model.card.InitialCard;
 import org.junit.Before;
 import org.junit.Test;

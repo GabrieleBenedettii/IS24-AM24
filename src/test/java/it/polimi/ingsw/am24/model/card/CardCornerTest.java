@@ -1,6 +1,5 @@
-package it.polimi.ingsw.am24.modelTest.cardTest;
+package it.polimi.ingsw.am24.model.card;
 
-import it.polimi.ingsw.am24.model.card.CardCorner;
 import it.polimi.ingsw.am24.model.Symbol;
 
 import org.junit.jupiter.api.Test;

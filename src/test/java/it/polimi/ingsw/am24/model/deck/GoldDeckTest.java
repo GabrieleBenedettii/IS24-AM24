@@ -1,6 +1,6 @@
-package it.polimi.ingsw.am24.modelTest.deckTest;
+package it.polimi.ingsw.am24.model.deck;
 
-import it.polimi.ingsw.am24.model.deck.GoldDeck;
+import it.polimi.ingsw.am24.Exceptions.EmptyDeckException;
 import it.polimi.ingsw.am24.model.card.GoldCard;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,7 +26,7 @@ public class GoldDeckTest {
         assert(!firstCardBeforeShuffle.equals(firstCardAfterShuffle));
     }
     @Test
-    public void testDrawCard() {
+    public void testDrawCard() throws EmptyDeckException {
         int initialSize = goldDeck.getCards().size();
         GoldCard drawnCard = goldDeck.drawCard();
         assert(!drawnCard.equals(null));

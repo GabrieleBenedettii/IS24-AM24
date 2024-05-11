@@ -1,6 +1,5 @@
-package it.polimi.ingsw.am24.modelTest;
+package it.polimi.ingsw.am24.model;
 
-import it.polimi.ingsw.am24.model.ScoreBoard;
 import org.junit.Test;
 
 import java.util.HashMap;
