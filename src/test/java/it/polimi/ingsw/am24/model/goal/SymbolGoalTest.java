@@ -1,6 +1,8 @@
 package it.polimi.ingsw.am24.model.goal;
 
 import it.polimi.ingsw.am24.model.Symbol;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -8,27 +10,18 @@ import java.util.HashMap;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SymbolGoalTest {
+    HashMap<Symbol, Integer> visibleSymbolsK,visibleSymbolsG, visibleSymbolsT;  //symbols visible on board
+    HashMap<Symbol, Integer> symbolK,symbolG,symbolT;   //symbols requirements
+    SymbolGoal symbolgoalK,symbolgoalG,symbolgoalT;     //cards
+    @BeforeEach
+    public void setUp(){
+        symbolgoalK =new SymbolGoal(1,2,symbolK);
+        symbolgoalG =new SymbolGoal(2,2,symbolG);
+        symbolgoalT =new SymbolGoal(3,2,symbolT);
 
-    @Test
-    public void testCalculatePoints()
-    {
-        HashMap<Symbol, Integer> visibleSymbolsK = new HashMap<>();
-        HashMap<Symbol, Integer> visibleSymbolsG = new HashMap<>();
-        HashMap<Symbol, Integer> visibleSymbolsT = new HashMap<>();
-
-        visibleSymbolsK.put(Symbol.ANIMAL, 3);
-        visibleSymbolsG.put(Symbol.QUILL, 2);
-        visibleSymbolsT.put(Symbol.INK, 1);
-        visibleSymbolsT.put(Symbol.MANUSCRIPT, 1);
-        visibleSymbolsT.put(Symbol.QUILL, 1);
-
-        int pointsK;
-        int pointsG;
-        int pointsT;
-
-        HashMap<Symbol, Integer> symbolK  = new HashMap<>();
-        HashMap<Symbol, Integer> symbolG  = new HashMap<>();
-        HashMap<Symbol, Integer> symbolT  = new HashMap<>();
+        symbolK  = new HashMap<>();
+        symbolG  = new HashMap<>();
+        symbolT  = new HashMap<>();
 
         symbolK.put(Symbol.ANIMAL, 3);
         symbolG.put(Symbol.QUILL, 2);
@@ -36,17 +29,50 @@ public class SymbolGoalTest {
         symbolT.put(Symbol.MANUSCRIPT, 1);
         symbolT.put(Symbol.QUILL, 1);
 
+        visibleSymbolsK = new HashMap<>();
+        visibleSymbolsG = new HashMap<>();
+        visibleSymbolsT = new HashMap<>();
+    }
 
-        SymbolGoal symbolgoalK =new SymbolGoal(1,2,symbolK);
-        SymbolGoal symbolgoalG =new SymbolGoal(1,2,symbolG);
-        SymbolGoal symbolgoalT =new SymbolGoal(1,2,symbolT);
+    @Test
+    @DisplayName("Check correct point calculation")
+    public void testCalculatePoints1() {
+        visibleSymbolsK.put(Symbol.ANIMAL, 3);
+        visibleSymbolsG.put(Symbol.QUILL, 2);
+        visibleSymbolsT.put(Symbol.INK, 1);
+        visibleSymbolsT.put(Symbol.MANUSCRIPT, 1);
+        visibleSymbolsT.put(Symbol.QUILL, 1);
 
-        pointsK=symbolgoalK.calculatePoints(visibleSymbolsK);
-        pointsG=symbolgoalG.calculatePoints(visibleSymbolsG);
-        pointsT=symbolgoalT.calculatePoints(visibleSymbolsT);
+        assertEquals(2,symbolgoalK.calculatePoints(visibleSymbolsK));
+        assertEquals(2,symbolgoalK.calculatePoints(visibleSymbolsG));
+        assertEquals(3,symbolgoalK.calculatePoints(visibleSymbolsT));
+    }
 
-        assert(pointsK == 2);
-        assert(pointsG == 2);
-        assert(pointsT == 3);
+    @Test
+    @DisplayName("Ensure each card is counted once when calculating points")
+    public void testCalculatePoints2(){
+        visibleSymbolsK.put(Symbol.ANIMAL, 5);
+        visibleSymbolsG.put(Symbol.QUILL, 3);
+        visibleSymbolsT.put(Symbol.INK, 2);
+        visibleSymbolsT.put(Symbol.MANUSCRIPT, 1);
+        visibleSymbolsT.put(Symbol.QUILL, 2);
+
+        assertEquals(2,symbolgoalK.calculatePoints(visibleSymbolsK));
+        assertEquals(2,symbolgoalK.calculatePoints(visibleSymbolsG));
+        assertEquals(3,symbolgoalK.calculatePoints(visibleSymbolsT));
+    }
+
+    @Test
+    @DisplayName("Ensure accurate detection of two achieved goals")
+    public void testCalculatePoints3(){
+        visibleSymbolsK.put(Symbol.ANIMAL, 6);
+        visibleSymbolsG.put(Symbol.QUILL, 4);
+        visibleSymbolsT.put(Symbol.INK, 2);
+        visibleSymbolsT.put(Symbol.MANUSCRIPT, 2);
+        visibleSymbolsT.put(Symbol.QUILL, 3);
+
+        assertEquals(4,symbolgoalK.calculatePoints(visibleSymbolsK));
+        assertEquals(4,symbolgoalK.calculatePoints(visibleSymbolsG));
+        assertEquals(6,symbolgoalK.calculatePoints(visibleSymbolsT));
     }
 }

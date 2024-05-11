@@ -1,70 +1,79 @@
 package it.polimi.ingsw.am24.model.goal;
 
 import it.polimi.ingsw.am24.model.Kingdom;
+import it.polimi.ingsw.am24.model.Symbol;
 import it.polimi.ingsw.am24.model.card.ResourceCard;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ObliqueDispositionTest {
+public class ObliqueDispositionTest {
 
-    ObliqueDisposition topLeft = new ObliqueDisposition(1,5, Kingdom.FUNGI,-1);
-    ObliqueDisposition topRight = new ObliqueDisposition(4,1, Kingdom.FUNGI,1);
+    ObliqueDisposition topLeft,topRight;
+    ResourceCard fungiCard,genericCard;
+    ResourceCard[][] boardTL,boardTR;
+    @BeforeEach
+    public void setup(){
+        topLeft = new ObliqueDisposition(1,5, Kingdom.FUNGI,-1);
+        topRight = new ObliqueDisposition(2,1, Kingdom.FUNGI,1);
 
-    ResourceCard fungiCard = new ResourceCard(1, null,Kingdom.FUNGI,0);
-    ResourceCard insectCard = new ResourceCard(2, null,Kingdom.INSECT,0);
-    @Test
-    void calculatePointsOnce() {
-        ResourceCard boardTL[][] = new ResourceCard[5][5];
-        ResourceCard boardTR[][] = new ResourceCard[5][5];
-        for(int i=0;i<5;i++){
-            for(int j=0;j<5;j++){
-                if(i==j){
-                    boardTL[i][j] = fungiCard;
-                    if(i+j!=4)
-                        boardTR[i][j] = insectCard;
-                }
+        fungiCard = new ResourceCard(3, new Symbol[]{Symbol.INK, Symbol.ANIMAL},Kingdom.FUNGI,0);
+        genericCard = new ResourceCard(5,new Symbol[]{Symbol.INK, Symbol.ANIMAL},null,0);
 
-                if(i+j==4){
-                    boardTR[i][j] = fungiCard;
-                    if (i!=j)
-                        boardTL[i][j] = insectCard;
-                }
+        boardTL = new ResourceCard[21][41];
+        boardTR = new ResourceCard[21][41];
 
-                else{
-                    boardTL[i][j] = insectCard;
-                    boardTR[i][j] = insectCard;
-                }
+        for (int i = 0; i < boardTL.length; i++) {
+            for (int j = 0; j < boardTL[i].length; j++) {
+                boardTL[i][j] = genericCard;
+                boardTR[i][j] = genericCard;
             }
         }
+
+        for (int i = 0; i < boardTL.length; i++) {
+            for (int j = 0; j < boardTL[i].length; j++) {
+                boardTL[i][j] = genericCard;
+                boardTR[i][j] = genericCard;
+            }
+        }
+    }
+
+    @Test
+    @DisplayName("Check correct point calculation")
+    public void testCalculatePoints1() {
+        for (int i = 0; i < 3; i++)
+            boardTL[i][i] = fungiCard;
+
+        for (int i = 0; i < 3; i++)
+            boardTR[i][2 - i] = fungiCard;
+
+
+        assertEquals(5,topLeft.calculatePoints(boardTL));
+        assertEquals(1,topRight.calculatePoints(boardTR));
+    }
+
+    @Test
+    @DisplayName("Ensure each card is counted once when calculating points")
+    public void testCalculatePoints2() {
+        for (int i = 0; i < 5; i++)
+            boardTL[i][i] = fungiCard;
+
+        for (int i = 0; i < 5; i++)
+            boardTR[i][4 - i] = fungiCard;
 
         assertEquals(5,topLeft.calculatePoints(boardTL));
         assertEquals(1,topRight.calculatePoints(boardTR));
     }
     @Test
-    void calculatePointsTwice() {
-        ResourceCard boardTL[][] = new ResourceCard[6][6];
-        ResourceCard boardTR[][] = new ResourceCard[6][6];
-        for(int i=0;i<6;i++){
-            for(int j=0;j<6;j++){
-                if(i==j){
-                    boardTL[i][j] = fungiCard;
-                    if(i+j!=5)
-                        boardTR[i][j] = insectCard;
-                }
+    @DisplayName("Ensure accurate detection of two achieved goals")
+    void testCalculatePoints3() {
+        for (int i = 0; i < 6; i++)
+            boardTL[i][i] = fungiCard;
 
-                if(i+j==5){
-                    boardTR[i][j] = fungiCard;
-                    if (i!=j)
-                        boardTL[i][j] = insectCard;
-                }
-
-                else{
-                    boardTL[i][j] = insectCard;
-                    boardTR[i][j] = insectCard;
-                }
-            }
-        }
+        for (int i = 0; i < 6; i++)
+            boardTR[i][5 - i] = fungiCard;
 
         assertEquals(10,topLeft.calculatePoints(boardTL));
         assertEquals(2,topRight.calculatePoints(boardTR));
