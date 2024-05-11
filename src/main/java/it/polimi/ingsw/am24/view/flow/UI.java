@@ -13,6 +13,7 @@ public abstract class UI {
     public abstract void show_gameView(GameView gameView);
     public abstract void show_menu();
     public abstract void show_table(GameView gameView,boolean forChoice);
+    public abstract void show_start_table(GameView gameView);
     public abstract void show_lobby();
     public abstract void show_available_colors(ArrayList<String> colors);
     public abstract void show_hidden_goal(ArrayList<GameCardView> views);

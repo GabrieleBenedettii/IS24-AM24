@@ -2,6 +2,7 @@ package it.polimi.ingsw.am24.listeners;
 
 import it.polimi.ingsw.am24.modelView.GameCardView;
 import it.polimi.ingsw.am24.modelView.GameView;
+import it.polimi.ingsw.am24.modelView.PublicBoardView;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -20,7 +21,7 @@ public interface GameListener extends Remote {
 
     void availableColors(ArrayList<String> colors) throws RemoteException;
 
-    void hiddenGoalChoice(ArrayList<GameCardView> cardViews) throws RemoteException;
+    void hiddenGoalChoice(ArrayList<GameCardView> cardViews, PublicBoardView publicBoardView) throws RemoteException;
 
     void initialCardSide(GameCardView front, GameCardView back) throws RemoteException;
 

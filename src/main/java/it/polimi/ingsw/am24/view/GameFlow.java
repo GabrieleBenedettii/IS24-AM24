@@ -2,6 +2,7 @@ package it.polimi.ingsw.am24.view;
 
 import it.polimi.ingsw.am24.modelView.GameCardView;
 import it.polimi.ingsw.am24.modelView.GameView;
+import it.polimi.ingsw.am24.modelView.PublicBoardView;
 import it.polimi.ingsw.am24.network.rmi.RMIClient;
 import it.polimi.ingsw.am24.network.socket.SocketClient;
 import it.polimi.ingsw.am24.view.commandLine.CLI;
@@ -295,6 +296,7 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
         //ui.show_hidden_goal(cards);
         boolean retry;
         do {
+            ui.show_start_table(gameView);
             ui.show_hidden_goal(cards);
             try {
                 int choice = Integer.parseInt(this.inputParser.getDataToProcess().pop());
@@ -368,13 +370,13 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
                         playCard(nickname, cardIndex, front, x, y);
                     }
                     case "/table" -> {
-                        ui.show_table(gameView, false);
+                        ui.show_start_table(gameView);
                         continue;
                     }
-                    case "/visible" -> {
+                    /*case "/visible" -> {
                         ui.show_visibleSymbols(gameView);
                         continue;
-                    }
+                    }*/
                     case "/help" -> {
                         ui.show_menu();
                         continue;
@@ -539,9 +541,10 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
     }
 
     @Override
-    public void hiddenGoalChoice(ArrayList<GameCardView> cardViews) {
-        addEvent(EventType.HIDDEN_GOAL_CHOICE);
+    public void hiddenGoalChoice(ArrayList<GameCardView> cardViews, PublicBoardView publicBoardView) {
+        this.gameView = new GameView(null, 0, null, publicBoardView, null);
         this.cards = cardViews;
+        addEvent(EventType.HIDDEN_GOAL_CHOICE);
     }
 
     @Override

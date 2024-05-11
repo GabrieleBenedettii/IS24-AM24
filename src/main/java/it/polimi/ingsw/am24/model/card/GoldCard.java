@@ -1,6 +1,6 @@
 package it.polimi.ingsw.am24.model.card;
 
-import it.polimi.ingsw.am24.costants.Costants;
+import it.polimi.ingsw.am24.constants.Constants;
 import it.polimi.ingsw.am24.model.Kingdom;
 import it.polimi.ingsw.am24.model.Symbol;
 import it.polimi.ingsw.am24.modelView.GameCardView;
@@ -8,7 +8,7 @@ import it.polimi.ingsw.am24.modelView.GameCardView;
 import java.util.HashMap;
 import java.util.Map;
 
-import static it.polimi.ingsw.am24.costants.Costants.getText;
+import static it.polimi.ingsw.am24.constants.Constants.getText;
 
 public class GoldCard extends PlayableCard {
     private final Map<Symbol,Integer> requirements;
@@ -58,14 +58,14 @@ public class GoldCard extends PlayableCard {
     }
     public String printCard() {
         StringBuilder text = new StringBuilder("Kingdom: ");
-        text.append(Costants.getText(this.getKingdom()));
+        text.append(Constants.getText(this.getKingdom()));
         text.append("\n\tCorners: ");
         for (CardCorner c: this.getCorners()) {
-            text.append(c.isHidden() ? Costants.HIDDEN + " " : (c.getSymbol()!=null ? Costants.getText(c.getSymbol()) : Costants.EMPTY) + " ");
+            text.append(c.isHidden() ? Constants.HIDDEN + " " : (c.getSymbol()!=null ? Constants.getText(c.getSymbol()) : Constants.EMPTY) + " ");
         }
         text.append("\n\tRequirements: ");
         for (Symbol s: requirements.keySet()) {
-            text.append(Costants.getText(s));
+            text.append(Constants.getText(s));
             text.append(" -> ");
             text.append(requirements.get(s));
             text.append(" ");

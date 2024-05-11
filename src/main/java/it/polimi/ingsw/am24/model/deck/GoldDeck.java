@@ -1,6 +1,7 @@
 package it.polimi.ingsw.am24.model.deck;
 
 import com.google.gson.Gson;
+import it.polimi.ingsw.am24.Exceptions.EmptyDeckException;
 import it.polimi.ingsw.am24.HelloApplication;
 import it.polimi.ingsw.am24.model.Kingdom;
 import it.polimi.ingsw.am24.model.card.GoldCard;
@@ -26,7 +27,9 @@ public class GoldDeck implements Deck{
     public void shuffle(){
         Collections.shuffle(cards);
     }
-    public GoldCard drawCard(){
+
+    public GoldCard drawCard() throws EmptyDeckException {
+        if(cards.isEmpty()) throw new EmptyDeckException();
         GoldCard card;
         card = cards.getFirst();
         cards.removeFirst();
@@ -38,5 +41,9 @@ public class GoldDeck implements Deck{
 
     public ArrayList<GoldCard> getCards() {
         return cards;
+    }
+
+    public int deckSize() {
+        return cards.size();
     }
 }

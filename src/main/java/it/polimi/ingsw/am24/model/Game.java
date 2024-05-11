@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import it.polimi.ingsw.am24.costants.Costants;
+import it.polimi.ingsw.am24.Exceptions.EmptyDeckException;
+import it.polimi.ingsw.am24.constants.Constants;
 import it.polimi.ingsw.am24.model.deck.*;
 import it.polimi.ingsw.am24.model.card.*;
 import it.polimi.ingsw.am24.model.goal.GoalDeck;
@@ -12,7 +13,7 @@ import it.polimi.ingsw.am24.model.goal.GoalCard;
 import it.polimi.ingsw.am24.modelView.GameCardView;
 import it.polimi.ingsw.am24.modelView.PublicBoardView;
 
-import static it.polimi.ingsw.am24.costants.Costants.getText;
+import static it.polimi.ingsw.am24.constants.Constants.getText;
 
 
 public class Game {
@@ -58,20 +59,37 @@ public class Game {
         goalDeck.shuffle();
 
         //set the table
-        visibleResCard.add(resourceDeck.drawCard());
-        visibleResCard.add(resourceDeck.drawCard());
-        visibleGoldCard.add(goldDeck.drawCard());
-        visibleGoldCard.add(goldDeck.drawCard());
+        try {
+            visibleResCard.add(resourceDeck.drawCard());
+            visibleResCard.add(resourceDeck.drawCard());
+            visibleGoldCard.add(goldDeck.drawCard());
+            visibleGoldCard.add(goldDeck.drawCard());
+        } catch(EmptyDeckException e) {
+            //ignored, can't happen
+        }
+
         commonGoals.add(goalDeck.drawCard());
         commonGoals.add(goalDeck.drawCard());
     }
 
-    public ArrayList<ResourceCard> getVisibleResCard() {
-        return visibleResCard;
+    public int resDeckSize() {
+        return resourceDeck.deckSize();
     }
 
-    public ArrayList<GoldCard> getVisibleGoldCard() {
-        return visibleGoldCard;
+    public int goldDeckSize() {
+        return goldDeck.deckSize();
+    }
+
+    public ResourceCard drawnResCard(int index) {
+        ResourceCard drawn = visibleResCard.get(index);
+        visibleResCard.remove(index);
+        return drawn;
+    }
+
+    public GoldCard drawnGoldCard(int index) {
+        GoldCard drawn = visibleGoldCard.get(index);
+        visibleGoldCard.remove(index);
+        return drawn;
     }
 
     public ArrayList<GoalCard> drawGoalCards() {
@@ -89,19 +107,19 @@ public class Game {
         return initialDeck.drawCard();
     }
 
-    public ResourceCard drawResourceCard() {
+    public ResourceCard drawResourceCard() throws EmptyDeckException {
         return resourceDeck.drawCard();
     }
 
-    public GoldCard drawGoldCard() {
+    public GoldCard drawGoldCard() throws EmptyDeckException {
         return goldDeck.drawCard();
     }
 
-    public void addResourceCard() {
+    public void addResourceCard() throws EmptyDeckException {
         visibleResCard.add(resourceDeck.drawCard());
     }
 
-    public void addGoldCard() {
+    public void addGoldCard() throws EmptyDeckException {
         visibleGoldCard.add(goldDeck.drawCard());
     }
 
@@ -130,8 +148,8 @@ public class Game {
     }
 
     public PublicBoardView getPublicBoardView(){
-        String topGold = Costants.getText(goldDeck.getFirstCardKingdom());
-        String topRes = Costants.getText(resourceDeck.getFirstCardKingdom());
+        String topGold = Constants.getText(goldDeck.getFirstCardKingdom());
+        String topRes = Constants.getText(resourceDeck.getFirstCardKingdom());
         ArrayList<GameCardView> res = new ArrayList<>(), gold = new ArrayList<>(), goals = new ArrayList<>();
         for(int i = 0; i < 2; i++){
             goals.add(new GameCardView("goal", commonGoals.get(i).getImageId(), commonGoals.get(i).printCard()));

@@ -1,6 +1,6 @@
 package it.polimi.ingsw.am24.model.card;
 
-import it.polimi.ingsw.am24.costants.Costants;
+import it.polimi.ingsw.am24.constants.Constants;
 import it.polimi.ingsw.am24.model.Symbol;
 import it.polimi.ingsw.am24.model.Kingdom;
 public class ResourceCard extends PlayableCard{
@@ -11,10 +11,10 @@ public class ResourceCard extends PlayableCard{
 
     public String printCard() {
         StringBuilder text = new StringBuilder("Kingdom: ");
-        text.append(Costants.getText(this.getKingdom()));
+        text.append(Constants.getText(this.getKingdom()));
         text.append("\n\tCorners: ");
         for (CardCorner c: this.getCorners()) {
-            text.append(c.isHidden() ? Costants.HIDDEN + " " : (c.getSymbol()!=null ? Costants.getText(c.getSymbol()) : Costants.EMPTY) + " ");
+            text.append(c.isHidden() ? Constants.HIDDEN + " " : (c.getSymbol()!=null ? Constants.getText(c.getSymbol()) : Constants.EMPTY) + " ");
         }
         text.append("\n\tPoints: ");
         text.append(this.getPoints());

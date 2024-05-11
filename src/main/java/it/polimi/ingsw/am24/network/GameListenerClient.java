@@ -3,6 +3,7 @@ package it.polimi.ingsw.am24.network;
 import it.polimi.ingsw.am24.listeners.GameListener;
 import it.polimi.ingsw.am24.modelView.GameCardView;
 import it.polimi.ingsw.am24.modelView.GameView;
+import it.polimi.ingsw.am24.modelView.PublicBoardView;
 import it.polimi.ingsw.am24.view.flow.Flow;
 
 import java.io.Serializable;
@@ -44,8 +45,8 @@ public class GameListenerClient implements GameListener, Serializable {
     }
 
     @Override
-    public void hiddenGoalChoice(ArrayList<GameCardView> cardViews) throws RemoteException {
-        flow.hiddenGoalChoice(cardViews);
+    public void hiddenGoalChoice(ArrayList<GameCardView> cardViews, PublicBoardView publicBoardView) throws RemoteException {
+        flow.hiddenGoalChoice(cardViews, publicBoardView);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.am24.Controller;
 
+import it.polimi.ingsw.am24.Exceptions.EmptyDeckException;
 import it.polimi.ingsw.am24.Exceptions.FullLobbyException;
 import it.polimi.ingsw.am24.Exceptions.InvalidPositioningException;
 import it.polimi.ingsw.am24.Exceptions.RequirementsNotMetException;
@@ -106,7 +107,11 @@ public class GameController implements GameControllerInterface, Serializable, Ru
         game.start();
         for (Player p : players.values()) {
             p.setInitialCard(game.drawInitialCard());
-            p.setPlayingHand(game.drawResourceCard(), game.drawResourceCard(), game.drawGoldCard());
+            try {
+                p.setPlayingHand(game.drawResourceCard(), game.drawResourceCard(), game.drawGoldCard());
+            } catch (EmptyDeckException ignored) {
+                //can't happen
+            }
         }
     }
 
@@ -116,7 +121,13 @@ public class GameController implements GameControllerInterface, Serializable, Ru
             Player p = players.get(nickname);
             if (p != null) {
                 p.setHiddenGoal(game.chosenGoalCard(goalId));
-                listener.initialCardSide(p.getInitialcard().getView(), p.getInitialcard().getBackView());
+                readyPlayers++;
+                if(readyPlayers == playerCount) {
+                    Collections.shuffle(rotation);
+                    currentPlayer = rotation.getFirst();
+                    System.out.println("THE GAME [" + gameId + "] IS STARTING!!!");
+                    notifyAllListeners();
+                }
                 return true;
             }
             return false;
@@ -130,13 +141,7 @@ public class GameController implements GameControllerInterface, Serializable, Ru
             if (p != null) {
                 p.getInitialcard().setFront(isFront);
                 p.playInitialCard(isFront);
-                readyPlayers++;
-                if(readyPlayers == playerCount) {
-                    Collections.shuffle(rotation);
-                    currentPlayer = rotation.getFirst();
-                    System.out.println("THE GAME [" + gameId + "] IS STARTING!!!");
-                    notifyAllListeners();
-                }
+                listener.hiddenGoalChoice(new ArrayList<>(game.drawGoalCards().stream().map(GoalCard::getView).toList()), game.getPublicBoardView());
                 return true;
             }
             return false;
@@ -167,30 +172,37 @@ public class GameController implements GameControllerInterface, Serializable, Ru
         synchronized (lockPlayers) {
             Player p = players.get(nickname);
             if (p != null) {
-                switch (cardIndex) {
-                    case 0 -> {
-                        p.draw(game.getVisibleResCard().getFirst());
-                        game.addResourceCard();
+                try {
+                    switch (cardIndex) {
+                        case 0 -> {
+                            p.draw(game.drawnResCard(0));
+                            game.addResourceCard();
+                        }
+                        case 1 -> {
+                            p.draw(game.drawnResCard(1));
+                            game.addResourceCard();
+                        }
+                        case 2 -> {
+                            p.draw(game.drawnGoldCard(0));
+                            game.addGoldCard();
+                        }
+                        case 3 -> {
+                            p.draw(game.drawnGoldCard(1));
+                            game.addGoldCard();
+                        }
+                        case 4 -> p.draw(game.drawResourceCard());
+                        case 5 -> p.draw(game.drawGoldCard());
                     }
-                    case 1 -> {
-                        p.draw(game.getVisibleResCard().get(1));
-                        game.addResourceCard();
-                    }
-                    case 2 -> {
-                        p.draw(game.getVisibleGoldCard().getFirst());
-                        game.addGoldCard();
-                    }
-                    case 3 -> {
-                        p.draw(game.getVisibleGoldCard().get(1));
-                        game.addGoldCard();
-                    }
-                    case 4 -> p.draw(game.drawResourceCard());
-                    case 5 -> p.draw(game.drawGoldCard());
-                }
 
-                nextPlayer();
-                notifyAllListeners();
-                return true;
+                    //one between the two decks is empty, the final part begins
+                    if(game.goldDeckSize() == 0 || game.resDeckSize() == 0) beginEndGame = true;
+
+                    nextPlayer();
+                    notifyAllListeners();
+                    return true;
+                } catch (EmptyDeckException e) {
+                    return false;
+                }
             }
             return false;
         }
@@ -265,8 +277,11 @@ public class GameController implements GameControllerInterface, Serializable, Ru
                 else {
                     startGame();
                     for (String p : listeners.keySet()) {
-                        if (p != null && listeners.get(p) != null) listeners.get(p).hiddenGoalChoice(new ArrayList<>(game.drawGoalCards().stream().map(GoalCard::getView).toList()));
+                        if (p != null && listeners.get(p) != null) listeners.get(p).initialCardSide(players.get(p).getInitialcard().getView(), players.get(p).getInitialcard().getBackView());
                     }
+                    /*for (String p : listeners.keySet()) {
+                        if (p != null && listeners.get(p) != null) listeners.get(p).hiddenGoalChoice(new ArrayList<>(game.drawGoalCards().stream().map(GoalCard::getView).toList()), game.getPublicBoardView());
+                    }*/
                 }
             }
             else{
