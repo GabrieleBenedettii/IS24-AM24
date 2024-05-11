@@ -2,6 +2,7 @@ package it.polimi.ingsw.am24.view.graphicalUser;
 
 import it.polimi.ingsw.am24.view.GameFlow;
 import it.polimi.ingsw.am24.view.graphicalUser.controllers.Generic;
+import it.polimi.ingsw.am24.view.input.InputReaderGUI;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -25,7 +26,7 @@ public class GUIapp extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        gameflow = new GameFlow("RMI");
+        gameflow = new GameFlow(this, getParameters().getUnnamed().get(0));
         loadScenes();
 
         this.mainStage = primaryStage;
@@ -49,6 +50,52 @@ public class GUIapp extends Application {
             }
             scene.add(new SceneDesc(new Scene(root), Scenes.values()[i], g));
         }
+    }
+    public void setInputReaderGUItoAllControllers(InputReaderGUI inputReaderGUI) {
+        loadScenes();
+        for (SceneDesc s : scene) {
+            s.setInputReaderGUI(inputReaderGUI);
+        }
+    }
+    public Generic getController(Scenes scene) {
+        int index = getSceneIndex(scene);
+        if (index != -1) {
+            return this.scene.get(getSceneIndex(scene)).getGeneric();
+        }
+        return null;
+    }
+
+    private int getSceneIndex(Scenes scene) {
+        for (int i = 0; i < this.scene.size(); i++) {
+            if (this.scene.get(i).getScenes().equals(scene))
+                return i;
+        }
+        return -1;
+    }
+
+    public void createNewWindowWithStyle() {
+        // Crea una nuova finestra con lo stile desiderato
+        Stage newStage = new Stage();
+
+        // Copia la scena dalla finestra precedente
+        newStage.setScene(this.mainStage.getScene());
+
+        // Mostra la nuova finestra
+        newStage.show();
+
+        // Chiudi la finestra precedente
+        this.mainStage.close();
+
+        // Imposta la nuova finestra come primaryStage
+        this.mainStage = newStage;
+        this.mainStage.centerOnScreen();
+        this.mainStage.setAlwaysOnTop(true);
+
+        this.mainStage.setOnCloseRequest(event -> {
+            System.out.println("Closing all");
+
+            System.exit(1);
+        });
     }
 
     public void setActiveScene(Scenes scene){}

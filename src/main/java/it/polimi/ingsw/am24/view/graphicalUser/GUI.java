@@ -43,7 +43,7 @@ public class GUI extends UI {
 
     @Override
     public void show_insert_nickname() {
-
+        callPlatformRunLater(() -> this.guiApplication.setActiveScene(Scenes.NICKNAMESELECT));
     }
 
     @Override
@@ -110,6 +110,11 @@ public class GUI extends UI {
     }
 
     private void show_menuOptions() {
+        if (alreadyShowedPublisher) {
+            callPlatformRunLater(() -> this.guiApplication.setInputReaderGUItoAllControllers(this.inputReaderGUI));
+            callPlatformRunLater(() -> this.guiApplication.createNewWindowWithStyle());
+            callPlatformRunLater(() -> this.guiApplication.setActiveScene(Scenes.MENU));
+        }
     }
 
     @Override
