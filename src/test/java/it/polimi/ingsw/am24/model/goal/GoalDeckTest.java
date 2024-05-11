@@ -1,33 +1,47 @@
 package it.polimi.ingsw.am24.model.goal;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.*;
 public class GoalDeckTest {
     private GoalDeck goalDeck;
-    @Before
+    @BeforeEach
     public void setUp() {
         goalDeck = new GoalDeck();
         goalDeck.loadCards();
     }
     @Test
+    @DisplayName("Correct goal cards loading")
     public void testLoadCards(){
-        assert(!goalDeck.getCards().isEmpty());
-        assert(!goalDeck.getCards().contains(null));
+        assertFalse(goalDeck.getCards().isEmpty());
+        assertFalse(goalDeck.getCards().contains(null));
+        assertEquals(16,goalDeck.getCards().size()); //4 oblique, 4 vertical, 8 symbols
     }
 
     @Test
+    @DisplayName("Correct goal cards shuffle")
     public void testShuffle() {
-        GoalCard firstCardBeforeShuffle = goalDeck.getCards().get(0);
+        GoalCard firstCardBeforeShuffle = goalDeck.getCards().getFirst();
+        int sizeBeforeShuffle = goalDeck.getCards().size();
+
         goalDeck.shuffle();
-        GoalCard firstCardAfterShuffle = goalDeck.getCards().get(0);
-        assert(!firstCardBeforeShuffle.equals(firstCardAfterShuffle));
+
+        GoalCard firstCardAfterShuffle = goalDeck.getCards().getFirst();
+        int sizeAfterShuffle = goalDeck.getCards().size();
+
+        assertNotEquals(firstCardBeforeShuffle, firstCardAfterShuffle);
+        assertEquals(sizeBeforeShuffle,sizeAfterShuffle);
     }
     @Test
+    @DisplayName("Correct goal cards draw")
     public void testDrawCard() {
         int initialSize = goalDeck.getCards().size();
+
         GoalCard drawnCard = goalDeck.drawCard();
-        assert(!drawnCard.equals(null));
-        assert(initialSize - 1 == goalDeck.getCards().size());
+
+        assertNotNull(drawnCard);
+        assertEquals(initialSize-1,goalDeck.getCards().size());
     }
 }
