@@ -5,19 +5,19 @@
     "corners":[
       {
         "symbol":"FUNGI",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"PLANT",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"INSECT",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"ANIMAL",
-        "hidden":"false"
+        "isHidden":"false"
       }
     ],
     "backCard":{
@@ -25,19 +25,19 @@
       "corners":[
         {
           "symbol":"null",
-          "hidden":"false"
+          "isHidden":"false"
         },
         {
           "symbol":"PLANT",
-          "hidden":"false"
+          "isHidden":"false"
         },
         {
           "symbol":"INSECT",
-          "hidden":"false"
+          "isHidden":"false"
         },
         {
           "symbol":"null",
-          "hidden":"false"
+          "isHidden":"false"
         }
       ]
     }
@@ -48,19 +48,19 @@
     "corners":[
       {
         "symbol":"PLANT",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"ANIMAL",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"FUNGI",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"INSECT",
-        "hidden":"false"
+        "isHidden":"false"
       }
     ],
     "backCard":{
@@ -68,19 +68,19 @@
       "corners":[
         {
           "symbol":"ANIMAL",
-          "hidden":"false"
+          "isHidden":"false"
         },
         {
           "symbol":"null",
-          "hidden":"false"
+          "isHidden":"false"
         },
         {
           "symbol":"null",
-          "hidden":"false"
+          "isHidden":"false"
         },
         {
           "symbol":"FUNGI",
-          "hidden":"false"
+          "isHidden":"false"
         }
       ]
     }
@@ -91,19 +91,19 @@
     "corners":[
       {
         "symbol":"INSECT",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"ANIMAL",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"FUNGI",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"PLANT",
-        "hidden":"false"
+        "isHidden":"false"
       }
     ],
     "backCard":{
@@ -111,19 +111,19 @@
       "corners":[
         {
           "symbol":"null",
-          "hidden":"false"
+          "isHidden":"false"
         },
         {
           "symbol":"null",
-          "hidden":"false"
+          "isHidden":"false"
         },
         {
           "symbol":"null",
-          "hidden":"false"
+          "isHidden":"false"
         },
         {
           "symbol":"null",
-          "hidden":"false"
+          "isHidden":"false"
         }
       ]
     }
@@ -134,19 +134,19 @@
     "corners":[
       {
         "symbol":"PLANT",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"INSECT",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"ANIMAL",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"FUNGI",
-        "hidden":"false"
+        "isHidden":"false"
       }
     ],
     "backCard":{
@@ -154,19 +154,19 @@
       "corners":[
         {
           "symbol":"null",
-          "hidden":"false"
+          "isHidden":"false"
         },
         {
           "symbol":"null",
-          "hidden":"false"
+          "isHidden":"false"
         },
         {
           "symbol":"null",
-          "hidden":"false"
+          "isHidden":"false"
         },
         {
           "symbol":"null",
-          "hidden":"false"
+          "isHidden":"false"
         }
       ]
     }
@@ -177,19 +177,19 @@
     "corners":[
       {
         "symbol":"INSECT",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"FUNGI",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"PLANT",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"ANIMAL",
-        "hidden":"false"
+        "isHidden":"false"
       }
     ],
     "backCard":{
@@ -197,19 +197,19 @@
       "corners":[
         {
           "symbol":"null",
-          "hidden":"false"
+          "isHidden":"false"
         },
         {
           "symbol":"null",
-          "hidden":"false"
+          "isHidden":"false"
         },
         {
           "symbol":"null",
-          "hidden":"true"
+          "isHidden":"true"
         },
         {
           "symbol":"null",
-          "hidden":"true"
+          "isHidden":"true"
         }
       ]
     }
@@ -220,19 +220,19 @@
     "corners":[
       {
         "symbol":"FUNGI",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"ANIMAL",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"PLANT",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"INSECT",
-        "hidden":"false"
+        "isHidden":"false"
       }
     ],
     "backCard":{
@@ -240,19 +240,19 @@
       "corners":[
         {
           "symbol":"null",
-          "hidden":"false"
+          "isHidden":"false"
         },
         {
           "symbol":"null",
-          "hidden":"false"
+          "isHidden":"false"
         },
         {
           "symbol":"null",
-          "hidden":"true"
+          "isHidden":"true"
         },
         {
           "symbol":"null",
-          "hidden":"true"
+          "isHidden":"true"
         }
       ]
     }

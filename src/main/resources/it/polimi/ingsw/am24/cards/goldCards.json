@@ -12,19 +12,19 @@
     "corners":[
       {
         "symbol":"null",
-        "hidden":"true"
+        "isHidden":"true"
       },
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"QUILL",
-        "hidden":"false"
+        "isHidden":"false"
       }
     ]
   },
@@ -41,19 +41,19 @@
     "corners":[
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"INK",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"true"
+        "isHidden":"true"
       },
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       }
     ]
   },
@@ -70,19 +70,19 @@
     "corners":[
       {
         "symbol":"MANUSCRIPT",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"true"
+        "isHidden":"true"
       }
     ]
   },
@@ -99,19 +99,19 @@
     "corners":[
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"true"
+        "isHidden":"true"
       },
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       }
     ]
   },
@@ -128,19 +128,19 @@
     "corners":[
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"true"
+        "isHidden":"true"
       }
     ]
   },
@@ -157,19 +157,19 @@
     "corners":[
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"true"
+        "isHidden":"true"
       },
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       }
     ]
   },
@@ -185,19 +185,19 @@
     "corners":[
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"true"
+        "isHidden":"true"
       },
       {
         "symbol":"INK",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"true"
+        "isHidden":"true"
       }
     ]
   },
@@ -213,19 +213,19 @@
     "corners":[
       {
         "symbol":"QUILL",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"true"
+        "isHidden":"true"
       },
       {
         "symbol":"null",
-        "hidden":"true"
+        "isHidden":"true"
       }
     ]
   },
@@ -241,19 +241,19 @@
     "corners":[
       {
         "symbol":"null",
-        "hidden":"true"
+        "isHidden":"true"
       },
       {
         "symbol":"MANUSCRIPT",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"true"
+        "isHidden":"true"
       },
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       }
     ]
   },
@@ -269,19 +269,19 @@
     "corners":[
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"true"
+        "isHidden":"true"
       },
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"true"
+        "isHidden":"true"
       }
     ]
   },
@@ -298,19 +298,19 @@
     "corners":[
       {
         "symbol":"QUILL",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"true"
+        "isHidden":"true"
       }
     ]
   },
@@ -327,19 +327,19 @@
     "corners":[
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"MANUSCRIPT",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"true"
+        "isHidden":"true"
       },
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       }
     ]
   },
@@ -356,19 +356,19 @@
     "corners":[
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"true"
+        "isHidden":"true"
       },
       {
         "symbol":"INK",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       }
     ]
   },
@@ -385,19 +385,19 @@
     "corners":[
       {
         "symbol":"null",
-        "hidden":"true"
+        "isHidden":"true"
       },
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       }
     ]
   },
@@ -414,19 +414,19 @@
     "corners":[
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"true"
+        "isHidden":"true"
       }
     ]
   },
@@ -443,19 +443,19 @@
     "corners":[
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"true"
+        "isHidden":"true"
       },
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       }
     ]
   },
@@ -471,19 +471,19 @@
     "corners":[
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"true"
+        "isHidden":"true"
       },
       {
         "symbol":"QUILL",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"true"
+        "isHidden":"true"
       }
     ]
   },
@@ -499,19 +499,19 @@
     "corners":[
       {
         "symbol":"MANUSCRIPT",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"true"
+        "isHidden":"true"
       },
       {
         "symbol":"null",
-        "hidden":"true"
+        "isHidden":"true"
       }
     ]
   },
@@ -527,19 +527,19 @@
     "corners":[
       {
         "symbol":"null",
-        "hidden":"true"
+        "isHidden":"true"
       },
       {
         "symbol":"INK",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"true"
+        "isHidden":"true"
       },
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       }
     ]
   },
@@ -555,19 +555,19 @@
     "corners":[
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"true"
+        "isHidden":"true"
       },
       {
         "symbol":"null",
-        "hidden":"true"
+        "isHidden":"true"
       }
     ]
   },
@@ -584,19 +584,19 @@
     "corners":[
       {
         "symbol":"INK",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"true"
+        "isHidden":"true"
       }
     ]
   },
@@ -613,19 +613,19 @@
     "corners":[
       {
         "symbol":"null",
-        "hidden":"true"
+        "isHidden":"true"
       },
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"MANUSCRIPT",
-        "hidden":"true"
+        "isHidden":"true"
       }
     ]
   },
@@ -642,19 +642,19 @@
     "corners":[
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"true"
+        "isHidden":"true"
       },
       {
         "symbol":"QUILL",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       }
     ]
   },
@@ -671,19 +671,19 @@
     "corners":[
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"true"
+        "isHidden":"true"
       },
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       }
     ]
   },
@@ -700,19 +700,19 @@
     "corners":[
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"true"
+        "isHidden":"true"
       },
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       }
     ]
   },
@@ -729,19 +729,19 @@
     "corners":[
       {
         "symbol":"null",
-        "hidden":"true"
+        "isHidden":"true"
       },
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       }
     ]
   },
@@ -757,19 +757,19 @@
     "corners":[
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"true"
+        "isHidden":"true"
       },
       {
         "symbol":"MANUSCRIPT",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"true"
+        "isHidden":"true"
       }
     ]
   },
@@ -785,19 +785,19 @@
     "corners":[
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"INK",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"true"
+        "isHidden":"true"
       },
       {
         "symbol":"null",
-        "hidden":"true"
+        "isHidden":"true"
       }
     ]
   },
@@ -813,19 +813,19 @@
     "corners":[
       {
         "symbol":"null",
-        "hidden":"true"
+        "isHidden":"true"
       },
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"true"
+        "isHidden":"true"
       },
       {
         "symbol":"QUILL",
-        "hidden":"false"
+        "isHidden":"false"
       }
     ]
   },
@@ -841,19 +841,19 @@
     "corners":[
       {
         "symbol":"null",
-        "hidden":"true"
+        "isHidden":"true"
       },
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"true"
+        "isHidden":"true"
       },
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       }
     ]
   },
@@ -870,19 +870,19 @@
     "corners":[
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"QUILL",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"true"
+        "isHidden":"true"
       },
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       }
     ]
   },
@@ -899,19 +899,19 @@
     "corners":[
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"true"
+        "isHidden":"true"
       },
       {
         "symbol":"MANUSCRIPT",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       }
     ]
   },
@@ -928,19 +928,19 @@
     "corners":[
       {
         "symbol":"null",
-        "hidden":"true"
+        "isHidden":"true"
       },
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"INK",
-        "hidden":"false"
+        "isHidden":"false"
       }
     ]
   },
@@ -957,19 +957,19 @@
     "corners":[
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"true"
+        "isHidden":"true"
       },
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       }
     ]
   },
@@ -986,19 +986,19 @@
     "corners":[
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"true"
+        "isHidden":"true"
       }
     ]
   },
@@ -1015,19 +1015,19 @@
     "corners":[
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"true"
+        "isHidden":"true"
       },
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       }
     ]
   },
@@ -1043,19 +1043,19 @@
     "corners":[
       {
         "symbol":"INK",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"true"
+        "isHidden":"true"
       },
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"true"
+        "isHidden":"true"
       }
     ]
   },
@@ -1071,19 +1071,19 @@
     "corners":[
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"MANUSCRIPT",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"true"
+        "isHidden":"true"
       },
       {
         "symbol":"null",
-        "hidden":"true"
+        "isHidden":"true"
       }
     ]
   },
@@ -1099,19 +1099,19 @@
     "corners":[
       {
         "symbol":"null",
-        "hidden":"true"
+        "isHidden":"true"
       },
       {
         "symbol":"null",
-        "hidden":"true"
+        "isHidden":"true"
       },
       {
         "symbol":"QUILL",
-        "hidden":"true"
+        "isHidden":"true"
       },
       {
         "symbol":"null",
-        "hidden":"true"
+        "isHidden":"true"
       }
     ]
   },
@@ -1127,19 +1127,19 @@
     "corners":[
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"false"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
-        "hidden":"true"
+        "isHidden":"true"
       },
       {
         "symbol":"null",
-        "hidden":"true"
+        "isHidden":"true"
       }
     ]
   }
