@@ -7,7 +7,7 @@ import it.polimi.ingsw.am24.modelView.GameCardView;
 
 public class ObliqueDisposition extends GoalCard{
     private final Kingdom kingdom;
-    private final int direction;    //direction = -1 -> top-left, direction = 1 -> top-right
+    private final int direction;    //direction = 1 -> top-left (\), direction = -1 -> top-right (/)
 
     public ObliqueDisposition(int imageId, int points, Kingdom kingdom, int direction) {
         super(imageId, points);
@@ -24,8 +24,8 @@ public class ObliqueDisposition extends GoalCard{
         int points = 0;
         for(int i = 1-direction; i < board.length - (1+direction); i++){
             for(int j = 0; j < board[i].length - 2; j++){
-                if(!alreadyUsed[i][j] && kingdom.equals(board[i][j].getKingdom()) && kingdom.equals(board[i+direction][j+1].getKingdom()) && kingdom.equals(board[i+2*direction][j+2].getKingdom())) {
-                    points += 2;
+                if(!alreadyUsed[i][j] && !alreadyUsed[i+direction][j+1] && !alreadyUsed[i+2*direction][j+2] && kingdom.equals(board[i][j].getKingdom()) && kingdom.equals(board[i+direction][j+1].getKingdom()) && kingdom.equals(board[i+2*direction][j+2].getKingdom())) {
+                    points += getPoints();
                     alreadyUsed[i][j] = true;
                     alreadyUsed[i+direction][j+1] = true;
                     alreadyUsed[i+2*direction][j+2] = true;

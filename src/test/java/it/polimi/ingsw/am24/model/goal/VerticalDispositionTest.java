@@ -3,17 +3,17 @@ package it.polimi.ingsw.am24.model.goal;
 import it.polimi.ingsw.am24.model.Kingdom;
 import it.polimi.ingsw.am24.model.Symbol;
 import it.polimi.ingsw.am24.model.card.ResourceCard;
-import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class VerticalDispositionTest {
     VerticalDisposition fungi, plant,animal, insect;
-    ResourceCard fungiCard, plantCard,animalCard, insectCard,genericCard;
-
+    ResourceCard fungiCard, plantCard,animalCard, insectCard;
     ResourceCard[][] boardf, boardp,boardi,boarda;
+
     @BeforeEach
     public void setUp(){
         fungi = new VerticalDisposition(1,3, Kingdom.FUNGI, Kingdom.PLANT,3);
@@ -25,7 +25,6 @@ public class VerticalDispositionTest {
         plantCard = new ResourceCard(6, new Symbol[]{Symbol.INK, Symbol.ANIMAL},Kingdom.PLANT,0);
         animalCard = new ResourceCard(7, new Symbol[]{Symbol.INK, Symbol.ANIMAL},Kingdom.ANIMAL,0);
         insectCard = new ResourceCard(8, new Symbol[]{Symbol.INK, Symbol.ANIMAL},Kingdom.INSECT,0);
-        genericCard = new ResourceCard(5,new Symbol[]{Symbol.INK, Symbol.ANIMAL},null,0);
 
         boardf = new ResourceCard[21][41];
         boardp = new ResourceCard[21][41];
@@ -34,36 +33,35 @@ public class VerticalDispositionTest {
 
         for (int i = 0; i < boardf.length; i++) {
             for (int j = 0; j < boardf[i].length; j++) {
-                boardf[i][j] = genericCard;
-                boardf[i][j] = genericCard;
+                boardf[i][j] = animalCard;
+                boardf[i][j] = animalCard;
             }
         }
 
         for (int i = 0; i < boardp.length; i++) {
             for (int j = 0; j < boardp[i].length; j++) {
-                boardp[i][j] = genericCard;
-                boardp[i][j] = genericCard;
+                boardp[i][j] = fungiCard;
+                boardp[i][j] = fungiCard;
             }
         }
 
         for (int i = 0; i < boardi.length; i++) {
             for (int j = 0; j < boardi[i].length; j++) {
-                boardi[i][j] = genericCard;
-                boardi[i][j] = genericCard;
+                boardi[i][j] = fungiCard;
+                boardi[i][j] = fungiCard;
             }
         }
 
         for (int i = 0; i < boarda.length; i++) {
             for (int j = 0; j < boarda[i].length; j++) {
-                boarda[i][j] = genericCard;
-                boarda[i][j] = genericCard;
+                boarda[i][j] = plantCard;
+                boarda[i][j] = plantCard;
             }
         }
     }
     @Test
     @DisplayName("Check correct point calculation")
     public void testCalculatePoints1() {
-
         boardf[0][2]=fungiCard;
         boardf[2][2]=fungiCard;
         boardf[3][3]=plantCard;
@@ -79,7 +77,6 @@ public class VerticalDispositionTest {
         boardi[1][2]=insectCard;
         boardi[3][2]=insectCard;
         boardi[0][1]=animalCard;
-
 
         assertEquals(3,fungi.calculatePoints(boardf));
         assertEquals(3,plant.calculatePoints(boardp));

@@ -16,8 +16,8 @@ public class ObliqueDispositionTest {
     ResourceCard[][] boardTL,boardTR;
     @BeforeEach
     public void setup(){
-        topLeft = new ObliqueDisposition(1,5, Kingdom.FUNGI,-1);
-        topRight = new ObliqueDisposition(2,1, Kingdom.FUNGI,1);
+        topLeft = new ObliqueDisposition(1,5, Kingdom.FUNGI,1);
+        topRight = new ObliqueDisposition(2,1, Kingdom.FUNGI,-1);
 
         fungiCard = new ResourceCard(3, new Symbol[]{Symbol.INK, Symbol.ANIMAL},Kingdom.FUNGI,0);
         genericCard = new ResourceCard(5,new Symbol[]{Symbol.INK, Symbol.ANIMAL},null,0);
@@ -48,7 +48,6 @@ public class ObliqueDispositionTest {
 
         for (int i = 0; i < 3; i++)
             boardTR[i][2 - i] = fungiCard;
-
 
         assertEquals(5,topLeft.calculatePoints(boardTL));
         assertEquals(1,topRight.calculatePoints(boardTR));
