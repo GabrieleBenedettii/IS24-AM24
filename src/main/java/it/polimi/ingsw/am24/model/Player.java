@@ -46,8 +46,8 @@ public class Player {
             throw new InvalidPositioningException();
         }
         if(playingHand.get(cardIndex).getType().equals("gold")){
-            boolean placeable = true;
-            playingHand.get(cardIndex).checkRequirementsMet(visibleSymbols, placeable);
+            boolean placeable;
+            placeable = playingHand.get(cardIndex).checkRequirementsMet(visibleSymbols);
             if(!placeable){
                 throw new RequirementsNotMetException();
             }
@@ -75,19 +75,19 @@ public class Player {
             }
         }
         //add points
-        if(playingHand.get(cardIndex).getType().equals("gold")) {
-            if(((GoldCard) playingHand.get(cardIndex)).getPointsForCoveringCorners()) {
-                addPoints(coveredCorners*playingHand.get(cardIndex).getPoints());
-            }
-            else if(((GoldCard) playingHand.get(cardIndex)).getCoveringSymbol() != null) {
-                addPoints(playingHand.get(cardIndex).getPoints()*visibleSymbols.get(((GoldCard) playingHand.get(cardIndex)).getCoveringSymbol()));
-            }
-            else {
+        if(front) {
+            if (playingHand.get(cardIndex).getType().equals("gold")) {
+                if (((GoldCard) playingHand.get(cardIndex)).getPointsForCoveringCorners()) {
+                    System.out.println(coveredCorners);
+                    addPoints(coveredCorners * playingHand.get(cardIndex).getPoints());
+                } else if (((GoldCard) playingHand.get(cardIndex)).getCoveringSymbol() != null) {
+                    addPoints(playingHand.get(cardIndex).getPoints() * visibleSymbols.get(((GoldCard) playingHand.get(cardIndex)).getCoveringSymbol()));
+                } else {
+                    addPoints(playingHand.get(cardIndex).getPoints());
+                }
+            } else {
                 addPoints(playingHand.get(cardIndex).getPoints());
             }
-        }
-        else {
-            addPoints(playingHand.get(cardIndex).getPoints());
         }
 
         possiblePlacements[x][y] = false;
@@ -113,9 +113,9 @@ public class Player {
     }
 
     public void setPlayingHand(ResourceCard card1, ResourceCard card2, GoldCard card3) {
-        playingHand.add(card1);
-        playingHand.add(card2);
-        playingHand.add(card3);
+        playingHand.add(0,card1);
+        playingHand.add(1,card2);
+        playingHand.add(2,card3);
     }
 
     public GoalCard getHiddenGoal() {

@@ -488,20 +488,20 @@
     "points":0,
     "corners":[
       {
-        "symbol":"ANIMAL",
-        "hidden":"false"
-      },
-      {
-        "symbol":"ANIMAL",
-        "hidden":"false"
-      },
-      {
-        "symbol":"null",
-        "hidden":"false"
-      },
-      {
         "symbol":"null",
         "hidden":"true"
+      },
+      {
+        "symbol":"null",
+        "hidden":"false"
+      },
+      {
+        "symbol":"ANIMAL",
+        "hidden":"false"
+      },
+      {
+        "symbol":"ANIMAL",
+        "hidden":"false"
       }
     ]
   },
@@ -511,19 +511,19 @@
     "points":0,
     "corners":[
       {
+        "symbol":"ANIMAL",
+        "hidden":"false"
+      },
+      {
         "symbol":"null",
         "hidden":"true"
       },
       {
+        "symbol":"ANIMAL",
+        "hidden":"false"
+      },
+      {
         "symbol":"null",
-        "hidden":"false"
-      },
-      {
-        "symbol":"ANIMAL",
-        "hidden":"false"
-      },
-      {
-        "symbol":"ANIMAL",
         "hidden":"false"
       }
     ]
@@ -534,6 +534,10 @@
     "points":0,
     "corners":[
       {
+        "symbol":"null",
+        "hidden":"false"
+      },
+      {
         "symbol":"ANIMAL",
         "hidden":"false"
       },
@@ -543,10 +547,6 @@
       },
       {
         "symbol":"ANIMAL",
-        "hidden":"false"
-      },
-      {
-        "symbol":"null",
         "hidden":"false"
       }
     ]
@@ -558,15 +558,15 @@
     "corners":[
       {
         "symbol":"null",
-        "hidden":"false"
-      },
-      {
-        "symbol":"ANIMAL",
-        "hidden":"false"
-      },
-      {
-        "symbol":"null",
         "hidden":"true"
+      },
+      {
+        "symbol":"INSECT",
+        "hidden":"false"
+      },
+      {
+        "symbol":"INK",
+        "hidden":"false"
       },
       {
         "symbol":"ANIMAL",
@@ -580,29 +580,6 @@
     "points":0,
     "corners":[
       {
-        "symbol":"null",
-        "hidden":"true"
-      },
-      {
-        "symbol":"INSECT",
-        "hidden":"false"
-      },
-      {
-        "symbol":"INK",
-        "hidden":"false"
-      },
-      {
-        "symbol":"ANIMAL",
-        "hidden":"false"
-      }
-    ]
-  },
-  {
-    "cardID":27,
-    "kingdom":"ANIMAL",
-    "points":0,
-    "corners":[
-      {
         "symbol":"PLANT",
         "hidden":"false"
       },
@@ -621,7 +598,7 @@
     ]
   },
   {
-    "cardID":28,
+    "cardID":27,
     "kingdom":"ANIMAL",
     "points":0,
     "corners":[
@@ -644,7 +621,7 @@
     ]
   },
   {
-    "cardID":29,
+    "cardID":28,
     "kingdom":"ANIMAL",
     "points":1,
     "corners":[
@@ -662,6 +639,29 @@
       },
       {
         "symbol":"null",
+        "hidden":"false"
+      }
+    ]
+  },
+  {
+    "cardID":29,
+    "kingdom":"ANIMAL",
+    "points":1,
+    "corners":[
+      {
+        "symbol":"null",
+        "hidden":"false"
+      },
+      {
+        "symbol":"null",
+        "hidden":"true"
+      },
+      {
+        "symbol":"null",
+        "hidden":"false"
+      },
+      {
+        "symbol":"ANIMAL",
         "hidden":"false"
       }
     ]
@@ -673,10 +673,6 @@
     "corners":[
       {
         "symbol":"null",
-        "hidden":"true"
-      },
-      {
-        "symbol":"null",
         "hidden":"false"
       },
       {
@@ -686,14 +682,26 @@
       {
         "symbol":"null",
         "hidden":"false"
+      },
+      {
+        "symbol":"null",
+        "hidden":"true"
       }
     ]
   },
   {
     "cardID":31,
-    "kingdom":"ANIMAL",
-    "points":1,
+    "kingdom":"INSECT",
+    "points":0,
     "corners":[
+      {
+        "symbol":"INSECT",
+        "hidden":"false"
+      },
+      {
+        "symbol":"INSECT",
+        "hidden":"false"
+      },
       {
         "symbol":"null",
         "hidden":"false"
@@ -701,37 +709,29 @@
       {
         "symbol":"null",
         "hidden":"true"
-      },
-      {
-        "symbol":"null",
-        "hidden":"false"
-      },
-      {
-        "symbol":"ANIMAL",
-        "hidden":"false"
       }
     ]
   },
   {
     "cardID":32,
-    "kingdom":"ANIMAL",
-    "points":1,
+    "kingdom":"INSECT",
+    "points":0,
     "corners":[
       {
         "symbol":"null",
-        "hidden":"false"
-      },
-      {
-        "symbol":"ANIMAL",
-        "hidden":"false"
-      },
-      {
-        "symbol":"null",
-        "hidden":"false"
-      },
-      {
-        "symbol":"null",
         "hidden":"true"
+      },
+      {
+        "symbol":"null",
+        "hidden":"false"
+      },
+      {
+        "symbol":"INSECT",
+        "hidden":"false"
+      },
+      {
+        "symbol":"INSECT",
+        "hidden":"false"
       }
     ]
   },
@@ -745,16 +745,16 @@
         "hidden":"false"
       },
       {
+        "symbol":"null",
+        "hidden":"true"
+      },
+      {
         "symbol":"INSECT",
         "hidden":"false"
       },
       {
         "symbol":"null",
         "hidden":"false"
-      },
-      {
-        "symbol":"null",
-        "hidden":"true"
       }
     ]
   },
@@ -765,15 +765,15 @@
     "corners":[
       {
         "symbol":"null",
-        "hidden":"true"
-      },
-      {
-        "symbol":"null",
         "hidden":"false"
       },
       {
         "symbol":"INSECT",
         "hidden":"false"
+      },
+      {
+        "symbol":"null",
+        "hidden":"true"
       },
       {
         "symbol":"INSECT",
@@ -783,52 +783,6 @@
   },
   {
     "cardID":35,
-    "kingdom":"INSECT",
-    "points":0,
-    "corners":[
-      {
-        "symbol":"INSECT",
-        "hidden":"false"
-      },
-      {
-        "symbol":"null",
-        "hidden":"true"
-      },
-      {
-        "symbol":"INSECT",
-        "hidden":"false"
-      },
-      {
-        "symbol":"null",
-        "hidden":"false"
-      }
-    ]
-  },
-  {
-    "cardID":36,
-    "kingdom":"INSECT",
-    "points":0,
-    "corners":[
-      {
-        "symbol":"null",
-        "hidden":"false"
-      },
-      {
-        "symbol":"INSECT",
-        "hidden":"false"
-      },
-      {
-        "symbol":"null",
-        "hidden":"true"
-      },
-      {
-        "symbol":"INSECT",
-        "hidden":"false"
-      }
-    ]
-  },
-  {
-    "cardID":37,
     "kingdom":"INSECT",
     "points":0,
     "corners":[
@@ -851,7 +805,7 @@
     ]
   },
   {
-    "cardID":38,
+    "cardID":36,
     "kingdom":"INSECT",
     "points":0,
     "corners":[
@@ -874,7 +828,7 @@
     ]
   },
   {
-    "cardID":39,
+    "cardID":37,
     "kingdom":"INSECT",
     "points":0,
     "corners":[
@@ -897,53 +851,53 @@
     ]
   },
   {
+    "cardID":38,
+    "kingdom":"INSECT",
+    "points":1,
+    "corners":[
+      {
+        "symbol":"INSECT",
+        "hidden":"false"
+      },
+      {
+        "symbol":"null",
+        "hidden":"true"
+      },
+      {
+        "symbol":"null",
+        "hidden":"false"
+      },
+      {
+        "symbol":"null",
+        "hidden":"false"
+      }
+    ]
+  },
+  {
+    "cardID":39,
+    "kingdom":"INSECT",
+    "points":1,
+    "corners":[
+      {
+        "symbol":"null",
+        "hidden":"false"
+      },
+      {
+        "symbol":"null",
+        "hidden":"false"
+      },
+      {
+        "symbol":"null",
+        "hidden":"true"
+      },
+      {
+        "symbol":"INSECT",
+        "hidden":"false"
+      }
+    ]
+  },
+  {
     "cardID":40,
-    "kingdom":"INSECT",
-    "points":1,
-    "corners":[
-      {
-        "symbol":"INSECT",
-        "hidden":"false"
-      },
-      {
-        "symbol":"null",
-        "hidden":"true"
-      },
-      {
-        "symbol":"null",
-        "hidden":"false"
-      },
-      {
-        "symbol":"null",
-        "hidden":"false"
-      }
-    ]
-  },
-  {
-    "cardID":41,
-    "kingdom":"INSECT",
-    "points":1,
-    "corners":[
-      {
-        "symbol":"null",
-        "hidden":"false"
-      },
-      {
-        "symbol":"null",
-        "hidden":"false"
-      },
-      {
-        "symbol":"null",
-        "hidden":"true"
-      },
-      {
-        "symbol":"INSECT",
-        "hidden":"false"
-      }
-    ]
-  },
-  {
-    "cardID":42,
     "kingdom":"INSECT",
     "points":1,
     "corners":[

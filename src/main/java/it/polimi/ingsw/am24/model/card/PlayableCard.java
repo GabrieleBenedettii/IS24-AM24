@@ -29,6 +29,7 @@ public abstract class PlayableCard extends GameCard{
         }
         return this;
     }
-    public void checkRequirementsMet(HashMap<Symbol, Integer> visibleSymbols, boolean placeble){
+    public boolean checkRequirementsMet(HashMap<Symbol, Integer> visibleSymbols){
+        return true;
     }
 }

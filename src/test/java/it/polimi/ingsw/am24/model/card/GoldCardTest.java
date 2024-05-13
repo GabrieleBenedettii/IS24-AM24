@@ -24,15 +24,18 @@ public class GoldCardTest {
         card2 = deck.getCards().get(1);
         visibleSymbols.put(Symbol.ANIMAL, 3);
         visibleSymbols.put(Symbol.FUNGI, 3);
+        visibleSymbols.put(Symbol.PLANT, 0);
+        visibleSymbols.put(Symbol.INK, 0);
+        visibleSymbols.put(Symbol.QUILL, 0);
+        visibleSymbols.put(Symbol.MANUSCRIPT, 0);
+        visibleSymbols.put(Symbol.INSECT, 0);
+
     }
     @Test
     public void testCheckRequirementsMet_RequirementsMet() {
-        boolean placeable = true;
-        card1.checkRequirementsMet(visibleSymbols, placeable);
-        assertTrue(card1.isRequirementsMet());
-        placeable = true;
-        card2.checkRequirementsMet(visibleSymbols, placeable);
-        assertFalse(card2.isRequirementsMet());
+
+        assertTrue(card1.checkRequirementsMet(visibleSymbols));
+        assertFalse(card2.checkRequirementsMet(visibleSymbols));
     }
 
     @Test

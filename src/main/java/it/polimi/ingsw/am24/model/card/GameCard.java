@@ -17,7 +17,7 @@ public abstract class GameCard {
         this.front = false;
         this.corners = new ArrayList<>();
         for (Symbol s: symbols) {
-            this.corners.add(new CardCorner(s,true));
+            this.corners.add(new CardCorner(s,false));
         }
         this.imageId = imageId;
         this.kingdom = kingdom;

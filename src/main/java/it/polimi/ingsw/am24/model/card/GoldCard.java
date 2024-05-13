@@ -14,35 +14,22 @@ public class GoldCard extends PlayableCard {
     private final Map<Symbol,Integer> requirements;
     private final boolean pointsForCoveringCorners;
     private final Symbol coveringSymbol;
-    private boolean requirementsMet;
+
 
     public GoldCard(int imageId, Symbol[] symbols, Kingdom kingdom, int points, boolean pointsForCoveringCorners, Symbol pointSymbol, Map<Symbol,Integer> requirements) {
         super(imageId, symbols, kingdom, points);
         this.pointsForCoveringCorners = pointsForCoveringCorners;
         this.coveringSymbol = pointSymbol;
         this.requirements = requirements;
-        this.requirementsMet = false;
-    }
-    public void checkRequirementsMet(HashMap<Symbol, Integer> visibleSymbols, boolean placeble){
-        for(Symbol s : requirements.keySet()){
-            if(visibleSymbols.containsKey(s)) {
-                if(requirements.get(s) > (visibleSymbols.get(s))){
-                    placeble = false;
-                    break;
-                }
-            }
-            else{
-                placeble = false;
-                break;
-            }
-        }
-        if(placeble){
-            requirementsMet = true;
-        }
-    }
 
-    public boolean isRequirementsMet() {
-        return requirementsMet;
+    }
+    public boolean checkRequirementsMet(HashMap<Symbol, Integer> visibleSymbols){
+        for(Symbol s : requirements.keySet()){
+            if(requirements.get(s) > (visibleSymbols.get(s))){
+                return false;
+            }
+        }
+        return true;
     }
 
     public Map<Symbol, Integer> getRequirements() {

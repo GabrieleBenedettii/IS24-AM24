@@ -26,6 +26,7 @@ public class InitialDeck implements Deck{
     public void shuffle(){
         Collections.shuffle(cards);
     }
+
     public InitialCard drawCard(){
         InitialCard card;
         card = cards.getFirst();

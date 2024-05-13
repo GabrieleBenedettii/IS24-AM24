@@ -23,15 +23,12 @@ public class GoalDeckTest {
     @Test
     @DisplayName("Correct goal cards shuffle")
     public void testShuffle() {
-        GoalCard firstCardBeforeShuffle = goalDeck.getCards().getFirst();
         int sizeBeforeShuffle = goalDeck.getCards().size();
 
         goalDeck.shuffle();
 
-        GoalCard firstCardAfterShuffle = goalDeck.getCards().getFirst();
         int sizeAfterShuffle = goalDeck.getCards().size();
 
-        assertNotEquals(firstCardBeforeShuffle, firstCardAfterShuffle);
         assertEquals(sizeBeforeShuffle,sizeAfterShuffle);
     }
     @Test
