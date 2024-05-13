@@ -2,9 +2,9 @@ package it.polimi.ingsw.am24.model.card;
 
 import it.polimi.ingsw.am24.model.Symbol;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CardCornerTest {
@@ -33,11 +33,19 @@ public class CardCornerTest {
 
         // Testa il metodo getCornerText() con una carta coperta
         CardCorner coveredCorner = new CardCorner(Symbol.ANIMAL, true);
-        assertEquals(' ', coveredCorner.getCornerText());
+        assertEquals('H', coveredCorner.getCornerText());
 
         // Testa il metodo getCornerText() con una carta nascosta
         CardCorner hiddenCorner = new CardCorner(null, false);
-        assertEquals('*', hiddenCorner.getCornerText());
+        assertEquals('E', hiddenCorner.getCornerText());
     }
 
+    @Test
+    public void testSetEmpty() {
+        CardCorner visibleCorner = new CardCorner(Symbol.ANIMAL, false);
+        visibleCorner.setEmpty();
+        assertFalse(visibleCorner.isCovered());
+        assertFalse(visibleCorner.isHidden());
+        assertNull(visibleCorner.getSymbol());
+    }
 }

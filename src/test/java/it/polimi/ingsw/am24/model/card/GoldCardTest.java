@@ -3,51 +3,38 @@ package it.polimi.ingsw.am24.model.card;
 import java.util.HashMap;
 import java.util.Map;
 
+import it.polimi.ingsw.am24.constants.Constants;
 import it.polimi.ingsw.am24.model.Kingdom;
 import it.polimi.ingsw.am24.model.Symbol;
-import org.junit.jupiter.api.Test;
+import it.polimi.ingsw.am24.model.deck.GoldDeck;
+import it.polimi.ingsw.am24.modelView.GameCardView;
+import org.junit.Before;
+import org.junit.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class GoldCardTest {
-    @Test
-    public void testCheckRequirementsMet_RequirementsMet() {
-        // Definisci i simboli visibili
-        HashMap<Symbol, Integer> visibleSymbols = new HashMap<>();
+    private GoldCard card1, card2;
+    private final HashMap<Symbol, Integer> visibleSymbols = new HashMap<>();
+    @Before
+    public void setUp(){
+        GoldDeck deck = new GoldDeck();
+        deck.loadCards();
+        card1 = deck.getCards().getFirst();
+        card2 = deck.getCards().get(1);
         visibleSymbols.put(Symbol.ANIMAL, 3);
         visibleSymbols.put(Symbol.FUNGI, 3);
-
-        // Definisci i requisiti della carta
-        Map<Symbol, Integer> requirements = new HashMap<>();
-        requirements.put(Symbol.ANIMAL, 2);
-        requirements.put(Symbol.FUNGI, 1);
-
-        // Crea una nuova carta d'oro
-        GoldCard goldCard = new GoldCard(1, new Symbol[]{Symbol.ANIMAL, Symbol.PLANT}, Kingdom.PLANT, 2, false, Symbol.PLANT, requirements);
-
-        // Verifica che i requisiti siano soddisfatti
-        goldCard.checkRequirementsMet(visibleSymbols, false);
-        assertTrue(goldCard.isRequirementsMet());
     }
-
     @Test
-    public void testCheckRequirementsMet_RequirementsNotMet() {
-        // Definisci i simboli visibili
-        HashMap<Symbol, Integer> visibleSymbols = new HashMap<>();
-        visibleSymbols.put(Symbol.ANIMAL, 3);
-        visibleSymbols.put(Symbol.FUNGI, 1);
-
-        // Definisci i requisiti della carta
-        Map<Symbol, Integer> requirements = new HashMap<>();
-        requirements.put(Symbol.FUNGI, 5);
-
-        // Crea una nuova carta d'oro
-        GoldCard goldCard = new GoldCard(1, new Symbol[]{Symbol.ANIMAL, Symbol.PLANT}, Kingdom.PLANT, 5, false, Symbol.PLANT, requirements);
-
-        // Verifica che i requisiti non siano soddisfatti
-        goldCard.checkRequirementsMet(visibleSymbols, false);
-        assertFalse(goldCard.isRequirementsMet());
+    public void testCheckRequirementsMet_RequirementsMet() {
+        boolean placeable = true;
+        card1.checkRequirementsMet(visibleSymbols, placeable);
+        assertTrue(card1.isRequirementsMet());
+        placeable = true;
+        card2.checkRequirementsMet(visibleSymbols, placeable);
+        assertFalse(card2.isRequirementsMet());
     }
+
     @Test
     public void constructorTest(){
         Map<Symbol, Integer> requirements = new HashMap<>();
@@ -61,15 +48,31 @@ public class GoldCardTest {
         assertEquals(goldCard.getCoveringSymbol(), Symbol.PLANT);
     }
 
+    @Test
     public void testPrintCard() {
-        // Definisci i requisiti della carta
-        Map<Symbol, Integer> requirements = new HashMap<>();
-        requirements.put(Symbol.FUNGI, 5);
+        String expected ="Kingdom: " + Constants.getText(Kingdom.FUNGI) +  "\n\tCorners: " +
+                Constants.EMPTY + " " + Constants.EMPTY + " " + Constants.EMPTY + " " + Constants.getText(Symbol.QUILL) + " " +
+                "\n\tRequirements: " + Constants.getText(Symbol.FUNGI) + " -> 2 " + Constants.getText(Symbol.ANIMAL) + " -> 1 " +
+                "\n\tPoints: 1";
+        assertEquals(expected, card1.printCard());
+    }
 
-        // Crea una nuova carta d'oro
-        GoldCard goldCard = new GoldCard(1, new Symbol[]{Symbol.ANIMAL, Symbol.PLANT}, Kingdom.PLANT, 5, false, Symbol.PLANT, requirements);
-        String text = new String();
-        text="Kingdom: \nCorners: ";
-        assertEquals(text,goldCard.printCard());
+    @Test
+    public void testGetView() {
+        String desc = "Kingdom: " + Constants.getText(Kingdom.FUNGI) +  "\n\tCorners: " +
+                Constants.EMPTY + " " + Constants.EMPTY + " " + Constants.EMPTY + " " + Constants.getText(Symbol.QUILL) + " " +
+                "\n\tRequirements: " + Constants.getText(Symbol.FUNGI) + " -> 2 " + Constants.getText(Symbol.ANIMAL) + " -> 1 " +
+                "\n\tPoints: 1";
+        GameCardView Expected = new GameCardView("Gold Card", 0, desc);
+        GameCardView cardView = card1.getView();
+        assertEquals(Expected.getCardType(), cardView.getCardType());
+        assertEquals(Expected.getCardId(), cardView.getCardId());
+        assertEquals(Expected.getCardDescription(), cardView.getCardDescription());
+    }
+
+    @Test
+    public void testGetType(){
+        String desc = "gold";
+        assertEquals(desc, card1.getType());
     }
 }

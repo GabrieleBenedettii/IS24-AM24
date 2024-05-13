@@ -16,10 +16,10 @@ public class GoldCard extends PlayableCard {
     private final Symbol coveringSymbol;
     private boolean requirementsMet;
 
-    public GoldCard(int imageId, Symbol[] symbols, Kingdom kingdom, int points, boolean pointsForCoveringCorners, Symbol coveringSymbol, Map<Symbol,Integer> requirements) {
+    public GoldCard(int imageId, Symbol[] symbols, Kingdom kingdom, int points, boolean pointsForCoveringCorners, Symbol pointSymbol, Map<Symbol,Integer> requirements) {
         super(imageId, symbols, kingdom, points);
         this.pointsForCoveringCorners = pointsForCoveringCorners;
-        this.coveringSymbol = coveringSymbol;
+        this.coveringSymbol = pointSymbol;
         this.requirements = requirements;
         this.requirementsMet = false;
     }

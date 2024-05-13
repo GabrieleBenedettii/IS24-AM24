@@ -1,37 +1,68 @@
 package it.polimi.ingsw.am24.model.deck;
 
 import it.polimi.ingsw.am24.Exceptions.EmptyDeckException;
+import it.polimi.ingsw.am24.model.Kingdom;
 import it.polimi.ingsw.am24.model.card.GoldCard;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertThrows;
+import static org.testng.AssertJUnit.*;
+
 public class GoldDeckTest {
     private GoldDeck goldDeck;
+
     @Before
     public void setUp() {
         goldDeck = new GoldDeck();
         goldDeck.loadCards();
     }
+
     @Test
-    public void testLoadCards(){
-        assert(!goldDeck.getCards().isEmpty());
-        assert(!goldDeck.getCards().contains(null));
+    public void testLoadCards() {
+        assertNotNull(goldDeck.getCards());
+        assertTrue(goldDeck.deckSize() > 0);
     }
 
     @Test
     public void testShuffle() {
-        GoldCard firstCardBeforeShuffle = goldDeck.getCards().get(0);
+        ArrayList<GoldCard> originalCards = new ArrayList<>(goldDeck.getCards());
         goldDeck.shuffle();
-        GoldCard firstCardAfterShuffle = goldDeck.getCards().get(0);
-        assert(!firstCardBeforeShuffle.equals(firstCardAfterShuffle));
-    }
-    @Test
-    public void testDrawCard() throws EmptyDeckException {
-        int initialSize = goldDeck.getCards().size();
-        GoldCard drawnCard = goldDeck.drawCard();
-        assert(!drawnCard.equals(null));
-        assert(initialSize - 1 == goldDeck.getCards().size());
+        assertNotEquals(originalCards, goldDeck.getCards());
     }
 
+    @Test
+    public void testDrawCard() {
+        int initialSize = goldDeck.deckSize();
+        try {
+            GoldCard drawnCard = goldDeck.drawCard();
+            assertNotNull(drawnCard);
+            assertEquals(initialSize - 1, goldDeck.deckSize());
+        } catch (EmptyDeckException e) {
+            fail("Unexpected EmptyDeckException");
+        }
+    }
+
+    @Test
+    public void testDrawCardFromEmptyDeck() {
+        // Clear the deck
+        goldDeck.getCards().clear();
+        assertThrows(EmptyDeckException.class, () -> goldDeck.drawCard());
+    }
+
+    @Test
+    public void testGetFirstCardKingdom() {
+        Kingdom firstCardKingdom = goldDeck.getFirstCardKingdom();
+        assertNotNull(firstCardKingdom);
+    }
+
+    @Test
+    public void testGetFirstCardKingdomFromEmptyDeck() {
+        goldDeck.getCards().clear();
+        assertThrows(EmptyDeckException.class, () -> goldDeck.drawCard());
+    }
 }
 

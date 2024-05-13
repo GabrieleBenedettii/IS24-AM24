@@ -46,7 +46,7 @@ public class Player {
             throw new InvalidPositioningException();
         }
         if(playingHand.get(cardIndex).getType().equals("gold")){
-            boolean placeable = false;
+            boolean placeable = true;
             playingHand.get(cardIndex).checkRequirementsMet(visibleSymbols, placeable);
             if(!placeable){
                 throw new RequirementsNotMetException();
