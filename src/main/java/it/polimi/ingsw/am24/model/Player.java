@@ -45,7 +45,7 @@ public class Player {
         if(!possiblePlacements[x][y]){
             throw new InvalidPositioningException();
         }
-        if(playingHand.get(cardIndex).getType().equals("gold")){
+        if(playingHand.get(cardIndex).getType().equals("gold") && front){
             boolean placeable;
             placeable = playingHand.get(cardIndex).checkRequirementsMet(visibleSymbols);
             if(!placeable){
@@ -78,7 +78,6 @@ public class Player {
         if(front) {
             if (playingHand.get(cardIndex).getType().equals("gold")) {
                 if (((GoldCard) playingHand.get(cardIndex)).getPointsForCoveringCorners()) {
-                    System.out.println(coveredCorners);
                     addPoints(coveredCorners * playingHand.get(cardIndex).getPoints());
                 } else if (((GoldCard) playingHand.get(cardIndex)).getCoveringSymbol() != null) {
                     addPoints(playingHand.get(cardIndex).getPoints() * visibleSymbols.get(((GoldCard) playingHand.get(cardIndex)).getCoveringSymbol()));

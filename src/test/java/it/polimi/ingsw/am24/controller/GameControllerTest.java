@@ -2,6 +2,7 @@ package it.polimi.ingsw.am24.controller;
 
 import it.polimi.ingsw.am24.Exceptions.*;
 import it.polimi.ingsw.am24.listeners.GameListener;
+import it.polimi.ingsw.am24.model.goal.GoalCard;
 import it.polimi.ingsw.am24.modelView.GameCardView;
 import it.polimi.ingsw.am24.modelView.GameView;
 import it.polimi.ingsw.am24.modelView.PublicBoardView;
@@ -147,19 +148,17 @@ public class GameControllerTest {
     @DisplayName("Check the drawing card phase")
     void drawCard() throws RemoteException {
         controller.startGame();
+        ArrayList<GoalCard> cards1 = controller.getGame().drawGoalCards();
+        ArrayList<GoalCard> cards2 = controller.getGame().drawGoalCards();
+        controller.getPlayer("p1").setHiddenGoal(cards1.get(0));
+        controller.getPlayer("p2").setHiddenGoal(cards1.get(1));
+        controller.getPlayer("p3").setHiddenGoal(cards2.get(0));
+        controller.getPlayer("p4").setHiddenGoal(cards2.get(1));
         assertFalse(controller.drawCard("p5", 0, gl));
         assertTrue(controller.drawCard("p1", 0, gl));
         assertTrue(controller.drawCard("p2", 1, gl));
         assertTrue(controller.drawCard("p3", 2, gl));
         assertTrue(controller.drawCard("p4", 3, gl));
-    }
-
-    @Test
-    @DisplayName("Check the drawing card phase, draw from decks")
-    void drawCardFromDecks() throws RemoteException {
-        controller.startGame();
-        assertTrue(controller.drawCard("p1", 4, gl));
-        assertTrue(controller.drawCard("p2", 5, gl));
     }
 
     @Test

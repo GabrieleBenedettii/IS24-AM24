@@ -38,7 +38,7 @@ public class CardCorner {
         if(isCovered) {
             text = ' ';
         } else if(symbol != null && !isHidden) {
-            text = symbol.toString().charAt(0);
+            text = symbol == Symbol.INK ? 'K' : symbol.toString().charAt(0);
         } else if (symbol == null && !isHidden) {
             text = 'E';
         } else if (isHidden){
