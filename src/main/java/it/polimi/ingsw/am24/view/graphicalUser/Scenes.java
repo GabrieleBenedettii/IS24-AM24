@@ -9,7 +9,9 @@ public enum Scenes {
     GREENPLAYERICON("/GreenPlayerIcon.fxml"),
     DISPLAY("/display.fxml"),
     LOBBYVIEW("/LobbyView.fxml"),
-    LOGO("/Logo.fxml");
+    LOGO("/Logo.fxml"),
+    COLORSELECTOR("/ColorSelector.fxml");
+
     private final String fxmlFile;
 
     Scenes(final String sceneName) {

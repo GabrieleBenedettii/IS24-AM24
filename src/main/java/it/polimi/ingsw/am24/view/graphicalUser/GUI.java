@@ -4,6 +4,7 @@ import it.polimi.ingsw.am24.constants.Constants;
 import it.polimi.ingsw.am24.modelView.GameCardView;
 import it.polimi.ingsw.am24.modelView.GameView;
 import it.polimi.ingsw.am24.view.flow.UI;
+import it.polimi.ingsw.am24.view.graphicalUser.controllers.ColorSelector;
 import it.polimi.ingsw.am24.view.input.InputReaderGUI;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
@@ -73,12 +74,14 @@ public class GUI extends UI {
 
     @Override
     public void show_lobby() {
-
+        show_menuOptions();
     }
 
     @Override
     public void show_available_colors(ArrayList<String> colors) {
-
+        callPlatformRunLater(() -> this.guiApplication.setActiveScene(Scenes.COLORSELECTOR));
+        ColorSelector selector = new ColorSelector();
+        selector.Initialize(colors);
     }
 
     @Override
@@ -129,7 +132,7 @@ public class GUI extends UI {
 
     @Override
     public void show_joined_players(ArrayList<String> player) {
-
+        callPlatformRunLater(() -> this.guiApplication.setActiveScene(Scenes.LOBBYVIEW));
     }
 
     @Override
