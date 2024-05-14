@@ -9,6 +9,7 @@ import it.polimi.ingsw.am24.modelView.PlayerView;
 import javafx.util.Pair;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class Player {
@@ -21,7 +22,7 @@ public class Player {
     private final HashMap<Symbol,Integer> visibleSymbols;
 
     private final GameCard[][] gameBoard;
-    private final boolean[][] possiblePlacements;
+    private final int[][] possiblePlacements;
     private final Pair<Integer, Integer>[] diagonals;
 
     public Player(String nickname){
@@ -32,7 +33,8 @@ public class Player {
             visibleSymbols.put(s,0);
         }
         this.gameBoard = new GameCard[21][41];
-        this.possiblePlacements = new boolean[21][41];
+        this.possiblePlacements = new int[21][41];
+        Arrays.stream(possiblePlacements).forEach(row->Arrays.fill(row,-1));
         this.score = 0;
         diagonals = new Pair[4];
         diagonals[0] = new Pair<>(-1,-1);
@@ -42,7 +44,7 @@ public class Player {
     }
 
     public void play(int cardIndex, boolean front, int x, int y) throws InvalidPositioningException, RequirementsNotMetException {
-        if(!possiblePlacements[x][y]){
+        if(possiblePlacements[x][y] != 1){
             throw new InvalidPositioningException();
         }
         if(playingHand.get(cardIndex).getType().equals("gold") && front){
@@ -58,7 +60,7 @@ public class Player {
         //cover all the covered corners and remove covered symbols from visible symbols
         int coveredCorners = 0;
         for(int k = 0; k < 4; k++){
-            possiblePlacements[x + diagonals[k].getKey()][y + diagonals[k].getValue()] = gameBoard[x + diagonals[k].getKey()][y + diagonals[k].getValue()] == null && !gameBoard[x][y].getCornerByIndex(k).isHidden();
+            possiblePlacements[x + diagonals[k].getKey()][y + diagonals[k].getValue()] = (gameBoard[x + diagonals[k].getKey()][y + diagonals[k].getValue()] == null && !gameBoard[x][y].getCornerByIndex(k).isHidden() && possiblePlacements[x + diagonals[k].getKey()][y + diagonals[k].getValue()] != 0) ? 1 : 0;
             if(gameBoard[x + diagonals[k].getKey()][y + diagonals[k].getValue()] != null) {
                 gameBoard[x + diagonals[k].getKey()][y + diagonals[k].getValue()].getCornerByIndex(3 - k).coverCorner();
                 coveredCorners++;
@@ -89,14 +91,14 @@ public class Player {
             }
         }
 
-        possiblePlacements[x][y] = false;
+        possiblePlacements[x][y] = 0;
         playingHand.remove(cardIndex);
     }
 
     public void playInitialCard(boolean front) {
         gameBoard[10][20] = front ? initialcard : initialcard.getBackCard();
         for(int k = 0; k < 4; k++) {
-            possiblePlacements[10 + diagonals[k].getKey()][20 + diagonals[k].getValue()] = !gameBoard[10][20].getCornerByIndex(k).isHidden();
+            possiblePlacements[10 + diagonals[k].getKey()][20 + diagonals[k].getValue()] = !gameBoard[10][20].getCornerByIndex(k).isHidden() ? 1 : 0;
             if(gameBoard[10][20].getCornerByIndex(k).getSymbol() != null && !gameBoard[10][20].getCornerByIndex(k).isHidden())
                 visibleSymbols.merge(gameBoard[10][20].getCornerByIndex(k).getSymbol(), 1, Integer::sum);
         }
@@ -168,6 +170,16 @@ public class Player {
         for(Symbol s : visibleSymbols.keySet()){
             vs.put(s.toString(), visibleSymbols.get(s));
         }
-        return new PlayerView(nickname, score, possiblePlacements, temp, new GameCardView("goal", hiddenGoal.getImageId(), hiddenGoal.printCard()), hand, vs);
+        return new PlayerView(nickname, score, getBooleanPossiblePlacements(), temp, new GameCardView("goal", hiddenGoal.getImageId(), hiddenGoal.printCard()), hand, vs);
+    }
+
+    private boolean[][] getBooleanPossiblePlacements() {
+        boolean[][] pp = new boolean[21][41];
+        for(int i = 0; i < possiblePlacements.length; i++) {
+            for(int j = 0; j < possiblePlacements[0].length; j++) {
+                pp[i][j] = possiblePlacements[i][j] == 1;
+            }
+        }
+        return pp;
     }
 }
