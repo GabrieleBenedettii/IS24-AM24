@@ -12,9 +12,12 @@ import it.polimi.ingsw.am24.view.flow.UI;
 import it.polimi.ingsw.am24.view.flow.utility.Event;
 import it.polimi.ingsw.am24.view.flow.utility.EventType;
 import it.polimi.ingsw.am24.view.flow.utility.GameStatus;
+import it.polimi.ingsw.am24.view.graphicalUser.GUI;
+import it.polimi.ingsw.am24.view.graphicalUser.GUIapp;
 import it.polimi.ingsw.am24.view.input.InputParser;
 import it.polimi.ingsw.am24.view.input.InputReader;
 import it.polimi.ingsw.am24.view.input.InputReaderCLI;
+import it.polimi.ingsw.am24.view.input.InputReaderGUI;
 
 import java.io.IOException;
 import java.rmi.NotBoundException;
@@ -52,6 +55,21 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
         nickname = "";
         joined = false;
         this.inputReader = new InputReaderCLI();
+        this.inputParser = new InputParser(this.inputReader.getBuffer(), this);
+        new Thread(this).start();
+    }
+    public GameFlow(GUIapp application, String connectionType) {
+        switch (connectionType) {
+            case "RMI" -> actions = new RMIClient(this);
+            case "SOCKET" -> actions = new SocketClient(this);
+        }
+        this.inputReader = new InputReaderGUI();
+
+        ui = new GUI(application, (InputReaderGUI) inputReader);
+
+        nickname = "";
+        joined = false;
+        this.inputReader = new InputReaderGUI();
         this.inputParser = new InputParser(this.inputReader.getBuffer(), this);
         new Thread(this).start();
     }

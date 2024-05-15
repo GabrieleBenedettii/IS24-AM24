@@ -3,6 +3,7 @@ package it.polimi.ingsw.am24.main;
 import it.polimi.ingsw.am24.view.GameFlow;
 import it.polimi.ingsw.am24.view.commandLine.CLI;
 import it.polimi.ingsw.am24.view.flow.UI;
+import it.polimi.ingsw.am24.view.graphicalUser.GUIapp;
 import javafx.application.Application;
 
 import java.io.IOException;
@@ -14,7 +15,7 @@ public class Client {
 
     public static void main(String[] args) {
         int selection;
-
+        String selected;
         //Disable javaFX logger
         killLoggers();
 
@@ -55,7 +56,7 @@ public class Client {
                 selection = -1;
                 System.out.println("Nan");
             }
-        } while (selection != 1 && selection != 2);
+        } while (selection != 1 && selection != 2 && selection != 3 && selection != 4);
 
         /*do {
             System.out.println("""
@@ -73,10 +74,19 @@ public class Client {
         } while (selection != 1 && selection != 2);
 
         String conSel = selection == 1 ? "CLI" : "GUI";*/
-
+        if(selection == 1 || selection ==3){
+            selected = "RMI";
+        }
+        else {
+            selected = "SOCKET";
+        }
         System.out.println("Starting the game!");
+        if(selection == 1 || selection == 2){
+            new GameFlow(selected);
+        }else {
+            Application.launch(GUIapp.class, selected);
+        }
 
-        new GameFlow(selection == 1 ? "RMI" : "SOCKET");
         //Starts the UI
         //selection == 1 ? new GameFlow(conSel) : Application.launch(GUIApplication.class, conSel.toString());
     }

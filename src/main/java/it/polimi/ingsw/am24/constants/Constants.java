@@ -17,7 +17,7 @@ public class Constants {
     public static final String TEXT_PURPLE = "\033[35m";
     public static final String TEXT_CYAN = "\033[36m";
     public static final String TEXT_WHITE = "\033[37m";
-
+    public static final int logoTime = 3;
     public static final String TEXT_F = TEXT_RED + "F" + TEXT_RESET;
     public static final String TEXT_A = TEXT_CYAN + "A" + TEXT_RESET;
     public static final String TEXT_I = TEXT_PURPLE + "I" + TEXT_RESET;
