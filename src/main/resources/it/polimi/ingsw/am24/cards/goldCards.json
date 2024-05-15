@@ -8,7 +8,7 @@
     },
     "points":1,
     "pointsForCoveringCorners":"false",
-    "pointSymbol":"QUILL",
+    "coveringSymbol":"QUILL",
     "corners":[
       {
         "symbol":"null",
@@ -37,7 +37,7 @@
     },
     "points":1,
     "pointsForCoveringCorners":"false",
-    "pointSymbol":"INK",
+    "coveringSymbol":"INK",
     "corners":[
       {
         "symbol":"null",
@@ -66,7 +66,7 @@
     },
     "points":1,
     "pointsForCoveringCorners":"false",
-    "pointSymbol":"MANUSCRIPT",
+    "coveringSymbol":"MANUSCRIPT",
     "corners":[
       {
         "symbol":"MANUSCRIPT",
@@ -95,7 +95,7 @@
     },
     "points":2,
     "pointsForCoveringCorners":"true",
-    "pointSymbol":"null",
+    "coveringSymbol":"null",
     "corners":[
       {
         "symbol":"null",
@@ -124,7 +124,7 @@
     },
     "points":2,
     "pointsForCoveringCorners":"true",
-    "pointSymbol":"null",
+    "coveringSymbol":"null",
     "corners":[
       {
         "symbol":"null",
@@ -153,7 +153,7 @@
     },
     "points":2,
     "pointsForCoveringCorners":"true",
-    "pointSymbol":"null",
+    "coveringSymbol":"null",
     "corners":[
       {
         "symbol":"null",
@@ -181,7 +181,7 @@
     },
     "points":3,
     "pointsForCoveringCorners":"false",
-    "pointSymbol":"null",
+    "coveringSymbol":"null",
     "corners":[
       {
         "symbol":"null",
@@ -209,7 +209,7 @@
     },
     "points":3,
     "pointsForCoveringCorners":"false",
-    "pointSymbol":"null",
+    "coveringSymbol":"null",
     "corners":[
       {
         "symbol":"QUILL",
@@ -237,7 +237,7 @@
     },
     "points":3,
     "pointsForCoveringCorners":"false",
-    "pointSymbol":"null",
+    "coveringSymbol":"null",
     "corners":[
       {
         "symbol":"null",
@@ -265,7 +265,7 @@
     },
     "points":5,
     "pointsForCoveringCorners":"false",
-    "pointSymbol":"null",
+    "coveringSymbol":"null",
     "corners":[
       {
         "symbol":"null",
@@ -294,7 +294,7 @@
     },
     "points":1,
     "pointsForCoveringCorners":"false",
-    "pointSymbol":"QUILL",
+    "coveringSymbol":"QUILL",
     "corners":[
       {
         "symbol":"QUILL",
@@ -323,7 +323,7 @@
     },
     "points":1,
     "pointsForCoveringCorners":"false",
-    "pointSymbol":"MANUSCRIPT",
+    "coveringSymbol":"MANUSCRIPT",
     "corners":[
       {
         "symbol":"null",
@@ -352,7 +352,7 @@
     },
     "points":1,
     "pointsForCoveringCorners":"false",
-    "pointSymbol":"INK",
+    "coveringSymbol":"INK",
     "corners":[
       {
         "symbol":"null",
@@ -381,7 +381,7 @@
     },
     "points":2,
     "pointsForCoveringCorners":"true",
-    "pointSymbol":"null",
+    "coveringSymbol":"null",
     "corners":[
       {
         "symbol":"null",
@@ -410,7 +410,7 @@
     },
     "points":2,
     "pointsForCoveringCorners":"true",
-    "pointSymbol":"null",
+    "coveringSymbol":"null",
     "corners":[
       {
         "symbol":"null",
@@ -439,7 +439,7 @@
     },
     "points":2,
     "pointsForCoveringCorners":"true",
-    "pointSymbol":"null",
+    "coveringSymbol":"null",
     "corners":[
       {
         "symbol":"null",
@@ -467,7 +467,7 @@
     },
     "points":3,
     "pointsForCoveringCorners":"false",
-    "pointSymbol":"null",
+    "coveringSymbol":"null",
     "corners":[
       {
         "symbol":"null",
@@ -495,7 +495,7 @@
     },
     "points":3,
     "pointsForCoveringCorners":"false",
-    "pointSymbol":"null",
+    "coveringSymbol":"null",
     "corners":[
       {
         "symbol":"MANUSCRIPT",
@@ -523,7 +523,7 @@
     },
     "points":3,
     "pointsForCoveringCorners":"false",
-    "pointSymbol":"null",
+    "coveringSymbol":"null",
     "corners":[
       {
         "symbol":"null",
@@ -551,7 +551,7 @@
     },
     "points":5,
     "pointsForCoveringCorners":"false",
-    "pointSymbol":"null",
+    "coveringSymbol":"null",
     "corners":[
       {
         "symbol":"null",
@@ -580,7 +580,7 @@
     },
     "points":1,
     "pointsForCoveringCorners":"false",
-    "pointSymbol":"INK",
+    "coveringSymbol":"INK",
     "corners":[
       {
         "symbol":"INK",
@@ -609,7 +609,7 @@
     },
     "points":1,
     "pointsForCoveringCorners":"false",
-    "pointSymbol":"MANUSCRIPT",
+    "coveringSymbol":"MANUSCRIPT",
     "corners":[
       {
         "symbol":"null",
@@ -638,7 +638,7 @@
     },
     "points":1,
     "pointsForCoveringCorners":"false",
-    "pointSymbol":"INK",
+    "coveringSymbol":"INK",
     "corners":[
       {
         "symbol":"null",
@@ -667,7 +667,7 @@
     },
     "points":2,
     "pointsForCoveringCorners":"true",
-    "pointSymbol":"null",
+    "coveringSymbol":"null",
     "corners":[
       {
         "symbol":"null",
@@ -696,7 +696,7 @@
     },
     "points":2,
     "pointsForCoveringCorners":"true",
-    "pointSymbol":"null",
+    "coveringSymbol":"null",
     "corners":[
       {
         "symbol":"null",
@@ -725,7 +725,7 @@
     },
     "points":2,
     "pointsForCoveringCorners":"true",
-    "pointSymbol":"null",
+    "coveringSymbol":"null",
     "corners":[
       {
         "symbol":"null",
@@ -753,7 +753,7 @@
     },
     "points":3,
     "pointsForCoveringCorners":"false",
-    "pointSymbol":"null",
+    "coveringSymbol":"null",
     "corners":[
       {
         "symbol":"null",
@@ -781,7 +781,7 @@
     },
     "points":3,
     "pointsForCoveringCorners":"false",
-    "pointSymbol":"null",
+    "coveringSymbol":"null",
     "corners":[
       {
         "symbol":"null",
@@ -809,7 +809,7 @@
     },
     "points":3,
     "pointsForCoveringCorners":"false",
-    "pointSymbol":"null",
+    "coveringSymbol":"null",
     "corners":[
       {
         "symbol":"null",
@@ -837,7 +837,7 @@
     },
     "points":5,
     "pointsForCoveringCorners":"false",
-    "pointSymbol":"null",
+    "coveringSymbol":"null",
     "corners":[
       {
         "symbol":"null",
@@ -866,7 +866,7 @@
     },
     "points":1,
     "pointsForCoveringCorners":"false",
-    "pointSymbol":"QUILL",
+    "coveringSymbol":"QUILL",
     "corners":[
       {
         "symbol":"null",
@@ -895,7 +895,7 @@
     },
     "points":1,
     "pointsForCoveringCorners":"false",
-    "pointSymbol":"MANUSCRIPT"  ,
+    "coveringSymbol":"MANUSCRIPT"  ,
     "corners":[
       {
         "symbol":"null",
@@ -924,7 +924,7 @@
     },
     "points":1,
     "pointsForCoveringCorners":"false",
-    "pointSymbol":"QUILL",
+    "coveringSymbol":"QUILL",
     "corners":[
       {
         "symbol":"null",
@@ -953,7 +953,7 @@
     },
     "points":2,
     "pointsForCoveringCorners":"true",
-    "pointSymbol":"null",
+    "coveringSymbol":"null",
     "corners":[
       {
         "symbol":"null",
@@ -982,7 +982,7 @@
     },
     "points":2,
     "pointsForCoveringCorners":"true",
-    "pointSymbol":"null",
+    "coveringSymbol":"null",
     "corners":[
       {
         "symbol":"null",
@@ -1011,7 +1011,7 @@
     },
     "points":2,
     "pointsForCoveringCorners":"true",
-    "pointSymbol":"null",
+    "coveringSymbol":"null",
     "corners":[
       {
         "symbol":"null",
@@ -1039,7 +1039,7 @@
     },
     "points":3,
     "pointsForCoveringCorners":"false",
-    "pointSymbol":"null",
+    "coveringSymbol":"null",
     "corners":[
       {
         "symbol":"INK",
@@ -1067,7 +1067,7 @@
     },
     "points":3,
     "pointsForCoveringCorners":"false",
-    "pointSymbol":"null",
+    "coveringSymbol":"null",
     "corners":[
       {
         "symbol":"null",
@@ -1095,7 +1095,7 @@
     },
     "points":3,
     "pointsForCoveringCorners":"false",
-    "pointSymbol":"null",
+    "coveringSymbol":"null",
     "corners":[
       {
         "symbol":"null",
@@ -1123,7 +1123,7 @@
     },
     "points":5,
     "pointsForCoveringCorners":"false",
-    "pointSymbol":"null",
+    "coveringSymbol":"null",
     "corners":[
       {
         "symbol":"null",
