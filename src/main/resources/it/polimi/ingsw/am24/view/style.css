@@ -4,12 +4,12 @@
     -fx-background-size: cover;
 }
 .soundOn{
-    -fx-background-image: url("images/misc/icons/soundON.png");
+    -fx-background-image: url("../images/misc/icons/soundON.png");
     -fx-background-repeat: stretch;
     -fx-background-size: cover;
 }
 .soundOff{
-    -fx-background-image: url("images/misc/icons/soundOFF.png");
+    -fx-background-image: url("../images/misc/icons/soundOFF.png");
     -fx-background-repeat: stretch;
     -fx-background-size: cover;
 }
@@ -55,7 +55,7 @@
     -fx-text-fill: #000000;
 }
 .nicknameBackground{
-    -fx-background-image: url("images/misc/NicknameBackground.jpeg");
+    -fx-background-image: url("../images/misc/NicknameBackground.jpeg");
     -fx-background-repeat: stretch;
     -fx-background-size: cover;
 }
@@ -78,10 +78,10 @@
 }
 .Button-1:hover {
     -fx-background-color:
-            linear-gradient(from 0% 93% to 0% 100%, #26a8ab 0%, #00caff 100%),
-            #26a8ab,
-            #00caff,
-            radial-gradient(center 50% 50%, radius 100%, #26a8ab, #00caff);
+            linear-gradient(from 0% 93% to 0% 100%, #412365 0%, #854cc7 100%),
+            #412365,
+            #854cc7,
+            radial-gradient(center 50% 50%, radius 100%, #854cc7 , #412365);
     -fx-font-size:22px !important;
 }
 .Button-1:pressed {
@@ -98,7 +98,7 @@
     -fx-background-size: cover;
 }
 .backgroundmenu{
-    -fx-background-image: url("images/misc/codex.jpg");
+    -fx-background-image: url("../images/misc/codex.jpg");
     -fx-background-repeat: stretch;
     -fx-background-size: cover;
 }
@@ -107,20 +107,20 @@
     -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;
     -fx-background-radius: 8;
     -fx-background-color:
-            linear-gradient(from 0% 93% to 0% 100%, #26a8ab 0%, #00caff 100%),
-            #26a8ab,
-            #00caff,
-            radial-gradient(center 50% 50%, radius 100%, #26a8ab, #00caff);
+            linear-gradient(from 0% 93% to 0% 100%, #ff5400 0%, #be1d00 100%),
+            #be1d00,
+            #ff5400,
+            radial-gradient(center 50% 50%, radius 100%, #ff2121, #5c0606);
     -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
     -fx-font-weight: bold;
     -fx-font-size:22;
 }
 .buttonSelect:hover {
     -fx-background-color:
-            linear-gradient(from 0% 93% to 0% 100%, #854cc7 0%, #412365 100%),
-            #854cc7,
-            #412365,
-            radial-gradient(center 50% 50%, radius 100%, #854cc7, #412365);
+            linear-gradient(from 0% 93% to 0% 100%, #be1d00 0%, #ff5400 100%),
+            #ff5400,
+            #be1d00,
+            radial-gradient(center 50% 50%, radius 100%, #ff2121, #5c0606);
     -fx-font-size:22px !important;
 }
 .buttonSelect:pressed {
@@ -128,7 +128,7 @@
     -fx-background-insets: 2 0 0 0,2 0 3 0, 2 0 4 0, 2 0 5 0;
 }
 .displayBackground{
-    -fx-background-image: url("images/misc/displayBackground.jpeg");
+    -fx-background-image: url("../images/misc/displayBackground.jpeg");
     -fx-background-repeat: stretch;
     -fx-background-size: cover;
 }

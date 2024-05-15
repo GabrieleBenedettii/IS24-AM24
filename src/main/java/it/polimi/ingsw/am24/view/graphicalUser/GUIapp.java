@@ -2,6 +2,7 @@ package it.polimi.ingsw.am24.view.graphicalUser;
 
 import it.polimi.ingsw.am24.view.GameFlow;
 import it.polimi.ingsw.am24.view.graphicalUser.controllers.Generic;
+import it.polimi.ingsw.am24.view.graphicalUser.controllers.MenuController;
 import it.polimi.ingsw.am24.view.input.InputReaderGUI;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -26,7 +27,7 @@ public class GUIapp extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        gameflow = new GameFlow(this, getParameters().getUnnamed().get(0));
+        gameflow = new GameFlow(this, "RMI");
         loadScenes();
 
         this.mainStage = primaryStage;
@@ -41,7 +42,8 @@ public class GUIapp extends Application {
         Parent root;
         Generic g;
         for (int i = 0; i < Scenes.values().length; i++) {
-            loader = new FXMLLoader(getClass().getResource(Scenes.values()[i].getFxmlFile()));
+            String name = Scenes.values()[i].getFxmlFile();
+            loader = new FXMLLoader(GameFlow.class.getResource(name));
             try {
                 root = loader.load();
                 g = loader.getController();
@@ -98,5 +100,17 @@ public class GUIapp extends Application {
         });
     }
 
-    public void setActiveScene(Scenes scene){}
+    public void setActiveScene(Scenes scene){
+        this.mainStage.setTitle("Codex Naturalis - "+scene.name());
+        SceneDesc s = this.scene.get(getSceneIndex(scene));
+        switch (scene) {
+            case MENU -> {
+                this.mainStage.centerOnScreen();
+                this.mainStage.setAlwaysOnTop(false);
+                MenuController controller = (MenuController) s.getGeneric();
+            }
+        }
+        this.mainStage.setScene(s.getScene());
+        this.mainStage.show();
+    }
 }

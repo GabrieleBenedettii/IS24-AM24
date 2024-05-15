@@ -44,7 +44,7 @@ public class GUI extends UI {
 
     @Override
     public void show_insert_nickname() {
-        callPlatformRunLater(() -> this.guiApplication.setActiveScene(Scenes.NICKNAMESELECT));
+        //callPlatformRunLater(() -> this.guiApplication.setActiveScene(Scenes.NICKNAMESELECT));
     }
 
     @Override
@@ -79,7 +79,7 @@ public class GUI extends UI {
 
     @Override
     public void show_available_colors(ArrayList<String> colors) {
-        callPlatformRunLater(() -> this.guiApplication.setActiveScene(Scenes.COLORSELECTOR));
+        //callPlatformRunLater(() -> this.guiApplication.setActiveScene(Scenes.COLORSELECTOR));
         ColorSelector selector = new ColorSelector();
         selector.Initialize(colors);
     }
@@ -132,7 +132,7 @@ public class GUI extends UI {
 
     @Override
     public void show_joined_players(ArrayList<String> player) {
-        callPlatformRunLater(() -> this.guiApplication.setActiveScene(Scenes.LOBBYVIEW));
+        //callPlatformRunLater(() -> this.guiApplication.setActiveScene(Scenes.LOBBYVIEW));
     }
 
     @Override
