@@ -56,7 +56,7 @@ public class GoldCardTest {
         String expected ="Kingdom: " + Constants.getText(Kingdom.FUNGI) +  "\n\tCorners: " +
                 Constants.HIDDEN + " " + Constants.EMPTY + " " + Constants.EMPTY + " " + Constants.getText(Symbol.QUILL) + " " +
                 "\n\tRequirements: " + Constants.getText(Symbol.FUNGI) + " -> 2 " + Constants.getText(Symbol.ANIMAL) + " -> 1 " +
-                "\n\tPoints: 1";
+                "\n\tPoints: 1 points for each QUILL";
         assertEquals(expected, card1.printCard());
     }
 
@@ -65,7 +65,7 @@ public class GoldCardTest {
         String desc = "Kingdom: " + Constants.getText(Kingdom.FUNGI) +  "\n\tCorners: " +
                 Constants.HIDDEN + " " + Constants.EMPTY + " " + Constants.EMPTY + " " + Constants.getText(Symbol.QUILL) + " " +
                 "\n\tRequirements: " + Constants.getText(Symbol.FUNGI) + " -> 2 " + Constants.getText(Symbol.ANIMAL) + " -> 1 " +
-                "\n\tPoints: 1";
+                "\n\tPoints: 1 points for each QUILL";
         GameCardView Expected = new GameCardView("Gold Card", 0, desc);
         GameCardView cardView = card1.getView();
         assertEquals(Expected.getCardType(), cardView.getCardType());
