@@ -26,21 +26,21 @@
                         </Text>
                         <HBox alignment="CENTER" layoutY="124.0" prefHeight="301.0" prefWidth="900.0" spacing="40">
                             <children>
-                                <Button onAction="#chooseFront">
+                                <Button onAction="#chooseFront" style="-fx-background-color: transparent; -fx-border-color: transparent;">
                                     <graphic>
                                         <ImageView fx:id="initialCard0" fitHeight="245.0" fitWidth="369.5" pickOnBounds="true" preserveRatio="true" />
                                     </graphic>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
+                                    <cursor>
+                                        <Cursor fx:constant="HAND" />
+                                    </cursor>
                                 </Button>
-                                <Button onAction="#chooseBack">
+                                <Button onAction="#chooseBack" style="-fx-background-color: transparent; -fx-border-color: transparent;">
                                     <graphic>
-                                        <ImageView fx:id="initialCard1" fitHeight="245.0" fitWidth="369.5" pickOnBounds="true" preserveRatio="true">
-                                 <cursor>
-                                    <Cursor fx:constant="HAND" />
-                                 </cursor></ImageView>
+                                        <ImageView fx:id="initialCard1" fitHeight="245.0" fitWidth="369.5" pickOnBounds="true" preserveRatio="true"/>
                                     </graphic>
+                                    <cursor>
+                                        <Cursor fx:constant="HAND" />
+                                    </cursor>
                                 </Button>
                             </children>
                             <padding>

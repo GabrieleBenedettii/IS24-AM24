@@ -6,28 +6,19 @@ import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-import java.net.URL;
 import java.util.ArrayList;
 
 public class InitialCardSelector extends Generic {
     @FXML
     public void Initialize(ArrayList<GameCardView> views) {
-        //todo check the correct loading
         String path0 = "/images/front/"+views.get(0).getCardId()+".jpg";
         String path1 = "/images/back/"+views.get(1).getCardId()+".jpg";
 
-        URL url0 = getClass().getResource(path0);
-        URL url1 = getClass().getResource(path1);
+        Image image0 = new Image(getClass().getResource(path0).toString());
+        Image image1 = new Image(getClass().getResource(path1).toString());
 
-        if (url0 != null && url1 != null) {
-            Image image0 = new Image(url0.toExternalForm());
-            Image image1 = new Image(url1.toExternalForm());
-
-            initialCard0.setImage(image0);
-            initialCard1.setImage(image1);
-        } else {
-            System.out.println("Image resource not found");
-        }
+        initialCard0.setImage(image0);
+        initialCard1.setImage(image1);
     }
 
     @FXML
