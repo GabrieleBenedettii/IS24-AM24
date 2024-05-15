@@ -39,7 +39,7 @@ public class ResourceCardTest {
     @Test
     public void testPrintCard() {
         String expected ="Kingdom: " + Constants.getText(Kingdom.FUNGI) +  "\n\tCorners: " +
-                Constants.getText(Symbol.FUNGI) + " " + Constants.EMPTY + " " + Constants.getText(Symbol.FUNGI) + " " + Constants.EMPTY + " " + "\n\tPoints: 0";
+                Constants.getText(Symbol.FUNGI) + " " + Constants.EMPTY + " " + Constants.getText(Symbol.FUNGI) + " " + Constants.HIDDEN + " " + "\n\tPoints: 0";
         assertEquals(expected, card.printCard());
     }
 }
