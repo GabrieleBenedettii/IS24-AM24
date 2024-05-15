@@ -59,6 +59,16 @@
     -fx-background-repeat: stretch;
     -fx-background-size: cover;
 }
+.gameview{
+     -fx-background-image: url("../images/misc/game-view.jpeg");
+     -fx-background-repeat: stretch;
+     -fx-background-size: cover;
+ }
+.neutralBackground{
+    -fx-background-image: url("../images/misc/neutralBackground.jpeg");
+    -fx-background-repeat: stretch;
+    -fx-background-size: cover;
+}
 .Button-1-Text {
     -fx-fill: white;
     -fx-effect: dropshadow( gaussian , #4c00a3 , 0,0,0,5 );

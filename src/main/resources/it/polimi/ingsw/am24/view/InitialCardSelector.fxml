@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="807.0" prefWidth="1237.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.am24.view.graphicalUser.controllers.InitialCardSelector">
+    <children>
+        <Pane layoutX="33.0" layoutY="-14.0" prefHeight="807.0" prefWidth="1237.0" styleClass="neutralBackground" stylesheets="@style.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <Pane layoutX="168.0" layoutY="153.5" maxHeight="500.0" maxWidth="900.0" opacity="0.8" prefHeight="500.0" prefWidth="900.0" style="-fx-background-color: black; -fx-border-radius: 10 15 0 0; -fx-border-width: 5;">
+                    <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                    </cursor>
+                    <padding>
+                        <Insets top="100.0" />
+                    </padding>
+                    <children>
+                        <Text fill="WHITE" layoutX="114.0" layoutY="83.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose Your Initial Card Side" textAlignment="CENTER" wrappingWidth="671.8605346679688">
+                            <font>
+                                <Font name="Arial Black" size="22.0" />
+                            </font>
+                        </Text>
+                        <HBox alignment="CENTER" layoutY="124.0" prefHeight="301.0" prefWidth="900.0" spacing="40">
+                            <children>
+                                <Button onAction="#chooseFront">
+                                    <graphic>
+                                        <ImageView fx:id="initialCard0" fitHeight="245.0" fitWidth="369.5" pickOnBounds="true" preserveRatio="true" />
+                                    </graphic>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                                </Button>
+                                <Button onAction="#chooseBack">
+                                    <graphic>
+                                        <ImageView fx:id="initialCard1" fitHeight="245.0" fitWidth="369.5" pickOnBounds="true" preserveRatio="true">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor></ImageView>
+                                    </graphic>
+                                </Button>
+                            </children>
+                            <padding>
+                                <Insets bottom="20" left="20" right="20" top="20" />
+                            </padding>
+                        </HBox>
+                    </children>
+                </Pane>
+            </children>
+        </Pane>
+    </children>
+</AnchorPane>

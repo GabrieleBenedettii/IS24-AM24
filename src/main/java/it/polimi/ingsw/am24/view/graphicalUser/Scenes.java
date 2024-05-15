@@ -11,6 +11,7 @@ public enum Scenes {
     LOBBYVIEW("LobbyView.fxml"),*/
     LOGO("Logo.fxml");
     //COLORSELECTOR("ColorSelector.fxml");
+    //INITIALCARDSELECTOR("InitialCardSelector.fxml");
 
     private final String fxmlFile;
 
