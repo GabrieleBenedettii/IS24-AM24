@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -119,6 +120,11 @@ public class GUIapp extends Application {
         }
         this.mainStage.setScene(s.getScene());
         this.mainStage.show();
-        //this.mainStage.getIcons().add(new Image(Objects.requireNonNull(GUIapp.class.getResourceAsStream("/favicon-1.png"))));
+
+        mainStage.getIcons().add(new Image("it/polimi/ingsw/am24/images/favicon-1.png"));
+    }
+
+    public GameFlow getGameflow() {
+        return gameflow;
     }
 }

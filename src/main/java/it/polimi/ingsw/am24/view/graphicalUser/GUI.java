@@ -45,7 +45,14 @@ public class GUI extends UI {
 
     @Override
     public void show_insert_nickname() {
-        callPlatformRunLater(() -> this.guiApplication.setActiveScene(Scenes.NICKNAMESELECT));
+        callPlatformRunLater(() -> {
+            if(guiApplication.getGameflow().isCreate()){
+                this.guiApplication.setActiveScene(Scenes.CREATEGAMENICKNAMESELECT);
+            }
+            else{
+                this.guiApplication.setActiveScene(Scenes.NICKNAMESELECT);
+            }
+        });
     }
 
     @Override
@@ -75,7 +82,7 @@ public class GUI extends UI {
 
     @Override
     public void show_lobby() {
-        show_menuOptions();
+
     }
 
     @Override
@@ -141,7 +148,7 @@ public class GUI extends UI {
 
     @Override
     public void show_joined_players(ArrayList<String> player) {
-        //callPlatformRunLater(() -> this.guiApplication.setActiveScene(Scenes.LOBBYVIEW));
+        callPlatformRunLater(() -> this.guiApplication.setActiveScene(Scenes.LOBBYVIEW));
     }
 
     @Override

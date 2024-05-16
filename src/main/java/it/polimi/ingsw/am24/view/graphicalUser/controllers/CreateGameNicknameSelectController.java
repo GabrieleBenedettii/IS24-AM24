@@ -17,7 +17,8 @@ public class CreateGameNicknameSelectController extends Generic{
     public void actionEnter(ActionEvent e) throws IOException {
         if(!nickNameTextField.getText().isEmpty() && !playerNumberTextField.getText().isEmpty()) {
             getInputReaderGUI().addString(nickNameTextField.getText());
-            getInputReaderGUI().addString(playerNumberTextField.getText());
+            int playerNumber = Integer.parseInt(playerNumberTextField.getText());
+            getInputReaderGUI().addString(String.valueOf(playerNumber));
             Sound.playSound("buttonClick.mp3");
         }
     }

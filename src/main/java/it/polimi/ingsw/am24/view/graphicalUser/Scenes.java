@@ -3,12 +3,13 @@ package it.polimi.ingsw.am24.view.graphicalUser;
 public enum Scenes {
     MENU("Menu.fxml"),
     NICKNAMESELECT("NicknameSelect.fxml"),
+    CREATEGAMENICKNAMESELECT("CreateGameNicknameSelect.fxml"),
     /*REDPLAYERICON("RedPlayerIcon.fxml"),
     BLUEPLAYERICON("BluePlayerIcon.fxml"),
     YELLOWPLAYERICON("YellowPlayerIcon.fxml"),
     GREENPLAYERICON("GreenPlayerIcon.fxml"),
-    DISPLAY("display.fxml"),
-    LOBBYVIEW("LobbyView.fxml"),*/
+    DISPLAY("display.fxml"),*/
+    LOBBYVIEW("LobbyView.fxml"),
     LOGO("Logo.fxml"),
     COLORSELECTOR("ColorSelector.fxml"),
     INITIALCARDSELECTOR("InitialCardSelector.fxml");

@@ -218,6 +218,11 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
         } while (!validNickname);
         //ui.show_chosenNickname(nickname);
     }
+    private boolean create = false;
+
+    public boolean isCreate() {
+        return create;
+    }
 
     private boolean askSelectGame() {
         String choice;
@@ -230,6 +235,7 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
 
         switch (choice) {
             case "1" -> {
+                create = true;
                 askNickname();
                 Integer numPlayers = askNumPlayers();
                 createGame(nickname, numPlayers);

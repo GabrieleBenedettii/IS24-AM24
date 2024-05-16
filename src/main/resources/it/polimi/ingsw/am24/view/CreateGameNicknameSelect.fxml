@@ -37,7 +37,7 @@
                         <Font name="Arial Black" size="22.0" />
                      </font>
                   </Text>
-                  <TextField fx:id="nickNameTextField1" alignment="CENTER" layoutX="56.0" layoutY="167.0" prefHeight="50.0" prefWidth="500.0">
+                  <TextField fx:id="playerNumberTextField" alignment="CENTER" layoutX="56.0" layoutY="167.0" prefHeight="50.0" prefWidth="500.0">
                      <font>
                         <Font name="Arial" size="22.0" />
                      </font>
