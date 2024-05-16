@@ -9,30 +9,30 @@ import javafx.scene.image.ImageView;
 
 import java.util.ArrayList;
 
-public class InitialCardSelector extends Generic {
+public class SecretGoalCardSelector extends Generic{
     @FXML
     public void Initialize(ArrayList<GameCardView> views) {
         String path0 = "images/front/"+views.get(0).getCardId()+".jpg";
-        String path1 = "images/back/"+views.get(1).getCardId()+".jpg";
+        String path1 = "images/front/"+views.get(1).getCardId()+".jpg";
 
         //todo fix
         Image image0 = new Image(HelloApplication.class.getResource(path0).toString());
         Image image1 = new Image(HelloApplication.class.getResource(path1).toString());
 
-        initialCard0.setImage(image0);
-        initialCard1.setImage(image1);
+        goalCard0.setImage(image0);
+        goalCard1.setImage(image1);
     }
 
     @FXML
-    private ImageView initialCard0;
+    private ImageView goalCard0;
 
     @FXML
-    private ImageView initialCard1;
+    private ImageView goalCard1;
 
-    public void chooseFront(ActionEvent actionEvent) {
+    public void chooseFirst(ActionEvent actionEvent) {
         getInputReaderGUI().addString("0");
     }
-    public void chooseBack(ActionEvent actionEvent) {
+    public void chooseSecond(ActionEvent actionEvent) {
         getInputReaderGUI().addString("1");
     }
 }

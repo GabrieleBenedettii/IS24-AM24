@@ -9,6 +9,7 @@ public enum Scenes {
     YELLOWPLAYERICON("YellowPlayerIcon.fxml"),
     GREENPLAYERICON("GreenPlayerIcon.fxml"),
     DISPLAY("display.fxml"),*/
+    SECRETGOALCARDSELECTOR("SecretGoalCardSelector.fxml"),
     LOBBYVIEW("LobbyView.fxml"),
     LOGO("Logo.fxml"),
     COLORSELECTOR("ColorSelector.fxml"),

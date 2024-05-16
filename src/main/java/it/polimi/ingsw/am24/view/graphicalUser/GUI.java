@@ -6,6 +6,7 @@ import it.polimi.ingsw.am24.modelView.GameView;
 import it.polimi.ingsw.am24.view.flow.UI;
 import it.polimi.ingsw.am24.view.graphicalUser.controllers.ColorSelector;
 import it.polimi.ingsw.am24.view.graphicalUser.controllers.InitialCardSelector;
+import it.polimi.ingsw.am24.view.graphicalUser.controllers.SecretGoalCardSelector;
 import it.polimi.ingsw.am24.view.input.InputReaderGUI;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
@@ -96,7 +97,11 @@ public class GUI extends UI {
 
     @Override
     public void show_hidden_goal(ArrayList<GameCardView> views) {
-
+        callPlatformRunLater(() -> {
+            this.guiApplication.setActiveScene(Scenes.SECRETGOALCARDSELECTOR);
+            SecretGoalCardSelector selector = (SecretGoalCardSelector) this.guiApplication.getController(Scenes.SECRETGOALCARDSELECTOR);
+            selector.Initialize(views);
+        });
     }
 
     @Override
