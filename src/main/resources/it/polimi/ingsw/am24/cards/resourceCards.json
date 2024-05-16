@@ -1,6 +1,6 @@
 [
   {
-    "cardID":1,
+    "imageId":1,
     "kingdom":"FUNGI",
     "points":0,
     "corners":[
@@ -23,7 +23,7 @@
     ]
   },
   {
-    "cardID":2,
+    "imageId":2,
     "kingdom":"FUNGI",
     "points":0,
     "corners":[
@@ -46,7 +46,7 @@
     ]
   },
   {
-    "cardID":3,
+    "imageId":3,
     "kingdom":"FUNGI",
     "points":0,
     "corners":[
@@ -69,7 +69,7 @@
     ]
   },
   {
-    "cardID":4,
+    "imageId":4,
     "kingdom":"FUNGI",
     "points":0,
     "corners":[
@@ -92,7 +92,7 @@
     ]
   },
   {
-    "cardID":5,
+    "imageId":5,
     "kingdom":"FUNGI",
     "points":0,
     "corners":[
@@ -115,7 +115,7 @@
     ]
   },
   {
-    "cardID":6,
+    "imageId":6,
     "kingdom":"FUNGI",
     "points":0,
     "corners":[
@@ -138,7 +138,7 @@
     ]
   },
   {
-    "cardID":7,
+    "imageId":7,
     "kingdom":"FUNGI",
     "points":0,
     "corners":[
@@ -161,7 +161,7 @@
     ]
   },
   {
-    "cardID":8,
+    "imageId":8,
     "kingdom":"FUNGI",
     "points":1,
     "corners":[
@@ -184,7 +184,7 @@
     ]
   },
   {
-    "cardID":9,
+    "imageId":9,
     "kingdom":"FUNGI",
     "points":1,
     "corners":[
@@ -207,7 +207,7 @@
     ]
   },
   {
-    "cardID":10,
+    "imageId":10,
     "kingdom":"FUNGI",
     "points":1,
     "corners":[
@@ -230,7 +230,7 @@
     ]
   },
   {
-    "cardID":11,
+    "imageId":11,
     "kingdom":"PLANT",
     "points":0,
     "corners":[
@@ -253,7 +253,7 @@
     ]
   },
   {
-    "cardID":12,
+    "imageId":12,
     "kingdom":"PLANT",
     "points":0,
     "corners":[
@@ -276,7 +276,7 @@
     ]
   },
   {
-    "cardID":13,
+    "imageId":13,
     "kingdom":"PLANT",
     "points":0,
     "corners":[
@@ -299,7 +299,7 @@
     ]
   },
   {
-    "cardID":14,
+    "imageId":14,
     "kingdom":"PLANT",
     "points":0,
     "corners":[
@@ -322,7 +322,7 @@
     ]
   },
   {
-    "cardID":15,
+    "imageId":15,
     "kingdom":"PLANT",
     "points":0,
     "corners":[
@@ -345,7 +345,7 @@
     ]
   },
   {
-    "cardID":16,
+    "imageId":16,
     "kingdom":"PLANT",
     "points":0,
     "corners":[
@@ -368,7 +368,7 @@
     ]
   },
   {
-    "cardID":17,
+    "imageId":17,
     "kingdom":"PLANT",
     "points":0,
     "corners":[
@@ -391,7 +391,7 @@
     ]
   },
   {
-    "cardID":18,
+    "imageId":18,
     "kingdom":"PLANT",
     "points":1,
     "corners":[
@@ -414,7 +414,7 @@
     ]
   },
   {
-    "cardID":19,
+    "imageId":19,
     "kingdom":"PLANT",
     "points":1,
     "corners":[
@@ -437,7 +437,7 @@
     ]
   },
   {
-    "cardID":20,
+    "imageId":20,
     "kingdom":"PLANT",
     "points":1,
     "corners":[
@@ -460,7 +460,7 @@
     ]
   },
   {
-    "cardID":21,
+    "imageId":21,
     "kingdom":"ANIMAL",
     "points":0,
     "corners":[
@@ -483,7 +483,7 @@
     ]
   },
   {
-    "cardID":22,
+    "imageId":22,
     "kingdom":"ANIMAL",
     "points":0,
     "corners":[
@@ -506,7 +506,7 @@
     ]
   },
   {
-    "cardID":23,
+    "imageId":23,
     "kingdom":"ANIMAL",
     "points":0,
     "corners":[
@@ -529,7 +529,7 @@
     ]
   },
   {
-    "cardID":24,
+    "imageId":24,
     "kingdom":"ANIMAL",
     "points":0,
     "corners":[
@@ -552,7 +552,7 @@
     ]
   },
   {
-    "cardID":25,
+    "imageId":25,
     "kingdom":"ANIMAL",
     "points":0,
     "corners":[
@@ -575,7 +575,7 @@
     ]
   },
   {
-    "cardID":26,
+    "imageId":26,
     "kingdom":"ANIMAL",
     "points":0,
     "corners":[
@@ -598,7 +598,7 @@
     ]
   },
   {
-    "cardID":27,
+    "imageId":27,
     "kingdom":"ANIMAL",
     "points":0,
     "corners":[
@@ -621,7 +621,7 @@
     ]
   },
   {
-    "cardID":28,
+    "imageId":28,
     "kingdom":"ANIMAL",
     "points":1,
     "corners":[
@@ -644,7 +644,7 @@
     ]
   },
   {
-    "cardID":29,
+    "imageId":29,
     "kingdom":"ANIMAL",
     "points":1,
     "corners":[
@@ -667,7 +667,7 @@
     ]
   },
   {
-    "cardID":30,
+    "imageId":30,
     "kingdom":"ANIMAL",
     "points":1,
     "corners":[
@@ -690,7 +690,7 @@
     ]
   },
   {
-    "cardID":31,
+    "imageId":31,
     "kingdom":"INSECT",
     "points":0,
     "corners":[
@@ -713,7 +713,7 @@
     ]
   },
   {
-    "cardID":32,
+    "imageId":32,
     "kingdom":"INSECT",
     "points":0,
     "corners":[
@@ -736,7 +736,7 @@
     ]
   },
   {
-    "cardID":33,
+    "imageId":33,
     "kingdom":"INSECT",
     "points":0,
     "corners":[
@@ -759,7 +759,7 @@
     ]
   },
   {
-    "cardID":34,
+    "imageId":34,
     "kingdom":"INSECT",
     "points":0,
     "corners":[
@@ -782,7 +782,7 @@
     ]
   },
   {
-    "cardID":35,
+    "imageId":35,
     "kingdom":"INSECT",
     "points":0,
     "corners":[
@@ -805,7 +805,7 @@
     ]
   },
   {
-    "cardID":36,
+    "imageId":36,
     "kingdom":"INSECT",
     "points":0,
     "corners":[
@@ -828,7 +828,7 @@
     ]
   },
   {
-    "cardID":37,
+    "imageId":37,
     "kingdom":"INSECT",
     "points":0,
     "corners":[
@@ -851,7 +851,7 @@
     ]
   },
   {
-    "cardID":38,
+    "imageId":38,
     "kingdom":"INSECT",
     "points":1,
     "corners":[
@@ -874,7 +874,7 @@
     ]
   },
   {
-    "cardID":39,
+    "imageId":39,
     "kingdom":"INSECT",
     "points":1,
     "corners":[
@@ -897,7 +897,7 @@
     ]
   },
   {
-    "cardID":40,
+    "imageId":40,
     "kingdom":"INSECT",
     "points":1,
     "corners":[

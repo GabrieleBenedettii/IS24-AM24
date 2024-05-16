@@ -1,6 +1,6 @@
 [
   {
-    "cardID":41,
+    "imageId":41,
     "kingdom":"FUNGI",
     "requirements":{
       "FUNGI":2,
@@ -29,7 +29,7 @@
     ]
   },
   {
-    "cardID":42,
+    "imageId":42,
     "kingdom":"FUNGI",
     "requirements":{
       "FUNGI":2,
@@ -58,7 +58,7 @@
     ]
   },
   {
-    "cardID":43,
+    "imageId":43,
     "kingdom":"FUNGI",
     "requirements":{
       "FUNGI":2,
@@ -87,7 +87,7 @@
     ]
   },
   {
-    "cardID":44,
+    "imageId":44,
     "kingdom":"FUNGI",
     "requirements":{
       "FUNGI":3,
@@ -116,7 +116,7 @@
     ]
   },
   {
-    "cardID":45,
+    "imageId":45,
     "kingdom":"FUNGI",
     "requirements":{
       "FUNGI":3,
@@ -145,7 +145,7 @@
     ]
   },
   {
-    "cardID":46,
+    "imageId":46,
     "kingdom":"FUNGI",
     "requirements":{
       "FUNGI":3,
@@ -174,7 +174,7 @@
     ]
   },
   {
-    "cardID":47,
+    "imageId":47,
     "kingdom":"FUNGI",
     "requirements":{
       "FUNGI":3
@@ -202,7 +202,7 @@
     ]
   },
   {
-    "cardID":48,
+    "imageId":48,
     "kingdom":"FUNGI",
     "requirements":{
       "FUNGI":3
@@ -230,7 +230,7 @@
     ]
   },
   {
-    "cardID":49,
+    "imageId":49,
     "kingdom":"FUNGI",
     "requirements":{
       "FUNGI":3
@@ -258,7 +258,7 @@
     ]
   },
   {
-    "cardID":50,
+    "imageId":50,
     "kingdom":"FUNGI",
     "requirements":{
       "FUNGI":5
@@ -286,7 +286,7 @@
     ]
   },
   {
-    "cardID":51,
+    "imageId":51,
     "kingdom":"PLANT",
     "requirements":{
       "PLANT":2,
@@ -315,7 +315,7 @@
     ]
   },
   {
-    "cardID":52,
+    "imageId":52,
     "kingdom":"PLANT",
     "requirements":{
       "PLANT":2,
@@ -344,7 +344,7 @@
     ]
   },
   {
-    "cardID":53,
+    "imageId":53,
     "kingdom":"PLANT",
     "requirements":{
       "PLANT":2,
@@ -373,7 +373,7 @@
     ]
   },
   {
-    "cardID":54,
+    "imageId":54,
     "kingdom":"PLANT",
     "requirements":{
       "PLANT":3,
@@ -402,7 +402,7 @@
     ]
   },
   {
-    "cardID":55,
+    "imageId":55,
     "kingdom":"PLANT",
     "requirements":{
       "PLANT":3,
@@ -431,7 +431,7 @@
     ]
   },
   {
-    "cardID":56,
+    "imageId":56,
     "kingdom":"PLANT",
     "requirements":{
       "PLANT":3,
@@ -460,7 +460,7 @@
     ]
   },
   {
-    "cardID":57,
+    "imageId":57,
     "kingdom":"PLANT",
     "requirements":{
       "PLANT":3
@@ -488,7 +488,7 @@
     ]
   },
   {
-    "cardID":58,
+    "imageId":58,
     "kingdom":"PLANT",
     "requirements":{
       "PLANT":3
@@ -516,7 +516,7 @@
     ]
   },
   {
-    "cardID":59,
+    "imageId":59,
     "kingdom":"PLANT",
     "requirements":{
       "PLANT":3
@@ -544,7 +544,7 @@
     ]
   },
   {
-    "cardID":60,
+    "imageId":60,
     "kingdom":"PLANT",
     "requirements":{
       "PLANT":5
@@ -572,7 +572,7 @@
     ]
   },
   {
-    "cardID":61,
+    "imageId":61,
     "kingdom":"ANIMAL",
     "requirements":{
       "ANIMAL":2,
@@ -601,7 +601,7 @@
     ]
   },
   {
-    "cardID":62,
+    "imageId":62,
     "kingdom":"ANIMAL",
     "requirements":{
       "ANIMAL":2,
@@ -630,7 +630,7 @@
     ]
   },
   {
-    "cardID":63,
+    "imageId":63,
     "kingdom":"ANIMAL",
     "requirements":{
       "ANIMAL":2,
@@ -659,7 +659,7 @@
     ]
   },
   {
-    "cardID":64,
+    "imageId":64,
     "kingdom":"ANIMAL",
     "requirements":{
       "ANIMAL":3,
@@ -688,7 +688,7 @@
     ]
   },
   {
-    "cardID":65,
+    "imageId":65,
     "kingdom":"ANIMAL",
     "requirements":{
       "ANIMAL":3,
@@ -717,7 +717,7 @@
     ]
   },
   {
-    "cardID":66,
+    "imageId":66,
     "kingdom":"ANIMAL",
     "requirements":{
       "ANIMAL":3,
@@ -746,7 +746,7 @@
     ]
   },
   {
-    "cardID":67,
+    "imageId":67,
     "kingdom":"ANIMAL",
     "requirements":{
       "ANIMAL":3
@@ -774,7 +774,7 @@
     ]
   },
   {
-    "cardID":68,
+    "imageId":68,
     "kingdom":"ANIMAL",
     "requirements":{
       "ANIMAL":3
@@ -802,7 +802,7 @@
     ]
   },
   {
-    "cardID":69,
+    "imageId":69,
     "kingdom":"ANIMAL",
     "requirements":{
       "ANIMAL":3
@@ -830,7 +830,7 @@
     ]
   },
   {
-    "cardID":70,
+    "imageId":70,
     "kingdom":"ANIMAL",
     "requirements":{
       "ANIMAL":5
@@ -858,7 +858,7 @@
     ]
   },
   {
-    "cardID":71,
+    "imageId":71,
     "kingdom":"INSECT",
     "requirements":{
       "INSECT":2,
@@ -887,7 +887,7 @@
     ]
   },
   {
-    "cardID":72,
+    "imageId":72,
     "kingdom":"INSECT",
     "requirements":{
       "INSECT":2,
@@ -916,7 +916,7 @@
     ]
   },
   {
-    "cardID":73,
+    "imageId":73,
     "kingdom":"INSECT",
     "requirements":{
       "INSECT":2,
@@ -945,7 +945,7 @@
     ]
   },
   {
-    "cardID":74,
+    "imageId":74,
     "kingdom":"INSECT",
     "requirements":{
       "INSECT":3,
@@ -974,7 +974,7 @@
     ]
   },
   {
-    "cardID":75,
+    "imageId":75,
     "kingdom":"INSECT",
     "requirements":{
       "INSECT":3,
@@ -1003,7 +1003,7 @@
     ]
   },
   {
-    "cardID":76,
+    "imageId":76,
     "kingdom":"INSECT",
     "requirements":{
       "INSECT":3,
@@ -1032,7 +1032,7 @@
     ]
   },
   {
-    "cardID":77,
+    "imageId":77,
     "kingdom":"INSECT",
     "requirements":{
       "INSECT":3
@@ -1060,7 +1060,7 @@
     ]
   },
   {
-    "cardID":78,
+    "imageId":78,
     "kingdom":"INSECT",
     "requirements":{
       "INSECT":3
@@ -1088,7 +1088,7 @@
     ]
   },
   {
-    "cardID":79,
+    "imageId":79,
     "kingdom":"INSECT",
     "requirements":{
       "INSECT":3
@@ -1116,7 +1116,7 @@
     ]
   },
   {
-    "cardID":80,
+    "imageId":80,
     "kingdom":"INSECT",
     "requirements":{
       "INSECT":5

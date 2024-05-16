@@ -1,6 +1,6 @@
 [
   {
-    "ImageId":81,
+    "imageId":81,
     "kingdoms":[],
     "corners":[
       {
@@ -43,7 +43,7 @@
     }
   },
   {
-    "ImageId":82,
+    "imageId":82,
     "kingdoms":[],
     "corners":[
       {
@@ -86,7 +86,7 @@
     }
   },
   {
-    "ImageId":83,
+    "imageId":83,
     "kingdoms":[],
     "corners":[
       {
@@ -129,7 +129,7 @@
     }
   },
   {
-    "ImageId":84,
+    "imageId":84,
     "kingdoms":[],
     "corners":[
       {
@@ -172,7 +172,7 @@
     }
   },
   {
-    "ImageId":85,
+    "imageId":85,
     "kingdoms":[],
     "corners":[
       {
@@ -215,7 +215,7 @@
     }
   },
   {
-    "ImageId":86,
+    "imageId":86,
     "kingdoms":[],
     "corners":[
       {
