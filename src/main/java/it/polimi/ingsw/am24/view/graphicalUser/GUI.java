@@ -5,6 +5,8 @@ import it.polimi.ingsw.am24.modelView.GameCardView;
 import it.polimi.ingsw.am24.modelView.GameView;
 import it.polimi.ingsw.am24.view.flow.UI;
 import it.polimi.ingsw.am24.view.graphicalUser.controllers.ColorSelector;
+import it.polimi.ingsw.am24.view.graphicalUser.controllers.InitialCardSelector;
+import it.polimi.ingsw.am24.view.graphicalUser.controllers.SecretGoalCardSelector;
 import it.polimi.ingsw.am24.view.input.InputReaderGUI;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
@@ -44,7 +46,14 @@ public class GUI extends UI {
 
     @Override
     public void show_insert_nickname() {
-        //callPlatformRunLater(() -> this.guiApplication.setActiveScene(Scenes.NICKNAMESELECT));
+        callPlatformRunLater(() -> {
+            if(guiApplication.getGameflow().isCreate()){
+                this.guiApplication.setActiveScene(Scenes.CREATEGAMENICKNAMESELECT);
+            }
+            else{
+                this.guiApplication.setActiveScene(Scenes.NICKNAMESELECT);
+            }
+        });
     }
 
     @Override
@@ -74,24 +83,34 @@ public class GUI extends UI {
 
     @Override
     public void show_lobby() {
-        show_menuOptions();
+
     }
 
     @Override
     public void show_available_colors(ArrayList<String> colors) {
-        //callPlatformRunLater(() -> this.guiApplication.setActiveScene(Scenes.COLORSELECTOR));
-        ColorSelector selector = new ColorSelector();
-        selector.Initialize(colors);
+        callPlatformRunLater(() -> {
+            this.guiApplication.setActiveScene(Scenes.COLORSELECTOR);
+            ColorSelector selector = (ColorSelector) this.guiApplication.getController(Scenes.COLORSELECTOR);
+            selector.initialize(colors);
+        });
     }
 
     @Override
     public void show_hidden_goal(ArrayList<GameCardView> views) {
-
+        callPlatformRunLater(() -> {
+            this.guiApplication.setActiveScene(Scenes.SECRETGOALCARDSELECTOR);
+            SecretGoalCardSelector selector = (SecretGoalCardSelector) this.guiApplication.getController(Scenes.SECRETGOALCARDSELECTOR);
+            selector.Initialize(views);
+        });
     }
 
     @Override
     public void show_initial_side(ArrayList<GameCardView> views) {
-
+        callPlatformRunLater(() -> {
+            this.guiApplication.setActiveScene(Scenes.INITIALCARDSELECTOR);
+            InitialCardSelector selector = (InitialCardSelector) this.guiApplication.getController(Scenes.INITIALCARDSELECTOR);
+            selector.Initialize(views);
+        });
     }
 
     @Override
@@ -114,9 +133,11 @@ public class GUI extends UI {
 
     private void show_menuOptions() {
         if (alreadyShowedPublisher) {
-            callPlatformRunLater(() -> this.guiApplication.setInputReaderGUItoAllControllers(this.inputReaderGUI));
-            callPlatformRunLater(() -> this.guiApplication.createNewWindowWithStyle());
-            callPlatformRunLater(() -> this.guiApplication.setActiveScene(Scenes.MENU));
+            callPlatformRunLater(() ->  {
+                this.guiApplication.setInputReaderGUItoAllControllers(this.inputReaderGUI);
+                this.guiApplication.createNewWindowWithStyle();
+                this.guiApplication.setActiveScene(Scenes.MENU);
+            });
         }
     }
 
@@ -132,7 +153,7 @@ public class GUI extends UI {
 
     @Override
     public void show_joined_players(ArrayList<String> player) {
-        //callPlatformRunLater(() -> this.guiApplication.setActiveScene(Scenes.LOBBYVIEW));
+        callPlatformRunLater(() -> this.guiApplication.setActiveScene(Scenes.LOBBYVIEW));
     }
 
     @Override

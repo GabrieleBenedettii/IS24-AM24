@@ -1,5 +1,5 @@
-.cranioLogo{
-    -fx-background-image: url("/it/polimi/ingsw/am24/images/misc/CranioLogo.png");
+.logo{
+    -fx-background-image: url("../images/misc/prova.jpg");
     -fx-background-repeat: stretch;
     -fx-background-size: cover;
 }
@@ -13,10 +13,30 @@
     -fx-background-repeat: stretch;
     -fx-background-size: cover;
 }
-.scoreBoard{
-    -fx-background-image: url("images/misc/PLATEU-SCORE-IMP.PNG");
-    -fx-background-repeat: stretch;
-    -fx-background-size: cover;
+.NicknameSelectButtonGradiant{
+    -fx-padding: 8 15 15 15;
+    -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;
+    -fx-background-radius: 8;
+    -fx-background-color:
+            linear-gradient(from 0% 93% to 0% 100%, #a89646 0%, #e2cd99 100%),
+            #a89646,
+            #e2cd99,
+            radial-gradient(center 50% 50%, radius 100%, #a89646, #e2cd99);
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
+    -fx-font-weight: bold;
+    -fx-font-size:22;
+}
+.NicknameSelectButtonGradiant:hover{
+    -fx-background-color:
+            linear-gradient(from 0% 93% to 0% 100%, #e2cd99 0%, #a89646 100%),
+            #e2cd99,
+            #a89646,
+            radial-gradient(center 50% 50%, radius 100%, #e2cd99, #a89646);
+    -fx-font-size:22px !important;
+}
+.NicknameSelectButtonGradiant:pressed {
+    -fx-padding: 10 15 13 15;
+    -fx-background-insets: 2 0 0 0,2 0 3 0, 2 0 4 0, 2 0 5 0;
 }
 .green {
     -fx-background-color:
@@ -56,6 +76,16 @@
 }
 .nicknameBackground{
     -fx-background-image: url("../images/misc/NicknameBackground.jpeg");
+    -fx-background-repeat: stretch;
+    -fx-background-size: cover;
+}
+.gameview{
+     -fx-background-image: url("../images/misc/game-view.jpeg");
+     -fx-background-repeat: stretch;
+     -fx-background-size: cover;
+ }
+.neutralBackground{
+    -fx-background-image: url("../images/misc/neutralBackground.jpeg");
     -fx-background-repeat: stretch;
     -fx-background-size: cover;
 }
@@ -148,4 +178,9 @@
 .displayButton:pressed {
     -fx-padding: 10 15 13 15;
     -fx-background-insets: 2 0 0 0,2 0 3 0, 2 0 4 0, 2 0 5 0;
+}
+.neutralBorderedBackground{
+    -fx-background-image: url("../images/misc/600x400.jpeg");
+    -fx-background-repeat: stretch;
+    -fx-background-size: cover;
 }

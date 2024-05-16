@@ -8,18 +8,11 @@ import javafx.scene.text.Text;
 import java.io.IOException;
 
 public class LobbyViewController extends Generic{
-    @FXML
-    private Text nickname;
-    @FXML
-    private Button readyButton;
-    @FXML
-    private Text gameID;
-
-    public void setNickname(String nickname) {this.nickname.setText(nickname);}
-    public void setGameID(int id) {this.gameID.setText("GameId: " + id);}
-    public void readyButtonClicked(ActionEvent event) throws IOException {
-        getInputReaderGUI().addString("pressed");
-        //todo : sound for button press
-    }
-    public void setVisibility(boolean visibility) { readyButton.setVisible(visibility);}
+    /*
+    *           <Text fx:id="playersNames" fill="WHITE" layoutX="6.0" layoutY="204.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="611.8605346679688">
+                     <font>
+                        <Font name="Arial Black" size="22.0" />
+                     </font>
+                  </Text>
+                  * */
 }

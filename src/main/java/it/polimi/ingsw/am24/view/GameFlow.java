@@ -69,7 +69,6 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
 
         nickname = "";
         joined = false;
-        this.inputReader = new InputReaderGUI();
         this.inputParser = new InputParser(this.inputReader.getBuffer(), this);
         new Thread(this).start();
     }
@@ -219,6 +218,11 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
         } while (!validNickname);
         //ui.show_chosenNickname(nickname);
     }
+    private boolean create = false;
+
+    public boolean isCreate() {
+        return create;
+    }
 
     private boolean askSelectGame() {
         String choice;
@@ -228,14 +232,18 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        askNickname();
 
         switch (choice) {
             case "1" -> {
+                create = true;
+                askNickname();
                 Integer numPlayers = askNumPlayers();
                 createGame(nickname, numPlayers);
             }
-            case "2" -> joinFirstGameAvailable(nickname);
+            case "2" -> {
+                askNickname();
+                joinFirstGameAvailable(nickname);
+            }
             /*case "js" -> {
                 Integer gameId = askGameId();
                 if (gameId == -1)

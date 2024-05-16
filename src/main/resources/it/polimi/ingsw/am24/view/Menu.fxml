@@ -23,7 +23,7 @@
                </effect>
             </Button>
             <Pane layoutX="14.0" layoutY="13.0" prefHeight="29.0" prefWidth="31.0" styleClass="soundOn" stylesheets="@style.css" />
-            <Button defaultButton="true" layoutX="349.0" layoutY="531.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="237.0" styleClass="buttonSelect" stylesheets="@style.css" text="Join Game">
+            <Button defaultButton="true" layoutX="349.0" layoutY="531.0" mnemonicParsing="false" onAction="#joinFirstAvailableGameAction" prefHeight="55.0" prefWidth="237.0" styleClass="buttonSelect" stylesheets="@style.css" text="Join Game">
                <effect>
                   <DropShadow height="103.07" radius="51.035" width="103.07">
                      <color>

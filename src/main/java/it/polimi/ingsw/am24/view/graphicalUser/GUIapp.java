@@ -8,11 +8,15 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class GUIapp extends Application {
 
@@ -54,7 +58,6 @@ public class GUIapp extends Application {
         }
     }
     public void setInputReaderGUItoAllControllers(InputReaderGUI inputReaderGUI) {
-        loadScenes();
         for (SceneDesc s : scene) {
             s.setInputReaderGUI(inputReaderGUI);
         }
@@ -104,6 +107,11 @@ public class GUIapp extends Application {
         this.mainStage.setTitle("Codex Naturalis - "+scene.name());
         SceneDesc s = this.scene.get(getSceneIndex(scene));
         switch (scene) {
+            case LOGO -> {
+                this.mainStage.initStyle(StageStyle.UNDECORATED);
+                this.mainStage.setAlwaysOnTop(true);
+                this.mainStage.centerOnScreen();
+            }
             case MENU -> {
                 this.mainStage.centerOnScreen();
                 this.mainStage.setAlwaysOnTop(false);
@@ -112,5 +120,11 @@ public class GUIapp extends Application {
         }
         this.mainStage.setScene(s.getScene());
         this.mainStage.show();
+
+        mainStage.getIcons().add(new Image("it/polimi/ingsw/am24/images/favicon-1.png"));
+    }
+
+    public GameFlow getGameflow() {
+        return gameflow;
     }
 }
