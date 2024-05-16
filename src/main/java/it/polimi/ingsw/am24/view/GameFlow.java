@@ -228,14 +228,17 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        askNickname();
 
         switch (choice) {
             case "1" -> {
+                askNickname();
                 Integer numPlayers = askNumPlayers();
                 createGame(nickname, numPlayers);
             }
-            case "2" -> joinFirstGameAvailable(nickname);
+            case "2" -> {
+                askNickname();
+                joinFirstGameAvailable(nickname);
+            }
             /*case "js" -> {
                 Integer gameId = askGameId();
                 if (gameId == -1)
