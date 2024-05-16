@@ -1,5 +1,5 @@
-.cranioLogo{
-    -fx-background-image: url("/it/polimi/ingsw/am24/images/misc/CranioLogo.png");
+.logo{
+    -fx-background-image: url("../images/misc/prova.jpg");
     -fx-background-repeat: stretch;
     -fx-background-size: cover;
 }
