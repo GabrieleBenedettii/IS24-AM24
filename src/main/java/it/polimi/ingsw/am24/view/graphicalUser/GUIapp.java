@@ -54,7 +54,6 @@ public class GUIapp extends Application {
         }
     }
     public void setInputReaderGUItoAllControllers(InputReaderGUI inputReaderGUI) {
-        loadScenes();
         for (SceneDesc s : scene) {
             s.setInputReaderGUI(inputReaderGUI);
         }

@@ -15,13 +15,15 @@ public class MenuController extends Generic{
     Pane soundIcon;
 
     public void createNewGameAction(ActionEvent event) throws IOException {
-        getInputReaderGUI().addString("0");
-        Sound.playSound("buttonClick");
-    }
-    public void joinFirstAvailableGameAction(ActionEvent event) throws IOException {
         getInputReaderGUI().addString("1");
-        Sound.playSound("buttonClick");
+        //Sound.playSound("buttonClick");
     }
+
+    public void joinFirstAvailableGameAction(ActionEvent event) throws IOException {
+        getInputReaderGUI().addString("2");
+        //Sound.playSound("buttonClick");
+    }
+
     public void infoAction(MouseEvent event){
         Alert alert = new Alert(Alert.AlertType.NONE,
                 "Developed by Belfiore Mattia, Benedetti Gabriele, Buccheri Giuseppe, Canepari Michele"
@@ -29,6 +31,7 @@ public class MenuController extends Generic{
         alert.show();
         Sound.playSound("buttonClick");
     }
+
     public void soundIconAction(MouseEvent event){
         if(event != null){
             Sound.play = !Sound.play;
