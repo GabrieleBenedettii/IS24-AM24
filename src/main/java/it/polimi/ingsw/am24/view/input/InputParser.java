@@ -64,12 +64,9 @@ public class InputParser extends Thread {
                 //gameFlow.leave(p.getNickname(), gameId);
                 //gameFlow.youLeft();
 
-            } else {*/
-                //I didn't pop a message
-
-                //I add the data to the buffer processed via GameFlow
+            }*/ else {
                 dataToProcess.add(txt);
-            //}
+            }
         }
     }
 

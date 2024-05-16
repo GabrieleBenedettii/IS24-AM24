@@ -69,7 +69,6 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
 
         nickname = "";
         joined = false;
-        this.inputReader = new InputReaderGUI();
         this.inputParser = new InputParser(this.inputReader.getBuffer(), this);
         new Thread(this).start();
     }

@@ -45,7 +45,7 @@ public class GUI extends UI {
 
     @Override
     public void show_insert_nickname() {
-        //callPlatformRunLater(() -> this.guiApplication.setActiveScene(Scenes.NICKNAMESELECT));
+        callPlatformRunLater(() -> this.guiApplication.setActiveScene(Scenes.NICKNAMESELECT));
     }
 
     @Override
@@ -80,9 +80,11 @@ public class GUI extends UI {
 
     @Override
     public void show_available_colors(ArrayList<String> colors) {
-        //callPlatformRunLater(() -> this.guiApplication.setActiveScene(Scenes.COLORSELECTOR));
-        ColorSelector selector = new ColorSelector();
-        selector.Initialize(colors);
+        callPlatformRunLater(() -> {
+            this.guiApplication.setActiveScene(Scenes.COLORSELECTOR);
+            ColorSelector selector = (ColorSelector) this.guiApplication.getController(Scenes.COLORSELECTOR);
+            selector.initialize(colors);
+        });
     }
 
     @Override
@@ -92,9 +94,11 @@ public class GUI extends UI {
 
     @Override
     public void show_initial_side(ArrayList<GameCardView> views) {
-        //callPlatformRunLater(() -> this.guiApplication.setActiveScene(Scenes.INITIALCARDSELECTOR));
-        InitialCardSelector selector = new InitialCardSelector();
-        selector.Initialize(views);
+        callPlatformRunLater(() -> {
+            this.guiApplication.setActiveScene(Scenes.INITIALCARDSELECTOR);
+            InitialCardSelector selector = (InitialCardSelector) this.guiApplication.getController(Scenes.INITIALCARDSELECTOR);
+            selector.Initialize(views);
+        });
     }
 
     @Override
@@ -117,9 +121,11 @@ public class GUI extends UI {
 
     private void show_menuOptions() {
         if (alreadyShowedPublisher) {
-            callPlatformRunLater(() -> this.guiApplication.setInputReaderGUItoAllControllers(this.inputReaderGUI));
-            callPlatformRunLater(() -> this.guiApplication.createNewWindowWithStyle());
-            callPlatformRunLater(() -> this.guiApplication.setActiveScene(Scenes.MENU));
+            callPlatformRunLater(() ->  {
+                this.guiApplication.setInputReaderGUItoAllControllers(this.inputReaderGUI);
+                this.guiApplication.createNewWindowWithStyle();
+                this.guiApplication.setActiveScene(Scenes.MENU);
+            });
         }
     }
 

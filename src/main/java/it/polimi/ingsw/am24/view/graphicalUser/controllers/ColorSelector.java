@@ -3,50 +3,39 @@ package it.polimi.ingsw.am24.view.graphicalUser.controllers;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.control.Button;
+import javafx.scene.layout.*;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class ColorSelector extends Generic implements EventHandler<ActionEvent> {
     private ArrayList<String> colors;
 
     @FXML
-    public void Initialize(ArrayList<String> colors) {
+    private HBox colorsContainer;
+
+    @FXML
+    public void initialize(ArrayList<String> colors) {
         this.colors = colors;
-        for(String color : colors) {
-            switch (color){
-                case "red": red.setOnAction(this);
-                case "blue": blue.setOnAction(this);
-                case "green": green.setOnAction(this);
-                case "yellow": yellow.setOnAction(this);
-            }
+        for (int i = 0; i < colors.size(); i++) {
+            Button button = new Button(colors.get(i));
+            button.setMaxWidth(Double.MAX_VALUE);
+            button.setMaxHeight(Double.MAX_VALUE);
+            button.getStyleClass().add(colors.get(i).toLowerCase());
+            button.setOnAction(this);
+            button.setCursor(Cursor.HAND);
+
+            colorsContainer.getChildren().add(button);
+
+            HBox.setHgrow(button, Priority.ALWAYS);
+            button.setPrefHeight(150);
         }
     }
-    @FXML
-    private Button red;
-
-    @FXML
-    private Button green;
-
-    @FXML
-    private Button blue;
-
-    @FXML
-    private Button yellow;
 
     @Override
     public void handle(ActionEvent event) {
         Button clickedButton = (Button) event.getSource();
-        if (clickedButton == red) {
-            getInputReaderGUI().addString("red");
-        } else if (clickedButton == green) {
-            getInputReaderGUI().addString("green");
-        } else if (clickedButton == blue) {
-            getInputReaderGUI().addString("blue");
-        } else if (clickedButton == yellow) {
-            getInputReaderGUI().addString("yellow");
-        }
+        getInputReaderGUI().addString(clickedButton.getText());
     }
 }
