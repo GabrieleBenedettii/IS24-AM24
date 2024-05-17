@@ -5,6 +5,7 @@ import it.polimi.ingsw.am24.modelView.GameCardView;
 import it.polimi.ingsw.am24.modelView.GameView;
 import it.polimi.ingsw.am24.view.flow.UI;
 import it.polimi.ingsw.am24.view.graphicalUser.controllers.ColorSelector;
+import it.polimi.ingsw.am24.view.graphicalUser.controllers.EndGameScreenController;
 import it.polimi.ingsw.am24.view.graphicalUser.controllers.InitialCardSelector;
 import it.polimi.ingsw.am24.view.graphicalUser.controllers.SecretGoalCardSelector;
 import it.polimi.ingsw.am24.view.input.InputReaderGUI;
@@ -143,7 +144,11 @@ public class GUI extends UI {
 
     @Override
     public void show_winner_and_rank(boolean winner, HashMap<String, Integer> rank) {
-
+        callPlatformRunLater(() -> {
+            this.guiApplication.setActiveScene(Scenes.ENDGAMESCREEN);
+            EndGameScreenController selector = (EndGameScreenController) this.guiApplication.getController(Scenes.ENDGAMESCREEN);
+            selector.rankings(rank);
+        });
     }
 
     @Override
