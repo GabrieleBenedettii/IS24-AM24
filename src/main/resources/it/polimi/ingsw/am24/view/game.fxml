@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="900.0" maxWidth="1600.0" prefHeight="900.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.am24.view.graphicalUser.controllers.GameBoardController">
+      <children>
+      <Pane prefHeight="900.0" prefWidth="1600.0" styleClass="displayGameBoard" stylesheets="@style.css">
+         <children>
+               <VBox layoutX="1241.0" layoutY="42.0" prefHeight="130.0" prefWidth="317.0" style="-fx-background-color: blue" />
+               <HBox fx:id="hiddenGoalContainer" layoutX="843.0" layoutY="707.0" maxHeight="150.0" maxWidth="250.0" minHeight="150.0" minWidth="250.0" prefHeight="150.0" prefWidth="250.0">
+                  <padding>
+                     <Insets left="25.0" right="25.0" />
+                  </padding>
+            </HBox>
+               <HBox fx:id="playingHandContainer" layoutX="43.0" layoutY="707.0" maxHeight="150.0" maxWidth="800.0" prefHeight="150.0" prefWidth="800.0">
+                  <padding>
+                     <Insets bottom="25.0" left="25.0" right="25.0" />
+                  </padding>
+            </HBox>
+               <VBox fx:id="goldCardsContainer" layoutX="1378.0" layoutY="172.0" prefHeight="380.0" prefWidth="180.0">
+                  <padding>
+                     <Insets bottom="10.0" right="10.0" top="10.0" />
+                  </padding>
+            </VBox>
+               <VBox fx:id="resourceCardsContainer" layoutX="1198.0" layoutY="172.0" prefHeight="380.0" prefWidth="180.0">
+                  <padding>
+                     <Insets bottom="10.0" left="10.0" top="10.0" />
+                  </padding>
+            </VBox>
+               <HBox fx:id="commonGoalsContainer" layoutX="1198.0" layoutY="552.0" prefHeight="150.0" prefWidth="360.0">
+               <padding>
+                  <Insets left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </HBox>
+         </children>
+      </Pane>
+      </children>
+</AnchorPane>

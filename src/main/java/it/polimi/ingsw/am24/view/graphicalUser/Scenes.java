@@ -14,6 +14,7 @@ public enum Scenes {
     LOBBYVIEW("LobbyView.fxml"),
     LOGO("Logo.fxml"),
     COLORSELECTOR("ColorSelector.fxml"),
+    GAME("game.fxml"),
     INITIALCARDSELECTOR("InitialCardSelector.fxml");
 
     private final String fxmlFile;
