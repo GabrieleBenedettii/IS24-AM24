@@ -13,11 +13,12 @@ public class PlayerView implements Serializable {
     private final int playerScore;
     private final GameCardView secretCard;
     private final ArrayList<GameCardView> playerHand;
-    private final String[][] board;
+    private final GameCardView[][] board;
+    private final ArrayList<Placement> placeOrder;
     private final boolean[][] possiblePlacements;
     private final HashMap<String, Integer> visibleSymbols;
 
-    public PlayerView(String player, int score, boolean[][] placements, String[][] board, GameCardView secret, ArrayList<GameCardView> hand, HashMap<String, Integer> visibleSymbols){
+    public PlayerView(String player, int score, boolean[][] placements, GameCardView[][] board, GameCardView secret, ArrayList<GameCardView> hand, HashMap<String, Integer> visibleSymbols, ArrayList<Placement> placeOrder){
         this.board = board;
         this.possiblePlacements = placements;
         this.playerName = player;
@@ -25,6 +26,7 @@ public class PlayerView implements Serializable {
         this.secretCard = secret;
         this.playerHand = hand;
         this.visibleSymbols = visibleSymbols;
+        this.placeOrder = placeOrder;
     }
     public String getPlayerName() {
         return playerName;
@@ -39,7 +41,7 @@ public class PlayerView implements Serializable {
         return playerHand;
     }
 
-    public String[][] getBoard() {
+    public GameCardView[][] getBoard() {
         return board;
     }
 
@@ -48,5 +50,9 @@ public class PlayerView implements Serializable {
     }
     public HashMap<String, Integer> getVisibleSymbols() {
         return visibleSymbols;
+    }
+
+    public ArrayList<Placement> getPlaceOrder() {
+        return placeOrder;
     }
 }

@@ -1,18 +1,20 @@
 package it.polimi.ingsw.am24.view.graphicalUser.controllers;
 
 import it.polimi.ingsw.am24.HelloApplication;
-import it.polimi.ingsw.am24.model.Game;
+import it.polimi.ingsw.am24.modelView.GameCardView;
 import it.polimi.ingsw.am24.modelView.GameView;
+import it.polimi.ingsw.am24.modelView.Placement;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Cursor;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBar;
+import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Paint;
 
-
+import java.util.ArrayList;
 
 public class  GameBoardController extends Generic{
 
@@ -22,6 +24,7 @@ public class  GameBoardController extends Generic{
     @FXML private VBox goldCardsContainer;
     @FXML private HBox commonGoalsContainer;
     @FXML private VBox rankingContainer;
+    @FXML private Pane gameViewContainer;
 
     private GridPane grid;
     private GameView gameView;
@@ -85,7 +88,6 @@ public class  GameBoardController extends Generic{
 
         for (int i = 0; i < gameView.getCommon().getResourceCards().size(); i++) {
             id = gameView.getCommon().getResourceCards().get(i).getCardId();
-            System.out.println(id);
             image = new Image(HelloApplication.class.getResource("images/front/"+id+".jpg").toString());
             imageView = new ImageView(image);imageView.setCursor(Cursor.HAND);
             setImageOptionsV(imageView);
@@ -106,6 +108,49 @@ public class  GameBoardController extends Generic{
             HBox.setHgrow(imageView, Priority.ALWAYS);
             imageView.setFitHeight(Double.MAX_VALUE);
         }
+
+        //GAME VIEW
+        GridPane gridPane = new GridPane();
+        gridPane.setAlignment(Pos.CENTER);
+        gridPane.setBorder(Border.stroke(Paint.valueOf("black")));
+
+        GameCardView[][] matrix = gameView.getPlayerView().getBoard();
+        ArrayList<Placement> order = gameView.getPlayerView().getPlaceOrder();
+        double cellWidth = (double) 1100 /matrix.length;
+        double cellHeight = 583.5/matrix[0].length;
+
+        //adding all empty cells
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[i].length; j++) {
+                StackPane stackPane = new StackPane();
+                stackPane.setPrefSize(cellWidth, cellHeight);
+                gridPane.add(stackPane, j, i);
+            }
+        }
+
+        //adding placed cards in order
+        for(Placement placement : order) {
+            StackPane stackPane = new StackPane();
+            stackPane.setPrefSize(cellWidth, cellHeight);
+            Pane pane = new Pane();
+            pane.setPrefSize(cellWidth, cellHeight);
+
+            image = new Image(HelloApplication.class.getResource("images/front/"+placement.getCard().getCardId()+".jpg").toString());
+            imageView = new ImageView(image);
+            imageView.setPreserveRatio(true);
+            imageView.setSmooth(true);
+            imageView.setCache(true);
+
+            imageView.setFitWidth(cellWidth/0.78);
+            imageView.setLayoutX(-0.11*(cellWidth/0.75));
+            imageView.setLayoutY(-0.2*(cellHeight/0.6));
+
+            pane.getChildren().add(imageView);
+            stackPane.getChildren().add(pane);
+            gridPane.add(stackPane, placement.getY(), placement.getX());
+        }
+
+        gameViewContainer.getChildren().add(gridPane);
     }
 
     private void setImageOptionsH(ImageView imageView, int width, int margin) {

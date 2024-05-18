@@ -83,7 +83,7 @@ public class CLI extends UI {
             //first half of cells
             for (int j = firstColumn; j < lastColumn+1; j++) {
                 out.print("|" + (gameView.getPlayerView().getPossiblePlacements()[i][j] ? Constants.BACKGROUND_BLACK : "") + (gameView.getPlayerView().getBoard()[i][j] != null ?
-                        gameView.getPlayerView().getBoard()[i][j].substring(0,21) : "   " + Constants.BACKGROUND_RESET));
+                        gameView.getPlayerView().getBoard()[i][j].getCardDescription().substring(0,21) : "   " + Constants.BACKGROUND_RESET));
             }
             out.print("|");
             //visible symbols
@@ -91,7 +91,7 @@ public class CLI extends UI {
             out.print("\n  ");
             for (int j = firstColumn; j < lastColumn+1; j++) {
                 out.print("|" + (gameView.getPlayerView().getPossiblePlacements()[i][j] ? Constants.BACKGROUND_BLACK : "") + (gameView.getPlayerView().getBoard()[i][j] != null ?
-                        gameView.getPlayerView().getBoard()[i][j].substring(21) : "   " + Constants.BACKGROUND_RESET));
+                        gameView.getPlayerView().getBoard()[i][j].getCardDescription().substring(21) : "   " + Constants.BACKGROUND_RESET));
             }
             out.print("|");
             visSymbIndex = show_visible_symbols(visSymbIndex, gameView, symbols);

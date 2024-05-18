@@ -5,6 +5,7 @@ import it.polimi.ingsw.am24.Exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.am24.model.card.*;
 import it.polimi.ingsw.am24.model.goal.GoalCard;
 import it.polimi.ingsw.am24.modelView.GameCardView;
+import it.polimi.ingsw.am24.modelView.Placement;
 import it.polimi.ingsw.am24.modelView.PlayerView;
 import javafx.util.Pair;
 
@@ -22,6 +23,7 @@ public class Player {
     private final HashMap<Symbol,Integer> visibleSymbols;
 
     private final GameCard[][] gameBoard;
+    private final ArrayList<Placement> placeOrder;
     private final int[][] possiblePlacements;
     private final Pair<Integer, Integer>[] diagonals;
 
@@ -33,6 +35,7 @@ public class Player {
             visibleSymbols.put(s,0);
         }
         this.gameBoard = new GameCard[21][41];
+        this.placeOrder = new ArrayList<>();
         this.possiblePlacements = new int[21][41];
         Arrays.stream(possiblePlacements).forEach(row->Arrays.fill(row,-1));
         this.score = 0;
@@ -56,6 +59,7 @@ public class Player {
         }
 
         gameBoard[x][y] = playingHand.get(cardIndex).getCardSide(front);
+        placeOrder.add(new Placement(x,y,playingHand.get(cardIndex).getCardSide(front).getView()));
 
         //cover all the covered corners and remove covered symbols from visible symbols
         int coveredCorners = 0;
@@ -97,6 +101,7 @@ public class Player {
 
     public void playInitialCard(boolean front) {
         gameBoard[10][20] = front ? initialcard : initialcard.getBackCard();
+        placeOrder.add(new Placement(10,20,gameBoard[10][20].getView()));
         for(int k = 0; k < 4; k++) {
             possiblePlacements[10 + diagonals[k].getKey()][20 + diagonals[k].getValue()] = !gameBoard[10][20].getCornerByIndex(k).isHidden() ? 1 : 0;
             if(gameBoard[10][20].getCornerByIndex(k).getSymbol() != null && !gameBoard[10][20].getCornerByIndex(k).isHidden())
@@ -156,10 +161,10 @@ public class Player {
     }
 
     public PlayerView getPlayerView(){
-        String[][] temp = new String[21][41];
+        GameCardView[][] temp = new GameCardView[21][41];
         for(int i = 1; i < 20; i++){
             for(int j = 1; j < 40; j++){
-                temp[i][j] = gameBoard[i][j] != null ? gameBoard[i][j].getStringForCard() : null;
+                temp[i][j] = gameBoard[i][j] != null ? new GameCardView("",gameBoard[i][j].getImageId(),gameBoard[i][j].getStringForCard()) : null;
             }
         }
         ArrayList<GameCardView> hand = new ArrayList<>();
@@ -170,7 +175,7 @@ public class Player {
         for(Symbol s : visibleSymbols.keySet()){
             vs.put(s.toString(), visibleSymbols.get(s));
         }
-        return new PlayerView(nickname, score, getBooleanPossiblePlacements(), temp, new GameCardView("goal", hiddenGoal.getImageId(), hiddenGoal.printCard()), hand, vs);
+        return new PlayerView(nickname, score, getBooleanPossiblePlacements(), temp, new GameCardView("goal", hiddenGoal.getImageId(), hiddenGoal.printCard()), hand, vs,placeOrder);
     }
 
     private boolean[][] getBooleanPossiblePlacements() {
