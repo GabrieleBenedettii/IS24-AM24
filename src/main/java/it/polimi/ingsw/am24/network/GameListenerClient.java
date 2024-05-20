@@ -45,8 +45,8 @@ public class GameListenerClient implements GameListener, Serializable {
     }
 
     @Override
-    public void hiddenGoalChoice(ArrayList<GameCardView> cardViews, PublicBoardView publicBoardView) throws RemoteException {
-        flow.hiddenGoalChoice(cardViews, publicBoardView);
+    public void hiddenGoalChoice(ArrayList<GameCardView> cardViews, GameView gameView) throws RemoteException {
+        flow.hiddenGoalChoice(cardViews, gameView);
     }
 
     @Override
@@ -70,8 +70,8 @@ public class GameListenerClient implements GameListener, Serializable {
     }
 
     @Override
-    public void beginDraw() throws RemoteException {
-        flow.beginDraw();
+    public void beginDraw(GameView gameView) throws RemoteException {
+        flow.beginDraw(gameView);
     }
 
     @Override

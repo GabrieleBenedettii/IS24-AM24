@@ -39,7 +39,7 @@ public class LobbyControllerTest {
             public void availableColors(ArrayList<String> colors) throws RemoteException {}
 
             @Override
-            public void hiddenGoalChoice(ArrayList<GameCardView> cardViews, PublicBoardView publicBoardView) throws RemoteException {}
+            public void hiddenGoalChoice(ArrayList<GameCardView> cardViews, GameView gameView) throws RemoteException {}
 
             @Override
             public void initialCardSide(GameCardView front, GameCardView back) throws RemoteException {}
@@ -54,7 +54,7 @@ public class LobbyControllerTest {
             public void requirementsNotMet() throws RemoteException {}
 
             @Override
-            public void beginDraw() throws RemoteException {}
+            public void beginDraw(GameView gameView) throws RemoteException {}
 
             @Override
             public void wrongCardPlay(GameView gameView) throws RemoteException {}

@@ -72,9 +72,9 @@ public class GameListenerClientSocket implements GameListener, Serializable {
     }
 
     @Override
-    public void hiddenGoalChoice(ArrayList<GameCardView> cardViews, PublicBoardView publicBoardView) throws RemoteException {
+    public void hiddenGoalChoice(ArrayList<GameCardView> cardViews, GameView gameView) throws RemoteException {
         try {
-            out.writeObject(new HiddenGoalChoiceMessage(cardViews, publicBoardView));
+            out.writeObject(new HiddenGoalChoiceMessage(cardViews, gameView));
             out.flush();
             out.reset();
 
@@ -122,9 +122,9 @@ public class GameListenerClientSocket implements GameListener, Serializable {
     }
 
     @Override
-    public void beginDraw() throws RemoteException {
+    public void beginDraw(GameView gameView) throws RemoteException {
         try {
-            out.writeObject(new BeginDrawMessage());
+            out.writeObject(new BeginDrawMessage(gameView));
             out.flush();
             out.reset();
 

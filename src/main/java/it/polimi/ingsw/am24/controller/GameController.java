@@ -143,7 +143,7 @@ public class GameController implements GameControllerInterface, Serializable, Ru
             if (p != null) {
                 p.getInitialcard().setFront(isFront);
                 p.playInitialCard(isFront);
-                listener.hiddenGoalChoice(new ArrayList<>(game.drawGoalCards().stream().map(GoalCard::getView).toList()), game.getPublicBoardView());
+                listener.hiddenGoalChoice(new ArrayList<>(game.drawGoalCards().stream().map(GoalCard::getView).toList()), new GameView(null, gameId, p.getPlayerView(), game.getPublicBoardView(), null));
                 return true;
             }
             return false;
@@ -157,7 +157,7 @@ public class GameController implements GameControllerInterface, Serializable, Ru
                 try {
                     p.play(cardIndex, isFront, x, y);
                     if(p.getScore() >= 20 && !status.equals(GameStatus.LAST_LAST_ROUND) && !status.equals(GameStatus.LAST_ROUND)) status = GameStatus.LAST_LAST_ROUND;
-                    listener.beginDraw();
+                    listener.beginDraw(new GameView(currentPlayer, gameId, p.getPlayerView(), game.getPublicBoardView(), status));
                     return true;
                 } catch (InvalidPositioningException e) {
                     listener.invalidPositioning();

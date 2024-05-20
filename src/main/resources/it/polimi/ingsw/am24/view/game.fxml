@@ -5,7 +5,7 @@
 
 <AnchorPane maxHeight="900.0" maxWidth="1600.0" prefHeight="900.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.am24.view.graphicalUser.controllers.GameBoardController">
       <children>
-      <Pane prefHeight="900.0" prefWidth="1600.0" styleClass="displayGameBoard" stylesheets="@style.css">
+      <Pane fx:id="container" prefHeight="900.0" prefWidth="1600.0" styleClass="displayGameBoard" stylesheets="@style.css">
          <children>
                <VBox layoutX="1241.0" layoutY="42.0" prefHeight="130.0" prefWidth="317.0" style="-fx-background-color: blue" />
                <HBox fx:id="hiddenGoalContainer" layoutX="843.0" layoutY="707.0" maxHeight="150.0" maxWidth="250.0" minHeight="150.0" minWidth="250.0" prefHeight="150.0" prefWidth="250.0">

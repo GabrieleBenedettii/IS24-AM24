@@ -21,7 +21,7 @@ public interface GameListener extends Remote {
 
     void availableColors(ArrayList<String> colors) throws RemoteException;
 
-    void hiddenGoalChoice(ArrayList<GameCardView> cardViews, PublicBoardView publicBoardView) throws RemoteException;
+    void hiddenGoalChoice(ArrayList<GameCardView> cardViews, GameView gameView) throws RemoteException;
 
     void initialCardSide(GameCardView front, GameCardView back) throws RemoteException;
 
@@ -31,7 +31,7 @@ public interface GameListener extends Remote {
 
     void requirementsNotMet() throws RemoteException;
 
-    void beginDraw() throws RemoteException;
+    void beginDraw(GameView gameView) throws RemoteException;
 
     void wrongCardPlay(GameView gameView) throws RemoteException;
 

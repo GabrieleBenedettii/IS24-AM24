@@ -211,7 +211,7 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
             }
             // check for special characters
             if (nickname.matches(".*[" + Pattern.quote(invalidChars) + "].*")) {
-                System.out.println("Invalid nickname. Please enter a nickname without special characters or numbers.");
+                ui.show_invalid_username();
             } else {
                 validNickname = true;
             }
@@ -327,7 +327,7 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
                     System.out.println("Invalid choice. Please select a valid card side.");
                     continue; // re-enter the loop
                 }
-                actions.chooseInitialCardSide(nickname, choice);
+                chooseInitialCardSide(nickname, choice);
                 retry = false;
             } catch (NumberFormatException e) {
                 System.out.println("Invalid input. Please enter a number.");
@@ -549,8 +549,8 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
     }
 
     @Override
-    public void hiddenGoalChoice(ArrayList<GameCardView> cardViews, PublicBoardView publicBoardView) {
-        this.gameView = new GameView(null, 0, null, publicBoardView, null);
+    public void hiddenGoalChoice(ArrayList<GameCardView> cardViews, GameView gameView) {
+        this.gameView = gameView;
         this.cards = cardViews;
         addEvent(EventType.HIDDEN_GOAL_CHOICE);
     }
@@ -583,7 +583,8 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
     }
 
     @Override
-    public void beginDraw() {
+    public void beginDraw(GameView gameView) {
+        this.gameView = gameView;
         this.status = GameStatus.RUNNING;
         addEvent(EventType.BEGIN_DRAW);
     }

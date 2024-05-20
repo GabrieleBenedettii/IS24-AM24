@@ -175,7 +175,7 @@ public class Player {
         for(Symbol s : visibleSymbols.keySet()){
             vs.put(s.toString(), visibleSymbols.get(s));
         }
-        return new PlayerView(nickname, score, getBooleanPossiblePlacements(), temp, new GameCardView("goal", hiddenGoal.getImageId(), hiddenGoal.printCard()), hand, vs,placeOrder);
+        return new PlayerView(nickname, score, getBooleanPossiblePlacements(), temp, hiddenGoal != null ? new GameCardView("goal", hiddenGoal.getImageId(), hiddenGoal.printCard()) : null, hand, vs,placeOrder);
     }
 
     private boolean[][] getBooleanPossiblePlacements() {

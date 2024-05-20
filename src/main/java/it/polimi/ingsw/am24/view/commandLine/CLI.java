@@ -216,6 +216,11 @@ public class CLI extends UI {
         out.print("please wait, "+ nickname +" is playing.");
     }
 
+    @Override
+    public void show_invalid_username() {
+        System.out.println("Invalid nickname. Please enter a nickname without special characters or numbers.");
+    }
+
 
     //not working on intellij
     public void clearScreen() {

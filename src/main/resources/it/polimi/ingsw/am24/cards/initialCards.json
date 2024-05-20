@@ -21,6 +21,7 @@
       }
     ],
     "backCard":{
+      "imageId":81,
       "kingdoms":["INSECT"],
       "corners":[
         {
@@ -64,6 +65,7 @@
       }
     ],
     "backCard":{
+      "imageId":82,
       "kingdoms":["FUNGI"],
       "corners":[
         {
@@ -107,6 +109,7 @@
       }
     ],
     "backCard":{
+      "imageId":83,
       "kingdoms":["PLANT","FUNGI"],
       "corners":[
         {
@@ -150,6 +153,7 @@
       }
     ],
     "backCard":{
+      "imageId":84,
       "kingdoms":["ANIMAL","INSECT"],
       "corners":[
         {
@@ -193,6 +197,7 @@
       }
     ],
     "backCard":{
+      "imageId":85,
       "kingdoms":["ANIMAL","INSECT","PLANT"],
       "corners":[
         {
@@ -236,6 +241,7 @@
       }
     ],
     "backCard":{
+      "imageId":86,
       "kingdoms":["PLANT","ANIMAL","FUNGI"],
       "corners":[
         {

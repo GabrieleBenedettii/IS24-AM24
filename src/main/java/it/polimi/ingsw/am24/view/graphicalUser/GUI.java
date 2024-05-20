@@ -1,8 +1,7 @@
 package it.polimi.ingsw.am24.view.graphicalUser;
 
 import it.polimi.ingsw.am24.constants.Constants;
-import it.polimi.ingsw.am24.modelView.GameCardView;
-import it.polimi.ingsw.am24.modelView.GameView;
+import it.polimi.ingsw.am24.modelView.*;
 import it.polimi.ingsw.am24.view.flow.UI;
 import it.polimi.ingsw.am24.view.graphicalUser.controllers.*;
 import it.polimi.ingsw.am24.view.input.InputReaderGUI;
@@ -61,7 +60,10 @@ public class GUI extends UI {
 
     @Override
     public void show_gameView(GameView gameView) {
-
+        callPlatformRunLater(() -> {
+            GameBoardController controller = (GameBoardController) this.guiApplication.getController(Scenes.GAME);
+            controller.beginTurn(gameView);
+        });
     }
 
     @Override
@@ -71,12 +73,19 @@ public class GUI extends UI {
 
     @Override
     public void show_table(GameView gameView, boolean forChoice) {
-
+        callPlatformRunLater(() -> {
+            GameBoardController controller = (GameBoardController) this.guiApplication.getController(Scenes.GAME);
+            controller.beginDraw(gameView);
+        });
     }
 
     @Override
     public void show_start_table(GameView gameView) {
-
+        callPlatformRunLater(() -> {
+            this.guiApplication.setActiveScene(Scenes.GAME);
+            GameBoardController controller = (GameBoardController) this.guiApplication.getController(Scenes.GAME);
+            controller.hiddenGoalChoice(gameView);
+        });
     }
 
     @Override
@@ -96,9 +105,8 @@ public class GUI extends UI {
     @Override
     public void show_hidden_goal(ArrayList<GameCardView> views) {
         callPlatformRunLater(() -> {
-            this.guiApplication.setActiveScene(Scenes.SECRETGOALCARDSELECTOR);
-            SecretGoalCardSelector selector = (SecretGoalCardSelector) this.guiApplication.getController(Scenes.SECRETGOALCARDSELECTOR);
-            selector.Initialize(views);
+            GameBoardController controller = (GameBoardController) this.guiApplication.getController(Scenes.GAME);
+            controller.drawChooseHiddenGoal(views);
         });
     }
 
@@ -126,6 +134,11 @@ public class GUI extends UI {
             this.show_menuOptions();
         });
         pause.play();
+
+    }
+
+    @Override
+    public void show_invalid_username() {
 
     }
 

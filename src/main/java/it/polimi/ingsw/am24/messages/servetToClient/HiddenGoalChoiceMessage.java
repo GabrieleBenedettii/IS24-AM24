@@ -13,16 +13,16 @@ import java.util.List;
 
 public class HiddenGoalChoiceMessage extends SocketServerMessage {
     private final ArrayList<GameCardView> views = new ArrayList<>();
-    private final PublicBoardView publicBoardView;
+    private final GameView gameView;
 
-    public HiddenGoalChoiceMessage(List<GameCardView> views, PublicBoardView publicBoardView) {
+    public HiddenGoalChoiceMessage(List<GameCardView> views, GameView gameView) {
         this.views.add(views.get(0));
         this.views.add(views.get(1));
-        this.publicBoardView = publicBoardView;
+        this.gameView = gameView;
     }
 
     @Override
     public void execute(GameListener listener) throws RemoteException {
-        listener.hiddenGoalChoice(views, publicBoardView);
+        listener.hiddenGoalChoice(views, gameView);
     }
 }
