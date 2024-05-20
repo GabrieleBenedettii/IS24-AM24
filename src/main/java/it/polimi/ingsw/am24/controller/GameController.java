@@ -286,12 +286,25 @@ public class GameController implements GameControllerInterface, Serializable, Ru
                 startGame();
                 for (String p : listeners.keySet()) {
                     if (p != null && listeners.get(p) != null)
-                        listeners.get(p).initialCardSide(players.get(p).getInitialcard().getView(), players.get(p).getInitialcard().getBackView());
+                        new Thread(() -> {
+                            try {
+                                listeners.get(p).initialCardSide(players.get(p).getInitialcard().getView(), players.get(p).getInitialcard().getBackView());
+                            } catch (RemoteException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }).start();
                 }
             }
             else {
                 for(String p : listeners.keySet()){
-                    if(p != null && listeners.get(p) != null) listeners.get(p).playerJoined(new ArrayList<>(players.keySet().stream().toList()));
+                    if(p != null && listeners.get(p) != null)
+                        new Thread(() -> {
+                            try {
+                                listeners.get(p).playerJoined(new ArrayList<>(players.keySet().stream().toList()));
+                            } catch (RemoteException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }).start();
                 }
             }
         }
@@ -301,7 +314,13 @@ public class GameController implements GameControllerInterface, Serializable, Ru
         synchronized (lockPlayers) {
             for (String p : listeners.keySet()) {
                 if (p != null && listeners.get(p) != null)
-                    listeners.get(p).beginTurn(new GameView(currentPlayer, gameId, players.get(p).getPlayerView(), game.getPublicBoardView(), status));
+                    new Thread(() -> {
+                        try {
+                            listeners.get(p).beginTurn(new GameView(currentPlayer, gameId, players.get(p).getPlayerView(), game.getPublicBoardView(), status));
+                        } catch (RemoteException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }).start();
             }
         }
     }
@@ -313,7 +332,14 @@ public class GameController implements GameControllerInterface, Serializable, Ru
                 rank.put(p, players.get(p).getScore());
             }
             for (String p : listeners.keySet()) {
-                if (p != null && listeners.get(p) != null) listeners.get(p).gameEnded(winner, rank);
+                if (p != null && listeners.get(p) != null)
+                    new Thread(() -> {
+                        try {
+                            listeners.get(p).gameEnded(winner, rank);
+                        } catch (RemoteException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }).start();
             }
         }
     }
@@ -322,14 +348,26 @@ public class GameController implements GameControllerInterface, Serializable, Ru
         synchronized (chat) {
             for (String p : listeners.keySet()) {
                 if(chat.getLast().getReceiver().isEmpty() || chat.getLast().getReceiver().equals(p) || !chat.getLast().getSender().equals(p))
-                    listeners.get(p).sentMessage(chat.getLastMessage());
+                    new Thread(() -> {
+                        try {
+                            listeners.get(p).sentMessage(chat.getLastMessage());
+                        } catch (RemoteException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }).start();
             }
         }
     }
 
     //notify the single listener for the color choice
     private void notifyListener(GameListener listener) throws RemoteException {
-        listener.availableColors(new ArrayList<>(game.getAvailableColors()));
+        new Thread(() -> {
+            try {
+                listener.availableColors(new ArrayList<>(game.getAvailableColors()));
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
+            }
+        }).start();
     }
 
     public int getGameId() {
