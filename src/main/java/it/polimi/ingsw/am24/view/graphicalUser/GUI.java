@@ -4,10 +4,7 @@ import it.polimi.ingsw.am24.constants.Constants;
 import it.polimi.ingsw.am24.modelView.GameCardView;
 import it.polimi.ingsw.am24.modelView.GameView;
 import it.polimi.ingsw.am24.view.flow.UI;
-import it.polimi.ingsw.am24.view.graphicalUser.controllers.ColorSelector;
-import it.polimi.ingsw.am24.view.graphicalUser.controllers.EndGameScreenController;
-import it.polimi.ingsw.am24.view.graphicalUser.controllers.InitialCardSelector;
-import it.polimi.ingsw.am24.view.graphicalUser.controllers.SecretGoalCardSelector;
+import it.polimi.ingsw.am24.view.graphicalUser.controllers.*;
 import it.polimi.ingsw.am24.view.input.InputReaderGUI;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
@@ -157,8 +154,12 @@ public class GUI extends UI {
     }
 
     @Override
-    public void show_joined_players(ArrayList<String> player) {
-        callPlatformRunLater(() -> this.guiApplication.setActiveScene(Scenes.LOBBYVIEW));
+    public void show_joined_players(ArrayList<String> players) {
+        callPlatformRunLater(() -> {
+            this.guiApplication.setActiveScene(Scenes.LOBBYVIEW);
+            LobbyViewController controller = (LobbyViewController) this.guiApplication.getController(Scenes.LOBBYVIEW);
+            controller.initialize(players);
+        });
     }
 
     @Override

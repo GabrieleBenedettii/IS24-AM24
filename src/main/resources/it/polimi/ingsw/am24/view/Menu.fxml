@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.image.*?>
@@ -13,7 +14,7 @@
             <ImageView fitHeight="50.0" fitWidth="100.0" layoutX="536.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
                <Image url="@../images/misc/CranioLogo.png" />
             </ImageView>
-            <Button defaultButton="true" layoutX="14.0" layoutY="531.0" mnemonicParsing="false" onAction="#createNewGameAction" prefHeight="55.0" prefWidth="237.0" styleClass="Button-1" stylesheets="@style.css" text="Create New Game">
+            <Button fx:id="button1" defaultButton="true" layoutX="14.0" layoutY="531.0" mnemonicParsing="false" onAction="#createNewGameAction" prefHeight="55.0" prefWidth="237.0" styleClass="Button-1" stylesheets="@style.css" text="Create Game">
                <effect>
                   <DropShadow height="103.07" radius="51.035" width="103.07">
                      <color>
@@ -21,9 +22,12 @@
                      </color>
                   </DropShadow>
                </effect>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Button>
             <Pane layoutX="14.0" layoutY="13.0" prefHeight="29.0" prefWidth="31.0" styleClass="soundOn" stylesheets="@style.css" />
-            <Button defaultButton="true" layoutX="349.0" layoutY="531.0" mnemonicParsing="false" onAction="#joinFirstAvailableGameAction" prefHeight="55.0" prefWidth="237.0" styleClass="buttonSelect" stylesheets="@style.css" text="Join Game">
+            <Button fx:id="button2" defaultButton="true" layoutX="349.0" layoutY="531.0" mnemonicParsing="false" onAction="#joinFirstAvailableGameAction" prefHeight="55.0" prefWidth="237.0" styleClass="Button-1" stylesheets="@style.css" text="Join Game">
                <effect>
                   <DropShadow height="103.07" radius="51.035" width="103.07">
                      <color>
@@ -31,6 +35,9 @@
                      </color>
                   </DropShadow>
                </effect>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Button>
          </children></Pane>
    </children>

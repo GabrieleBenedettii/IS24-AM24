@@ -1,5 +1,6 @@
 package it.polimi.ingsw.am24.view.graphicalUser.controllers;
 
+import it.polimi.ingsw.am24.HelloApplication;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -14,7 +15,6 @@ public class ColorSelector extends Generic implements EventHandler<ActionEvent> 
 
     @FXML
     private HBox colorsContainer;
-
     @FXML
     public void initialize(ArrayList<String> colors) {
         this.colors = colors;
@@ -25,6 +25,7 @@ public class ColorSelector extends Generic implements EventHandler<ActionEvent> 
             button.getStyleClass().add(colors.get(i).toLowerCase());
             button.setOnAction(this);
             button.setCursor(Cursor.HAND);
+            button.setMinWidth(colorsContainer.getPrefWidth()/colors.size());
 
             colorsContainer.getChildren().add(button);
 

@@ -6,10 +6,12 @@ import it.polimi.ingsw.am24.view.graphicalUser.controllers.MenuController;
 import it.polimi.ingsw.am24.view.input.InputReaderGUI;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -85,6 +87,9 @@ public class GUIapp extends Application {
         // Copia la scena dalla finestra precedente
         newStage.setScene(this.mainStage.getScene());
 
+        //Blocca fullscreen e resize
+        newStage.setResizable(false);
+
         // Mostra la nuova finestra
         newStage.show();
 
@@ -119,6 +124,9 @@ public class GUIapp extends Application {
             }
         }
         this.mainStage.setScene(s.getScene());
+        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+        this.mainStage.setX((screenBounds.getWidth() - this.mainStage.getWidth()) / 2);
+        this.mainStage.setY((screenBounds.getHeight() - this.mainStage.getHeight()) / 2);
         this.mainStage.show();
 
         mainStage.getIcons().add(new Image("it/polimi/ingsw/am24/images/favicon-1.png"));

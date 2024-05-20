@@ -8,6 +8,7 @@ import javafx.scene.control.TextField;
 import java.io.IOException;
 
 public class CreateGameNicknameSelectController extends Generic{
+
     @FXML
     private TextField nickNameTextField;
 
