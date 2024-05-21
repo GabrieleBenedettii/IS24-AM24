@@ -133,14 +133,12 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
             case NICKNAME_ALREADY_USED -> {
                 nickname = null;
                 events.add(new Event(EventType.APP_MENU));
-                //todo create ui message
-                System.out.println("Nickname already used");
+                ui.show_nickname_already_used();
             }
             case NO_LOBBY_AVAILABLE -> {
                 nickname = null;
                 events.add(new Event(EventType.APP_MENU));
-                //todo create ui message
-                System.out.println("No lobby is available, please create a new one");
+                ui.show_no_lobby_available();
             }
         }
     }
@@ -265,7 +263,7 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
         try {
             color = this.inputParser.getDataToProcess().pop();
             if (!availableColors.contains(color) && !availableColors.contains(color.toUpperCase())) {
-                System.out.println("Color not available. Please choose a different color.");
+                ui.show_color_not_available();
                 askColor();
                 return;
             }
@@ -280,7 +278,7 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
         Integer numPlayers = null;
         do {
             //ui.show_inputGameIdMsg();
-            System.out.print("\nInsert number of players -> ");
+            ui.show_insert_num_player();
             try {
                 try {
                     temp = this.inputParser.getDataToProcess().pop();
@@ -289,11 +287,11 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
                 }
                 numPlayers = Integer.parseInt(temp);
                 if (numPlayers < 2 || numPlayers > 4) {
-                    System.out.println("Invalid number of players. Please enter a number between 2 and 4.");
+                    ui.show_invalid_num_player();
                     numPlayers = null;
                 }
             } catch (NumberFormatException e) {
-                System.out.println("Invalid input. Please enter a number between 2 and 4.");
+                ui.show_invalid_num_player();
                 //ui.show_NaNMsg();
             }
         } while (numPlayers == null);
@@ -311,7 +309,7 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
                 actions.chooseHiddenGoal(nickname, cards.get(choice).getCardId());
                 retry = false;
             } catch (Exception e) {
-                System.out.println("Nan");
+                ui.show_nan();
                 retry = true;
             }
         } while(retry);
@@ -324,15 +322,15 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
             try {
                 int choice = Integer.parseInt(this.inputParser.getDataToProcess().pop());
                 if (choice < 0 || choice >= cards.size()) {
-                    System.out.println("Invalid choice. Please select a valid card side.");
+                    ui.show_invalid_initialcard();
                     continue; // re-enter the loop
                 }
                 chooseInitialCardSide(nickname, choice);
                 retry = false;
             } catch (NumberFormatException e) {
-                System.out.println("Invalid input. Please enter a number.");
+                ui.show_invalid_initialcard();
             } catch (Exception e) {
-                System.out.println("An error occurred. Please try again.");
+                ui.show_error();
             }
         } while (retry);
     }
@@ -342,14 +340,14 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
         //ui.show_player_view();
         do {
             try {
-                System.out.print("\nCommand -> ");
+                //System.out.print("\nCommand -> ");
                 command = this.inputParser.getDataToProcess().pop();
                 String[] command_args = command.split(" ");
 
                 switch (command_args[0]) {
                     case "/play" -> {
                         if(command_args.length != 5) {
-                            System.out.println("Invalid command. Please enter in the format: play <cardIndex> <front/back> <x> <y>");
+                            ui.show_invalid_play_command();
                             continue;
                         }
                         int cardIndex, x, y;
@@ -360,19 +358,19 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
                             y = Integer.parseInt(command_args[4]);
                             front = command_args[2].equalsIgnoreCase("front");
                         } catch (NumberFormatException e) {
-                            System.out.println("Invalid input. Please enter valid integers for card index, x, and y coordinates.");
+                            ui.show_invalid_play_number();
                             continue;
                         }
                         if (cardIndex < 0 || cardIndex >= gameView.getPlayerView().getPlayerHand().size()) {
-                            System.out.println("Invalid card index. Please enter a valid index.");
+                            ui.show_invalid_index();
                             continue;
                         }
                         if (x < 0 || x >= gameView.getPlayerView().getBoard().length || y < 0 || y >= gameView.getPlayerView().getBoard()[0].length) {
-                            System.out.println("Invalid coordinates. Please enter valid coordinates within the board.");
+                            ui.show_invalid_coordinates();
                             continue;
                         }
                         if (!gameView.getPlayerView().getPossiblePlacements()[x][y]) {
-                            System.out.println("Invalid positioning. You cannot place a card in this position.");
+                            ui.show_invalid_positioning();
                             continue;
                         }
                         playCard(nickname, cardIndex, front, x, y);
@@ -390,12 +388,12 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
                         continue;
                     }
                     default -> {
-                        System.out.println("Invalid command. Type \"/help\" for help");
+                        ui.show_invalid_command();
                         continue;
                     }
                 }
             } catch (Exception e) {
-                System.out.println("An error occurred. Please try again.");
+                ui.show_error();
                 continue;
             }
             break;
@@ -438,24 +436,24 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
         //ui.show_public_board_view();
         do {
             try {
-                System.out.print("\nCommand -> ");
+                //System.out.print("\nCommand -> ");
                 command = this.inputParser.getDataToProcess().pop();
                 String[] command_args = command.split(" ");
                 if (!command_args[0].equalsIgnoreCase("/draw") || command_args.length < 2) {
-                    System.out.println("Invalid command. Please enter in the format: draw <cardIndex>");
+                    ui.show_invalid_draw_command();
                     continue;
                 }
                 int cardIndex = Integer.parseInt(command_args[1]);
                 if (cardIndex < 0 || cardIndex >= 6) {
-                    System.out.println("Invalid card index. Please enter a valid index.");
+                    ui.show_invalid_index();
                     continue;
                 }
                 drawCard(nickname, cardIndex);
             } catch (NumberFormatException e) {
-                System.out.println("Invalid input. Please enter a valid card index.");
+                ui.show_invalid_index();
                 continue;
             } catch (Exception e) {
-                System.out.println("An error occurred. Please try again.");
+                ui.show_error();
                 continue;
             }
             break;
@@ -470,7 +468,7 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
         try {
             actions.createGame(nickname, numPlayers);
         } catch (IOException | NotBoundException e) {
-            System.out.println("Error during creating game");
+            ui.show_error_create_game();
         }
     }
 
@@ -480,7 +478,7 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
         try {
             actions.joinFirstGameAvailable(nickname);
         } catch (IOException | NotBoundException e) {
-            System.out.println("Error during joining game");
+            ui.show_error_join_game();
         }
     }
 
@@ -572,13 +570,13 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
 
     @Override
     public void invalidPositioning() {
-        System.out.println("Invalid positioning!!!");
+        ui.show_invalid_positioning();
         addEvent(EventType.BEGIN_PLAY);
     }
 
     @Override
     public void requirementsNotMet() {
-        System.out.println("You can't place this card!!!");
+        ui.show_requirements_not_met();
         addEvent(EventType.BEGIN_PLAY);
     }
 

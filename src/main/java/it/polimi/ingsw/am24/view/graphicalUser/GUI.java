@@ -142,6 +142,96 @@ public class GUI extends UI {
 
     }
 
+    @Override
+    public void show_nickname_already_used() {
+
+    }
+
+    @Override
+    public void show_no_lobby_available() {
+
+    }
+
+    @Override
+    public void show_color_not_available() {
+
+    }
+
+    @Override
+    public void show_insert_num_player() {
+
+    }
+
+    @Override
+    public void show_invalid_num_player() {
+
+    }
+
+    @Override
+    public void show_invalid_initialcard() {
+
+    }
+
+    @Override
+    public void show_invalid_play_command() {
+
+    }
+
+    @Override
+    public void show_invalid_play_number() {
+
+    }
+
+    @Override
+    public void show_invalid_index() {
+
+    }
+
+    @Override
+    public void show_invalid_coordinates() {
+
+    }
+
+    @Override
+    public void show_invalid_positioning() {
+
+    }
+
+    @Override
+    public void show_invalid_command() {
+
+    }
+
+    @Override
+    public void show_error() {
+
+    }
+
+    @Override
+    public void show_invalid_draw_command() {
+
+    }
+
+    @Override
+    public void show_error_create_game() {
+
+    }
+
+    @Override
+    public void show_error_join_game() {
+
+    }
+
+    @Override
+    public void show_requirements_not_met() {
+
+    }
+
+    @Override
+    public void show_nan() {
+
+    }
+
     private void show_menuOptions() {
         if (alreadyShowedPublisher) {
             callPlatformRunLater(() ->  {

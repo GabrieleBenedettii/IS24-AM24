@@ -28,4 +28,22 @@ public abstract class UI {
     public abstract void show_chosenNickname(String nickname);
     public abstract void show_network_type();
     public abstract void show_invalid_username();
+    public abstract void show_nickname_already_used();
+    public abstract void show_no_lobby_available();
+    public abstract void show_color_not_available();
+    public abstract void show_insert_num_player();
+    public abstract void show_invalid_num_player();
+    public abstract void show_invalid_initialcard();
+    public abstract void show_invalid_play_command();
+    public abstract void show_invalid_play_number();
+    public abstract void show_invalid_index();
+    public abstract void show_invalid_coordinates();
+    public abstract void show_invalid_positioning();
+    public abstract void show_invalid_command();
+    public abstract void show_error();
+    public abstract void show_invalid_draw_command();
+    public abstract void show_error_create_game();
+    public abstract void show_error_join_game();
+    public abstract void show_requirements_not_met();
+    public abstract void show_nan();
 }

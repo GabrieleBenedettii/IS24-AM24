@@ -104,6 +104,8 @@ public class CLI extends UI {
         for(int i = 0; i <  gameView.getPlayerView().getPlayerHand().size(); i++) {
             out.print("\n" + i + " - " + gameView.getPlayerView().getPlayerHand().get(i).getCardDescription());
         }
+
+        System.out.print("\nCommand -> ");
     }
 
     public int show_visible_symbols(int index, GameView gameView, List<String> symbols) {
@@ -129,6 +131,8 @@ public class CLI extends UI {
         i = 4;
         out.println(i + " - Pick a card from RESOURCE CARD DECK, first card color: " + gameView.getCommon().getResourceDeck());
         out.println((i + 1) + " - Pick a card from GOLD CARD DECK, first card color: " + gameView.getCommon().getGoldDeck());
+
+        System.out.print("\nCommand -> ");
     }
 
     public void show_start_table(GameView gameView) {
@@ -270,6 +274,27 @@ public class CLI extends UI {
     public void show_chosenNickname(String nickname) {
         out.println("your nickname: "+nickname);
     }
+
+    @Override
+    public void show_nickname_already_used(){System.out.println("Nickname already used");}
+    public void show_no_lobby_available(){System.out.println("No lobby is available, please create a new one");}
+    public void show_color_not_available(){System.out.println("Color not available. Please choose a different color.");}
+    public void show_insert_num_player(){System.out.print("\nInsert number of players -> ");}
+    public void show_invalid_num_player(){System.out.println("Invalid input. Please enter a number between 2 and 4.");}
+    public void show_invalid_initialcard(){System.out.println("Invalid choice. Please select a valid card side.");}
+    public void show_invalid_play_command(){System.out.println("Invalid command. Please enter in the format: play <cardIndex> <front/back> <x> <y>");}
+    public void show_invalid_play_number(){System.out.println("Invalid input. Please enter valid integers for card index, x, and y coordinates.");}
+    public void show_invalid_index(){System.out.println("Invalid card index. Please enter a valid index.");}
+    public void show_invalid_coordinates(){System.out.println("Invalid coordinates. Please enter valid coordinates within the board.");}
+    public void show_invalid_positioning(){System.out.println("Invalid positioning. You cannot place a card in this position.");}
+    public void show_invalid_command(){System.out.println("Invalid command. Type \"/help\" for help");}
+    public void show_error(){System.out.println("An error occurred. Please try again.");}
+    public void show_invalid_draw_command(){System.out.println("Invalid command. Please enter in the format: draw <cardIndex>");}
+    public void show_error_create_game(){System.out.println("Error during creating game");}
+    public void show_error_join_game(){System.out.println("Error during joining game");}
+    public void show_requirements_not_met(){System.out.println("You can't place this card, you dont fullfil the requirements");}
+    public  void show_nan(){System.out.println("Nan");}
+
 
     @Override
     public void show_logo() {
