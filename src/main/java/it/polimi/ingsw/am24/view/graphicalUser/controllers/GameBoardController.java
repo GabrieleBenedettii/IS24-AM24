@@ -4,6 +4,7 @@ import it.polimi.ingsw.am24.HelloApplication;
 import it.polimi.ingsw.am24.modelView.GameCardView;
 import it.polimi.ingsw.am24.modelView.GameView;
 import it.polimi.ingsw.am24.modelView.Placement;
+import it.polimi.ingsw.am24.view.graphicalUser.Sound;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -228,6 +229,7 @@ public class  GameBoardController extends Generic{
 
                                 pane.getChildren().add(clickedImageView);
                                 getInputReaderGUI().addString("/play " + clickedImageView.getId() + " " + "front" + " " + coordinates[0] + " " + coordinates[1]);
+                                Sound.playSound("button.wav");
                             }
                         });
                     }
@@ -259,6 +261,7 @@ public class  GameBoardController extends Generic{
                     clearBorders(iw.getParent(), iw);
                     iw.setOpacity(0.5);
                     clickedImageView = iw;
+                    Sound.playSound("button.wav");
                 });
             }
 
@@ -322,6 +325,7 @@ public class  GameBoardController extends Generic{
             deck.setCursor(Cursor.HAND);
             deck.setOnMouseClicked(event -> {
                 getInputReaderGUI().addString("/draw " + deck.getId());
+                Sound.playSound("button.wav");
             });
         }
 
@@ -341,6 +345,7 @@ public class  GameBoardController extends Generic{
                 iw.setCursor(Cursor.HAND);
                 iw.setOnMouseClicked(event -> {
                     getInputReaderGUI().addString("/draw " + iw.getId());
+                    Sound.playSound("button.wav");
                 });
             }
 
@@ -372,6 +377,7 @@ public class  GameBoardController extends Generic{
             deck.setCursor(Cursor.HAND);
             deck.setOnMouseClicked(event -> {
                 getInputReaderGUI().addString("/draw " + deck.getId());
+                Sound.playSound("button.wav");
             });
         }
 
@@ -387,6 +393,7 @@ public class  GameBoardController extends Generic{
                 iw.setCursor(Cursor.HAND);
                 iw.setOnMouseClicked(event -> {
                     getInputReaderGUI().addString("/draw " + iw.getId());
+                    Sound.playSound("button.wav");
                 });
             }
 
@@ -429,6 +436,7 @@ public class  GameBoardController extends Generic{
             iw.setOnMouseClicked(event -> {
                 iw.setOpacity(0.5);
                 getInputReaderGUI().addString(iw.getId());
+                Sound.playSound("button.wav");
             });
 
             chooseHiddenGoal.getChildren().add(iw);

@@ -20,7 +20,7 @@ public class CreateGameNicknameSelectController extends Generic{
             getInputReaderGUI().addString(nickNameTextField.getText());
             int playerNumber = Integer.parseInt(playerNumberTextField.getText());
             getInputReaderGUI().addString(String.valueOf(playerNumber));
-            Sound.playSound("buttonClick.mp3");
+            Sound.playSound("button.wav");
         }
     }
 }

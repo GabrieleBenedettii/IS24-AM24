@@ -1,5 +1,6 @@
 package it.polimi.ingsw.am24.view.graphicalUser.controllers;
 
+import it.polimi.ingsw.am24.view.graphicalUser.Sound;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -13,6 +14,7 @@ public class NicknameSelectController extends Generic{
     public  void actionEnter(ActionEvent event) throws IOException {
         if(!nickname.getText().isEmpty()){
             getInputReaderGUI().addString(nickname.getText());
+            Sound.playSound("button.wav");
         }
     }
 }
