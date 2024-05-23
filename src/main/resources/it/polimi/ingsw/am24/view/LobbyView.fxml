@@ -20,7 +20,7 @@
                <children>
                   <Text fill="black" layoutX="6.0" layoutY="113.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size:50; -fx-font-family: 'Muli';-fx-font-weight: bold;" text="Waiting for other players..." textAlignment="CENTER" wrappingWidth="1023.8605346679688">
                   </Text>
-                  <Text fill="black" layoutX="402.0" layoutY="209.0" style="-fx-font-size:30; -fx-font-family: 'Muli';-fx-font-weight: bold;" text="Players in lobby:" textAlignment="CENTER">
+                  <Text fx:id="label" fill="black" layoutX="402.0" layoutY="209.0" style="-fx-font-size:30; -fx-font-family: 'Muli';-fx-font-weight: bold;" textAlignment="CENTER">
                   </Text>
                   <HBox fx:id="playersInLobby" alignment="CENTER" layoutX="68.0" layoutY="261.0" prefHeight="24.0" prefWidth="901.0" spacing="10.0">
                   </HBox>

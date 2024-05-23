@@ -90,7 +90,13 @@ public class GUI extends UI {
 
     @Override
     public void show_lobby() {
-
+        if (alreadyShowedPublisher) {
+            callPlatformRunLater(() ->  {
+                this.guiApplication.setInputReaderGUItoAllControllers(this.inputReaderGUI);
+                this.guiApplication.createNewWindowWithStyle();
+                this.guiApplication.setActiveScene(Scenes.MENU);
+            });
+        }
     }
 
     @Override
@@ -131,7 +137,7 @@ public class GUI extends UI {
         pause.setOnFinished(event -> {
             alreadyShowedPublisher = true;
 
-            this.show_menuOptions();
+            this.show_lobby();
         });
         pause.play();
 
@@ -139,32 +145,79 @@ public class GUI extends UI {
 
     @Override
     public void show_invalid_username() {
-
+        callPlatformRunLater(() -> {
+            if(guiApplication.getGameflow().isCreate()){
+                CreateGameNicknameSelectController controller = (CreateGameNicknameSelectController) this.guiApplication.getController((Scenes.CREATEGAMENICKNAMESELECT));
+                controller.showInvalidUsername();
+            }
+            else{
+                NicknameSelectController controller = (NicknameSelectController) this.guiApplication.getController((Scenes.NICKNAMESELECT));
+                controller.showInvalidUsername();
+            }
+        });
+    }
+    @Override
+    public void show_nickname_already_used() {
+        callPlatformRunLater(() -> {
+            if(guiApplication.getGameflow().isCreate()){
+                CreateGameNicknameSelectController controller = (CreateGameNicknameSelectController) this.guiApplication.getController((Scenes.CREATEGAMENICKNAMESELECT));
+                controller.initialize();
+                controller.showNicknameAlreadyUsed();
+            }
+            else{
+                NicknameSelectController controller = (NicknameSelectController) this.guiApplication.getController((Scenes.NICKNAMESELECT));
+                controller.initialize();
+                controller.showNicknameAlreadyUsed();
+            }
+        });
     }
 
     @Override
-    public void show_nickname_already_used() {
-
+    public void show_empty_nickname() {
+        callPlatformRunLater(() -> {
+            if(guiApplication.getGameflow().isCreate()){
+                CreateGameNicknameSelectController controller = (CreateGameNicknameSelectController) this.guiApplication.getController((Scenes.CREATEGAMENICKNAMESELECT));
+                controller.showEmptyUsername();
+            }
+            else{
+                NicknameSelectController controller = (NicknameSelectController) this.guiApplication.getController((Scenes.NICKNAMESELECT));
+                controller.showEmptyUsername();
+            }
+        });
     }
 
     @Override
     public void show_no_lobby_available() {
-
+        callPlatformRunLater(() -> {
+            NicknameSelectController controller = (NicknameSelectController) this.guiApplication.getController((Scenes.NICKNAMESELECT));
+            controller.showNoLobbyAvaiable();
+        });
     }
 
     @Override
     public void show_color_not_available() {
+        callPlatformRunLater(() -> {
+            this.guiApplication.setActiveScene(Scenes.COLORSELECTOR);
+            ColorSelector selector = (ColorSelector) this.guiApplication.getController(Scenes.COLORSELECTOR);
+            selector.showColorNotAvailable();
 
+        });
     }
 
     @Override
     public void show_insert_num_player() {
-
+        callPlatformRunLater(() -> {
+            CreateGameNicknameSelectController controller = (CreateGameNicknameSelectController) this.guiApplication.getController((Scenes.CREATEGAMENICKNAMESELECT));
+            controller.initialize();
+        });
     }
 
     @Override
     public void show_invalid_num_player() {
-
+        callPlatformRunLater(() -> {
+            CreateGameNicknameSelectController controller = (CreateGameNicknameSelectController) this.guiApplication.getController((Scenes.CREATEGAMENICKNAMESELECT));
+            controller.showInvalidNumberOfPlayers();
+        });
     }
 
     @Override
@@ -257,11 +310,11 @@ public class GUI extends UI {
     }
 
     @Override
-    public void show_joined_players(ArrayList<String> players) {
+    public void show_joined_players(ArrayList<String> players, String current, int num) {
         callPlatformRunLater(() -> {
             this.guiApplication.setActiveScene(Scenes.LOBBYVIEW);
             LobbyViewController controller = (LobbyViewController) this.guiApplication.getController(Scenes.LOBBYVIEW);
-            controller.initialize(players);
+            controller.initialize(players, current, num);
         });
     }
 

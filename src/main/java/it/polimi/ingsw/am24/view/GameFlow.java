@@ -2,7 +2,6 @@ package it.polimi.ingsw.am24.view;
 
 import it.polimi.ingsw.am24.modelView.GameCardView;
 import it.polimi.ingsw.am24.modelView.GameView;
-import it.polimi.ingsw.am24.modelView.PublicBoardView;
 import it.polimi.ingsw.am24.network.rmi.RMIClient;
 import it.polimi.ingsw.am24.network.socket.SocketClient;
 import it.polimi.ingsw.am24.view.commandLine.CLI;
@@ -23,26 +22,27 @@ import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
 public class GameFlow extends Flow implements Runnable, CommonClientActions {
     private String nickname;
-
+    private String current_choice = null;
+    private boolean create = false;
+    private int num;
     private CommonClientActions actions;
-
     private GameStatus status = GameStatus.NOT_STARTED;
-
     private final Queue<Event> events = new LinkedList<>();
-
     private final UI ui;
-
     protected InputParser inputParser;
     protected InputReader inputReader;
-
     private boolean joined;
     private ArrayList<String> availableColors;
     private ArrayList<GameCardView> cards;
     private GameView gameView;
+    private ArrayList<String> players;
+    private boolean colorNotAvailable;
+    private HashMap<String,Boolean> colorSelected = new HashMap<>();
 
     public GameFlow(String connectionType) {
         switch (connectionType) {
@@ -50,10 +50,13 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
             case "SOCKET" -> actions = new SocketClient(this);
         }
 
-        ui = new CLI();
+        this.ui = new CLI();
 
-        nickname = "";
-        joined = false;
+        this.nickname = "";
+        this.joined = false;
+        this.colorNotAvailable = false;
+        this.num = 0;
+        this.players = new ArrayList<>();
         this.inputReader = new InputReaderCLI();
         this.inputParser = new InputParser(this.inputReader.getBuffer(), this);
         new Thread(this).start();
@@ -65,10 +68,13 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
         }
         this.inputReader = new InputReaderGUI();
 
-        ui = new GUI(application, (InputReaderGUI) inputReader);
+        this.ui = new GUI(application, (InputReaderGUI) inputReader);
 
-        nickname = "";
-        joined = false;
+        this.nickname = "";
+        this.joined = false;
+        this.colorNotAvailable = false;
+        this.num = 0;
+        this.players = new ArrayList<>();
         this.inputParser = new InputParser(this.inputReader.getBuffer(), this);
         new Thread(this).start();
     }
@@ -121,24 +127,32 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
             }
         }
     }
-
+    private Boolean nicknameAlreadyUsed = false;
     private void statusNotInAGame(Event event) {
         switch (event.getType()) {
             case APP_MENU -> {
                 boolean selectionok;
+
                 do {
-                    selectionok = askSelectGame();
+                    selectionok = askSelectGame(nicknameAlreadyUsed, current_choice);
                 } while (!selectionok);
+
             }
             case NICKNAME_ALREADY_USED -> {
                 nickname = null;
-                events.add(new Event(EventType.APP_MENU));
                 ui.show_nickname_already_used();
+                nicknameAlreadyUsed = true;
+                events.add(new Event(EventType.APP_MENU));
             }
             case NO_LOBBY_AVAILABLE -> {
                 nickname = null;
-                events.add(new Event(EventType.APP_MENU));
                 ui.show_no_lobby_available();
+                try {
+                    TimeUnit.SECONDS.sleep(3);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                events.add(new Event(EventType.APP_MENU));
             }
         }
     }
@@ -146,6 +160,10 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
     private void statusWait(Event event) throws IOException, InterruptedException {
         switch (event.getType()) {
             case AVAILABLE_COLORS -> askColor();
+            case NOT_AVAILABLE_COLORS -> {
+                colorNotAvailable = true;
+                askColor();
+            }
             case HIDDEN_GOAL_CHOICE -> askSecretGoalDealt();
             case INITIAL_CARD_SIDE -> askInitialCardSide();
         }
@@ -198,8 +216,8 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
     }
 
     private void askNickname() {
-        String invalidChars = "~!@#$%^&*()-_=+[]{}|;:',.<>?";
         boolean validNickname = false;
+        String invalidChars = "0123456789~£!@#$%^&*()-_=+[]{}|;:',.<>?";
         do {
             ui.show_insert_nickname();
             try {
@@ -210,37 +228,49 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
             // check for special characters
             if (nickname.matches(".*[" + Pattern.quote(invalidChars) + "].*")) {
                 ui.show_invalid_username();
+            } else if(players.contains(nickname)) {
+
+            } else if (nickname.isEmpty()) {
+                ui.show_empty_nickname();
             } else {
                 validNickname = true;
             }
         } while (!validNickname);
         //ui.show_chosenNickname(nickname);
     }
-    private boolean create = false;
 
     public boolean isCreate() {
         return create;
     }
-
-    private boolean askSelectGame() {
+    private boolean askSelectGame(Boolean nicknameAlreadyUsed, String previous) {
         String choice;
-        ui.show_lobby();
-        try {
-            choice = this.inputParser.getDataToProcess().pop();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+        if (nicknameAlreadyUsed){
+
+            nicknameAlreadyUsed = false;
+            choice = previous;
+        }
+        else {
+            ui.show_lobby();
+            try {
+                choice = this.inputParser.getDataToProcess().pop();
+                current_choice = choice;
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
 
         switch (choice) {
             case "1" -> {
                 create = true;
-                askNickname();
-                Integer numPlayers = askNumPlayers();
-                createGame(nickname, numPlayers);
+                //askNickname();
+                num = askNicknameAndPlayers();
+                createGame(nickname, num);
+                colorSelected.put(nickname,false);
             }
             case "2" -> {
                 askNickname();
                 joinFirstGameAvailable(nickname);
+                colorSelected.put(nickname,false);
             }
             /*case "js" -> {
                 Integer gameId = askGameId();
@@ -259,6 +289,10 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
 
     private void askColor() {
         String color;
+        if (colorNotAvailable){
+            ui.show_color_not_available();
+        }
+
         ui.show_available_colors(availableColors);
         try {
             color = this.inputParser.getDataToProcess().pop();
@@ -268,34 +302,63 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
                 return;
             }
             chooseColor(nickname, color);
+            colorSelected.put(nickname,true);
         } catch (InterruptedException | IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private Integer askNumPlayers() {
-        String temp;
-        Integer numPlayers = null;
+    private Integer askNicknameAndPlayers() {
+        boolean validInputs = false;
+        String invalidChars = "0123456789~£!@#$%^&*()-_=+[]{}|;:',.<>?";
+
+        String tempNickname = null;
+        Integer tempNumPlayers = null;
+
         do {
-            //ui.show_inputGameIdMsg();
-            ui.show_insert_num_player();
+            boolean validNickname = false;
+            boolean validNumPlayers = false;
+
+            ui.show_insert_nickname();
             try {
-                try {
-                    temp = this.inputParser.getDataToProcess().pop();
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-                numPlayers = Integer.parseInt(temp);
-                if (numPlayers < 2 || numPlayers > 4) {
-                    ui.show_invalid_num_player();
-                    numPlayers = null;
-                }
-            } catch (NumberFormatException e) {
-                ui.show_invalid_num_player();
-                //ui.show_NaNMsg();
+                tempNickname = this.inputParser.getDataToProcess().pop();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
             }
-        } while (numPlayers == null);
-        return numPlayers;
+
+            if (tempNickname.matches(".*[" + Pattern.quote(invalidChars) + "].*")) {
+                ui.show_invalid_username();
+            } else if (players.contains(tempNickname)) {
+            } else if (tempNickname.isEmpty()) {
+                ui.show_empty_nickname();
+            } else {
+                validNickname = true;
+            }
+
+            if(validNickname){
+                ui.show_insert_num_player();
+
+                try {
+                    String temp = this.inputParser.getDataToProcess().pop();
+                    tempNumPlayers = Integer.parseInt(temp);
+                    if (tempNumPlayers < 2 || tempNumPlayers > 4) {
+                        ui.show_invalid_num_player();
+                        tempNumPlayers = null;
+                    } else {
+                        validNumPlayers = true;
+                    }
+                } catch (NumberFormatException | InterruptedException e) {
+                    ui.show_invalid_num_player();
+                }
+            }
+
+            // Se entrambi gli input sono validi, aggiorna le variabili principali
+            if (validNickname && validNumPlayers) {
+                nickname = tempNickname;
+                validInputs = true;
+            }
+        } while (!validInputs);
+        return tempNumPlayers;
     }
 
     private void askSecretGoalDealt() {
@@ -525,8 +588,9 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
     }
 
     @Override
-    public void playerJoined(ArrayList<String> players) {
-        ui.show_joined_players(players);
+    public void playerJoined(ArrayList<String> players, String current, int num) {
+        if(colorSelected.get(current))
+            ui.show_joined_players(players,current, num);
     }
 
     @Override
@@ -544,6 +608,13 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
         this.availableColors = colors;
         this.status = GameStatus.FIRST_PHASE;
         addEvent(EventType.AVAILABLE_COLORS);
+    }
+
+    @Override
+    public void notAvailableColors(ArrayList<String> colors) throws RemoteException {
+        this.availableColors = colors;
+        this.status = GameStatus.FIRST_PHASE;
+        addEvent(EventType.NOT_AVAILABLE_COLORS);
     }
 
     @Override

@@ -3,7 +3,6 @@ package it.polimi.ingsw.am24.controller;
 import it.polimi.ingsw.am24.listeners.GameListener;
 import it.polimi.ingsw.am24.modelView.GameCardView;
 import it.polimi.ingsw.am24.modelView.GameView;
-import it.polimi.ingsw.am24.modelView.PublicBoardView;
 import it.polimi.ingsw.am24.network.rmi.GameControllerInterface;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -27,7 +26,7 @@ public class LobbyControllerTest {
             public void invalidNumPlayers() throws RemoteException {}
 
             @Override
-            public void playerJoined(ArrayList<String> players) throws RemoteException {}
+            public void playerJoined(ArrayList<String> players, String current, int num) throws RemoteException {}
 
             @Override
             public void noLobbyAvailable() throws RemoteException {}
@@ -37,6 +36,9 @@ public class LobbyControllerTest {
 
             @Override
             public void availableColors(ArrayList<String> colors) throws RemoteException {}
+
+            @Override
+            public void notAvailableColors(ArrayList<String> colors) throws RemoteException {}
 
             @Override
             public void hiddenGoalChoice(ArrayList<GameCardView> cardViews, GameView gameView) throws RemoteException {}

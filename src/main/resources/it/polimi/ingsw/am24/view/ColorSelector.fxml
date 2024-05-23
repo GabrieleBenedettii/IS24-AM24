@@ -24,6 +24,7 @@
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </padding>
                   </HBox>
+                  <Text fx:id="errorText" fill="red" layoutX="77.0" layoutY="411.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size:20; -fx-font-family: 'Muli';-fx-font-weight: bold;" textAlignment="CENTER" visible="false" wrappingWidth="746.8605346679688" />
                </children>
             </Pane>
          </children>

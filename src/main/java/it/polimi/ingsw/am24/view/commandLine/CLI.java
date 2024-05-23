@@ -222,7 +222,7 @@ public class CLI extends UI {
 
     @Override
     public void show_invalid_username() {
-        System.out.println("Invalid nickname. Please enter a nickname without special characters or numbers.");
+        System.out.println("\nInvalid nickname. Please enter a nickname without special characters");
     }
 
 
@@ -253,9 +253,15 @@ public class CLI extends UI {
     }
 
     @Override
-    public void show_joined_players(ArrayList<String> players) {
-        out.print("\nPLAYERS IN LOBBY: ");
-        players.forEach((p) -> out.print(p));
+    public void show_joined_players(ArrayList<String> players, String current, int num) {
+        System.out.println(current);
+        out.print("\nPLAYERS IN LOBBY ["+players.size()+"/"+num+"] : ");
+        for (String s: players){
+            if (s.equals(current))
+                System.out.print(s+"(you) ");
+            else
+                System.out.print(s+" ");
+        }
     }
 
     @Override
@@ -276,23 +282,25 @@ public class CLI extends UI {
     }
 
     @Override
-    public void show_nickname_already_used(){System.out.println("Nickname already used");}
-    public void show_no_lobby_available(){System.out.println("No lobby is available, please create a new one");}
-    public void show_color_not_available(){System.out.println("Color not available. Please choose a different color.");}
+    public void show_nickname_already_used(){System.out.println("\nNickname already used");}
+    @Override
+    public void show_empty_nickname() { System.out.println("\nNickname cannot be empty."); }
+    public void show_no_lobby_available(){System.out.println("\nNo lobby is available, please create a new one");}
+    public void show_color_not_available(){System.out.println("\nColor not available. Please choose a different color.");}
     public void show_insert_num_player(){System.out.print("\nInsert number of players -> ");}
-    public void show_invalid_num_player(){System.out.println("Invalid input. Please enter a number between 2 and 4.");}
-    public void show_invalid_initialcard(){System.out.println("Invalid choice. Please select a valid card side.");}
-    public void show_invalid_play_command(){System.out.println("Invalid command. Please enter in the format: play <cardIndex> <front/back> <x> <y>");}
-    public void show_invalid_play_number(){System.out.println("Invalid input. Please enter valid integers for card index, x, and y coordinates.");}
-    public void show_invalid_index(){System.out.println("Invalid card index. Please enter a valid index.");}
-    public void show_invalid_coordinates(){System.out.println("Invalid coordinates. Please enter valid coordinates within the board.");}
-    public void show_invalid_positioning(){System.out.println("Invalid positioning. You cannot place a card in this position.");}
-    public void show_invalid_command(){System.out.println("Invalid command. Type \"/help\" for help");}
-    public void show_error(){System.out.println("An error occurred. Please try again.");}
-    public void show_invalid_draw_command(){System.out.println("Invalid command. Please enter in the format: draw <cardIndex>");}
-    public void show_error_create_game(){System.out.println("Error during creating game");}
-    public void show_error_join_game(){System.out.println("Error during joining game");}
-    public void show_requirements_not_met(){System.out.println("You can't place this card, you dont fullfil the requirements");}
+    public void show_invalid_num_player(){System.out.println("\nInvalid input. Please enter a number between 2 and 4.");}
+    public void show_invalid_initialcard(){System.out.println("\nInvalid choice. Please select a valid card side.");}
+    public void show_invalid_play_command(){System.out.println("\nInvalid command. Please enter in the format: play <cardIndex> <front/back> <x> <y>");}
+    public void show_invalid_play_number(){System.out.println("\nInvalid input. Please enter valid integers for card index, x, and y coordinates.");}
+    public void show_invalid_index(){System.out.println("\nInvalid card index. Please enter a valid index.");}
+    public void show_invalid_coordinates(){System.out.println("\nInvalid coordinates. Please enter valid coordinates within the board.");}
+    public void show_invalid_positioning(){System.out.println("\nInvalid positioning. You cannot place a card in this position.");}
+    public void show_invalid_command(){System.out.println("\nInvalid command. Type \"/help\" for help");}
+    public void show_error(){System.out.println("\nAn error occurred. Please try again.");}
+    public void show_invalid_draw_command(){System.out.println("\nInvalid command. Please enter in the format: draw <cardIndex>");}
+    public void show_error_create_game(){System.out.println("\nError during creating game");}
+    public void show_error_join_game(){System.out.println("\nError during joining game");}
+    public void show_requirements_not_met(){System.out.println("\nYou can't place this card, you dont fullfil the requirements");}
     public  void show_nan(){System.out.println("Nan");}
 
 

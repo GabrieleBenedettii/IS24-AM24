@@ -91,7 +91,7 @@ public class GameController implements GameControllerInterface, Serializable, Ru
                     return true;
                 } else {
                     //if the color is not available, send the updated list
-                    listener.availableColors(new ArrayList<>(game.getAvailableColors()));
+                    listener.notAvailableColors(new ArrayList<>(game.getAvailableColors()));
                     return false;
                 }
             }
@@ -261,10 +261,6 @@ public class GameController implements GameControllerInterface, Serializable, Ru
         this.currentPlayer = currentPlayer;
     }
 
-    /*public void disconnectPlayer(){
-        //Todo ?
-    }*/
-
     public boolean sentPublicMessage(String sender, String message) throws RemoteException {
         if(!players.containsKey(sender)) return false;
         chat.addPublicMessage(sender, message);
@@ -300,7 +296,7 @@ public class GameController implements GameControllerInterface, Serializable, Ru
                     if(p != null && listeners.get(p) != null)
                         new Thread(() -> {
                             try {
-                                listeners.get(p).playerJoined(new ArrayList<>(players.keySet().stream().toList()));
+                                listeners.get(p).playerJoined(new ArrayList<>(players.keySet().stream().toList()),players.get(p).getNickname(), playerCount);
                             } catch (RemoteException e) {
                                 throw new RuntimeException(e);
                             }
