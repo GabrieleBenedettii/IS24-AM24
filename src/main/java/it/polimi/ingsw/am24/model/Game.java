@@ -33,7 +33,11 @@ public class Game {
 
     private ArrayList<PlayerColor> availableColors;
     private HashMap<Integer,GoalCard> drawnGoalCards;   //used to save the goal card's objects while players are choosing
-
+    /**
+     * 
+     * creates and initializes a Game object
+     * 
+     * */
     public Game() {
         this.visibleResCard = new ArrayList<>();
         this.visibleGoldCard = new ArrayList<>();
@@ -45,7 +49,11 @@ public class Game {
         availableColors.add(PlayerColor.RED);
         availableColors.add(PlayerColor.BLUE);
     }
-
+    /**
+     * 
+     * sets up the decks, shuffles them and prepares the game by drawing the two visible resource, gold and goal cards
+     * 
+     * */
     public void start(){
         //decks creation
         resourceDeck = new ResourceDeck();
