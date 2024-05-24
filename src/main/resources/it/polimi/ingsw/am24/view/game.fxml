@@ -7,33 +7,33 @@
       <children>
       <Pane fx:id="container" prefHeight="900.0" prefWidth="1600.0" styleClass="displayGameBoard" stylesheets="@style.css">
          <children>
-               <VBox layoutX="1241.0" layoutY="42.0" prefHeight="130.0" prefWidth="317.0" style="-fx-background-color: blue" />
-               <HBox fx:id="hiddenGoalContainer" layoutX="843.0" layoutY="707.0" maxHeight="150.0" maxWidth="250.0" minHeight="150.0" minWidth="250.0" prefHeight="150.0" prefWidth="250.0">
+               <HBox fx:id="hiddenGoalContainer" layoutX="963.0" layoutY="742.0" maxHeight="115.0" maxWidth="200.0" minHeight="115.0" minWidth="200.0" prefHeight="115.0" prefWidth="200.0">
                   <padding>
-                     <Insets left="25.0" right="25.0" />
+                     <Insets bottom="15.0" left="25.0" right="25.0" />
                   </padding>
             </HBox>
-               <HBox fx:id="playingHandContainer" layoutX="43.0" layoutY="707.0" maxHeight="150.0" maxWidth="800.0" prefHeight="150.0" prefWidth="800.0">
-                  <padding>
-                     <Insets bottom="25.0" left="25.0" right="25.0" />
-                  </padding>
-            </HBox>
-               <VBox fx:id="goldCardsContainer" layoutX="1378.0" layoutY="172.0" prefHeight="380.0" prefWidth="180.0">
-                  <padding>
-                     <Insets bottom="10.0" right="10.0" top="10.0" />
-                  </padding>
-            </VBox>
-               <VBox fx:id="resourceCardsContainer" layoutX="1198.0" layoutY="172.0" prefHeight="380.0" prefWidth="180.0">
-                  <padding>
-                     <Insets bottom="10.0" left="10.0" top="10.0" />
-                  </padding>
-            </VBox>
-               <HBox fx:id="commonGoalsContainer" layoutX="1198.0" layoutY="552.0" prefHeight="150.0" prefWidth="360.0">
+               <HBox fx:id="playingHandContainer" layoutX="423.0" layoutY="742.0" maxHeight="115.0" maxWidth="540.0" prefHeight="115.0" prefWidth="540.0">
                <padding>
-                  <Insets left="10.0" right="10.0" top="10.0" />
+                  <Insets bottom="15.0" />
                </padding>
             </HBox>
-            <Pane fx:id="gameViewContainer" layoutX="43.0" layoutY="42.0" prefHeight="583.5" prefWidth="1100.0" />
+               <VBox fx:id="goldCardsContainer" layoutX="1393.0" layoutY="201.0" prefHeight="355.0" prefWidth="165.0">
+                  <padding>
+                     <Insets bottom="5.0" right="20.0" top="5.0" />
+                  </padding>
+            </VBox>
+               <HBox fx:id="commonGoalsContainer" layoutX="1218.0" layoutY="556.0" prefHeight="130.0" prefWidth="340.0">
+               <padding>
+                  <Insets bottom="15.0" right="10.0" top="15.0" />
+               </padding>
+            </HBox>
+            <Pane fx:id="gameViewContainer" layoutX="400.0" layoutY="186.0" prefHeight="424.4" prefWidth="800.0" />
+            <StackPane fx:id="scoreboardContainer" layoutX="42.0" layoutY="201.0" prefHeight="498.6" prefWidth="280.0" />
+               <VBox fx:id="resourceCardsContainer" layoutX="1228.0" layoutY="201.0" prefHeight="355.0" prefWidth="165.0">
+                  <padding>
+                     <Insets bottom="5.0" right="20.0" top="5.0" />
+                  </padding>
+            </VBox>
          </children>
       </Pane>
       </children>

@@ -59,7 +59,7 @@ public class Player {
         }
 
         gameBoard[x][y] = playingHand.get(cardIndex).getCardSide(front);
-        placeOrder.add(new Placement(x,y,playingHand.get(cardIndex).getCardSide(front).getView()));
+        placeOrder.add(new Placement(x,y,playingHand.get(cardIndex).getCardSide(front).getView(),front));
 
         //cover all the covered corners and remove covered symbols from visible symbols
         int coveredCorners = 0;
@@ -101,8 +101,9 @@ public class Player {
 
     public void playInitialCard(boolean front) {
         gameBoard[10][20] = front ? initialcard : initialcard.getBackCard();
-        placeOrder.add(new Placement(10,20,gameBoard[10][20].getView()));
+        placeOrder.add(new Placement(10,20,gameBoard[10][20].getView(),front));
         for(int k = 0; k < 4; k++) {
+            System.out.println(gameBoard[10][20].getCornerByIndex(k).isHidden());
             possiblePlacements[10 + diagonals[k].getKey()][20 + diagonals[k].getValue()] = !gameBoard[10][20].getCornerByIndex(k).isHidden() ? 1 : 0;
             if(gameBoard[10][20].getCornerByIndex(k).getSymbol() != null && !gameBoard[10][20].getCornerByIndex(k).isHidden())
                 visibleSymbols.merge(gameBoard[10][20].getCornerByIndex(k).getSymbol(), 1, Integer::sum);

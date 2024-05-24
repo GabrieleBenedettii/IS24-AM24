@@ -9,10 +9,14 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.Parent;
 import javafx.scene.text.Font;
@@ -30,6 +34,7 @@ public class  GameBoardController extends Generic{
     @FXML private HBox commonGoalsContainer;
     @FXML private VBox rankingContainer;
     @FXML private Pane gameViewContainer;
+    @FXML private StackPane scoreboardContainer;
 
     private GameView gameView;
     private Image image;
@@ -58,6 +63,9 @@ public class  GameBoardController extends Generic{
 
         //GAME BOARD
         drawGameBoard(true);
+
+        //SCORE BOARD
+        drawScoreBoard();
     }
 
     @FXML
@@ -98,6 +106,9 @@ public class  GameBoardController extends Generic{
 
         //COMMON GOALS CARDS
         drawCommonGoals();
+
+        //SCORE BOARD
+        drawScoreBoard();
     }
 
     private void setImageOptionsH(ImageView imageView, int width, int margin) {
@@ -115,7 +126,7 @@ public class  GameBoardController extends Generic{
         imageView.setCache(true);
 
         imageView.setFitWidth(150);
-        VBox.setMargin(imageView, new Insets(10,10,10,10));
+        VBox.setMargin(imageView, new Insets(5,0,5,0));
     }
 
     private void drawGameBoard(boolean clickable) {
@@ -157,11 +168,10 @@ public class  GameBoardController extends Generic{
         if(lastColumn < gameView.getPlayerView().getBoard()[0].length - 2){
             lastColumn += 2;
         }
-
         ArrayList<Placement> order = gameView.getPlayerView().getPlaceOrder();
         double size = Math.max(lastRow-firstRow+1, lastColumn-firstColumn+1);
-        double cellWidth = (double) 1100/size;
-        double cellHeight = 583.5/size;
+        double cellWidth = size >= 7 ? 125 : 800/size;
+        double cellHeight = size >= 7 ? 66.3125 : 424.4/size;
 
         //adding all empty cells
         for (int i = firstRow; i <= lastRow; i++) {
@@ -179,8 +189,7 @@ public class  GameBoardController extends Generic{
             Pane pane = new Pane();
             pane.setPrefSize(cellWidth, cellHeight);
 
-            System.out.println(placement.getCard().getCardId());
-            image = new Image(HelloApplication.class.getResource("images/front/"+placement.getCard().getCardId()+".jpg").toString());
+            image = new Image(HelloApplication.class.getResource("images/"+(placement.getFront() ? "front" : "back")+"/"+placement.getCard().getCardId()+".jpg").toString());
             imageView = new ImageView(image);
             imageView.setPreserveRatio(true);
             imageView.setSmooth(true);
@@ -239,7 +248,12 @@ public class  GameBoardController extends Generic{
             }
         }
 
-        gameViewContainer.getChildren().add(gridPane);
+        ScrollPane scrollPane = new ScrollPane(gridPane);
+        scrollPane.setPrefViewportWidth(800);
+        scrollPane.setPrefViewportHeight(424.4);
+        scrollPane.setPannable(true);
+        scrollPane.getStyleClass().add("transparent-scroll-pane");
+        gameViewContainer.getChildren().add(scrollPane);
     }
 
 
@@ -250,7 +264,7 @@ public class  GameBoardController extends Generic{
             image = new Image(HelloApplication.class.getResource("images/front/"+id+".jpg").toString());
             ImageView iw = new ImageView(image);
             iw.setId(""+i);
-            setImageOptionsH(iw,200,25);
+            setImageOptionsH(iw,150,15);
 
             if(clickable) {
                 iw.getStyleClass().add("clickableCard");
@@ -297,7 +311,7 @@ public class  GameBoardController extends Generic{
         id = gameView.getPlayerView().getSecretCard().getCardId(); //secret goal
         image = new Image(HelloApplication.class.getResource("images/front/"+id+".jpg").toString());
         imageView = new ImageView(image);
-        setImageOptionsH(imageView,200,25);
+        setImageOptionsH(imageView,150,25);
 
         hiddenGoalContainer.getChildren().add(imageView);
         HBox.setHgrow(imageView, Priority.ALWAYS);
@@ -438,6 +452,35 @@ public class  GameBoardController extends Generic{
 
         hidden.getChildren().add(chooseHiddenGoal);
         gameViewContainer.getChildren().add(hidden);
+    }
+
+    private void drawScoreBoard() {
+        image = new Image(HelloApplication.class.getResource("images/misc/scoreboard.png").toString());
+        imageView = new ImageView(image);
+        imageView.setPreserveRatio(true);
+        imageView.setSmooth(true);
+        imageView.setCache(true);
+
+        imageView.setFitWidth(250);
+        Canvas canvas = new Canvas(250, 498.6);
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+
+        double cx = 65;
+        double cy = 450;
+        double x = cx;
+        double y = cy - 10;
+        double radius = 10;
+        drawCircle(gc, x, y, radius, "red");
+        x = cx - 10;
+        y = cy;
+        drawCircle(gc, x, y, radius, "blue");
+        scoreboardContainer.getChildren().addAll(imageView, canvas);
+        StackPane.setMargin(imageView, new Insets(0, 0, 0, 30));
+    }
+
+    private void drawCircle(GraphicsContext gc, double x, double y, double radius, String color) {
+        gc.setFill(Color.valueOf(color));
+        gc.fillOval(x - radius, y - radius, radius * 2, radius * 2);
     }
 
     private void clearContainers() {
