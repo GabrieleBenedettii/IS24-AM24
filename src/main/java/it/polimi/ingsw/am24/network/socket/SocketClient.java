@@ -26,6 +26,7 @@ public class SocketClient extends Thread implements CommonClientActions {
         connect("127.0.0.1", 8888);
         listener = new GameListenerClient(flow);
         this.start();
+        System.out.println("Client SOCKET ready");
     }
 
     private void connect(String ip, int port) {
