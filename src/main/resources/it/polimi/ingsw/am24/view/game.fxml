@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
 <AnchorPane maxHeight="900.0" maxWidth="1600.0" prefHeight="900.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.am24.view.graphicalUser.controllers.GameBoardController">
@@ -34,6 +35,10 @@
                      <Insets bottom="5.0" right="20.0" top="5.0" />
                   </padding>
             </VBox>
+            <ToggleButton fx:id="frontBackToggle" layoutX="371.0" layoutY="787.0" mnemonicParsing="false" text="front" />
+            <Label fx:id="errorLabel" layoutX="400.0" layoutY="630.0" prefHeight="25.0" prefWidth="800.0" style="-fx-font-size: 20; -fx-font-style: 'Muli'; -fx-font-weight: bold; -fx-text-alignment: center;" textAlignment="CENTER" textFill="RED" visible="false" />
+            <Label fx:id="actionMessage" contentDisplay="CENTER" layoutX="400.0" layoutY="106.0" prefHeight="25.0" prefWidth="800.0" style="-fx-font-size: 25; -fx-font-weight: bold; -fx-font-family: 'Muli'; -fx-text-alignment: center;" textAlignment="CENTER" />
+            <Pane fx:id="rotationContainer" layoutX="42.0" layoutY="41.0" prefHeight="138.0" prefWidth="280.0" />
          </children>
       </Pane>
       </children>

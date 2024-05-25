@@ -126,8 +126,11 @@ public class GUI extends UI {
     }
 
     @Override
-    public void show_current_player(String nickname) {
-
+    public void show_current_player(GameView gameView, String myNickname) {
+        callPlatformRunLater(() -> {
+            GameBoardController controller = (GameBoardController) this.guiApplication.getController(Scenes.GAME);
+            controller.notYourTurn(gameView, myNickname);
+        });
     }
 
     @Override
@@ -277,7 +280,10 @@ public class GUI extends UI {
 
     @Override
     public void show_requirements_not_met() {
-
+        callPlatformRunLater(() -> {
+            GameBoardController controller = (GameBoardController) this.guiApplication.getController(Scenes.GAME);
+            controller.requirementsNotMet();
+        });
     }
 
     @Override

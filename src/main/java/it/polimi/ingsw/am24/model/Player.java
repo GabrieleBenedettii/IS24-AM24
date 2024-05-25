@@ -6,7 +6,8 @@ import it.polimi.ingsw.am24.model.card.*;
 import it.polimi.ingsw.am24.model.goal.GoalCard;
 import it.polimi.ingsw.am24.modelView.GameCardView;
 import it.polimi.ingsw.am24.modelView.Placement;
-import it.polimi.ingsw.am24.modelView.PlayerView;
+import it.polimi.ingsw.am24.modelView.PrivatePlayerView;
+import it.polimi.ingsw.am24.modelView.PublicPlayerView;
 import javafx.util.Pair;
 
 import java.util.ArrayList;
@@ -59,7 +60,7 @@ public class Player {
         }
 
         gameBoard[x][y] = playingHand.get(cardIndex).getCardSide(front);
-        placeOrder.add(new Placement(x,y,playingHand.get(cardIndex).getCardSide(front).getView(),front));
+        placeOrder.add(new Placement(x,y,playingHand.get(cardIndex).getCardSide(front).getViewForMatrix(),front));
 
         //cover all the covered corners and remove covered symbols from visible symbols
         int coveredCorners = 0;
@@ -101,7 +102,7 @@ public class Player {
 
     public void playInitialCard(boolean front) {
         gameBoard[10][20] = front ? initialcard : initialcard.getBackCard();
-        placeOrder.add(new Placement(10,20,gameBoard[10][20].getView(),front));
+        placeOrder.add(new Placement(10,20,gameBoard[10][20].getViewForMatrix(),front));
         for(int k = 0; k < 4; k++) {
             System.out.println(gameBoard[10][20].getCornerByIndex(k).isHidden());
             possiblePlacements[10 + diagonals[k].getKey()][20 + diagonals[k].getValue()] = !gameBoard[10][20].getCornerByIndex(k).isHidden() ? 1 : 0;
@@ -161,22 +162,26 @@ public class Player {
         return visibleSymbols;
     }
 
-    public PlayerView getPlayerView(){
-        GameCardView[][] temp = new GameCardView[21][41];
-        for(int i = 1; i < 20; i++){
-            for(int j = 1; j < 40; j++){
-                temp[i][j] = gameBoard[i][j] != null ? new GameCardView("",gameBoard[i][j].getImageId(),gameBoard[i][j].getStringForCard()) : null;
-            }
-        }
+    public PrivatePlayerView getPrivatePlayerView(){
         ArrayList<GameCardView> hand = new ArrayList<>();
         for(PlayableCard c : playingHand){
             hand.add(new GameCardView(c.getType(), c.getImageId(), c.printCard()));
+        }
+        return new PrivatePlayerView(hiddenGoal != null ? new GameCardView("goal", hiddenGoal.getImageId(), hiddenGoal.printCard()) : null, hand);
+    }
+
+    public PublicPlayerView getPublicPlayerView(){
+        GameCardView[][] temp = new GameCardView[21][41];
+        for(int i = 1; i < 20; i++){
+            for(int j = 1; j < 40; j++){
+                temp[i][j] = gameBoard[i][j] != null ? gameBoard[i][j].getViewForMatrix() : null;
+            }
         }
         HashMap<String,Integer> vs = new HashMap<>();
         for(Symbol s : visibleSymbols.keySet()){
             vs.put(s.toString(), visibleSymbols.get(s));
         }
-        return new PlayerView(nickname, score, getBooleanPossiblePlacements(), temp, hiddenGoal != null ? new GameCardView("goal", hiddenGoal.getImageId(), hiddenGoal.printCard()) : null, hand, vs,placeOrder);
+        return new PublicPlayerView(score, temp, placeOrder, vs, getBooleanPossiblePlacements());
     }
 
     private boolean[][] getBooleanPossiblePlacements() {

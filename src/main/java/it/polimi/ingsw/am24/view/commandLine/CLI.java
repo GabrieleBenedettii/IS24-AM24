@@ -27,10 +27,11 @@ public class CLI extends UI {
 
     @Override
     public void show_gameView(GameView gameView) {
-        int firstRow = gameView.getPlayerView().getBoard().length, lastRow = 0, firstColumn = gameView.getPlayerView().getBoard()[0].length, lastColumn = 0;
-        for(int r = 0; r < gameView.getPlayerView().getBoard().length; r++){
-            for(int c = 0; c < gameView.getPlayerView().getBoard()[0].length; c++){
-                if(gameView.getPlayerView().getBoard()[r][c] != null){
+        GameCardView[][] board = gameView.getCommon().getPlayerView(gameView.getCurrent()).getBoard();
+        int firstRow = board.length, lastRow = 0, firstColumn = board[0].length, lastColumn = 0;
+        for(int r = 0; r < board.length; r++){
+            for(int c = 0; c < board[0].length; c++){
+                if(board[r][c] != null){
                     if(r <= firstRow){
                         firstRow = r;
                     }
@@ -49,18 +50,18 @@ public class CLI extends UI {
         if(firstRow > 1){
             firstRow -= 2;
         }
-        if(lastRow < gameView.getPlayerView().getBoard().length - 2){
+        if(lastRow < board.length - 2){
             lastRow += 2;
         }
         if(firstColumn > 1){
             firstColumn -= 2;
         }
-        if(lastColumn < gameView.getPlayerView().getBoard()[0].length - 2){
+        if(lastColumn < board[0].length - 2){
             lastColumn += 2;
         }
 
         out.println("\n" + gameView.getCurrent() + "'s table");
-        out.println("current points: " + gameView.getPlayerView().getPlayerScore() + "\n");
+        out.println("current points: " + gameView.getCommon().getPlayerView(gameView.getCurrent()).getPlayerScore() + "\n");
         out.print("    ");
         //first line of column indexes
         for (int i = firstColumn; i <= lastColumn; i++) {
@@ -69,7 +70,7 @@ public class CLI extends UI {
         }
         out.print("\tVISIBLE SYMBOLS");
         int visSymbIndex = 0;
-        List<String> symbols = gameView.getPlayerView().getVisibleSymbols().keySet().stream().toList();
+        List<String> symbols = gameView.getCommon().getPlayerView(gameView.getCurrent()).getVisibleSymbols().keySet().stream().toList();
         //matrix
         for (int i = firstRow; i <= lastRow; i++) {
             out.print("\n  ");
@@ -82,16 +83,16 @@ public class CLI extends UI {
             out.print((i < 10 ? " " + i : i));
             //first half of cells
             for (int j = firstColumn; j < lastColumn+1; j++) {
-                out.print("|" + (gameView.getPlayerView().getPossiblePlacements()[i][j] ? Constants.BACKGROUND_BLACK : "") + (gameView.getPlayerView().getBoard()[i][j] != null ?
-                        gameView.getPlayerView().getBoard()[i][j].getCardDescription().substring(0,21) : "   " + Constants.BACKGROUND_RESET));
+                out.print("|" + (gameView.getCommon().getPlayerView(gameView.getCurrent()).getPossiblePlacements()[i][j] ? Constants.BACKGROUND_BLACK : "") + (board[i][j] != null ?
+                        board[i][j].getCardDescription().substring(0,21) : "   " + Constants.BACKGROUND_RESET));
             }
             out.print("|");
             //visible symbols
             visSymbIndex = show_visible_symbols(visSymbIndex, gameView, symbols);
             out.print("\n  ");
             for (int j = firstColumn; j < lastColumn+1; j++) {
-                out.print("|" + (gameView.getPlayerView().getPossiblePlacements()[i][j] ? Constants.BACKGROUND_BLACK : "") + (gameView.getPlayerView().getBoard()[i][j] != null ?
-                        gameView.getPlayerView().getBoard()[i][j].getCardDescription().substring(21) : "   " + Constants.BACKGROUND_RESET));
+                out.print("|" + (gameView.getCommon().getPlayerView(gameView.getCurrent()).getPossiblePlacements()[i][j] ? Constants.BACKGROUND_BLACK : "") + (board[i][j] != null ?
+                        board[i][j].getCardDescription().substring(21) : "   " + Constants.BACKGROUND_RESET));
             }
             out.print("|");
             visSymbIndex = show_visible_symbols(visSymbIndex, gameView, symbols);
@@ -109,8 +110,8 @@ public class CLI extends UI {
     }
 
     public int show_visible_symbols(int index, GameView gameView, List<String> symbols) {
-        if(index < gameView.getPlayerView().getVisibleSymbols().size()) {
-            out.print("\t\t" + Constants.getText(Symbol.valueOf(symbols.get(index))) + " -> " + gameView.getPlayerView().getVisibleSymbols().get(symbols.get(index)));
+        if(index < gameView.getCommon().getPlayerView(gameView.getCurrent()).getVisibleSymbols().size()) {
+            out.print("\t\t" + Constants.getText(Symbol.valueOf(symbols.get(index))) + " -> " + gameView.getCommon().getPlayerView(gameView.getCurrent()).getVisibleSymbols().get(symbols.get(index)));
             index++;
         }
         return index;
@@ -119,42 +120,42 @@ public class CLI extends UI {
     @Override
     public void show_table(GameView gameView,boolean forChoice) {
         int i = 0;
-        for(GameCardView gcv : gameView.getCommon().getResourceCards()) {
+        for(GameCardView gcv : gameView.getCommon().getCommonBoardView().getResourceCards()) {
             out.println(i + " - " + gcv.getCardDescription());
             i++;
         }
         i = 2;
-        for(GameCardView gcv : gameView.getCommon().getGoldCards()) {
+        for(GameCardView gcv : gameView.getCommon().getCommonBoardView().getGoldCards()) {
             out.println(i + " - " + gcv.getCardDescription());
             i++;
         }
         i = 4;
-        out.println(i + " - Pick a card from RESOURCE CARD DECK, first card color: " + gameView.getCommon().getResourceDeck());
-        out.println((i + 1) + " - Pick a card from GOLD CARD DECK, first card color: " + gameView.getCommon().getGoldDeck());
+        out.println(i + " - Pick a card from RESOURCE CARD DECK, first card color: " + gameView.getCommon().getCommonBoardView().getResourceDeck());
+        out.println((i + 1) + " - Pick a card from GOLD CARD DECK, first card color: " + gameView.getCommon().getCommonBoardView().getGoldDeck());
 
         System.out.print("\nCommand -> ");
     }
 
     public void show_start_table(GameView gameView) {
-        for(GameCardView gcv : gameView.getCommon().getResourceCards()) {
+        for(GameCardView gcv : gameView.getCommon().getCommonBoardView().getResourceCards()) {
             out.println("R - " + gcv.getCardDescription());
         }
-        for(GameCardView gcv : gameView.getCommon().getGoldCards()) {
+        for(GameCardView gcv : gameView.getCommon().getCommonBoardView().getGoldCards()) {
             out.println("G - " + gcv.getCardDescription());
         }
-        out.println("RESOURCE CARD DECK, first card color: " + gameView.getCommon().getResourceDeck());
-        out.println("GOLD CARD DECK, first card color: " + gameView.getCommon().getGoldDeck());
+        out.println("RESOURCE CARD DECK, first card color: " + gameView.getCommon().getCommonBoardView().getResourceDeck());
+        out.println("GOLD CARD DECK, first card color: " + gameView.getCommon().getCommonBoardView().getGoldDeck());
 
         out.println("\nCOMMON GOALS");
-        for(GameCardView gcv : gameView.getCommon().getGoals()) {
+        for(GameCardView gcv : gameView.getCommon().getCommonBoardView().getGoals()) {
             out.println(" * " + gcv.getCardDescription());
         }
     }
 
     @Override
     public void show_visibleSymbols(GameView gameView) {
-        for(String s : gameView.getPlayerView().getVisibleSymbols().keySet()) {
-            out.println(s + " -> " + gameView.getPlayerView().getVisibleSymbols().get(s));
+        for(String s : gameView.getCommon().getPlayerView(gameView.getCurrent()).getVisibleSymbols().keySet()) {
+            out.println(s + " -> " + gameView.getCommon().getPlayerView(gameView.getCurrent()).getVisibleSymbols().get(s));
         }
     }
 
@@ -216,8 +217,8 @@ public class CLI extends UI {
     }
 
     @Override
-    public void show_current_player(String nickname) {
-        out.print("please wait, "+ nickname +" is playing.");
+    public void show_current_player(GameView gameView, String myNickname) {
+        out.print("please wait, "+ gameView.getCurrent() +" is playing.");
     }
 
     @Override
@@ -300,7 +301,7 @@ public class CLI extends UI {
     public void show_invalid_draw_command(){System.out.println("\nInvalid command. Please enter in the format: draw <cardIndex>");}
     public void show_error_create_game(){System.out.println("\nError during creating game");}
     public void show_error_join_game(){System.out.println("\nError during joining game");}
-    public void show_requirements_not_met(){System.out.println("\nYou can't place this card, you dont fullfil the requirements");}
+    public void show_requirements_not_met(){System.out.println("\nYou can't place this card, you don't fulfil the requirements");}
     public  void show_nan(){System.out.println("Nan");}
 
 

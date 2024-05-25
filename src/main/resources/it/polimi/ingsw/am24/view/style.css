@@ -211,3 +211,25 @@
     -fx-pref-width: 0;
     -fx-pref-height: 0;
 }
+
+.toggle-button {
+    -fx-background-color: transparent;
+    -fx-background-radius: 0;
+    -fx-border-color: #007aff; /* Colore del bordo */
+    -fx-border-width: 2px; /* Spessore del bordo */
+}
+
+.toggle-button:selected {
+    -fx-background-color: #007aff; /* Colore di sfondo selezionato */
+    -fx-text-fill: white; /* Colore del testo selezionato */
+}
+
+.toggle-button:hover {
+    -fx-background-color: #007aff33; /* Colore di sfondo al passaggio del mouse */
+    -fx-border-color: #007aff66; /* Colore del bordo al passaggio del mouse */
+}
+
+.toggle-button .label {
+    -fx-alignment: center; /* Allinea il testo al centro */
+    -fx-text-fill: #007aff; /* Colore del testo */
+}

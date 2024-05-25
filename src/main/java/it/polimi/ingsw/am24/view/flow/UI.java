@@ -17,7 +17,7 @@ public abstract class UI {
     public abstract void show_available_colors(ArrayList<String> colors);
     public abstract void show_hidden_goal(ArrayList<GameCardView> views);
     public abstract void show_initial_side(ArrayList<GameCardView> views);
-    public abstract void show_current_player(String nickname);
+    public abstract void show_current_player(GameView gameView, String myNickname);
     public abstract void show_logo();
     public abstract void show_winner_and_rank(boolean winner, HashMap<String,Integer> rank);
     public abstract void show_wrong_card_play();

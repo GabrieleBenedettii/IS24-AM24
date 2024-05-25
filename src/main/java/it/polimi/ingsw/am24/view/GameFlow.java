@@ -26,6 +26,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
 public class GameFlow extends Flow implements Runnable, CommonClientActions {
+    private int gameId;
     private String nickname;
     private String current_choice = null;
     private boolean create = false;
@@ -40,7 +41,6 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
     private ArrayList<String> availableColors;
     private ArrayList<GameCardView> cards;
     private GameView gameView;
-    private ArrayList<String> players;
     private boolean colorNotAvailable;
     private HashMap<String,Boolean> colorSelected = new HashMap<>();
 
@@ -56,7 +56,6 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
         this.joined = false;
         this.colorNotAvailable = false;
         this.num = 0;
-        this.players = new ArrayList<>();
         this.inputReader = new InputReaderCLI();
         this.inputParser = new InputParser(this.inputReader.getBuffer(), this);
         new Thread(this).start();
@@ -74,7 +73,6 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
         this.joined = false;
         this.colorNotAvailable = false;
         this.num = 0;
-        this.players = new ArrayList<>();
         this.inputParser = new InputParser(this.inputReader.getBuffer(), this);
         new Thread(this).start();
     }
@@ -181,7 +179,7 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
                     askCardPlay();
                 }
                 else
-                    ui.show_current_player(gameView.getCurrent());
+                    ui.show_current_player(gameView, nickname);
             }
             case BEGIN_DRAW -> {
                 if(gameView.getCurrent().equals(nickname)) {
@@ -189,7 +187,7 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
                     askCardDraw();
                 }
                 else
-                    ui.show_current_player(gameView.getCurrent());
+                    ui.show_current_player(gameView, nickname);
             }
             /*case SENT_MESSAGE -> {
                 //todo fix
@@ -228,8 +226,6 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
             // check for special characters
             if (nickname.matches(".*[" + Pattern.quote(invalidChars) + "].*")) {
                 ui.show_invalid_username();
-            } else if(players.contains(nickname)) {
-
             } else if (nickname.isEmpty()) {
                 ui.show_empty_nickname();
             } else {
@@ -328,7 +324,6 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
 
             if (tempNickname.matches(".*[" + Pattern.quote(invalidChars) + "].*")) {
                 ui.show_invalid_username();
-            } else if (players.contains(tempNickname)) {
             } else if (tempNickname.isEmpty()) {
                 ui.show_empty_nickname();
             } else {
@@ -428,11 +423,11 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
                             ui.show_invalid_index();
                             continue;
                         }
-                        if (x < 0 || x >= gameView.getPlayerView().getBoard().length || y < 0 || y >= gameView.getPlayerView().getBoard()[0].length) {
+                        if (x < 0 || x >= gameView.getCommon().getPlayerView(nickname).getBoard().length || y < 0 || y >= gameView.getCommon().getPlayerView(nickname).getBoard()[0].length) {
                             ui.show_invalid_coordinates();
                             continue;
                         }
-                        if (!gameView.getPlayerView().getPossiblePlacements()[x][y]) {
+                        if (!gameView.getCommon().getPlayerView(nickname).getPossiblePlacements()[x][y]) {
                             ui.show_invalid_positioning();
                             continue;
                         }

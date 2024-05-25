@@ -12,11 +12,11 @@ import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.Parent;
 import javafx.scene.text.Font;
@@ -35,16 +35,29 @@ public class  GameBoardController extends Generic{
     @FXML private VBox rankingContainer;
     @FXML private Pane gameViewContainer;
     @FXML private StackPane scoreboardContainer;
+    @FXML private ToggleButton frontBackToggle;
+    @FXML private Pane rotationContainer;
+
+    @FXML private Label errorLabel;
+    @FXML private Label actionMessage;
 
     private GameView gameView;
     private Image image;
     private ImageView imageView;
     private ImageView clickedImageView;
     private int id;
+    private ImageView[] hand;
+
+    @FXML
+    public void initialize() {
+        hand = new ImageView[3];
+    }
 
     @FXML
     public void beginTurn(GameView gameView) {
         this.gameView = gameView;
+        gameViewContainer.setOpacity(1);
+        actionMessage.setText(gameView.getCurrent() + ", it's your turn. Please, place a card");
 
         //PLAYING HAND
         drawGameHand(true);
@@ -62,7 +75,7 @@ public class  GameBoardController extends Generic{
         //drawCommonGoals();
 
         //GAME BOARD
-        drawGameBoard(true);
+        drawGameBoard(true, gameView.getCurrent());
 
         //SCORE BOARD
         drawScoreBoard();
@@ -71,6 +84,8 @@ public class  GameBoardController extends Generic{
     @FXML
     public void beginDraw(GameView gameView) {
         this.gameView = gameView;
+        errorLabel.setVisible(false);
+        actionMessage.setText(gameView.getCurrent() + ", it's your turn. Please, draw a card");
 
         //PLAYING HAND
         drawGameHand(false);
@@ -88,7 +103,7 @@ public class  GameBoardController extends Generic{
         //drawCommonGoals();
 
         //GAME BOARD
-        drawGameBoard(false);
+        drawGameBoard(false, gameView.getCurrent());
     }
 
     @FXML
@@ -129,18 +144,19 @@ public class  GameBoardController extends Generic{
         VBox.setMargin(imageView, new Insets(5,0,5,0));
     }
 
-    private void drawGameBoard(boolean clickable) {
+    private void drawGameBoard(boolean clickable, String nickname) {
         gameViewContainer.getChildren().clear();
         GridPane gridPane = new GridPane();
         gridPane.setAlignment(Pos.CENTER);
 
-        int firstRow = gameView.getPlayerView().getBoard().length;
+        GameCardView[][] board = gameView.getCommon().getPlayerView(nickname).getBoard();
+        int firstRow = board.length;
         int lastRow = 0;
-        int firstColumn = gameView.getPlayerView().getBoard()[0].length;
+        int firstColumn = board[0].length;
         int lastColumn = 0;
-        for(int r = 0; r < gameView.getPlayerView().getBoard().length; r++){
-            for(int c = 0; c < gameView.getPlayerView().getBoard()[0].length; c++){
-                if(gameView.getPlayerView().getBoard()[r][c] != null){
+        for(int r = 0; r < board.length; r++){
+            for(int c = 0; c < board[0].length; c++){
+                if(board[r][c] != null){
                     if(r <= firstRow){
                         firstRow = r;
                     }
@@ -159,16 +175,16 @@ public class  GameBoardController extends Generic{
         if(firstRow > 1){
             firstRow -= 2;
         }
-        if(lastRow < gameView.getPlayerView().getBoard().length - 2){
+        if(lastRow < board.length - 2){
             lastRow += 2;
         }
         if(firstColumn > 1){
             firstColumn -= 2;
         }
-        if(lastColumn < gameView.getPlayerView().getBoard()[0].length - 2){
+        if(lastColumn < board[0].length - 2){
             lastColumn += 2;
         }
-        ArrayList<Placement> order = gameView.getPlayerView().getPlaceOrder();
+        ArrayList<Placement> order = gameView.getCommon().getPlayerView(nickname).getPlaceOrder();
         double size = Math.max(lastRow-firstRow+1, lastColumn-firstColumn+1);
         double cellWidth = size >= 7 ? 125 : 800/size;
         double cellHeight = size >= 7 ? 66.3125 : 424.4/size;
@@ -204,46 +220,48 @@ public class  GameBoardController extends Generic{
             gridPane.add(stackPane, placement.getY(), placement.getX());
         }
 
-        //adding all possible placement
-        boolean[][] pp = gameView.getPlayerView().getPossiblePlacements();
-        for (int i = 0; i < pp.length; i++) {
-            for (int j = 0; j < pp[i].length; j++) {
-                if(pp[i][j]) {
-                    StackPane stackPane = new StackPane();
-                    stackPane.setPrefSize(cellWidth, cellHeight);
-                    Pane pane = new Pane();
-                    pane.setPrefSize(cellWidth, cellHeight);
+        if(clickable) {
+            //adding all possible placement
+            boolean[][] pp = gameView.getCommon().getPlayerView(nickname).getPossiblePlacements();
+            for (int i = 0; i < pp.length; i++) {
+                for (int j = 0; j < pp[i].length; j++) {
+                    if (pp[i][j]) {
+                        StackPane stackPane = new StackPane();
+                        stackPane.setPrefSize(cellWidth, cellHeight);
+                        Pane pane = new Pane();
+                        pane.setPrefSize(cellWidth, cellHeight);
 
-                    Rectangle card = new Rectangle(cellWidth / 0.78, cellHeight / 0.6);
-                    card.setId(i+"-"+j);
-                    card.setFill(Color.GRAY);
-                    card.setOpacity(0.2);
-                    card.setTranslateX(-0.11 * (cellWidth / 0.78));
-                    card.setTranslateY(-0.2 * (cellHeight / 0.6));
+                        Rectangle card = new Rectangle(cellWidth / 0.78, cellHeight / 0.6);
+                        card.setId(i + "-" + j);
+                        card.setFill(Color.GRAY);
+                        card.setOpacity(0.2);
+                        card.setTranslateX(-0.11 * (cellWidth / 0.78));
+                        card.setTranslateY(-0.2 * (cellHeight / 0.6));
 
-                    if(clickable) {
-                        card.setCursor(Cursor.HAND);
-                        card.setOnMouseClicked(event -> {
-                            if(clickedImageView != null) {
-                                String[] coordinates = card.getId().split("-");
-                                pane.getChildren().clear();
-                                clickedImageView.setPreserveRatio(true);
-                                clickedImageView.setSmooth(true);
-                                clickedImageView.setCache(true);
+                        if (clickable) {
+                            card.setCursor(Cursor.HAND);
+                            card.setOnMouseClicked(event -> {
+                                if (clickedImageView != null) {
+                                    String[] coordinates = card.getId().split("-");
+                                    pane.getChildren().clear();
+                                    clickedImageView.setPreserveRatio(true);
+                                    clickedImageView.setSmooth(true);
+                                    clickedImageView.setCache(true);
 
-                                clickedImageView.setFitWidth(cellWidth/0.78);
-                                clickedImageView.setLayoutX(-0.11*(cellWidth/0.78));
-                                clickedImageView.setLayoutY(-0.2*(cellHeight/0.6));
+                                    clickedImageView.setFitWidth(cellWidth / 0.78);
+                                    clickedImageView.setLayoutX(-0.11 * (cellWidth / 0.78));
+                                    clickedImageView.setLayoutY(-0.2 * (cellHeight / 0.6));
 
-                                pane.getChildren().add(clickedImageView);
-                                getInputReaderGUI().addString("/play " + clickedImageView.getId() + " " + "front" + " " + coordinates[0] + " " + coordinates[1]);
-                            }
-                        });
+                                    pane.getChildren().add(clickedImageView);
+                                    getInputReaderGUI().addString("/play " + clickedImageView.getId() + " " + frontBackToggle.getText() + " " + coordinates[0] + " " + coordinates[1]);
+                                }
+                            });
+                        }
+
+                        pane.getChildren().add(card);
+                        stackPane.getChildren().add(pane);
+                        gridPane.add(stackPane, j, i);
                     }
-
-                    pane.getChildren().add(card);
-                    stackPane.getChildren().add(pane);
-                    gridPane.add(stackPane, j, i);
                 }
             }
         }
@@ -261,25 +279,36 @@ public class  GameBoardController extends Generic{
         playingHandContainer.getChildren().clear();
         for (int i = 0; i < gameView.getPlayerView().getPlayerHand().size(); i++) {
             id = gameView.getPlayerView().getPlayerHand().get(i).getCardId();
-            image = new Image(HelloApplication.class.getResource("images/front/"+id+".jpg").toString());
-            ImageView iw = new ImageView(image);
-            iw.setId(""+i);
-            setImageOptionsH(iw,150,15);
+            image = new Image(HelloApplication.class.getResource("images/"+frontBackToggle.getText()+"/"+id+".jpg").toString());
+            hand[i] = new ImageView(image);
+
+            hand[i].setId(""+i);
+            setImageOptionsH(hand[i],150,15);
 
             if(clickable) {
-                iw.getStyleClass().add("clickableCard");
-                iw.setCursor(Cursor.HAND);
-                iw.setOnMouseClicked(event -> {
-                    clearBorders(iw.getParent(), iw);
-                    iw.setOpacity(0.5);
-                    clickedImageView = iw;
+                hand[i].getStyleClass().add("clickableCard");
+                hand[i].setCursor(Cursor.HAND);
+                int index = i;
+                hand[i].setOnMouseClicked(event -> {
+                    clearBorders(hand[index].getParent(), hand[index]);
+                    hand[index].setOpacity(0.5);
+                    clickedImageView = hand[index];
                 });
             }
 
-            playingHandContainer.getChildren().add(iw);
-            HBox.setHgrow(iw, Priority.ALWAYS);
-            iw.setFitHeight(Double.MAX_VALUE);
+            playingHandContainer.getChildren().add(hand[i]);
+            HBox.setHgrow(hand[i], Priority.ALWAYS);
+            hand[i].setFitHeight(Double.MAX_VALUE);
         }
+
+        frontBackToggle.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            frontBackToggle.setText(newValue ? "back" : "front");
+            for (int i = 0; i < gameView.getPlayerView().getPlayerHand().size(); i++) {
+                id = gameView.getPlayerView().getPlayerHand().get(i).getCardId();
+                image = new Image(HelloApplication.class.getResource("images/" + frontBackToggle.getText() + "/" + id + ".jpg").toString());
+                hand[i].setImage(image);
+            }
+        });
     }
 
     private void clearBorders(Parent parent, Node node) {
@@ -294,8 +323,8 @@ public class  GameBoardController extends Generic{
     }
 
     private void drawCommonGoals() {
-        for (int i = 0; i < gameView.getCommon().getGoals().size(); i++) {
-            id = gameView.getCommon().getGoals().get(i).getCardId(); //
+        for (int i = 0; i < gameView.getCommon().getCommonBoardView().getGoals().size(); i++) {
+            id = gameView.getCommon().getCommonBoardView().getGoals().get(i).getCardId(); //
             image = new Image(HelloApplication.class.getResource("images/front/"+id+".jpg").toString());
             imageView = new ImageView(image);
             setImageOptionsH(imageView, 150, 10);
@@ -321,10 +350,10 @@ public class  GameBoardController extends Generic{
     private void drawResourceCardsTable(boolean clickable) {
         resourceCardsContainer.getChildren().clear();
 
-        if(gameView.getCommon().getResourceDeck().equals(Constants.TEXT_FUNGI)) id = 1;
-        else if (gameView.getCommon().getResourceDeck().equals(Constants.TEXT_PLANT)) id = 11;
-        else if (gameView.getCommon().getResourceDeck().equals(Constants.TEXT_ANIMAL)) id = 21;
-        else if (gameView.getCommon().getResourceDeck().equals(Constants.TEXT_INSECT)) id = 31;
+        if(gameView.getCommon().getCommonBoardView().getResourceDeck().equals(Constants.TEXT_FUNGI)) id = 1;
+        else if (gameView.getCommon().getCommonBoardView().getResourceDeck().equals(Constants.TEXT_PLANT)) id = 11;
+        else if (gameView.getCommon().getCommonBoardView().getResourceDeck().equals(Constants.TEXT_ANIMAL)) id = 21;
+        else if (gameView.getCommon().getCommonBoardView().getResourceDeck().equals(Constants.TEXT_INSECT)) id = 31;
 
         image = new Image(HelloApplication.class.getResource("images/back/"+id+".jpg").toString());
         ImageView deck = new ImageView(image);
@@ -343,8 +372,8 @@ public class  GameBoardController extends Generic{
         VBox.setVgrow(deck, Priority.ALWAYS);
         deck.setFitHeight(Double.MAX_VALUE);
 
-        for (int i = 0; i < gameView.getCommon().getResourceCards().size(); i++) {
-            id = gameView.getCommon().getResourceCards().get(i).getCardId();
+        for (int i = 0; i < gameView.getCommon().getCommonBoardView().getResourceCards().size(); i++) {
+            id = gameView.getCommon().getCommonBoardView().getResourceCards().get(i).getCardId();
             image = new Image(HelloApplication.class.getResource("images/front/"+id+".jpg").toString());
             ImageView iw = new ImageView(image);
             setImageOptionsV(iw);
@@ -367,10 +396,10 @@ public class  GameBoardController extends Generic{
     private void drawGoldCardsTable(boolean clickable) {
         goldCardsContainer.getChildren().clear();
 
-        if(gameView.getCommon().getGoldDeck().equals(Constants.TEXT_FUNGI)) id = 41;
-        else if (gameView.getCommon().getGoldDeck().equals(Constants.TEXT_PLANT)) id = 51;
-        else if (gameView.getCommon().getGoldDeck().equals(Constants.TEXT_ANIMAL)) id = 61;
-        else if (gameView.getCommon().getGoldDeck().equals(Constants.TEXT_INSECT)) id = 71;
+        if(gameView.getCommon().getCommonBoardView().getGoldDeck().equals(Constants.TEXT_FUNGI)) id = 41;
+        else if (gameView.getCommon().getCommonBoardView().getGoldDeck().equals(Constants.TEXT_PLANT)) id = 51;
+        else if (gameView.getCommon().getCommonBoardView().getGoldDeck().equals(Constants.TEXT_ANIMAL)) id = 61;
+        else if (gameView.getCommon().getCommonBoardView().getGoldDeck().equals(Constants.TEXT_INSECT)) id = 71;
 
         image = new Image(HelloApplication.class.getResource("images/back/"+id+".jpg").toString());      //TODO create ID for gold and resource deck
         ImageView deck = new ImageView(image);
@@ -389,8 +418,8 @@ public class  GameBoardController extends Generic{
             });
         }
 
-        for (int i = 0; i < gameView.getCommon().getGoldCards().size(); i++) {
-            id = gameView.getCommon().getGoldCards().get(i).getCardId();
+        for (int i = 0; i < gameView.getCommon().getCommonBoardView().getGoldCards().size(); i++) {
+            id = gameView.getCommon().getCommonBoardView().getGoldCards().get(i).getCardId();
             image = new Image(HelloApplication.class.getResource("images/front/"+id+".jpg").toString());
             ImageView iw = new ImageView(image);
             setImageOptionsV(iw);
@@ -452,6 +481,24 @@ public class  GameBoardController extends Generic{
 
         hidden.getChildren().add(chooseHiddenGoal);
         gameViewContainer.getChildren().add(hidden);
+    }
+
+    @FXML
+    public void requirementsNotMet() {
+        errorLabel.setText("You can't place this card, you don't fulfil the requirements");
+        errorLabel.setVisible(true);
+    }
+
+    @FXML
+    public void notYourTurn(GameView gameView, String myNickname) {
+        this.gameView = gameView;
+        actionMessage.setText(gameView.getCurrent() + " is playing. Wait for your turn");
+        gameViewContainer.setOpacity(0.5);
+
+        drawGameBoard(false, myNickname);
+        drawGoldCardsTable(false);
+        drawResourceCardsTable(false);
+        drawGameHand(false);
     }
 
     private void drawScoreBoard() {
