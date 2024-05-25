@@ -38,7 +38,18 @@
             <ToggleButton fx:id="frontBackToggle" layoutX="371.0" layoutY="787.0" mnemonicParsing="false" text="front" />
             <Label fx:id="errorLabel" layoutX="400.0" layoutY="630.0" prefHeight="25.0" prefWidth="800.0" style="-fx-font-size: 20; -fx-font-style: 'Muli'; -fx-font-weight: bold; -fx-text-alignment: center;" textAlignment="CENTER" textFill="RED" visible="false" />
             <Label fx:id="actionMessage" contentDisplay="CENTER" layoutX="400.0" layoutY="106.0" prefHeight="25.0" prefWidth="800.0" style="-fx-font-size: 25; -fx-font-weight: bold; -fx-font-family: 'Muli'; -fx-text-alignment: center;" textAlignment="CENTER" />
-            <Pane fx:id="rotationContainer" layoutX="42.0" layoutY="41.0" prefHeight="138.0" prefWidth="280.0" />
+            <VBox fx:id="rotationContainer" layoutX="42.0" layoutY="43.0" prefHeight="150.0" prefWidth="280.0" />
+            <Pane layoutX="1208.0" layoutY="707.0" prefHeight="150.0" prefWidth="350.0">
+               <children>
+                  <ChoiceBox fx:id="receiver" layoutY="124.0" prefHeight="25.0" prefWidth="100.0" />
+                  <TextField fx:id="messageText" layoutX="101.0" layoutY="124.0" prefHeight="25.0" prefWidth="200.0" />
+                  <ScrollPane fx:id="chatMessagesReceiver" layoutY="-6.0" prefHeight="130.0" prefWidth="350.0" styleClass="transparent-scroll-pane">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+                    </content>
+                  </ScrollPane>
+               </children>
+            </Pane>
          </children>
       </Pane>
       </children>
