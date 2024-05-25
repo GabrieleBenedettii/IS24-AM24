@@ -5,13 +5,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class PublicPlayerView implements Serializable {
+
+    private final String color;
     private final int playerScore;
     private final GameCardView[][] board;
     private final ArrayList<Placement> placeOrder;
     private final HashMap<String, Integer> visibleSymbols;
     private final boolean[][] possiblePlacements;
 
-    public PublicPlayerView(int playerScore, GameCardView[][] board, ArrayList<Placement> placeOrder, HashMap<String, Integer> visibleSymbols, boolean[][] possiblePlacements) {
+
+    public PublicPlayerView(String color,int playerScore, GameCardView[][] board, ArrayList<Placement> placeOrder, HashMap<String, Integer> visibleSymbols, boolean[][] possiblePlacements) {
+        this.color = color;
         this.playerScore = playerScore;
         this.board = board;
         this.placeOrder = placeOrder;
@@ -37,5 +41,9 @@ public class PublicPlayerView implements Serializable {
 
     public boolean[][] getPossiblePlacements() {
         return possiblePlacements;
+    }
+
+    public String getColor() {
+        return color;
     }
 }

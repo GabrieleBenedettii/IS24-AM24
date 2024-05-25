@@ -181,7 +181,7 @@ public class Player {
         for(Symbol s : visibleSymbols.keySet()){
             vs.put(s.toString(), visibleSymbols.get(s));
         }
-        return new PublicPlayerView(score, temp, placeOrder, vs, getBooleanPossiblePlacements());
+        return new PublicPlayerView(color.toString(),score, temp, placeOrder, vs, getBooleanPossiblePlacements());
     }
 
     private boolean[][] getBooleanPossiblePlacements() {

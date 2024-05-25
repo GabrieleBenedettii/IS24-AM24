@@ -22,8 +22,10 @@ import javafx.scene.Parent;
 import javafx.scene.text.Font;
 import javafx.scene.control.Label;
 
+import java.awt.*;
 import java.util.ArrayList;
 import it.polimi.ingsw.am24.constants.Constants;
+
 
 public class  GameBoardController extends Generic{
 
@@ -443,28 +445,32 @@ public class  GameBoardController extends Generic{
     public void drawChooseHiddenGoal(ArrayList<GameCardView> views){
 
         VBox hidden = new VBox();
-        hidden.setPadding(new Insets(225, 100, 100, 100));
+        hidden.setPadding(new Insets(0, 0, 0, 0));
+        hidden.setAlignment(Pos.CENTER);
+        hidden.setPrefSize(800,424.4);
 
         Label label = new Label();
         label.setText("Choose your hidden goal");
-        label.setFont(new Font(24));
+        Font customFont = Font.loadFont(HelloApplication.class.getResourceAsStream("view/fonts/Muli-Regular.ttf"), 22);
+        label.setFont(customFont);
         label.setAlignment(Pos.CENTER);
 
         HBox labelBox = new HBox();
         labelBox.setAlignment(Pos.CENTER);
         labelBox.getChildren().add(label);
-        labelBox.setPadding(new Insets(0, 0, 50, 0));
+        labelBox.setPadding(new Insets(50, 0, 25, 0));
 
         hidden.getChildren().add(labelBox);
 
         HBox chooseHiddenGoal = new HBox();
         chooseHiddenGoal.setAlignment(Pos.CENTER);
+        chooseHiddenGoal.setPadding(new Insets(25, 0, 0, 0));
 
         for (int i = 0; i < views.size(); i++) {
             id = views.get(i).getCardId();
             image = new Image(HelloApplication.class.getResource("images/front/"+id+".jpg").toString());
             ImageView iw = new ImageView(image);
-            setImageOptionsH(iw,350,50);
+            setImageOptionsH(iw,250,25);
             iw.getStyleClass().add("clickableCard");
             iw.setId(""+i);
             iw.setCursor(Cursor.HAND);
@@ -512,15 +518,23 @@ public class  GameBoardController extends Generic{
         Canvas canvas = new Canvas(250, 498.6);
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
-        double cx = 65;
-        double cy = 450;
-        double x = cx;
-        double y = cy - 10;
-        double radius = 10;
-        drawCircle(gc, x, y, radius, "red");
-        x = cx - 10;
-        y = cy;
-        drawCircle(gc, x, y, radius, "blue");
+
+        for (String s : gameView.getCommon().getRotation()){
+            Point p = Constants.scoreboard.get(gameView.getCommon().getPlayerView(s).getPlayerScore());
+            double x = 15+p.getX()/2.904;
+            double y = p.getY()/2.904;
+            double radius = 12;
+
+
+            if (gameView.getCommon().getPlayerView(s).getColor().equals("RED") ){ x+=5;}
+            else if (gameView.getCommon().getPlayerView(s).getColor().equals("BLUE")){ x-=5;}
+            else if (gameView.getCommon().getPlayerView(s).getColor().equals("GREEN")){ y+=5;}
+            else if (gameView.getCommon().getPlayerView(s).getColor().equals("YELLOW")){ y-=5;}
+
+            drawCircle(gc, x, y, radius, gameView.getCommon().getPlayerView(s).getColor());
+
+
+        }
         scoreboardContainer.getChildren().addAll(imageView, canvas);
         StackPane.setMargin(imageView, new Insets(0, 0, 0, 30));
     }
