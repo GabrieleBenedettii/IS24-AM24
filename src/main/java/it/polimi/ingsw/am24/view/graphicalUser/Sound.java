@@ -10,7 +10,7 @@ import java.io.InputStream;
 
 public class Sound {
     //todo: change something
-    public static boolean play = false;
+    public static boolean play = true;
 
     public static synchronized void playSound(final String Name) {
         if (play) {
@@ -19,7 +19,7 @@ public class Sound {
                     Clip clip = AudioSystem.getClip();
 
 
-                    InputStream in = Sound.class.getResourceAsStream("/audio/" + Name);
+                    InputStream in = Sound.class.getResourceAsStream("/it/polimi/ingsw/am24/sounds/" + Name);
 
 
                     ByteArrayOutputStream outputStream = new ByteArrayOutputStream();

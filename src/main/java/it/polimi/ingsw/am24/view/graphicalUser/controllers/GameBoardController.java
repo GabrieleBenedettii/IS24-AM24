@@ -4,8 +4,6 @@ import it.polimi.ingsw.am24.HelloApplication;
 import it.polimi.ingsw.am24.modelView.GameCardView;
 import it.polimi.ingsw.am24.modelView.GameView;
 import it.polimi.ingsw.am24.modelView.Placement;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -13,29 +11,23 @@ import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.Parent;
 import javafx.scene.text.Font;
 import javafx.scene.control.Label;
-import javafx.scene.text.Text;
-import javafx.scene.control.TextField;
 
 import java.awt.*;
 import java.util.ArrayList;
 import it.polimi.ingsw.am24.constants.Constants;
 
 
-public class GameBoardController extends Generic{
+public class  GameBoardController extends Generic{
 
     @FXML private HBox playingHandContainer;
     @FXML private HBox hiddenGoalContainer;
@@ -46,11 +38,7 @@ public class GameBoardController extends Generic{
     @FXML private Pane gameViewContainer;
     @FXML private StackPane scoreboardContainer;
     @FXML private ToggleButton frontBackToggle;
-    @FXML private VBox rotationContainer;
-
-    @FXML private ScrollPane chatMessagesContainer;
-    @FXML private ChoiceBox receiver;
-    @FXML private TextField messageText;
+    @FXML private Pane rotationContainer;
 
     @FXML private Label errorLabel;
     @FXML private Label actionMessage;
@@ -61,13 +49,10 @@ public class GameBoardController extends Generic{
     private ImageView clickedImageView;
     private int id;
     private ImageView[] hand;
-    private Font normal, bold;
 
     @FXML
     public void initialize() {
         hand = new ImageView[3];
-        normal = Font.loadFont(HelloApplication.class.getResourceAsStream("view/fonts/Muli-regular.ttf"), 18);
-        bold = Font.loadFont(HelloApplication.class.getResourceAsStream("view/fonts/Muli-bold.ttf"), 18);
     }
 
     @FXML
@@ -96,9 +81,6 @@ public class GameBoardController extends Generic{
 
         //SCORE BOARD
         drawScoreBoard();
-
-        //ROTATION
-        drawRotation();
     }
 
     @FXML
@@ -124,31 +106,11 @@ public class GameBoardController extends Generic{
 
         //GAME BOARD
         drawGameBoard(false, gameView.getCurrent());
-
-        //SCORE BOARD
-        drawScoreBoard();
-
-        //ROTATION
-        drawRotation();
     }
 
     @FXML
     public void hiddenGoalChoice(GameView gameView){
         this.gameView = gameView;
-        ObservableList<String> items = FXCollections.observableArrayList();
-        items.add("All");
-        items.addAll(gameView.getCommon().getRotation());
-        receiver.setItems(items);
-
-        messageText.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.ENTER) {
-                System.out.println(receiver.getValue().toString());
-                if(receiver != null && !messageText.equals("")) {
-                    getInputReaderGUI().addString((receiver.getValue().toString().equals("All") ? "/c " : "/cs " + receiver.getValue().toString() + " ") + messageText.getText());
-                    messageText.clear();
-                }
-            }
-        });
 
         //PLAYING HAND
         drawGameHand(false);
@@ -543,8 +505,6 @@ public class GameBoardController extends Generic{
         drawGoldCardsTable(false);
         drawResourceCardsTable(false);
         drawGameHand(false);
-        drawHiddenGoal();
-        drawRotation();
     }
 
     private void drawScoreBoard() {
@@ -582,29 +542,6 @@ public class GameBoardController extends Generic{
     private void drawCircle(GraphicsContext gc, double x, double y, double radius, String color) {
         gc.setFill(Color.valueOf(color));
         gc.fillOval(x - radius, y - radius, radius * 2, radius * 2);
-    }
-
-    private void drawRotation() {
-        rotationContainer.getChildren().clear();
-        rotationContainer.setAlignment(Pos.CENTER);
-
-        int padding = 20 - gameView.getCommon().getRotation().size() * 4;
-
-        for (String p : gameView.getCommon().getRotation()) {
-            HBox hbox = new HBox();
-            hbox.setAlignment(Pos.CENTER_LEFT);
-            hbox.setSpacing(10);
-            hbox.setPadding(new Insets(padding, 0, padding, 30));
-
-            Circle circle = new Circle(12, Paint.valueOf(gameView.getCommon().getPlayerView(p).getColor()));
-            circle.setCursor(Cursor.HAND);
-            circle.setOnMouseClicked(event -> drawGameBoard(false, p));
-
-            Text playerName = new Text(p);
-            playerName.setFont(p.equals(gameView.getCurrent()) ? bold : normal);
-            hbox.getChildren().addAll(circle, playerName);
-            rotationContainer.getChildren().add(hbox);
-        }
     }
 
     private void clearContainers() {
