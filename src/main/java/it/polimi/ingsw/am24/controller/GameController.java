@@ -36,9 +36,6 @@ public class GameController implements GameControllerInterface, Serializable, Ru
 
     private final Chat chat;
 
-    /**
-    * Creates a new GameController and starts a new thread
-    */
     public GameController(int numPlayers) {
         this.game = new Game();
         this.rotation = new ArrayList<>();
@@ -53,16 +50,7 @@ public class GameController implements GameControllerInterface, Serializable, Ru
         new Thread(this).start();
     }
 
-    /**
-    *
-    * add new player and set the game as ready to start if the player added is the last one
-     *
-    * @param nickname is the name of the player
-    * @param listener is the listener associated to the game
-    * @throws RemoteException if the reference could not be accessed
-     * @throws FullLobbyException if the lobby has already reached max capacity
-     *
-    * */
+    //add new player and set the game started if the player added is the last
     public void addPlayer(String nickname, GameListener listener) throws RemoteException, FullLobbyException {
         if(players.size() == playerCount) throw new FullLobbyException();
         synchronized (lockPlayers) {
@@ -73,42 +61,20 @@ public class GameController implements GameControllerInterface, Serializable, Ru
         }
     }
 
-    /**
-    *
-    * @return is a Player object representing the player with the name @param nickname
-    *
-    * @param nickname is the name of the wanted player
-    * @return Player object representing the player with the given nickname
-    * */
+    //return the player with the given nickname
     public Player getPlayer(String nickname){
         synchronized (lockPlayers) {
             return players.get(nickname);
         }
     }
-    /**
-    *
-    * removes from players the player named @param nickname
-    *
-    * @param nickname is the name of the player that needs to be removed
-    *
-    * */
+
     /*public void removePlayer(String nickname) {
         synchronized (lockPlayers){
             players.remove(nickname);
         }
     }*/
 
-    /**
-    *
-    * lets the player select their color
-    *
-    * @param nickname is the name of the player selecting a color
-    * @param color is the color selected by the player
-    * @param listener is the listener for the game
-    * @return true if the selection is valid, if the selection is not valid @return false
-    * @throws RemoteException if the reference could not be accessed
-     *
-    * */
+    //choice of the color by a player
     public boolean chooseColor(String nickname, String color, GameListener listener) throws RemoteException {
         //find the player
         synchronized (lockPlayers) {
@@ -135,11 +101,7 @@ public class GameController implements GameControllerInterface, Serializable, Ru
         }
     }
 
-    /**
-     *
-     * Starts the game and distributes the initial card to the players and their initial hand
-     *
-     * */
+    //decks creation and card's distribution
     public void startGame() {
         game.start();
         for (Player p : players.values()) {
@@ -152,17 +114,7 @@ public class GameController implements GameControllerInterface, Serializable, Ru
         }
     }
 
-    /**
-     *
-     * Lets the players choose their secret objectives
-     *
-     * @param nickname is the player who selected the objective
-     * @param goalId is the reference to the Goal card selected
-     * @param listener is the listener associated to the game
-     * @return if the selection was successful returns true, else returns false
-     * @throws RemoteException if the reference could not be accessed
-     *
-     * */
+    //choice of the hidden goal by a player
     public boolean chooseGoal(String nickname, int goalId, GameListener listener) throws RemoteException {
         synchronized (lockPlayers) {
             Player p = players.get(nickname);
@@ -186,17 +138,7 @@ public class GameController implements GameControllerInterface, Serializable, Ru
         }
     }
 
-    /**
-     *
-     * lets the players choose the side of their Initial card and notifies all the player once they have all chosen a side
-     *
-     * @param nickname is the player currently selecting the side
-     * @param isFront set to true if the side chosen is the front
-     * @param listener is the listener associated to the game
-     * @return if the selection is valid return true, else returns false
-     * @throws RemoteException if the references could not be accessed
-     *
-     * */
+    //choice of the side of the initial card by a player
     public boolean chooseInitialCardSide(String nickname, boolean isFront, GameListener listener) throws RemoteException {
         synchronized (lockPlayers) {
             Player p = players.get(nickname);
@@ -213,20 +155,7 @@ public class GameController implements GameControllerInterface, Serializable, Ru
             return false;
         }
     }
-    /**
-     *
-     * lets the player named @param nickname play a card from his hand on his board, triggers end game if the
-     * player placing the card reaches 20 points
-     *
-     * @param nickname is the name of the player
-     * @param cardIndex is the index of the card that is played referencing the player hand
-     * @param isFront is set to true if the card is played with its front facing up
-     * @param x,y are the coordinates of where the card is played
-     * @param listener is the listener associated with the game
-     * @return is true if the card selected can actually be placed at the given coordinates
-     * @throws RemoteException if the references could not be accessed
-     *
-     * */
+
     public boolean playCard(String nickname, int cardIndex, boolean isFront, int x, int y, GameListener listener) throws RemoteException {
         synchronized (lockPlayers) {
             Player p = players.get(nickname);
@@ -246,17 +175,7 @@ public class GameController implements GameControllerInterface, Serializable, Ru
             return false;
         }
     }
-    /**
-     *
-     * used for the draw phase of the players turn
-     *
-     * @param nickname is the name of the player
-     * @param cardIndex is the index of the card that the player wants to draw
-     * @param listener is the listener associated with the game
-     * @return is true if the selected card is actually drawable, otherwise is false
-     * @throws RemoteException if the references could not be accessed
-     *
-     * */
+
     public boolean drawCard(String nickname, int cardIndex, GameListener listener) throws RemoteException {
         synchronized (lockPlayers) {
             Player p = players.get(nickname);
@@ -296,14 +215,7 @@ public class GameController implements GameControllerInterface, Serializable, Ru
             return false;
         }
     }
-    /**
-     *
-     * this method is responsible for the turn rotation of the players, it also checks for common goals completion
-     * and in the case of any player reaching 20 points triggers the end game and calculates the winner
-     *
-     * @throws RemoteException if the references could not be accessed
-     *
-     * */
+
     public void nextPlayer() throws RemoteException {
         int nextPlayerIndex = rotation.indexOf(currentPlayer) + 1;
         if(nextPlayerIndex == playerCount) {
@@ -324,13 +236,7 @@ public class GameController implements GameControllerInterface, Serializable, Ru
         }
         currentPlayer = rotation.get(nextPlayerIndex);
     }
-    /**
-     *
-     * calculates the winner of the game
-     *
-     * @return the nickname of the winning player
-     *
-     * */
+
     public String calculateWinner() {
         int max = 0;
         String win = "";
@@ -344,36 +250,15 @@ public class GameController implements GameControllerInterface, Serializable, Ru
         }
         return win;
     }
-    /**
-     * returns the number of players
-     *
-     * @return the number of players
-     *
-     * */
+
     public int getNumOfPlayers() {
         return players.size();
     }
-    /**
-     *
-     * method used to show a message in the public chat
-     *
-     * @param sender is the player that sends the message
-     * @param message content of the message itself
-     * @throws RemoteException if the references could not be accessed
-     *
-     * */
+
     public Game getGame() {
         return game;
     }
-    /**
-     * method used to send a private message from a player to another
-     *
-     * @param sender is the player that sends the message
-     * @param receiver is the player that receives the message
-     * @param message content of the message itself
-     * @throws RemoteException if the references could not be accessed
-     *
-     * */
+
     public String getCurrentPlayer() {
         return currentPlayer;
     }

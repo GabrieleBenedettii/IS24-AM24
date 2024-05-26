@@ -50,9 +50,9 @@ public abstract class GameCard {
         return new GameCardView("GameCard", imageId, printCard());
     }
 
-    public String getStringForCard(){
-        return Constants.getText(getCornerByIndex(0).getCornerText()) + "*" + Constants.getText(getCornerByIndex(1).getCornerText()) +
-                Constants.getText(getCornerByIndex(2).getCornerText()) + "*" + Constants.getText(getCornerByIndex(3).getCornerText());
+    public GameCardView getViewForMatrix(){
+        return new GameCardView("GameCard", imageId, Constants.getText(getCornerByIndex(0).getCornerText()) + "*" + Constants.getText(getCornerByIndex(1).getCornerText()) +
+                Constants.getText(getCornerByIndex(2).getCornerText()) + "*" + Constants.getText(getCornerByIndex(3).getCornerText()));
     }
 }
 

@@ -28,12 +28,12 @@ public class MenuController extends Generic{
 
     public void createNewGameAction(ActionEvent event) throws IOException {
         getInputReaderGUI().addString("1");
-        //Sound.playSound("buttonClick");
+        Sound.playSound("buttonClick");
     }
 
     public void joinFirstAvailableGameAction(ActionEvent event) throws IOException {
         getInputReaderGUI().addString("2");
-        //Sound.playSound("buttonClick");
+        Sound.playSound("buttonClick");
     }
 
     public void infoAction(MouseEvent event){

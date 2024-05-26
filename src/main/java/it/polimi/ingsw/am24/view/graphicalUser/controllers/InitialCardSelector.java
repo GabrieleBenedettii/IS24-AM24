@@ -2,7 +2,6 @@ package it.polimi.ingsw.am24.view.graphicalUser.controllers;
 
 import it.polimi.ingsw.am24.HelloApplication;
 import it.polimi.ingsw.am24.modelView.GameCardView;
-import it.polimi.ingsw.am24.view.graphicalUser.Sound;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
@@ -32,10 +31,8 @@ public class InitialCardSelector extends Generic {
 
     public void chooseFront(ActionEvent actionEvent) {
         getInputReaderGUI().addString("0");
-        Sound.playSound("button.wav");
     }
     public void chooseBack(ActionEvent actionEvent) {
         getInputReaderGUI().addString("1");
-        Sound.playSound("button.wav");
     }
 }
