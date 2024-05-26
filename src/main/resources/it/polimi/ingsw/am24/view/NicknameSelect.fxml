@@ -19,11 +19,11 @@
                   <Insets top="100.0" />
                </padding>
             </Pane>
-            <Text fill="black" layoutX="338.0" layoutY="259.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size:40; -fx-font-family: 'Muli'; -fx-font-weight: bold;" text="Insert Your Nickname:" textAlignment="CENTER" wrappingWidth="611.8605346679688">
+            <Text fx:id="text1" fill="black" layoutX="338.0" layoutY="259.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Insert Your Nickname:" style="-fx-font-size:40; -fx-font-family: 'Muli';-fx-font-weight: black;" textAlignment="CENTER" wrappingWidth="611.8605346679688">
             </Text>
-            <TextField fx:id="nickname" alignment="CENTER" layoutX="388.0" layoutY="306.0" prefHeight="50.0" prefWidth="500.0" style="-fx-font-size:30; -fx-font-family: 'Muli';">
+            <TextField fx:id="nickname" alignment="CENTER" layoutX="388.0" layoutY="306.0" prefHeight="50.0" prefWidth="500.0" style="-fx-font-size:20; -fx-font-family: 'Muli';">
             </TextField>
-            <Button fx:id="button" defaultButton="true" layoutX="478.0" layoutY="416.0" mnemonicParsing="false" onAction="#actionEnter" prefHeight="60.0" prefWidth="334.0" style="-fx-font-size:30; -fx-font-family: 'Muli';-fx-font-weight: bold;" styleClass="Button-1" stylesheets="@style.css" text="ENTER">
+            <Button fx:id="button" defaultButton="true" layoutX="478.0" layoutY="416.0" mnemonicParsing="false" onAction="#actionEnter" prefHeight="60.0" prefWidth="334.0" style="-fx-font-size:40; -fx-font-family: 'Muli';-fx-font-weight: black;" styleClass="Button-1" stylesheets="@style.css" text="ENTER">
             </Button>
             <Text fx:id="errorText" fill="red" layoutX="227.0" layoutY="566.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size:20; -fx-font-family: 'Muli';-fx-font-weight: bold;" text="" textAlignment="CENTER" visible="false" wrappingWidth="846.0" />
          </children>

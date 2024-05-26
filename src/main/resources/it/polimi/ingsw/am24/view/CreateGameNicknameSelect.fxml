@@ -10,7 +10,7 @@
    <children>
       <Pane fx:id="content" prefHeight="735.0" prefWidth="1299.0" styleClass="neutralBackground" stylesheets="@style.css">
          <children>
-            <Pane layoutX="344.0" layoutY="191.0" maxHeight="353.0" maxWidth="611.0" opacity="0.8" prefHeight="353.0" prefWidth="611.0">
+            <Pane layoutX="344.0" layoutY="140.0" maxHeight="441.0" maxWidth="611.0" opacity="0.8" prefHeight="441.0" prefWidth="611.0">
                <cursor>
                   <Cursor fx:constant="DEFAULT" />
                </cursor>
@@ -18,20 +18,20 @@
                   <Insets top="100.0" />
                </padding>
                <children>
-                  <Text fill="black" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size:30; -fx-font-family: 'Muli';-fx-font-weight: bold;" text="Insert Your Nickname:" textAlignment="CENTER" wrappingWidth="611.8605346679688">
+                  <Text fx:id="text1" fill="black" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size:40; -fx-font-weight: black; -fx-font-family: 'Muli'" text="Insert Your Nickname:" textAlignment="CENTER" wrappingWidth="611.8605346679688">
                   </Text>
-                  <TextField fx:id="nickNameTextField" alignment="CENTER" layoutX="56.0" layoutY="58.0" prefHeight="50.0" prefWidth="500.0" style="-fx-font-size:20; -fx-font-family: 'Muli';">
+                  <TextField fx:id="nickNameTextField" alignment="CENTER" layoutX="56.0" layoutY="97.0" prefHeight="50.0" prefWidth="500.0" style="-fx-font-size:20; -fx-font-family: 'Muli'">
                   </TextField>
-                  <Text fill="black" layoutY="147.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size:30; -fx-font-family: 'Muli'; -fx-font-weight: bold;" text="Insert the Number of Players:" textAlignment="CENTER" wrappingWidth="611.8605346679688">
+                  <Text fx:id="text2" fill="black" layoutX="7.0" layoutY="202.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size:40; ;-fx-font-weight: black;-fx-font-family: 'Muli'" text="Insert players number:" textAlignment="CENTER" wrappingWidth="611.8605346679688">
                   </Text>
-                  <TextField fx:id="playerNumberTextField" alignment="CENTER" layoutX="56.0" layoutY="167.0" prefHeight="50.0" prefWidth="500.0" style="-fx-font-size:20; -fx-font-family: 'Muli';">
+                  <TextField fx:id="playerNumberTextField" alignment="CENTER" layoutX="56.0" layoutY="236.0" prefHeight="50.0" prefWidth="500.0" style="-fx-font-size:20; -fx-font-family: 'Muli'">
                   </TextField>
-                  <Button defaultButton="true" layoutX="139.0" layoutY="245.0" mnemonicParsing="false" onAction="#actionEnter" prefHeight="60.0" prefWidth="334.0" style="-fx-font-size:30; -fx-font-family: 'Muli';-fx-font-weight: bold;" styleClass="Button-1" stylesheets="@style.css" text="ENTER">
+                  <Button fx:id="button" defaultButton="true" layoutX="139.0" layoutY="312.0" mnemonicParsing="false" onAction="#actionEnter" prefHeight="60.0" prefWidth="334.0" style="-fx-font-size:40;-fx-font-weight: black;-fx-font-family: 'Muli'" styleClass="Button-1" stylesheets="@style.css" text="ENTER">
                   </Button>
                </children>
             </Pane>
-            <Text fx:id="errorText1" fill="red" layoutX="276.0" layoutY="566.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size:20; -fx-font-family: 'Muli';-fx-font-weight: bold;" textAlignment="CENTER" visible="false" wrappingWidth="746.8605346679688" />
-            <Text fx:id="errorText2" fill="red" layoutX="276.0" layoutY="602.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size:20; -fx-font-family: 'Muli';-fx-font-weight: bold;" textAlignment="CENTER" visible="false" wrappingWidth="746.8605346679688" />
+            <Text fx:id="errorText1" fill="red" layoutX="276.0" layoutY="566.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" visible="false" wrappingWidth="746.8605346679688" style="-fx-font-size:20; -fx-font-weight: black; -fx-font-family: 'Muli' "/>
+            <Text fx:id="errorText2" fill="red" layoutX="276.0" layoutY="602.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" visible="false" wrappingWidth="746.8605346679688" style="-fx-font-size:20; -fx-font-weight: black; -fx-font-family: 'Muli'"/>
          </children>
       </Pane>
    </children>

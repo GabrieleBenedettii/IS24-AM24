@@ -37,6 +37,8 @@ import it.polimi.ingsw.am24.constants.Constants;
 
 public class GameBoardController extends Generic{
 
+    @FXML private VBox messagesContainer;
+    @FXML private ScrollPane chatMessagesReceiver;
     @FXML private HBox playingHandContainer;
     @FXML private HBox hiddenGoalContainer;
     @FXML private VBox resourceCardsContainer;
@@ -62,6 +64,7 @@ public class GameBoardController extends Generic{
     private int id;
     private ImageView[] hand;
     private Font normal, bold;
+    private ObservableList<String> items = FXCollections.observableArrayList();
 
     @FXML
     public void initialize() {
@@ -73,6 +76,7 @@ public class GameBoardController extends Generic{
     @FXML
     public void beginTurn(GameView gameView) {
         this.gameView = gameView;
+        items.remove(gameView.getCurrent());
         gameViewContainer.setOpacity(1);
         actionMessage.setText(gameView.getCurrent() + ", it's your turn. Please, place a card");
 
@@ -135,14 +139,13 @@ public class GameBoardController extends Generic{
     @FXML
     public void hiddenGoalChoice(GameView gameView){
         this.gameView = gameView;
-        ObservableList<String> items = FXCollections.observableArrayList();
         items.add("All");
         items.addAll(gameView.getCommon().getRotation());
         receiver.setItems(items);
+        receiver.setValue("All");
 
         messageText.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
-                System.out.println(receiver.getValue().toString());
                 if(receiver != null && !messageText.equals("")) {
                     getInputReaderGUI().addString((receiver.getValue().toString().equals("All") ? "/c " : "/cs " + receiver.getValue().toString() + " ") + messageText.getText());
                     messageText.clear();
@@ -536,6 +539,7 @@ public class GameBoardController extends Generic{
     @FXML
     public void notYourTurn(GameView gameView, String myNickname) {
         this.gameView = gameView;
+        items.remove(myNickname);
         actionMessage.setText(gameView.getCurrent() + " is playing. Wait for your turn");
         gameViewContainer.setOpacity(0.5);
 
@@ -615,5 +619,12 @@ public class GameBoardController extends Generic{
         commonGoalsContainer.getChildren().clear();
         rankingContainer.getChildren().clear();
         gameViewContainer.getChildren().clear();
+    }
+
+    public void addMessage(String message) {
+        Text text = new Text(message);
+        messagesContainer.getChildren().add(text);
+        chatMessagesReceiver.layout();
+        chatMessagesReceiver.setVvalue(1.0);
     }
 }

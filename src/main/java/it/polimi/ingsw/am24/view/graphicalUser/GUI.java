@@ -203,7 +203,6 @@ public class GUI extends UI {
             this.guiApplication.setActiveScene(Scenes.COLORSELECTOR);
             ColorSelector selector = (ColorSelector) this.guiApplication.getController(Scenes.COLORSELECTOR);
             selector.showColorNotAvailable();
-
         });
     }
 
@@ -331,7 +330,10 @@ public class GUI extends UI {
 
     @Override
     public void add_message(String message) {
-
+        callPlatformRunLater(() -> {
+            GameBoardController controller = (GameBoardController) this.guiApplication.getController(Scenes.GAME);
+            controller.addMessage(message);
+        });
     }
 
     @Override

@@ -1,8 +1,11 @@
 package it.polimi.ingsw.am24.view.graphicalUser.controllers;
 
+import it.polimi.ingsw.am24.HelloApplication;
 import it.polimi.ingsw.am24.view.graphicalUser.Sound;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
@@ -10,7 +13,9 @@ import java.io.IOException;
 public class CreateGameNicknameSelectController extends Generic{
 
     @FXML
-    public Text errorText1;
+    private Text errorText1;
+    @FXML
+    private Text errorText2;
     @FXML
     public Text errorText2;
     @FXML

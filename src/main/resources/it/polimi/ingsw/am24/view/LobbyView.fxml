@@ -7,12 +7,15 @@
 
 <AnchorPane prefHeight="735.0" prefWidth="1299.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.am24.view.graphicalUser.controllers.LobbyViewController">
    <children>
-      <Pane prefHeight="735.0" prefWidth="1299.0" styleClass="neutralBackground" stylesheets="@style.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <Pane prefHeight="735.0" prefWidth="1299.0" styleClass="neutralBackground" stylesheets="@style.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <cursor>
+            <Cursor fx:constant="WAIT" />
+         </cursor></Pane>
       <Pane fx:id="content" prefHeight="735.0" prefWidth="1299.0">
          <children>
             <Pane layoutX="132.0" layoutY="191.0" maxHeight="353.0" maxWidth="1036.0" opacity="0.8" prefHeight="353.0" prefWidth="1036.0">
                <cursor>
-                  <Cursor fx:constant="DEFAULT" />
+                  <Cursor fx:constant="WAIT" />
                </cursor>
                <padding>
                   <Insets top="100.0" />
@@ -27,6 +30,12 @@
                </children>
             </Pane>
          </children>
+         <cursor>
+            <Cursor fx:constant="WAIT" />
+         </cursor>
       </Pane>
    </children>
+   <cursor>
+      <Cursor fx:constant="WAIT" />
+   </cursor>
 </AnchorPane>

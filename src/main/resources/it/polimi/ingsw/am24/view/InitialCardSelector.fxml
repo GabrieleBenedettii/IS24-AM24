@@ -19,7 +19,7 @@
                         <Insets top="100.0" />
                     </padding>
                     <children>
-                        <Text fill="black" layoutX="109.0" layoutY="83.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size:50; -fx-font-family: 'Muli';-fx-font-weight: bold;" text="Choose Your Initial Card Side" textAlignment="CENTER">
+                        <Text fx:id="text" fill="black" layoutX="109.0" layoutY="83.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size:50; -fx-font-weight: bold; -fx-font-family: 'Muli'" text="Choose Your Initial Card Side" textAlignment="CENTER">
                         </Text>
                         <HBox alignment="CENTER" layoutY="124.0" prefHeight="301.0" prefWidth="900.0" spacing="40">
                             <children>

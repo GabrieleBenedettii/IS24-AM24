@@ -274,7 +274,7 @@ public class CLI extends UI {
 
     @Override
     public void add_message(String message) {
-        messages.add(message);
+        System.out.println("\nNew message: " + message);
     }
 
     @Override
