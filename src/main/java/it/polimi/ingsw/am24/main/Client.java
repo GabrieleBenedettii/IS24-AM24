@@ -84,6 +84,7 @@ public class Client {
         if(selection == 1 || selection == 2){
             new GameFlow(selected);
         }else {
+            //todo verificare che l'opzione 4 (gui + socket) utilizzi davvero le socket (stampa "Client RMI ready")
             Application.launch(GUIapp.class, selected);
         }
 

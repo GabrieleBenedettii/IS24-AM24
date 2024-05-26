@@ -7,13 +7,17 @@ import java.util.ArrayList;
 
 public class PlayerJoinedMessage extends SocketServerMessage {
     private final ArrayList<String> players;
+    private final String current;
+    private final int num;
 
-    public PlayerJoinedMessage(ArrayList<String> players) {
+    public PlayerJoinedMessage(ArrayList<String> players, String current,int num) {
         this.players=players;
+        this.current = current;
+        this.num = num;
     }
 
     @Override
     public void execute(GameListener listener) throws RemoteException {
-        listener.playerJoined(players);
+        listener.playerJoined(players,current, num);
     }
 }

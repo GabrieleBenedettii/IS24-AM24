@@ -72,7 +72,7 @@ class PlayerTest {
         assertEquals(PlayerColor.RED,player.getColor());
 
         player.setHiddenGoal(obj);
-        assertNotNull(player.getPlayerView());
+        assertNotNull(player.getPublicPlayerView());
     }
 
 

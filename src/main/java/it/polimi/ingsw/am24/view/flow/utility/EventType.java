@@ -11,5 +11,5 @@ public enum EventType {
     BEGIN_PLAY,
     BEGIN_DRAW,
     SENT_MESSAGE,
-    GAME_ENDED
+    NOT_AVAILABLE_COLORS, GAME_ENDED
 }

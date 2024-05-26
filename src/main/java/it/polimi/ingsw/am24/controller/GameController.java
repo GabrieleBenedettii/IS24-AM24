@@ -8,6 +8,8 @@ import it.polimi.ingsw.am24.model.Player;
 import it.polimi.ingsw.am24.model.PlayerColor;
 import it.polimi.ingsw.am24.model.goal.GoalCard;
 import it.polimi.ingsw.am24.modelView.GameView;
+import it.polimi.ingsw.am24.modelView.PublicBoardView;
+import it.polimi.ingsw.am24.modelView.PublicPlayerView;
 import it.polimi.ingsw.am24.network.rmi.GameControllerInterface;
 import it.polimi.ingsw.am24.view.flow.utility.GameStatus;
 
@@ -91,7 +93,7 @@ public class GameController implements GameControllerInterface, Serializable, Ru
                     return true;
                 } else {
                     //if the color is not available, send the updated list
-                    listener.availableColors(new ArrayList<>(game.getAvailableColors()));
+                    listener.notAvailableColors(new ArrayList<>(game.getAvailableColors()));
                     return false;
                 }
             }
@@ -140,10 +142,14 @@ public class GameController implements GameControllerInterface, Serializable, Ru
     public boolean chooseInitialCardSide(String nickname, boolean isFront, GameListener listener) throws RemoteException {
         synchronized (lockPlayers) {
             Player p = players.get(nickname);
+            HashMap<String, PublicPlayerView> playerViews = new HashMap<>();
+            for(String pl : rotation) {
+                playerViews.put(pl, players.get(pl).getPublicPlayerView());
+            }
             if (p != null) {
                 p.getInitialcard().setFront(isFront);
                 p.playInitialCard(isFront);
-                listener.hiddenGoalChoice(new ArrayList<>(game.drawGoalCards().stream().map(GoalCard::getView).toList()), new GameView(null, gameId, p.getPlayerView(), game.getPublicBoardView(), null));
+                listener.hiddenGoalChoice(new ArrayList<>(game.drawGoalCards().stream().map(GoalCard::getView).toList()), new GameView(null, gameId, p.getPrivatePlayerView(), new PublicBoardView(game.getCommonBoardView(), rotation, playerViews), null));
                 return true;
             }
             return false;
@@ -157,7 +163,7 @@ public class GameController implements GameControllerInterface, Serializable, Ru
                 try {
                     p.play(cardIndex, isFront, x, y);
                     if(p.getScore() >= 20 && !status.equals(GameStatus.LAST_LAST_ROUND) && !status.equals(GameStatus.LAST_ROUND)) status = GameStatus.LAST_LAST_ROUND;
-                    listener.beginDraw(new GameView(currentPlayer, gameId, p.getPlayerView(), game.getPublicBoardView(), status));
+                    notifyAllListeners_beginDraw();
                     return true;
                 } catch (InvalidPositioningException e) {
                     listener.invalidPositioning();
@@ -261,10 +267,6 @@ public class GameController implements GameControllerInterface, Serializable, Ru
         this.currentPlayer = currentPlayer;
     }
 
-    /*public void disconnectPlayer(){
-        //Todo ?
-    }*/
-
     public boolean sentPublicMessage(String sender, String message) throws RemoteException {
         if(!players.containsKey(sender)) return false;
         chat.addPublicMessage(sender, message);
@@ -300,7 +302,7 @@ public class GameController implements GameControllerInterface, Serializable, Ru
                     if(p != null && listeners.get(p) != null)
                         new Thread(() -> {
                             try {
-                                listeners.get(p).playerJoined(new ArrayList<>(players.keySet().stream().toList()));
+                                listeners.get(p).playerJoined(new ArrayList<>(players.keySet().stream().toList()),players.get(p).getNickname(), playerCount);
                             } catch (RemoteException e) {
                                 throw new RuntimeException(e);
                             }
@@ -312,11 +314,34 @@ public class GameController implements GameControllerInterface, Serializable, Ru
 
     private void notifyAllListeners_beginTurn() throws RemoteException {
         synchronized (lockPlayers) {
+            HashMap<String, PublicPlayerView> playerViews = new HashMap<>();
+            for(String pl : rotation) {
+                playerViews.put(pl, players.get(pl).getPublicPlayerView());
+            }
             for (String p : listeners.keySet()) {
                 if (p != null && listeners.get(p) != null)
                     new Thread(() -> {
                         try {
-                            listeners.get(p).beginTurn(new GameView(currentPlayer, gameId, players.get(p).getPlayerView(), game.getPublicBoardView(), status));
+                            listeners.get(p).beginTurn(new GameView(currentPlayer, gameId, players.get(p).getPrivatePlayerView(), new PublicBoardView(game.getCommonBoardView(), rotation, playerViews), status));
+                        } catch (RemoteException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }).start();
+            }
+        }
+    }
+
+    private void notifyAllListeners_beginDraw() throws RemoteException {
+        HashMap<String, PublicPlayerView> playerViews = new HashMap<>();
+        for(String pl : rotation) {
+            playerViews.put(pl, players.get(pl).getPublicPlayerView());
+        }
+        synchronized (lockPlayers) {
+            for (String p : listeners.keySet()) {
+                if (p != null && listeners.get(p) != null)
+                    new Thread(() -> {
+                        try {
+                            listeners.get(p).beginDraw(new GameView(currentPlayer, gameId, players.get(p).getPrivatePlayerView(), new PublicBoardView(game.getCommonBoardView(), rotation, playerViews), status));
                         } catch (RemoteException e) {
                             throw new RuntimeException(e);
                         }

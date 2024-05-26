@@ -7,11 +7,11 @@ import java.io.Serializable;
 public class GameView implements Serializable {
     private final String current;
     private final int gameId;
-    private final PlayerView playerView;
+    private final PrivatePlayerView playerView;
     private final PublicBoardView common;
     private final GameStatus gameStatus;
 
-    public GameView(String current, int gameId, PlayerView playerView, PublicBoardView common, GameStatus gameStatus) {
+    public GameView(String current, int gameId, PrivatePlayerView playerView, PublicBoardView common, GameStatus gameStatus) {
         this.current = current;
         this.gameId = gameId;
         this.playerView = playerView;
@@ -27,7 +27,7 @@ public class GameView implements Serializable {
         return gameId;
     }
 
-    public PlayerView getPlayerView() {
+    public PrivatePlayerView getPlayerView() {
         return playerView;
     }
 

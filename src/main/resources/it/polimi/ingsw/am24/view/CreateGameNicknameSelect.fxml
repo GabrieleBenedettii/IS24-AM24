@@ -22,14 +22,16 @@
                   </Text>
                   <TextField fx:id="nickNameTextField" alignment="CENTER" layoutX="56.0" layoutY="58.0" prefHeight="50.0" prefWidth="500.0" style="-fx-font-size:20; -fx-font-family: 'Muli';">
                   </TextField>
-                  <Text fill="black" layoutY="147.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size:30; -fx-font-family: 'Muli';-fx-font-weight: bold;" text="Insert the Number of Players:" textAlignment="CENTER" wrappingWidth="611.8605346679688">
+                  <Text fill="black" layoutY="147.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size:30; -fx-font-family: 'Muli'; -fx-font-weight: bold;" text="Insert the Number of Players:" textAlignment="CENTER" wrappingWidth="611.8605346679688">
                   </Text>
                   <TextField fx:id="playerNumberTextField" alignment="CENTER" layoutX="56.0" layoutY="167.0" prefHeight="50.0" prefWidth="500.0" style="-fx-font-size:20; -fx-font-family: 'Muli';">
                   </TextField>
                   <Button defaultButton="true" layoutX="139.0" layoutY="245.0" mnemonicParsing="false" onAction="#actionEnter" prefHeight="60.0" prefWidth="334.0" style="-fx-font-size:30; -fx-font-family: 'Muli';-fx-font-weight: bold;" styleClass="Button-1" stylesheets="@style.css" text="ENTER">
-            </Button>
+                  </Button>
                </children>
             </Pane>
+            <Text fx:id="errorText1" fill="red" layoutX="276.0" layoutY="566.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size:20; -fx-font-family: 'Muli';-fx-font-weight: bold;" textAlignment="CENTER" visible="false" wrappingWidth="746.8605346679688" />
+            <Text fx:id="errorText2" fill="red" layoutX="276.0" layoutY="602.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size:20; -fx-font-family: 'Muli';-fx-font-weight: bold;" textAlignment="CENTER" visible="false" wrappingWidth="746.8605346679688" />
          </children>
       </Pane>
    </children>
