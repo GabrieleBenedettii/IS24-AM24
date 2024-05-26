@@ -16,26 +16,19 @@ import it.polimi.ingsw.am24.modelView.GameCardView;
 
 
 public class Game {
-    //DECKS
+
     private ResourceDeck resourceDeck;
     private GoldDeck goldDeck;
     private InitialDeck initialDeck;
     private GoalDeck goalDeck;
 
-    //CARDS FACE UP ON THE TABLE
     private ArrayList<ResourceCard> visibleResCard;
     private ArrayList<GoldCard> visibleGoldCard;
 
-    //COMMON GOALS
     private ArrayList<GoalCard> commonGoals;
 
     private ArrayList<PlayerColor> availableColors;
-    private HashMap<Integer,GoalCard> drawnGoalCards;   //used to save the goal card's objects while players are choosing
-    /**
-     * 
-     * creates and initializes a Game object
-     * 
-     * */
+    private HashMap<Integer,GoalCard> drawnGoalCards;
     public Game() {
         this.visibleResCard = new ArrayList<>();
         this.visibleGoldCard = new ArrayList<>();
@@ -47,32 +40,28 @@ public class Game {
         availableColors.add(PlayerColor.RED);
         availableColors.add(PlayerColor.BLUE);
     }
-    /**
-     * 
-     * sets up the decks, shuffles them and prepares the game by drawing the two visible resource, gold and goal cards
-     * 
-     * */
+
     public void start(){
-        //decks creation
+
         resourceDeck = new ResourceDeck();
         goldDeck = new GoldDeck();
         initialDeck = new InitialDeck();
         goalDeck = new GoalDeck();
 
-        //decks initial shuffle
+
         resourceDeck.shuffle();
         goldDeck.shuffle();
         initialDeck.shuffle();
         goalDeck.shuffle();
 
-        //set the table
+
         try {
             visibleResCard.add(resourceDeck.drawCard());
             visibleResCard.add(resourceDeck.drawCard());
             visibleGoldCard.add(goldDeck.drawCard());
             visibleGoldCard.add(goldDeck.drawCard());
         } catch(EmptyDeckException e) {
-            //ignored, can't happen
+
         }
 
         commonGoals.add(goalDeck.drawCard());
