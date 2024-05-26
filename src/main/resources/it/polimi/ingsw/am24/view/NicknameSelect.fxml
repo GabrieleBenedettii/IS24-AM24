@@ -11,7 +11,7 @@
       <Pane prefHeight="735.0" prefWidth="1299.0" styleClass="neutralBackground" stylesheets="@style.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
       <Pane fx:id="content" prefHeight="735.0" prefWidth="1299.0">
          <children>
-            <Pane layoutX="340.0" layoutY="191.0" maxHeight="353.0" maxWidth="611.0" opacity="0.8" prefHeight="353.0" prefWidth="611.0" >
+            <Pane layoutX="340.0" layoutY="191.0" maxHeight="353.0" maxWidth="611.0" opacity="0.8" prefHeight="353.0" prefWidth="611.0">
                <cursor>
                   <Cursor fx:constant="DEFAULT" />
                </cursor>
@@ -21,10 +21,11 @@
             </Pane>
             <Text fill="black" layoutX="338.0" layoutY="259.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size:40; -fx-font-family: 'Muli'; -fx-font-weight: bold;" text="Insert Your Nickname:" textAlignment="CENTER" wrappingWidth="611.8605346679688">
             </Text>
-            <TextField fx:id="nickname" alignment="CENTER" layoutX="388.0" layoutY="306.0" prefHeight="50.0" prefWidth="500.0" style="-fx-font-size:30; -fx-font-family: 'Muli';-fx-font-weight: bold;">
+            <TextField fx:id="nickname" alignment="CENTER" layoutX="388.0" layoutY="306.0" prefHeight="50.0" prefWidth="500.0" style="-fx-font-size:30; -fx-font-family: 'Muli';">
             </TextField>
             <Button fx:id="button" defaultButton="true" layoutX="478.0" layoutY="416.0" mnemonicParsing="false" onAction="#actionEnter" prefHeight="60.0" prefWidth="334.0" style="-fx-font-size:30; -fx-font-family: 'Muli';-fx-font-weight: bold;" styleClass="Button-1" stylesheets="@style.css" text="ENTER">
             </Button>
+            <Text fx:id="errorText" fill="red" layoutX="227.0" layoutY="566.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size:20; -fx-font-family: 'Muli';-fx-font-weight: bold;" text="" textAlignment="CENTER" visible="false" wrappingWidth="846.0" />
          </children>
       </Pane>
    </children>

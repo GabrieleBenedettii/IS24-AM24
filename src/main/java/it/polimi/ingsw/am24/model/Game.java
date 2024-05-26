@@ -11,10 +11,8 @@ import it.polimi.ingsw.am24.model.deck.*;
 import it.polimi.ingsw.am24.model.card.*;
 import it.polimi.ingsw.am24.model.goal.GoalDeck;
 import it.polimi.ingsw.am24.model.goal.GoalCard;
+import it.polimi.ingsw.am24.modelView.CommonBoardView;
 import it.polimi.ingsw.am24.modelView.GameCardView;
-import it.polimi.ingsw.am24.modelView.PublicBoardView;
-
-import static it.polimi.ingsw.am24.constants.Constants.getText;
 
 
 public class Game {
@@ -161,7 +159,7 @@ public class Game {
         return drawnGoalCards.keySet().stream().toList();
     }
 
-    public PublicBoardView getPublicBoardView(){
+    public CommonBoardView getCommonBoardView(){
         String topGold = Constants.getText(goldDeck.getFirstCardKingdom());
         String topRes = Constants.getText(resourceDeck.getFirstCardKingdom());
         ArrayList<GameCardView> res = new ArrayList<>(), gold = new ArrayList<>(), goals = new ArrayList<>();
@@ -170,6 +168,6 @@ public class Game {
             res.add(new GameCardView(visibleResCard.get(i).getType(), visibleResCard.get(i).getImageId(), visibleResCard.get(i).printCard()));
             gold.add(new GameCardView(visibleGoldCard.get(i).getType(), visibleGoldCard.get(i).getImageId(), visibleGoldCard.get(i).printCard()));
         }
-        return new PublicBoardView(goals, gold, res, topGold, topRes);
+        return new CommonBoardView(goals, res, gold, topRes, topGold);
     }
 }

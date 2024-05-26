@@ -3,6 +3,7 @@ package it.polimi.ingsw.am24.constants;
 import it.polimi.ingsw.am24.model.Kingdom;
 import it.polimi.ingsw.am24.model.Symbol;
 
+import java.awt.*;
 import java.util.HashMap;
 
 public class Constants {
@@ -47,6 +48,41 @@ public class Constants {
     private static final HashMap<Character, String> firstLetterMap = new HashMap<Character, String>();
     public final static Object gameIdTime = "Created";
     public final static Object gameIdData = "GameId";
+    public static final HashMap<Integer, Point> scoreboard = new HashMap<>();
+
+
+    static {
+        scoreboard.put(0,new Point(192,1349));
+        scoreboard.put(1,new Point(361,1349));
+        scoreboard.put(2,new Point(535,1349));
+        scoreboard.put(3,new Point(623,1193));
+        scoreboard.put(4,new Point(449,1193));
+        scoreboard.put(5,new Point(280,1193));
+        scoreboard.put(6,new Point(106,1193));
+        scoreboard.put(7,new Point(106,1038));
+        scoreboard.put(8,new Point(280,1038));
+        scoreboard.put(9,new Point(449,1038));
+        scoreboard.put(10,new Point(623,1038));
+        scoreboard.put(11,new Point(623,882));
+        scoreboard.put(12,new Point(449,882));
+        scoreboard.put(13,new Point(280,882));
+        scoreboard.put(14,new Point(106,882));
+        scoreboard.put(15,new Point(106,727));
+        scoreboard.put(16,new Point(280,727));
+        scoreboard.put(17,new Point(449,727));
+        scoreboard.put(18,new Point(623,727));
+        scoreboard.put(19,new Point(623,572));
+        scoreboard.put(20,new Point(363,491));
+        scoreboard.put(21,new Point(106,572));
+        scoreboard.put(22,new Point(106,413));
+        scoreboard.put(23,new Point(106,254));
+        scoreboard.put(24,new Point(206,128));
+        scoreboard.put(25,new Point(363,101));
+        scoreboard.put(26,new Point(520,128));
+        scoreboard.put(27,new Point(623,254));
+        scoreboard.put(28,new Point(623,413));
+        scoreboard.put(29,new Point(363,289));
+    }
     public final static int offSet = 40500;
 
     static {

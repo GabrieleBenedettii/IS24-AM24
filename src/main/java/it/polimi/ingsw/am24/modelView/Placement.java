@@ -6,11 +6,13 @@ public class Placement implements Serializable {
     private int x;
     private int y;
     private GameCardView card;
+    private boolean front;
 
-    public Placement(int x, int y, GameCardView card) {
+    public Placement(int x, int y, GameCardView card, boolean front) {
         this.x = x;
         this.y = y;
         this.card = card;
+        this.front = front;
     }
 
     public int getX() {
@@ -23,5 +25,9 @@ public class Placement implements Serializable {
 
     public GameCardView getCard() {
         return card;
+    }
+
+    public boolean getFront() {
+        return front;
     }
 }

@@ -1,36 +1,30 @@
 package it.polimi.ingsw.am24.modelView;
 
-import it.polimi.ingsw.am24.model.Game;
-
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class PublicBoardView implements Serializable {
-    private final ArrayList<GameCardView> goals;
-    private final ArrayList<GameCardView> resourceCards;
-    private final ArrayList<GameCardView> goldCards;
-    private final String resourceDeck;
-    private final String goldDeck;
-    public PublicBoardView(ArrayList<GameCardView> goals, ArrayList<GameCardView> gold, ArrayList<GameCardView> res, String topGold, String topRes){
-        this.goals = goals;
-        this.resourceCards = res;
-        this.goldCards = gold;
-        this.goldDeck = topGold;
-        this.resourceDeck = topRes;
+    private final CommonBoardView commonBoardView;
+
+    private final ArrayList<String> rotation;
+    private final HashMap<String, PublicPlayerView> playerViews;
+
+    public PublicBoardView(CommonBoardView commonBoardView, ArrayList<String> rotation, HashMap<String, PublicPlayerView> playerViews){
+        this.commonBoardView = commonBoardView;
+        this.rotation = rotation;
+        this.playerViews = playerViews;
     }
-    public ArrayList<GameCardView> getGoals() {
-        return goals;
+
+    public CommonBoardView getCommonBoardView() {
+        return commonBoardView;
     }
-    public ArrayList<GameCardView> getResourceCards() {
-        return resourceCards;
+
+    public ArrayList<String> getRotation() {
+        return rotation;
     }
-    public ArrayList<GameCardView> getGoldCards() {
-        return goldCards;
-    }
-    public String getResourceDeck() {
-        return resourceDeck;
-    }
-    public String getGoldDeck() {
-        return goldDeck;
+
+    public PublicPlayerView getPlayerView(String nickname) {
+        return playerViews.get(nickname);
     }
 }
