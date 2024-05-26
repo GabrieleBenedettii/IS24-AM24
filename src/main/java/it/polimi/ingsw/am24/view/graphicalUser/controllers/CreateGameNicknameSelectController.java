@@ -14,8 +14,8 @@ public class CreateGameNicknameSelectController extends Generic{
 
     @FXML
     private Text errorText1;
-    @FXML
-    private Text errorText2;
+    //@FXML
+    //private Text errorText2;
     @FXML
     public Text errorText2;
     @FXML
@@ -41,6 +41,7 @@ public class CreateGameNicknameSelectController extends Generic{
             try {
                 getInputReaderGUI().addString(nickNameTextField.getText());
                 getInputReaderGUI().addString(String.valueOf(Integer.parseInt(playerNumberTextField.getText())));
+                Sound.playSound("button.wav");
                 if(Integer.parseInt(playerNumberTextField.getText()) > 1 && Integer.parseInt(playerNumberTextField.getText())<5)
                     errorText2.setVisible(false);
             } catch (NumberFormatException e) {

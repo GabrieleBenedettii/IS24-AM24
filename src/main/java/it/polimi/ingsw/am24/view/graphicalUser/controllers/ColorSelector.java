@@ -1,5 +1,6 @@
 package it.polimi.ingsw.am24.view.graphicalUser.controllers;
 
+import it.polimi.ingsw.am24.view.graphicalUser.Sound;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -45,5 +46,6 @@ public class ColorSelector extends Generic implements EventHandler<ActionEvent> 
     public void handle(ActionEvent event) {
         Button clickedButton = (Button) event.getSource();
         getInputReaderGUI().addString(clickedButton.getText());
+        Sound.playSound("button.wav");
     }
 }

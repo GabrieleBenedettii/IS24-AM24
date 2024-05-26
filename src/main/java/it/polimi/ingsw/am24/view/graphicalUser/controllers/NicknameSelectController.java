@@ -1,6 +1,7 @@
 package it.polimi.ingsw.am24.view.graphicalUser.controllers;
 
 import it.polimi.ingsw.am24.HelloApplication;
+import it.polimi.ingsw.am24.view.graphicalUser.Sound;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -25,6 +26,7 @@ public class NicknameSelectController extends Generic{
 
     public void actionEnter() throws IOException {
         getInputReaderGUI().addString(nickname.getText());
+        Sound.playSound("button.wav");
     }
     public void showEmptyUsername() {
         errorText.setText("Nickname cannot be empty.");
