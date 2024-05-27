@@ -21,6 +21,8 @@ public class NicknameSelectController extends Generic{
     private Text errorText;
     @FXML
     public void initialize() {
+        Font customFont = Font.loadFont(HelloApplication.class.getResourceAsStream("view/fonts/Plain_Germanica.ttf"), 40);
+        button.setFont(customFont);
         resetNicknameField();
     }
 

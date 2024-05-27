@@ -329,10 +329,18 @@ public class GUI extends UI {
     }
 
     @Override
-    public void add_message(String message) {
+    public void add_message_received(String sender, String receiver, String message, String time) {
         callPlatformRunLater(() -> {
             GameBoardController controller = (GameBoardController) this.guiApplication.getController(Scenes.GAME);
-            controller.addMessage(message);
+            controller.addMessage("[" + time + "] " + (receiver.equals("") ? "[PUBLIC]" : "[PRIVATE]") + " from " + sender + ": " + message);
+        });
+    }
+
+    @Override
+    public void add_message_sent(String receiver, String message, String time) {
+        callPlatformRunLater(() -> {
+            GameBoardController controller = (GameBoardController) this.guiApplication.getController(Scenes.GAME);
+            controller.addMessage("[" + time + "] " + (receiver.equals("") ? "[PUBLIC] to all" : ("[PRIVATE] to " + receiver)) + ": " + message);
         });
     }
 

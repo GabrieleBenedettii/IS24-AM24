@@ -149,7 +149,7 @@ public class GameController implements GameControllerInterface, Serializable, Ru
             if (p != null) {
                 p.getInitialcard().setFront(isFront);
                 p.playInitialCard(isFront);
-                listener.hiddenGoalChoice(new ArrayList<>(game.drawGoalCards().stream().map(GoalCard::getView).toList()), new GameView(null, gameId, p.getPrivatePlayerView(), new PublicBoardView(game.getCommonBoardView(), rotation, playerViews), null));
+                listener.hiddenGoalChoice(new ArrayList<>(game.drawGoalCards().stream().map(GoalCard::getView).toList()), new GameView(p.getNickname(), gameId, p.getPrivatePlayerView(), new PublicBoardView(game.getCommonBoardView(), rotation, playerViews), null));
                 return true;
             }
             return false;
@@ -372,10 +372,10 @@ public class GameController implements GameControllerInterface, Serializable, Ru
     private void notifyAllListeners_sentMessage() throws RemoteException {
         synchronized (chat) {
             for (String p : listeners.keySet()) {
-                if(chat.getLast().getReceiver().isEmpty() || chat.getLast().getReceiver().equals(p) || !chat.getLast().getSender().equals(p))
+                if(chat.getLast().getReceiver().isEmpty() || chat.getLast().getReceiver().equals(p) || chat.getLast().getSender().equals(p))
                     new Thread(() -> {
                         try {
-                            listeners.get(p).sentMessage(chat.getLastMessage());
+                            listeners.get(p).sentMessage(chat.getLast().getSender(), chat.getLast().getReceiver(), chat.getLast().getMessage(), chat.getLast().getTime());
                         } catch (RemoteException e) {
                             throw new RuntimeException(e);
                         }

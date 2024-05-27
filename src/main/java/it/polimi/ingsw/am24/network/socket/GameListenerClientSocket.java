@@ -161,9 +161,9 @@ public class GameListenerClientSocket implements GameListener, Serializable {
     }
 
     @Override
-    public void sentMessage(String message) throws RemoteException {
+    public void sentMessage(String sender, String receiver, String message, String time) throws RemoteException {
         try {
-            out.writeObject(new SentMessageMessage(message));
+            out.writeObject(new SentMessageMessage(sender, receiver, message, time));
             out.flush();
             out.reset();
 

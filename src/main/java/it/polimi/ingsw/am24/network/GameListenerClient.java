@@ -89,8 +89,8 @@ public class GameListenerClient implements GameListener, Serializable {
     }
 
     @Override
-    public void sentMessage(String message) throws RemoteException {
-        flow.sentMessage(message);
+    public void sentMessage(String sender, String receiver, String message, String time) throws RemoteException {
+        flow.sentMessage(sender, receiver, message, time);
     }
 }
 

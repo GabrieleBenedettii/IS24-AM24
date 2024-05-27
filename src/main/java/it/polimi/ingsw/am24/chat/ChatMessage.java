@@ -25,10 +25,7 @@ public class ChatMessage implements Serializable {
     }
 
     public String getMessage() {
-        String ret = !receiver.isEmpty() ? "[PRIVATE]" : "[PUBLIC]";
-        ret += " [" + time.format(DateTimeFormatter.ofPattern("HH:mm")) + "]";
-        ret += " from " + sender + ": " + message;
-        return ret;
+        return message;
     }
 
     public String getSender() {
@@ -37,5 +34,9 @@ public class ChatMessage implements Serializable {
 
     public String getReceiver() {
         return receiver;
+    }
+
+    public String getTime() {
+        return time.format(DateTimeFormatter.ofPattern("HH:mm"));
     }
 }

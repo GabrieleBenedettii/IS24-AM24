@@ -26,7 +26,7 @@
                   </Text>
                   <TextField fx:id="playerNumberTextField" alignment="CENTER" layoutX="56.0" layoutY="236.0" prefHeight="50.0" prefWidth="500.0" style="-fx-font-size:20; -fx-font-family: 'Muli'">
                   </TextField>
-                  <Button fx:id="button" defaultButton="true" layoutX="139.0" layoutY="312.0" mnemonicParsing="false" onAction="#actionEnter" prefHeight="60.0" prefWidth="334.0" style="-fx-font-size:40;-fx-font-weight: black;-fx-font-family: 'Muli'" styleClass="Button-1" stylesheets="@style.css" text="ENTER">
+                  <Button fx:id="button" alignment="CENTER" contentDisplay="CENTER" defaultButton="true" layoutX="139.0" layoutY="312.0" mnemonicParsing="false" onAction="#actionEnter" prefHeight="60.0" prefWidth="334.0" styleClass="Button-1" stylesheets="@style.css" text="create">
                   </Button>
                </children>
             </Pane>

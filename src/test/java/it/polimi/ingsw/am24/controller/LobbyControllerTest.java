@@ -65,7 +65,7 @@ public class LobbyControllerTest {
             public void gameEnded(String winner, HashMap<String, Integer> rank) throws RemoteException {}
 
             @Override
-            public void sentMessage(String message) throws RemoteException {}
+            public void sentMessage(String sender, String receiver, String message, String time) throws RemoteException {}
         };
     }
 

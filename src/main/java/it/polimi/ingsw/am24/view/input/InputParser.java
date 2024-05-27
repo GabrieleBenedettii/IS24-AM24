@@ -42,7 +42,9 @@ public class InputParser extends Thread {
             if (nickname != null && txt.startsWith("/cs")) {
                 substrings = txt.split(" ");
                 String receiver = substrings[1];
+                System.out.println("Receiver: " + receiver);
                 String message = txt.substring(receiver.length() + 4);
+                System.out.println("Message: " + message);
                 try {
                     gameFlow.sendPrivateMessage(nickname, receiver, message);
                 } catch (RemoteException e) {

@@ -22,7 +22,7 @@ public class ColorSelector extends Generic implements EventHandler<ActionEvent> 
     public void initialize(ArrayList<String> colors) {
         this.colors = colors;
         for (int i = 0; i < colors.size(); i++) {
-            Button button = new Button(colors.get(i));
+            Button button = new Button(colors.get(i).toLowerCase());
             button.setMaxWidth(Double.MAX_VALUE);
             button.setMaxHeight(Double.MAX_VALUE);
             button.getStyleClass().add(colors.get(i).toLowerCase());

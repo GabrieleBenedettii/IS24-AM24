@@ -273,8 +273,13 @@ public class CLI extends UI {
     }
 
     @Override
-    public void add_message(String message) {
-        System.out.println("\nNew message: " + message);
+    public void add_message_received(String sender, String receiver, String message, String time) {
+        System.out.println("\n[" + time + "] " + (receiver.equals("") ? "[PUBLIC]" : "[PRIVATE]") + " from " + sender + ": " + message);
+    }
+
+    @Override
+    public void add_message_sent(String receiver, String message, String time) {
+        System.out.println("\n[" + time + "] " + (receiver.equals("") ? "[PUBLIC] to all" : ("[PRIVATE] to " + receiver)) + ": " + message);
     }
 
     @Override

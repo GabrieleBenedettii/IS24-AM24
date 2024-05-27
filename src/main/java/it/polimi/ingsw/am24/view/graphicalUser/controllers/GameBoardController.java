@@ -57,7 +57,10 @@ public class GameBoardController extends Generic{
 
     @FXML private Label errorLabel;
     @FXML private Label actionMessage;
+    @FXML private Label nameContainer;
+    @FXML private Label playerTableContainer;
 
+    private String nickname;
     private GameView gameView;
     private Image image;
     private ImageView imageView;
@@ -77,9 +80,10 @@ public class GameBoardController extends Generic{
     @FXML
     public void beginTurn(GameView gameView) {
         this.gameView = gameView;
-        items.remove(gameView.getCurrent());
+        clickedImageView = null;
         gameViewContainer.setOpacity(1);
-        actionMessage.setText(gameView.getCurrent() + ", it's your turn. Please, place a card");
+        actionMessage.setText("It's your turn. Please, place a card");
+        actionMessage.setAlignment(Pos.CENTER);
         Sound.playSound("createjoinsound.wav");
 
         //PLAYING HAND
@@ -111,7 +115,8 @@ public class GameBoardController extends Generic{
     public void beginDraw(GameView gameView) {
         this.gameView = gameView;
         errorLabel.setVisible(false);
-        actionMessage.setText(gameView.getCurrent() + ", it's your turn. Please, draw a card");
+        actionMessage.setText("It's your turn. Please, draw a card");
+        actionMessage.setAlignment(Pos.CENTER);
 
         //PLAYING HAND
         drawGameHand(false);
@@ -140,16 +145,20 @@ public class GameBoardController extends Generic{
 
     @FXML
     public void hiddenGoalChoice(GameView gameView){
+        this.nickname = gameView.getCurrent();
+        nameContainer.setText(nickname);
+        nameContainer.setAlignment(Pos.CENTER);
         this.gameView = gameView;
         items.add("All");
         items.addAll(gameView.getCommon().getRotation());
+        items.remove(nickname);
         receiver.setItems(items);
         receiver.setValue("All");
 
         messageText.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
                 if(receiver != null && !messageText.equals("")) {
-                    getInputReaderGUI().addString((receiver.getValue().toString().equals("All") ? "/c " : "/cs " + receiver.getValue().toString() + " ") + messageText.getText());
+                    getInputReaderGUI().addString((receiver.getValue().toString().equals("All") ? "/c " : ("/cs " + receiver.getValue().toString() + " ")) + messageText.getText());
                     Sound.playSound("button.wav");
                     messageText.clear();
                 }
@@ -190,12 +199,12 @@ public class GameBoardController extends Generic{
         VBox.setMargin(imageView, new Insets(5,0,5,0));
     }
 
-    private void drawGameBoard(boolean clickable, String nickname) {
+    private void drawGameBoard(boolean clickable, String nick) {
         gameViewContainer.getChildren().clear();
         GridPane gridPane = new GridPane();
         gridPane.setAlignment(Pos.CENTER);
 
-        GameCardView[][] board = gameView.getCommon().getPlayerView(nickname).getBoard();
+        GameCardView[][] board = gameView.getCommon().getPlayerView(nick).getBoard();
         int firstRow = board.length;
         int lastRow = 0;
         int firstColumn = board[0].length;
@@ -230,7 +239,7 @@ public class GameBoardController extends Generic{
         if(lastColumn < board[0].length - 2){
             lastColumn += 2;
         }
-        ArrayList<Placement> order = gameView.getCommon().getPlayerView(nickname).getPlaceOrder();
+        ArrayList<Placement> order = gameView.getCommon().getPlayerView(nick).getPlaceOrder();
         double size = Math.max(lastRow-firstRow+1, lastColumn-firstColumn+1);
         double cellWidth = size >= 7 ? 125 : 800/size;
         double cellHeight = size >= 7 ? 66.3125 : 424.4/size;
@@ -267,8 +276,8 @@ public class GameBoardController extends Generic{
         }
 
         if(clickable) {
-            //adding all possible placement
-            boolean[][] pp = gameView.getCommon().getPlayerView(nickname).getPossiblePlacements();
+            //adding all possible placements
+            boolean[][] pp = gameView.getCommon().getPlayerView(nick).getPossiblePlacements();
             for (int i = 0; i < pp.length; i++) {
                 for (int j = 0; j < pp[i].length; j++) {
                     if (pp[i][j]) {
@@ -501,8 +510,9 @@ public class GameBoardController extends Generic{
 
         Label label = new Label();
         label.setText("Choose your hidden goal");
-        Font customFont = Font.loadFont(HelloApplication.class.getResourceAsStream("view/fonts/Muli-Regular.ttf"), 22);
-        label.setFont(customFont);
+        label.setStyle("-fx-font-family: 'Muli'");
+        label.setStyle("-fx-font-size: 30");
+        label.setStyle("-fx-font-weight: bold");
         label.setAlignment(Pos.CENTER);
 
         HBox labelBox = new HBox();
@@ -544,13 +554,14 @@ public class GameBoardController extends Generic{
     public void requirementsNotMet() {
         errorLabel.setText("You can't place this card, you don't fulfil the requirements");
         errorLabel.setVisible(true);
+        errorLabel.setAlignment(Pos.CENTER);
     }
 
     @FXML
     public void notYourTurn(GameView gameView, String myNickname) {
         this.gameView = gameView;
-        items.remove(myNickname);
         actionMessage.setText(gameView.getCurrent() + " is playing. Wait for your turn");
+        actionMessage.setAlignment(Pos.CENTER);
         gameViewContainer.setOpacity(0.5);
 
         drawGameBoard(false, myNickname);
@@ -610,13 +621,26 @@ public class GameBoardController extends Generic{
             hbox.setSpacing(10);
             hbox.setPadding(new Insets(padding, 0, padding, 30));
 
+            StackPane stackPane = new StackPane();
             Circle circle = new Circle(12, Paint.valueOf(gameView.getCommon().getPlayerView(p).getColor()));
-            circle.setCursor(Cursor.HAND);
-            circle.setOnMouseClicked(event -> drawGameBoard(false, p));
+            stackPane.getChildren().add(circle);
+
+            ImageView imageView = new ImageView(new Image(HelloApplication.class.getResource("images/misc/eye_icon.png").toString()));
+            imageView.setFitWidth(20);
+            imageView.setFitHeight(20);
+            stackPane.getChildren().add(imageView);
+            stackPane.setCursor(Cursor.HAND);
+
+            stackPane.setOnMouseClicked(event -> {
+                gameViewContainer.setOpacity(gameView.getCurrent().equals(nickname) && p.equals(nickname) ? 1 : 0.5);
+                playerTableContainer.setText(p.equals(nickname) ? "" : (p + "'s table"));
+                playerTableContainer.setAlignment(Pos.CENTER);
+                drawGameBoard(gameView.getCurrent().equals(nickname) && p.equals(nickname), p);
+            });
 
             Text playerName = new Text(p);
             playerName.setFont(p.equals(gameView.getCurrent()) ? bold : normal);
-            hbox.getChildren().addAll(circle, playerName);
+            hbox.getChildren().addAll(stackPane, playerName);
             rotationContainer.getChildren().add(hbox);
         }
     }

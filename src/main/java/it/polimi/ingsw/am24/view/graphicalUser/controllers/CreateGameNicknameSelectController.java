@@ -3,6 +3,7 @@ package it.polimi.ingsw.am24.view.graphicalUser.controllers;
 import it.polimi.ingsw.am24.HelloApplication;
 import it.polimi.ingsw.am24.view.graphicalUser.Sound;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Font;
@@ -12,6 +13,8 @@ import java.io.IOException;
 
 public class CreateGameNicknameSelectController extends Generic{
 
+    @FXML
+    private Button button;
     @FXML
     private Text errorText1;
     //@FXML
@@ -25,6 +28,8 @@ public class CreateGameNicknameSelectController extends Generic{
 
     @FXML
     public void initialize() {
+        Font customFont = Font.loadFont(HelloApplication.class.getResourceAsStream("view/fonts/Plain_Germanica.ttf"), 40);
+        button.setFont(customFont);
         errorText1.setVisible(false);
         errorText2.setVisible(false);
     }

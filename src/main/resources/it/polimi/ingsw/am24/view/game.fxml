@@ -4,6 +4,7 @@
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 <AnchorPane maxHeight="900.0" maxWidth="1600.0" prefHeight="900.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.am24.view.graphicalUser.controllers.GameBoardController">
       <children>
@@ -38,7 +39,7 @@
             </VBox>
             <ToggleButton fx:id="frontBackToggle" layoutX="371.0" layoutY="787.0" mnemonicParsing="false" text="front" />
             <Label fx:id="errorLabel" layoutX="400.0" layoutY="630.0" prefHeight="25.0" prefWidth="800.0" style="-fx-font-size: 20; -fx-font-style: 'Muli'; -fx-font-weight: bold; -fx-text-alignment: center;" textAlignment="CENTER" textFill="RED" visible="false" />
-            <Label fx:id="actionMessage" contentDisplay="CENTER" layoutX="400.0" layoutY="106.0" prefHeight="25.0" prefWidth="800.0" style="-fx-font-size: 25; -fx-font-weight: bold; -fx-font-family: 'Muli'; -fx-text-alignment: center;" textAlignment="CENTER" />
+            <Label fx:id="actionMessage" contentDisplay="CENTER" layoutX="400.0" layoutY="118.0" maxHeight="30.0" prefHeight="30.0" prefWidth="800.0" style="-fx-font-size: 20; -fx-font-weight: bold; -fx-font-family: 'Muli';" />
             <VBox fx:id="rotationContainer" layoutX="42.0" layoutY="43.0" prefHeight="150.0" prefWidth="280.0" />
             <Pane layoutX="1208.0" layoutY="707.0" prefHeight="150.0" prefWidth="350.0">
                <children>
@@ -57,6 +58,16 @@
                   </ScrollPane>
                </children>
             </Pane>
+            <Label fx:id="playerTableContainer" layoutX="400.0" layoutY="165.0" prefHeight="20.0" prefWidth="800.0" style="-fx-font-family: 'Muli'; -fx-font-size: 15;">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="nameContainer" layoutX="400.0" layoutY="73.0" prefHeight="35.0" prefWidth="800.0" style="-fx-font-family: 'Muli'; -fx-font-weight: bold; -fx-font-size: 30;">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
       </children>

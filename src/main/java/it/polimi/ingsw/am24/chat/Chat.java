@@ -27,10 +27,6 @@ public class Chat implements Serializable {
         messages.add(new ChatMessage(sender,receiver,message));
     }
 
-    public String getLastMessage() {
-        return messages.get(messages.size() - 1).getMessage();
-    }
-
     public ChatMessage getLast() {
         return messages.get(messages.size() - 1);
     }

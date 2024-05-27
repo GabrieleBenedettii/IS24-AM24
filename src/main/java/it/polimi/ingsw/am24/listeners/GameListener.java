@@ -37,5 +37,5 @@ public interface GameListener extends Remote {
 
     void gameEnded(String winner, HashMap<String,Integer> rank) throws RemoteException;
 
-    void sentMessage(String message) throws RemoteException;
+    void sentMessage(String sender, String receiver, String message, String time) throws RemoteException;
 }

@@ -661,9 +661,11 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
     }
 
     @Override
-    public void sentMessage(String message) {
+    public void sentMessage(String sender, String receiver, String message, String time) {
         //Show the message only if is for everyone or is for me (or I sent it)
-        ui.add_message(message);
+        if(sender.equals(nickname)) ui.add_message_sent(receiver, message, time);
+        else ui.add_message_received(sender, receiver, message, time);
+
         addEvent(EventType.SENT_MESSAGE);
     }
 
