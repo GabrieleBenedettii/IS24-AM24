@@ -1,7 +1,9 @@
 package it.polimi.ingsw.am24.network.rmi;
 
+import it.polimi.ingsw.am24.controller.GameController;
 import it.polimi.ingsw.am24.listeners.GameListener;
 import it.polimi.ingsw.am24.network.GameListenerClient;
+import it.polimi.ingsw.am24.network.HeartbeatSender;
 import it.polimi.ingsw.am24.view.flow.CommonClientActions;
 import it.polimi.ingsw.am24.view.flow.Flow;
 
@@ -21,6 +23,8 @@ public class RMIClient implements CommonClientActions {
 
     private GameControllerInterface gameController = null;
 
+    private String nickname;
+
     private static GameListener listener;
 
     private final GameListenerClient gameListenersHandler;
@@ -28,6 +32,7 @@ public class RMIClient implements CommonClientActions {
     private Registry registry;
 
     private final Flow flow;
+    private HeartbeatSender heartbeatSender;
 
     public RMIClient(Flow flow) {
         super();
@@ -35,6 +40,8 @@ public class RMIClient implements CommonClientActions {
         connect();
 
         this.flow=flow;
+        heartbeatSender =new HeartbeatSender(flow,this);
+        heartbeatSender.start();
     }
 
     public void connect() {
@@ -87,12 +94,14 @@ public class RMIClient implements CommonClientActions {
         registry = LocateRegistry.getRegistry(serverIp, port);
         server = (LobbyControllerInterface) registry.lookup(serverName);
         gameController = server.joinGame(nickname, numPlayers, listener);
+        this.nickname = nickname;
     }
 
     public void joinFirstGameAvailable(String nickname) throws RemoteException, NotBoundException {
         registry = LocateRegistry.getRegistry(serverIp, port);
         server = (LobbyControllerInterface) registry.lookup(serverName);
         gameController = server.joinGame(nickname, 1, listener);
+        this.nickname = nickname;
     }
 
     public void chooseColor(String nickname, String color) throws RemoteException {
@@ -139,6 +148,12 @@ public class RMIClient implements CommonClientActions {
     @Override
     public void sendPrivateMessage(String sender, String receiver, String message) throws RemoteException {
         gameController.sentPrivateMessage(sender, receiver, message);
+    }
+
+    @Override
+    public void heartbeat() throws RemoteException {
+        if(gameController != null)
+            gameController.heartbeat(nickname, listener);
     }
 }
 

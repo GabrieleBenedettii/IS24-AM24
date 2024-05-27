@@ -7,8 +7,12 @@ import it.polimi.ingsw.am24.view.graphicalUser.controllers.*;
 import it.polimi.ingsw.am24.view.input.InputReaderGUI;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
+import javafx.geometry.Pos;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 
+import java.awt.*;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -287,6 +291,16 @@ public class GUI extends UI {
 
     @Override
     public void show_nan() {
+
+    }
+
+    @Override
+    public void show_no_connection_error() {
+        callPlatformRunLater(() -> {
+            GameBoardController controller = (GameBoardController) this.guiApplication.getController(Scenes.GAME);
+            controller.connectionError();
+        });
+
 
     }
 

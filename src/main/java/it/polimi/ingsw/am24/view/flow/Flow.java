@@ -10,6 +10,6 @@ public abstract class Flow implements GameListener {
     }
     protected void saveGameId(DisconnectionFile disconnectionFile, String nickname, int gameId){
         disconnectionFile.setLastGameId(nickname, gameId);
-    }
-    public abstract void noConnectionError();*/
+    }*/
+    public abstract void noConnectionError();
 }

@@ -575,6 +575,11 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
         actions.sendPrivateMessage(sender, receiver, message);
     }
 
+    @Override
+    public void heartbeat() throws IOException {
+
+    }
+
     //EVENTS RECEIVED FROM THE SERVER
 
     @Override
@@ -684,5 +689,10 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
 
         if(type.equals(EventType.APP_MENU))
             joined = false;
+    }
+
+    @Override
+    public void noConnectionError() {
+        ui.show_no_connection_error();
     }
 }

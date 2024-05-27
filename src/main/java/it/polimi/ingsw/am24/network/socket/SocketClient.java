@@ -3,6 +3,7 @@ package it.polimi.ingsw.am24.network.socket;
 import it.polimi.ingsw.am24.messages.*;
 import it.polimi.ingsw.am24.messages.clientToServer.*;
 import it.polimi.ingsw.am24.network.GameListenerClient;
+import it.polimi.ingsw.am24.network.HeartbeatSender;
 import it.polimi.ingsw.am24.view.flow.CommonClientActions;
 import it.polimi.ingsw.am24.view.flow.Flow;
 
@@ -20,6 +21,8 @@ public class SocketClient extends Thread implements CommonClientActions {
     private ObjectOutputStream out;
     private GameListenerClient listener;
     private final Flow flow;
+    private final HeartbeatSender heartbeatSender;
+    private String nickname;
 
     public SocketClient(Flow flow) {
         this.flow = flow;
@@ -27,6 +30,9 @@ public class SocketClient extends Thread implements CommonClientActions {
         listener = new GameListenerClient(flow);
         this.start();
         System.out.println("Client SOCKET ready");
+
+        heartbeatSender = new HeartbeatSender(flow,this);
+        heartbeatSender.start();
     }
 
     private void connect(String ip, int port) {
@@ -50,7 +56,8 @@ public class SocketClient extends Thread implements CommonClientActions {
                 SocketServerMessage message = (SocketServerMessage) in.readObject();
                 message.execute(listener);
             } catch (IOException | ClassNotFoundException e) {
-                System.out.println("[ERROR] Connection lost: " + e + "\n");
+                //System.out.println("[ERROR] Connection lost: " + e + "\n");
+                break;
             }
         }
     }
@@ -60,6 +67,7 @@ public class SocketClient extends Thread implements CommonClientActions {
         out.writeObject(new CreateGameMessage(nickname, numPlayers));
         out.flush();
         out.reset();
+        this.nickname=nickname;
     }
 
     @Override
@@ -67,6 +75,7 @@ public class SocketClient extends Thread implements CommonClientActions {
         out.writeObject(new JoinFirstGameAvailableMessage(nickname));
         out.flush();
         out.reset();
+        this.nickname=nickname;
     }
 
     @Override
@@ -124,5 +133,12 @@ public class SocketClient extends Thread implements CommonClientActions {
         }
         catch (IOException ignored){}
 
+    }
+
+    @Override
+    public void heartbeat() throws IOException {
+        out.writeObject(new HeartBeatMessage(nickname));
+        out.flush();
+        out.reset();
     }
 }

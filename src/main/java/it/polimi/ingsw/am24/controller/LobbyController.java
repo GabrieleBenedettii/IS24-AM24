@@ -94,18 +94,16 @@ public class LobbyController implements Serializable, LobbyControllerInterface {
             System.out.println(nickname+" has left the game");
 
         return null;
-    }
+    }*/
 
-    //Todo cambiare Gamecontroller con un int
-    public synchronized int deleteGame(GameController game) {
-        if(game != null){
-            games.remove(game);
-            System.out.println("game deleted");
+    public synchronized void deleteGame(int gameId) {
+        List<GameController> game = games.stream().filter(g -> g.getGameId() == gameId).toList();
+        if(!game.isEmpty()) {
+            games.remove(game.getFirst());
+            System.out.println("Game " + gameId + "deleted");
         }
-
-        return games.size();
     }
-*/
+
     /*public void printGames(){
         int i = 1;
         System.out.println("Active games: ");

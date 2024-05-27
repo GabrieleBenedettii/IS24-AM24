@@ -42,6 +42,8 @@ public class ClientHandler extends Thread {
 
             } catch (IOException | ClassNotFoundException e) {
                 System.out.println("[ERROR] Error reading socket message " + e.getMessage());
+                this.interrupt();
+                //break;
             }
         }
     }

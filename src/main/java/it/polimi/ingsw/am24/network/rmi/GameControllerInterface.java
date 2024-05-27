@@ -22,6 +22,8 @@ public interface GameControllerInterface extends Remote {
 
     boolean sentPrivateMessage(String sender, String receiver, String message) throws RemoteException;
 
+    void heartbeat(String nickname, GameListener listener) throws RemoteException;
+
     //int getNumOnlinePlayers() throws RemoteException;
 
     //void leave(String nickname, GameListener listener) throws RemoteException;

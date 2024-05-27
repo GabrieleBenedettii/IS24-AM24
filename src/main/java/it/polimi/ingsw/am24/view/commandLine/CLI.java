@@ -291,23 +291,50 @@ public class CLI extends UI {
     public void show_nickname_already_used(){System.out.println("\nNickname already used");}
     @Override
     public void show_empty_nickname() { System.out.println("\nNickname cannot be empty."); }
+    @Override
     public void show_no_lobby_available(){System.out.println("\nNo lobby is available, please create a new one");}
+    @Override
     public void show_color_not_available(){System.out.println("\nColor not available. Please choose a different color.");}
+    @Override
     public void show_insert_num_player(){System.out.print("\nInsert number of players -> ");}
+    @Override
     public void show_invalid_num_player(){System.out.println("\nInvalid input. Please enter a number between 2 and 4.");}
+    @Override
     public void show_invalid_initialcard(){System.out.println("\nInvalid choice. Please select a valid card side.");}
+    @Override
     public void show_invalid_play_command(){System.out.println("\nInvalid command. Please enter in the format: play <cardIndex> <front/back> <x> <y>");}
+    @Override
     public void show_invalid_play_number(){System.out.println("\nInvalid input. Please enter valid integers for card index, x, and y coordinates.");}
+    @Override
     public void show_invalid_index(){System.out.println("\nInvalid card index. Please enter a valid index.");}
+    @Override
     public void show_invalid_coordinates(){System.out.println("\nInvalid coordinates. Please enter valid coordinates within the board.");}
+    @Override
     public void show_invalid_positioning(){System.out.println("\nInvalid positioning. You cannot place a card in this position.");}
+    @Override
     public void show_invalid_command(){System.out.println("\nInvalid command. Type \"/help\" for help");}
+    @Override
     public void show_error(){System.out.println("\nAn error occurred. Please try again.");}
+    @Override
     public void show_invalid_draw_command(){System.out.println("\nInvalid command. Please enter in the format: draw <cardIndex>");}
+    @Override
     public void show_error_create_game(){System.out.println("\nError during creating game");}
+    @Override
     public void show_error_join_game(){System.out.println("\nError during joining game");}
+    @Override
     public void show_requirements_not_met(){System.out.println("\nYou can't place this card, you don't fulfil the requirements");}
+    @Override
     public  void show_nan(){System.out.println("Nan");}
+    @Override
+    public void show_no_connection_error() {
+        System.out.println("\nCONNECTION TO SERVER LOST!");
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        System.exit(-1);
+    }
 
 
     @Override

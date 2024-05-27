@@ -14,6 +14,7 @@ public interface CommonClientActions {
     void playCard(String nickname, int cardIndex, boolean front, int x, int y) throws IOException;
     void sendPublicMessage(String sender, String message) throws RemoteException;
     void sendPrivateMessage(String sender, String receiver, String message) throws RemoteException;
+    void heartbeat() throws IOException;
     //void leaveGame(String nickname, int gameId) throws IOException, NotBoundException;
     //boolean isMyTurn() throws RemoteException;
 }

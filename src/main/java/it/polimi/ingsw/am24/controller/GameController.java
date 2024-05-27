@@ -2,6 +2,7 @@ package it.polimi.ingsw.am24.controller;
 
 import it.polimi.ingsw.am24.Exceptions.*;
 import it.polimi.ingsw.am24.chat.Chat;
+import it.polimi.ingsw.am24.heartbeat.HeartBeat;
 import it.polimi.ingsw.am24.listeners.GameListener;
 import it.polimi.ingsw.am24.model.Game;
 import it.polimi.ingsw.am24.model.Player;
@@ -36,6 +37,8 @@ public class GameController implements GameControllerInterface, Serializable, Ru
 
     private final Chat chat;
 
+    private final Map<GameListener, HeartBeat> heartbeats;
+
     public GameController(int numPlayers) {
         this.game = new Game();
         this.rotation = new ArrayList<>();
@@ -47,6 +50,7 @@ public class GameController implements GameControllerInterface, Serializable, Ru
         status = GameStatus.NOT_STARTED;
         gameId = gameCounter++;
         chat = new Chat();
+        heartbeats = new HashMap<>();
         new Thread(this).start();
     }
 
@@ -405,7 +409,61 @@ public class GameController implements GameControllerInterface, Serializable, Ru
 
     @Override
     public void run() {
+        while (!Thread.interrupted()) {
+            //checks all the heartbeat to detect disconnection
+            if (status != null && !status.equals(GameStatus.NOT_STARTED)) {
+                synchronized (heartbeats) {
+                    Iterator<Map.Entry<GameListener, HeartBeat>> heartIter = heartbeats.entrySet().iterator();
 
+                    while (heartIter.hasNext()) {
+                        Map.Entry<GameListener, HeartBeat> el = (Map.Entry<GameListener, HeartBeat>) heartIter.next();
+                        if (System.currentTimeMillis() - el.getValue().getBeat() > 4000) {
+                            try {
+                                this.disconnectPlayer(el.getValue().getNickname());
+                                System.out.println("Disconnection detected by heartbeat of player: "+el.getValue().getNickname()+"");
+
+                                if (this.players.isEmpty()) {
+                                    LobbyController.getInstance().deleteGame(this.getGameId());
+                                    return;
+                                }
+
+                            } catch (RemoteException e) {
+                                throw new RuntimeException(e);
+                            }
+
+                            heartIter.remove();
+                        }
+                    }
+                }
+            }
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    @Override
+    public synchronized void heartbeat(String nickname, GameListener listener) throws RemoteException {
+        synchronized (heartbeats) {
+            heartbeats.put(listener, new HeartBeat(System.currentTimeMillis(), nickname));
+        }
+    }
+
+    //@Override
+    public void disconnectPlayer(String nickname) throws RemoteException {
+        players.remove(nickname);
+        rotation.remove(nickname);
+        listeners.remove(nickname);
+        //Check if there is only one player playing
+        if ((status.equals(GameStatus.FIRST_PHASE) || status.equals(GameStatus.RUNNING) || status.equals(GameStatus.LAST_LAST_ROUND) || status.equals(GameStatus.LAST_ROUND)) && players.size() == 1) {
+            HashMap<String, Integer> rank = new HashMap<>();
+            Player p = players.values().stream().toList().getFirst();
+            winner = p.getNickname();
+            rank.put(winner, players.get(winner).getScore());
+            listeners.get(winner).gameEnded(winner, rank);
+        }
     }
 }
 

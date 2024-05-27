@@ -47,4 +47,5 @@ public abstract class UI {
     public abstract void show_error_join_game();
     public abstract void show_requirements_not_met();
     public abstract void show_nan();
+    public abstract void show_no_connection_error();
 }
