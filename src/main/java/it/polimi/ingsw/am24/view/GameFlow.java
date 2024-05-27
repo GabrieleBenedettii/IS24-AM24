@@ -673,7 +673,7 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
     public void gameEnded(String winner, HashMap<String,Integer> rank) {
         this.status = GameStatus.ENDED;
         addEvent(EventType.GAME_ENDED);
-        ui.show_winner_and_rank(winner.equals(nickname), rank);
+        ui.show_winner_and_rank(winner.equals(nickname), rank, winner);
         //resetGameId(fileDisconnection, gameModel);
     }
 

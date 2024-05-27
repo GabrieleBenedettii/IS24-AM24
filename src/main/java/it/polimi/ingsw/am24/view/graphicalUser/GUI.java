@@ -301,11 +301,11 @@ public class GUI extends UI {
     }
 
     @Override
-    public void show_winner_and_rank(boolean winner, HashMap<String, Integer> rank) {
+    public void show_winner_and_rank(boolean winner, HashMap<String, Integer> rank, String winnerNick) {
         callPlatformRunLater(() -> {
             this.guiApplication.setActiveScene(Scenes.ENDGAMESCREEN);
             EndGameScreenController selector = (EndGameScreenController) this.guiApplication.getController(Scenes.ENDGAMESCREEN);
-            selector.rankings(rank);
+            selector.rankings(rank,winner,winnerNick);
         });
     }
 

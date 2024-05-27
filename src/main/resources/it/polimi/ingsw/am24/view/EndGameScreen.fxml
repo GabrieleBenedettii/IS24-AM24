@@ -1,29 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="735.0" prefWidth="1299.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.am24.view.graphicalUser.controllers.EndGameScreenController">
+<AnchorPane prefHeight="735.0" prefWidth="1299.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.am24.view.graphicalUser.controllers.EndGameScreenController">
    <children>
       <Pane prefHeight="735.0" prefWidth="1299.0" styleClass="neutralBackground" stylesheets="@style.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Pane layoutX="39.0" layoutY="38.0" prefHeight="725.0" prefWidth="1123.0">
+            <Pane layoutX="-3.0" layoutY="-5.0" prefHeight="743.0" prefWidth="1309.0">
                <children>
-                  <Text style="-fx-font-size:60; -fx-font-family: 'Muli';-fx-font-weight: bold;" layoutX="336.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Game Ended" textAlignment="CENTER" wrappingWidth="451.13671875">
-                  </Text>
-                  <Text style="-fx-font-size:50; -fx-font-family: 'Muli';-fx-font-weight: bold;" layoutX="289.0" layoutY="162.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ranking:" textAlignment="CENTER" wrappingWidth="544.583984375">
-                  </Text>
-                  <Label style="-fx-font-size:35; -fx-font-family: 'Muli';" alignment="CENTER" layoutX="415.0" layoutY="187.0" prefHeight="88.0" prefWidth="295.0" text="Player1    -&gt;    00" textAlignment="CENTER">
-                  </Label>
-                  <Label style="-fx-font-size:35; -fx-font-family: 'Muli';" alignment="CENTER" layoutX="415.0" layoutY="450.0" prefHeight="88.0" prefWidth="295.0" text="Player4    -&gt;    00" textAlignment="CENTER">
-                  </Label>
-                  <Label style="-fx-font-size:35; -fx-font-family: 'Muli';" alignment="CENTER" layoutX="415.0" layoutY="362.0" prefHeight="88.0" prefWidth="295.0" text="Player3    -&gt;    00" textAlignment="CENTER">
-                  </Label>
-                  <Label style="-fx-font-size:35; -fx-font-family: 'Muli';" alignment="CENTER" layoutX="415.0" layoutY="275.0" prefHeight="88.0" prefWidth="295.0" text="Player2    -&gt;    00" textAlignment="CENTER">
-                  </Label>
+                  <Text layoutX="429.0" layoutY="113.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size:60; -fx-font-family: 'Muli';-fx-font-weight: bold;" text="Game Ended" textAlignment="CENTER" wrappingWidth="451.13671875" />
+                  <Text layoutX="382.0" layoutY="182.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size:50; -fx-font-family: 'Muli';-fx-font-weight: bold;" text="Ranking:" textAlignment="CENTER" wrappingWidth="544.583984375" />
+                  <VBox layoutX="314.0" layoutY="227.0" prefHeight="412.0" prefWidth="692.0" spacing="20.0">
+                     <Label fx:id="player0" alignment="CENTER" prefHeight="88.0" prefWidth="693.0" style="-fx-font-size:35; -fx-font-family: 'Muli';" textAlignment="CENTER" />
+                     <Label fx:id="player1" alignment="CENTER" prefHeight="88.0" prefWidth="694.0" style="-fx-font-size:35; -fx-font-family: 'Muli';" textAlignment="CENTER" />
+                     <Label fx:id="player2" alignment="CENTER" prefHeight="88.0" prefWidth="699.0" style="-fx-font-size:35; -fx-font-family: 'Muli';" textAlignment="CENTER" />
+                     <Label fx:id="player3" alignment="CENTER" prefHeight="88.0" prefWidth="699.0" style="-fx-font-size:35; -fx-font-family: 'Muli';" textAlignment="CENTER" />
+                  </VBox>
+                  <Label fx:id="resultMessage" alignment="CENTER" contentDisplay="CENTER" layoutY="625.0" prefHeight="88.0" prefWidth="1309.0" style="-fx-font-size:50; -fx-font-family: 'Muli';-fx-font-weight: bold;" />
                </children>
             </Pane>
          </children>

@@ -7,9 +7,13 @@ import javafx.scene.paint.Color;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class EndGameScreenController extends Generic{
-
+    @FXML
+    private Label resultMessage;
     @FXML
     private Label player0;
     @FXML
@@ -19,20 +23,33 @@ public class EndGameScreenController extends Generic{
     @FXML
     private Label player3;
 
-    public void rankings(HashMap<String, Integer> rank) {
-        player0.setVisible(false);
-        //player0.setTextFill(Color.YELLOW); -> mette in risalto il vincitore
-        player1.setVisible(false);
-        player2.setVisible(false);
-        player3.setVisible(false);
+    public void rankings(HashMap<String, Integer> rank,Boolean winner,String winnerNick) {
+        Label[] playerLabels = {player0, player1, player2, player3};
+        for (Label label : playerLabels) {
+            label.setVisible(false);
+        }
 
-        Label tmp = null;
+        Map<String, Integer> sortedRank = rank.entrySet()
+                .stream()
+                .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        Map.Entry::getValue,
+                        (e1, e2) -> e1,
+                        LinkedHashMap::new
+                ));
+
         int i = 0;
-        for(String player : rank.keySet()){
-            String p = "player" + i;
-            tmp.setText(player + "   -->   " + rank.get(player) + " points");
-            tmp.setVisible(true);
+        for(String player : sortedRank.keySet()){
+            playerLabels[i].setText(player + "   :   " + sortedRank.get(player) + " points");
+            playerLabels[i].setVisible(true);
             i++;
+        }
+
+        if (winner) {
+            resultMessage.setText("Congratulations! You won!");
+        } else {
+            resultMessage.setText("Game Over, the winner is " + winnerNick+ " !");
         }
     }
 }

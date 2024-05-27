@@ -241,8 +241,8 @@ public class CLI extends UI {
     }
 
     @Override
-    public void show_winner_and_rank(boolean winner, HashMap<String, Integer> rank) {
-        out.println(winner ? "you Win" : "Game Over");
+    public void show_winner_and_rank(boolean winner, HashMap<String, Integer> rank, String winnerNick) {
+        out.println(winner ? "Congratulation! you Won" : "Game Over, the winner is " + winnerNick+ " !");
         for(String player : rank.keySet()){
             out.println(rank.get(player)+ " : " +player);
         }

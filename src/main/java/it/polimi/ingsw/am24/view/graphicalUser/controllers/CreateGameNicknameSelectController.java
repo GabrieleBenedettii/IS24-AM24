@@ -17,10 +17,8 @@ public class CreateGameNicknameSelectController extends Generic{
     private Button button;
     @FXML
     private Text errorText1;
-    //@FXML
-    //private Text errorText2;
     @FXML
-    public Text errorText2;
+    private Text errorText2;
     @FXML
     private TextField nickNameTextField;
     @FXML

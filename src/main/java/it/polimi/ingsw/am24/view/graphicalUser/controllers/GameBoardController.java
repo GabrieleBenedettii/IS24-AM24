@@ -5,9 +5,11 @@ import it.polimi.ingsw.am24.modelView.GameCardView;
 import it.polimi.ingsw.am24.modelView.GameView;
 import it.polimi.ingsw.am24.modelView.Placement;
 import it.polimi.ingsw.am24.view.graphicalUser.Sound;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
@@ -80,6 +82,8 @@ public class GameBoardController extends Generic{
     @FXML
     public void beginTurn(GameView gameView) {
         this.gameView = gameView;
+        receiver.setDisable(false);
+        messageText.setDisable(false);
         clickedImageView = null;
         gameViewContainer.setOpacity(1);
         actionMessage.setText("It's your turn. Please, place a card");
@@ -146,6 +150,8 @@ public class GameBoardController extends Generic{
     @FXML
     public void hiddenGoalChoice(GameView gameView){
         this.nickname = gameView.getCurrent();
+        receiver.setDisable(true);
+        messageText.setDisable(true);
         nameContainer.setText(nickname);
         nameContainer.setAlignment(Pos.CENTER);
         this.gameView = gameView;
@@ -509,10 +515,8 @@ public class GameBoardController extends Generic{
         hidden.setPrefSize(800,424.4);
 
         Label label = new Label();
+        label.setStyle("-fx-font-family: 'Muli'; -fx-font-size: 30; -fx-font-weight: bold;");
         label.setText("Choose your hidden goal");
-        label.setStyle("-fx-font-family: 'Muli'");
-        label.setStyle("-fx-font-size: 30");
-        label.setStyle("-fx-font-weight: bold");
         label.setAlignment(Pos.CENTER);
 
         HBox labelBox = new HBox();
@@ -657,8 +661,14 @@ public class GameBoardController extends Generic{
 
     public void addMessage(String message) {
         Text text = new Text(message);
-        messagesContainer.getChildren().add(text);
-        chatMessagesReceiver.layout();
-        chatMessagesReceiver.setVvalue(1.0);
+        messagesContainer.getChildren().add(0, text);
+        Bounds bounds = text.getBoundsInParent();
+        double y = bounds.getMinY();
+        double height = bounds.getHeight();
+        double vValue = (y + height) / messagesContainer.getHeight();
+        Platform.runLater(() -> {
+            chatMessagesReceiver.layout();
+            chatMessagesReceiver.setVvalue(vValue);
+        });
     }
 }

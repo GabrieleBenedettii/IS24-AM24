@@ -19,7 +19,7 @@ public abstract class UI {
     public abstract void show_initial_side(ArrayList<GameCardView> views);
     public abstract void show_current_player(GameView gameView, String myNickname);
     public abstract void show_logo();
-    public abstract void show_winner_and_rank(boolean winner, HashMap<String,Integer> rank);
+    public abstract void show_winner_and_rank(boolean winner, HashMap<String,Integer> rank, String winnerNick);
     public abstract void show_wrong_card_play();
     public abstract void show_joined_players(ArrayList<String> player, String current, int num);
     public abstract void show_message();
