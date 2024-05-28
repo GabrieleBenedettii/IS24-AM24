@@ -47,60 +47,64 @@
 }
 .green {
     -fx-background-color:
-            linear-gradient(#aeff35, #a9ff00),
+            linear-gradient(#aeff35, #8dbf2f),
             radial-gradient(center 50% -40%, radius 200%, #b8ee36 45%, #80c800 50%);
     -fx-background-radius: 6, 5;
     -fx-background-insets: 0, 1;
-    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 5, 0.0, 0, 1);
     -fx-text-fill: #395306;
 }
 .green:hover {
     -fx-background-color:
-            linear-gradient(#8ee014, #72ad06),
+            linear-gradient(#8dbf2f, #6a8f26),
             radial-gradient(center 50% -40%, radius 200%, #82a41e 45%, #375704 50%);
 }
+
 .yellow {
     -fx-background-color:
-            linear-gradient(#dcca8a, #c7a740),
+            linear-gradient(#dcca8a, #bfa03e),
             radial-gradient(center 50% -40%, radius 200%, rgba(228,236,43,1) 0%, rgba(218,200,24,1) 100%);
     -fx-background-radius: 6, 5;
     -fx-background-insets: 0, 1;
-    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 5, 0.0, 0, 1);
     -fx-text-fill: #311c09;
 }
-.yellow:hover{
+.yellow:hover {
     -fx-background-color:
-            linear-gradient(#dcc465, #c2971f),
+            linear-gradient(#bfa03e, #947d30),
             radial-gradient(center 50% -40%, radius 200%, rgb(201, 210, 10) 0%, rgb(175, 161, 11) 100%);
 }
+
 .red {
     -fx-background-color:
-            linear-gradient(#ff5400, #be1d00),
+            linear-gradient(#ff5400, #b43100),
             radial-gradient(center 50% -40%, radius 200%, #ff2121 25%, #5c0606 75%);
     -fx-background-radius: 6, 5;
     -fx-background-insets: 0, 1;
-    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 5, 0.0, 0, 1);
     -fx-text-fill: #301f1f;
 }
-.red:hover{
+.red:hover {
     -fx-background-color:
-            linear-gradient(#d24a07, #8f1a06),
+            linear-gradient(#b43100, #8a2500),
             radial-gradient(center 50% -40%, radius 200%, #c40303 25%, #2d0303 75%);
 }
+
 .blue {
     -fx-background-color:
-            linear-gradient(#1123bd, #1165bd),
+            linear-gradient(#1123bd, #0d1a8a),
             radial-gradient(center 50% -40%, radius 200%, #00caff 25%, #0284ec 75%);
     -fx-background-radius: 6, 5;
     -fx-background-insets: 0, 1;
-    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 5, 0.0, 0, 1);
     -fx-text-fill: #000000;
 }
-.blue:hover{
+.blue:hover {
     -fx-background-color:
-            linear-gradient(#0011b2, #0252a9),
+            linear-gradient(#0d1a8a, #0a1468),
             radial-gradient(center 50% -40%, radius 200%, #09809d 25%, #0760a8 75%);
 }
+
 .nicknameBackground{
     -fx-background-image: url("../images/misc/NicknameBackground.jpeg");
     -fx-background-repeat: stretch;

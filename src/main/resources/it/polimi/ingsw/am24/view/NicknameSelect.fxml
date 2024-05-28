@@ -11,7 +11,7 @@
       <Pane prefHeight="735.0" prefWidth="1299.0" styleClass="neutralBackground" stylesheets="@style.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
       <Pane fx:id="content" prefHeight="735.0" prefWidth="1299.0">
          <children>
-            <Pane layoutX="340.0" layoutY="191.0" maxHeight="353.0" maxWidth="611.0" opacity="0.8" prefHeight="353.0" prefWidth="611.0">
+            <Pane layoutX="340.0" layoutY="191.0" maxHeight="353.0" maxWidth="611.0" opacity="0.8" prefHeight="353.0" prefWidth="611.0" stylesheets="@style.css">
                <cursor>
                   <Cursor fx:constant="DEFAULT" />
                </cursor>

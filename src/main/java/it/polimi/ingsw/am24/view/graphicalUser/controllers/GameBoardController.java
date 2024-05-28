@@ -55,6 +55,8 @@ public class GameBoardController extends Generic{
     @FXML private StackPane scoreboardContainer;
     @FXML private ToggleButton frontBackToggle;
     @FXML private VBox rotationContainer;
+    @FXML private Pane container;
+    @FXML private AnchorPane anchorContainer;
 
     @FXML private ScrollPane chatMessagesContainer;
     @FXML private ChoiceBox receiver;
@@ -75,6 +77,8 @@ public class GameBoardController extends Generic{
     private Font normal, bold;
     private ObservableList<String> items = FXCollections.observableArrayList();
     //private MediaPlayer music;
+    private int i;
+    private GridPane grid =new GridPane();
 
     @FXML
     public void initialize() {
@@ -166,17 +170,20 @@ public class GameBoardController extends Generic{
         drawGoldCardsTable(false);
         drawResourceCardsTable(false);
         drawGameBoard(false, nickname);
+        //container.setOpacity(0.5);
+        gameViewContainer.setOpacity(1);
 
         StackPane pane =new StackPane();
         pane.setOpacity(1);
         imageView.setImage(new Image(HelloApplication.class.getResource("images/misc/alert.png").toString()));
         pane.setAlignment(Pos.CENTER);
-        pane.setPrefWidth(300);
-        pane.setPrefHeight(200);
+        pane.setPrefWidth(700);
+        pane.setPrefHeight(300);
         Label label = new Label("SERVER CONNECTION LOST");
         label.setAlignment(Pos.CENTER);
         label.setStyle("-fx-font-family: 'Muli'; -fx-font-size: 30; -fx-font-weight: bold;");
         pane.getChildren().addAll(imageView,label);
+        gameViewContainer.getChildren().add(pane);
     }
 
     @FXML
@@ -223,6 +230,7 @@ public class GameBoardController extends Generic{
         imageView.setPreserveRatio(true);
         imageView.setSmooth(true);
         imageView.setCache(true);
+
 
         imageView.setFitWidth(width);
         HBox.setMargin(imageView, new Insets(0,margin,0,margin));
@@ -598,6 +606,8 @@ public class GameBoardController extends Generic{
         actionMessage.setText(gameView.getCurrent() + " is playing. Wait for your turn");
         actionMessage.setAlignment(Pos.CENTER);
         gameViewContainer.setOpacity(0.5);
+        receiver.setDisable(false);
+        messageText.setDisable(false);
 
         drawGameBoard(false, myNickname);
         drawGoldCardsTable(false);
@@ -605,6 +615,7 @@ public class GameBoardController extends Generic{
         drawGameHand(false);
         drawHiddenGoal();
         drawRotation();
+
     }
 
     private void drawScoreBoard() {
@@ -692,14 +703,13 @@ public class GameBoardController extends Generic{
 
     public void addMessage(String message) {
         Text text = new Text(message);
-        messagesContainer.getChildren().add(0, text);
-        Bounds bounds = text.getBoundsInParent();
-        double y = bounds.getMinY();
-        double height = bounds.getHeight();
-        double vValue = (y + height) / messagesContainer.getHeight();
+        text.setStyle("-fx-font-family: 'Muli'");
+        grid.add(text,0,i);
+        i++;
+        chatMessagesReceiver.setContent(grid);
         Platform.runLater(() -> {
             chatMessagesReceiver.layout();
-            chatMessagesReceiver.setVvalue(vValue);
+            chatMessagesReceiver.setVvalue(1.0);
         });
     }
 }
