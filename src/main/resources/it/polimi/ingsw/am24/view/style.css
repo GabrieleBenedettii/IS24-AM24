@@ -239,3 +239,8 @@
     -fx-focus-color: transparent;
     -fx-border-color: transparent;
 }
+.infobutton{
+    -fx-background-image: url("../images/misc/info.jpg");
+    -fx-background-repeat: stretch;
+    -fx-background-size: cover;
+}

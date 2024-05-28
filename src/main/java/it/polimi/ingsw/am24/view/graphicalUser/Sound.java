@@ -9,7 +9,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 
 public class Sound {
-    //todo: change something
     public static boolean play = true;
 
     public static synchronized void playSound(final String Name) {

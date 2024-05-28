@@ -4,6 +4,7 @@ import it.polimi.ingsw.am24.HelloApplication;
 import it.polimi.ingsw.am24.modelView.GameCardView;
 import it.polimi.ingsw.am24.modelView.GameView;
 import it.polimi.ingsw.am24.modelView.Placement;
+import it.polimi.ingsw.am24.view.graphicalUser.GUIapp;
 import it.polimi.ingsw.am24.view.graphicalUser.Sound;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -34,8 +35,10 @@ import javafx.scene.text.Text;
 import javafx.scene.control.TextField;
 
 import java.awt.*;
+import java.net.URL;
 import java.util.ArrayList;
 import it.polimi.ingsw.am24.constants.Constants;
+
 
 
 public class GameBoardController extends Generic{
@@ -71,12 +74,22 @@ public class GameBoardController extends Generic{
     private ImageView[] hand;
     private Font normal, bold;
     private ObservableList<String> items = FXCollections.observableArrayList();
+    //private MediaPlayer music;
 
     @FXML
     public void initialize() {
         hand = new ImageView[3];
         normal = Font.loadFont(HelloApplication.class.getResourceAsStream("view/fonts/Muli-regular.ttf"), 18);
         bold = Font.loadFont(HelloApplication.class.getResourceAsStream("view/fonts/Muli-bold.ttf"), 18);
+//        URL url = GUIapp.class.getResource("/totallyNotOblivionSong1.mp3");
+//        music = new MediaPlayer(new Media(url.toString()));
+//        music.play();
+//        music.setOnEndOfMedia(() -> {
+//            music.setRate(music.getRate() + 0.5);
+//            music.setVolume(music.getVolume() + 25);
+//            music.play();
+//        });
+//        music.setCycleCount(MediaPlayer.INDEFINITE);
     }
 
     @FXML
