@@ -23,7 +23,7 @@ public class ChatMessage implements Serializable {
         this.sender = sender;
         this.receiver = "";
         this.message = message;
-        this.time = java.time.LocalTime.now();;
+        this.time = java.time.LocalTime.now();
     }
 
     /**
@@ -36,7 +36,7 @@ public class ChatMessage implements Serializable {
         this.sender = sender;
         this.receiver = receiver;
         this.message = message;
-        this.time = java.time.LocalTime.now();;
+        this.time = java.time.LocalTime.now();
     }
 
     /**

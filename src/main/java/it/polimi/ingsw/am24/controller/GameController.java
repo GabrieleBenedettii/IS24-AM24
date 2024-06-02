@@ -18,6 +18,10 @@ import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.*;
 
+/**
+ * The GameController class manages the game state, player actions, and game flow.
+ * It implements the GameControllerInterface and Serializable and also runs a thread to handle game operations.
+ */
 public class GameController implements GameControllerInterface, Serializable, Runnable {
     private static int gameCounter = 10000;
     private final int gameId;
@@ -39,6 +43,11 @@ public class GameController implements GameControllerInterface, Serializable, Ru
 
     private final Map<GameListener, HeartBeat> heartbeats;
 
+    /**
+     * Constructor for the GameController class.
+     * Initializes the game, player lists, and game settings.
+     * @param numPlayers the number of players in the game.
+     */
     public GameController(int numPlayers) {
         this.game = new Game();
         this.rotation = new ArrayList<>();
@@ -54,7 +63,13 @@ public class GameController implements GameControllerInterface, Serializable, Ru
         new Thread(this).start();
     }
 
-    //add new player and set the game started if the player added is the last
+    /**
+     * Adds a player to the game.
+     * @param nickname the player's nickname.
+     * @param listener the GameListener for the player.
+     * @throws RemoteException if there is a network error.
+     * @throws FullLobbyException if the lobby is full.
+     */
     public void addPlayer(String nickname, GameListener listener) throws RemoteException, FullLobbyException {
         if(players.size() == playerCount) throw new FullLobbyException();
         synchronized (lockPlayers) {
@@ -65,7 +80,11 @@ public class GameController implements GameControllerInterface, Serializable, Ru
         }
     }
 
-    //return the player with the given nickname
+    /**
+     * Returns the player with the given nickname.
+     * @param nickname the player's nickname.
+     * @return the Player object.
+     */
     public Player getPlayer(String nickname){
         synchronized (lockPlayers) {
             return players.get(nickname);
@@ -78,7 +97,14 @@ public class GameController implements GameControllerInterface, Serializable, Ru
         }
     }*/
 
-    //choice of the color by a player
+    /**
+     * Sets a players color attribute with the given color.
+     * @param nickname the player's nickname.
+     * @param color the color chosen by the player.
+     * @param listener the GameListener for the player.
+     * @return true if the color choice is successful, false otherwise.
+     * @throws RemoteException if there is a network error.
+     */
     public boolean chooseColor(String nickname, String color, GameListener listener) throws RemoteException {
         //find the player
         synchronized (lockPlayers) {
@@ -105,7 +131,9 @@ public class GameController implements GameControllerInterface, Serializable, Ru
         }
     }
 
-    //decks creation and card's distribution
+    /**
+     * Starts the game by initializing decks and distributing initial cards to players.
+     */
     public void startGame() {
         game.start();
         for (Player p : players.values()) {
@@ -118,7 +146,14 @@ public class GameController implements GameControllerInterface, Serializable, Ru
         }
     }
 
-    //choice of the hidden goal by a player
+    /**
+     * Sets the players hidden goal attribute with the given choice.
+     * @param nickname the player's nickname.
+     * @param goalId the ID of the chosen goal.
+     * @param listener the GameListener for the player.
+     * @return true if the goal choice is successful, false otherwise.
+     * @throws RemoteException if there is a network error.
+     */
     public boolean chooseGoal(String nickname, int goalId, GameListener listener) throws RemoteException {
         synchronized (lockPlayers) {
             Player p = players.get(nickname);
@@ -142,7 +177,14 @@ public class GameController implements GameControllerInterface, Serializable, Ru
         }
     }
 
-    //choice of the side of the initial card by a player
+    /**
+     * Sets a player initial card side attribute with the given choice.
+     * @param nickname the player's nickname.
+     * @param isFront true if the front side is chosen, false otherwise.
+     * @param listener the GameListener for the player.
+     * @return true if the choice is successful, false otherwise.
+     * @throws RemoteException if there is a network error.
+     */
     public boolean chooseInitialCardSide(String nickname, boolean isFront, GameListener listener) throws RemoteException {
         synchronized (lockPlayers) {
             Player p = players.get(nickname);
@@ -160,6 +202,17 @@ public class GameController implements GameControllerInterface, Serializable, Ru
         }
     }
 
+    /**
+     * Allows a player to play a card.
+     * @param nickname the player's nickname.
+     * @param cardIndex the index of the card to be played.
+     * @param isFront true if the front side is played, false otherwise.
+     * @param x the x-coordinate for card placement.
+     * @param y the y-coordinate for card placement.
+     * @param listener the GameListener for the player.
+     * @return true if the card play is successful, false otherwise.
+     * @throws RemoteException if there is a network error.
+     */
     public boolean playCard(String nickname, int cardIndex, boolean isFront, int x, int y, GameListener listener) throws RemoteException {
         synchronized (lockPlayers) {
             Player p = players.get(nickname);
@@ -180,6 +233,14 @@ public class GameController implements GameControllerInterface, Serializable, Ru
         }
     }
 
+    /**
+     * Allows a player to draw a card.
+     * @param nickname the player's nickname.
+     * @param cardIndex the index of the card to be drawn.
+     * @param listener the GameListener for the player.
+     * @return true if the card draw is successful, false otherwise.
+     * @throws RemoteException if there is a network error.
+     */
     public boolean drawCard(String nickname, int cardIndex, GameListener listener) throws RemoteException {
         synchronized (lockPlayers) {
             Player p = players.get(nickname);
@@ -220,6 +281,10 @@ public class GameController implements GameControllerInterface, Serializable, Ru
         }
     }
 
+    /**
+     * Shifts the players following the turn rotation.
+     * @throws RemoteException if there is a network error.
+     */
     public void nextPlayer() throws RemoteException {
         int nextPlayerIndex = rotation.indexOf(currentPlayer) + 1;
         if(nextPlayerIndex == playerCount) {
@@ -240,7 +305,10 @@ public class GameController implements GameControllerInterface, Serializable, Ru
         }
         currentPlayer = rotation.get(nextPlayerIndex);
     }
-
+    /**
+     * Checks for a game winner and returns its name.
+     * @return the winner's nickname.
+     */
     public String calculateWinner() {
         int max = 0;
         String win = "";
@@ -255,22 +323,44 @@ public class GameController implements GameControllerInterface, Serializable, Ru
         return win;
     }
 
+    /**
+     * Returns the number of players of the game.
+     * @return the player number.
+     */
     public int getNumOfPlayers() {
         return players.size();
     }
 
+    /**
+     * Returns the Game object of the game.
+     * @return the game object.
+     */
     public Game getGame() {
         return game;
     }
 
+    /**
+     * Returns the nickname of the current player.
+     * @return the player's nickname.
+     */
     public String getCurrentPlayer() {
         return currentPlayer;
     }
 
+    /**
+     * Sets the new current player.
+     * @param currentPlayer the new current player nickname.
+     */
     public void setCurrentPlayer(String currentPlayer) {
         this.currentPlayer = currentPlayer;
     }
 
+    /**
+     * Sends a chat message from a player to the public chat.
+     * @param sender the player's nickname.
+     * @param message the chat message.
+     * @throws RemoteException if there is a network error.
+     */
     public boolean sentPublicMessage(String sender, String message) throws RemoteException {
         if(!players.containsKey(sender)) return false;
         chat.addPublicMessage(sender, message);
@@ -278,6 +368,13 @@ public class GameController implements GameControllerInterface, Serializable, Ru
         return true;
     }
 
+    /**
+     * Sends a chat message from a player to the private chat.
+     * @param sender the player's nickname.
+     * @param receiver the receiver player name.
+     * @param message the chat message.
+     * @throws RemoteException if there is a network error.
+     */
     public boolean sentPrivateMessage(String sender, String receiver, String message) throws RemoteException {
         if(!players.containsKey(sender)) return false;
         chat.addPrivateMessage(sender, receiver, message);
@@ -285,7 +382,10 @@ public class GameController implements GameControllerInterface, Serializable, Ru
         return true;
     }
 
-    //if the game is started, it sends the list of players in the lobby, otherwise it sends the secret cards
+    /**
+     * Notifies all players of a game update.
+     * @throws RemoteException if there is a network error.
+     */
     private void notifyAllListeners() throws RemoteException {
         synchronized (lockPlayers){
             if(status == GameStatus.FIRST_PHASE) {
@@ -316,6 +416,10 @@ public class GameController implements GameControllerInterface, Serializable, Ru
         }
     }
 
+    /**
+     * Notifies all players to begin their turn.
+     * @throws RemoteException if there is a network error.
+     */
     private void notifyAllListeners_beginTurn() throws RemoteException {
         synchronized (lockPlayers) {
             HashMap<String, PublicPlayerView> playerViews = new HashMap<>();
@@ -335,6 +439,10 @@ public class GameController implements GameControllerInterface, Serializable, Ru
         }
     }
 
+    /**
+     * Notifies all players to begin drawing cards.
+     * @throws RemoteException if there is a network error.
+     */
     private void notifyAllListeners_beginDraw() throws RemoteException {
         HashMap<String, PublicPlayerView> playerViews = new HashMap<>();
         for(String pl : rotation) {
@@ -354,6 +462,10 @@ public class GameController implements GameControllerInterface, Serializable, Ru
         }
     }
 
+    /**
+     * Notifies all listeners that the game has ended and provides the final ranking of players.
+     * @throws RemoteException if there is a network error during communication with listeners.
+     */
     private void notifyAllListeners_endGame() throws RemoteException {
         synchronized (lockPlayers) {
             HashMap<String, Integer> rank = new HashMap<>();
@@ -373,6 +485,10 @@ public class GameController implements GameControllerInterface, Serializable, Ru
         }
     }
 
+    /**
+     * Notifies all listeners about a new message sent in the chat.
+     * @throws RemoteException if there is a network error during communication with listeners.
+     */
     private void notifyAllListeners_sentMessage() throws RemoteException {
         synchronized (chat) {
             for (String p : listeners.keySet()) {
@@ -388,7 +504,11 @@ public class GameController implements GameControllerInterface, Serializable, Ru
         }
     }
 
-    //notify the single listener for the color choice
+    /**
+     * Notifies a specific player listener of a game update.
+     * @param listener the GameListener to notify.
+     * @throws RemoteException if there is a network error.
+     */
     private void notifyListener(GameListener listener) throws RemoteException {
         new Thread(() -> {
             try {
@@ -399,14 +519,25 @@ public class GameController implements GameControllerInterface, Serializable, Ru
         }).start();
     }
 
+    /**
+     * Returns the game ID.
+     * @return the game ID.
+     */
     public int getGameId() {
         return gameId;
     }
 
+    /**
+     * Returns the game status.
+     * @return the GameStatus.
+     */
     public GameStatus getStatus() {
         return status;
     }
 
+    /**
+     * Periodically checks the game status and performs necessary updates.
+     */
     @Override
     public void run() {
         while (!Thread.interrupted()) {
@@ -444,6 +575,12 @@ public class GameController implements GameControllerInterface, Serializable, Ru
         }
     }
 
+    /**
+     * Handles the heartbeat signal from a player to indicate their active presence.
+     * @param nickname The nickname of the player sending the heartbeat.
+     * @param listener The GameListener associated with the player.
+     * @throws RemoteException if there is a network error during communication with the listener.
+     */
     @Override
     public synchronized void heartbeat(String nickname, GameListener listener) throws RemoteException {
         synchronized (heartbeats) {
@@ -451,6 +588,13 @@ public class GameController implements GameControllerInterface, Serializable, Ru
         }
     }
 
+    /**
+     * Disconnects a player from the game.
+     * Removes the player from the player list, rotation, and listeners.
+     * Checks if there is only one player left in the game and notifies the listener about the game end.
+     * @param nickname The nickname of the player to disconnect.
+     * @throws RemoteException if there is a network error during communication with the listener.
+     */
     //@Override
     public void disconnectPlayer(String nickname) throws RemoteException {
         players.remove(nickname);
