@@ -123,6 +123,7 @@ public class GameControllerTest {
     @DisplayName("A player chooses the initial card side")
     void chooseInitialCardSide() throws RemoteException {
         controller.startGame();
+        controller.chooseColor("p1", "BLUE", gl);
         assertFalse(controller.chooseInitialCardSide("p5", true, gl));
         assertTrue(controller.chooseInitialCardSide("p1", true, gl));
     }
@@ -131,6 +132,10 @@ public class GameControllerTest {
     @DisplayName("Check the playing card phase")
     void playCard() throws RemoteException {
         controller.startGame();
+        controller.chooseColor("p1", "BLUE", gl);
+        controller.chooseColor("p2", "RED", gl);
+        controller.chooseColor("p3", "YELLOW", gl);
+        controller.chooseColor("p4", "GREEN", gl);
         controller.chooseInitialCardSide("p1", true, gl);
         controller.chooseInitialCardSide("p2", true, gl);
         controller.chooseInitialCardSide("p3", true, gl);
@@ -150,6 +155,10 @@ public class GameControllerTest {
     @DisplayName("Check the drawing card phase")
     void drawCard() throws RemoteException {
         controller.startGame();
+        controller.chooseColor("p1", "BLUE", gl);
+        controller.chooseColor("p2", "RED", gl);
+        controller.chooseColor("p3", "YELLOW", gl);
+        controller.chooseColor("p4", "GREEN", gl);
         ArrayList<GoalCard> cards1 = controller.getGame().drawGoalCards();
         ArrayList<GoalCard> cards2 = controller.getGame().drawGoalCards();
         controller.getPlayer("p1").setHiddenGoal(cards1.get(0));
@@ -230,7 +239,11 @@ public class GameControllerTest {
 
     @Test
     @DisplayName("Check multiple winners")
-    void calculateMultipleWinner(){
+    void calculateMultipleWinner() throws RemoteException {
+        controller.chooseColor("p1", "BLUE", gl);
+        controller.chooseColor("p2", "RED", gl);
+        controller.chooseColor("p3", "YELLOW", gl);
+        controller.chooseColor("p4", "GREEN", gl);
         controller.getPlayer("p1").addPoints(20);
         controller.getPlayer("p2").addPoints(20);
         controller.getPlayer("p3").addPoints(20);
@@ -242,6 +255,10 @@ public class GameControllerTest {
     @DisplayName("Final phase")
     void finalPhase() throws RemoteException {
         controller.startGame();
+        controller.chooseColor("p1", "BLUE", gl);
+        controller.chooseColor("p2", "RED", gl);
+        controller.chooseColor("p3", "YELLOW", gl);
+        controller.chooseColor("p4", "GREEN", gl);
         controller.chooseInitialCardSide("p1", true, gl);
         controller.chooseInitialCardSide("p2", true, gl);
         controller.chooseInitialCardSide("p3", true, gl);

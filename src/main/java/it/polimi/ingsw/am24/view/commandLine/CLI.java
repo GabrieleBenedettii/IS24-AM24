@@ -10,12 +10,15 @@ import java.io.PrintStream;
 import java.nio.charset.Charset;
 import java.util.*;
 
+import org.fusesource.jansi.AnsiConsole;
+
 public class CLI extends UI {
     private PrintStream out;
     private Queue<String> messages;
 
 
     public CLI() {
+        AnsiConsole.systemInstall();
         messages = new LinkedList<>();
         out = new PrintStream(System.out, true);
     }
@@ -170,6 +173,7 @@ public class CLI extends UI {
 
     @Override
     public void show_lobby(){
+        show_logo();
         out.println("\nSelect an option: ");
         out.println("\t(1) create a new lobby");
         out.println("\t(2) join an existing lobby");
@@ -339,40 +343,7 @@ public class CLI extends UI {
 
     @Override
     public void show_logo() {
-        //clearScreen();
-        /*new PrintStream(System.out, true, System.console() != null
-                ? System.console().charset()
-                : Charset.defaultCharset()
-        ).println("""
-                                                                                                           \s
-                                                                                                           \s
-                  ,----..                                                                                  \s
-                 /   /   \\                                   ,--,                                          \s
-                |   :     :  __  ,-.                 ,---, ,--.'|    ,---.                                 \s
-                .   |  ;. /,' ,'/ /|             ,-+-. /  ||  |,    '   ,'\\                                \s
-                .   ; /--` '  | |' | ,--.--.    ,--.'|'   |`--'_   /   /   |                               \s
-                ;   | ;    |  |   ,'/       \\  |   |  ,"' |,' ,'| .   ; ,. :                               \s
-                |   : |    '  :  / .--.  .-. | |   | /  | |'  | | '   | |: :                               \s
-                .   | '___ |  | '   \\__\\/: . . |   | |  | ||  | : '   | .; :                               \s
-                '   ; : .'|;  : |   ," .--.; | |   | |  |/ '  : |_|   :    |                               \s
-                '   | '/  :|  , ;  /  /  ,.  | |   | |--'  |  | '.'\\   \\  /                                \s
-                |   :    /  ---'  ;  :   .'   \\|   |/      ;  :    ;`----'                                 \s
-                 \\   \\ .'         |  ,     .-./'---'       |  ,   /                                        \s
-                  `---`            `--`---'                 ---`-'                                         \s
-                  ,----..                                   ___                                            \s
-                 /   /   \\                                ,--.'|_    ,--,                                  \s
-                |   :     :  __  ,-.                      |  | :,' ,--.'|    ,---.        ,---,            \s
-                .   |  ;. /,' ,'/ /|                      :  : ' : |  |,    '   ,'\\   ,-+-. /  | .--.--.   \s
-                .   ; /--` '  | |' | ,---.     ,--.--.  .;__,'  /  `--'_   /   /   | ,--.'|'   |/  /    '  \s
-                ;   | ;    |  |   ,'/     \\   /       \\ |  |   |   ,' ,'| .   ; ,. :|   |  ,"' |  :  /`./  \s
-                |   : |    '  :  / /    /  | .--.  .-. |:__,'| :   '  | | '   | |: :|   | /  | |  :  ;_    \s
-                .   | '___ |  | ' .    ' / |  \\__\\/: . .  '  : |__ |  | : '   | .; :|   | |  | |\\  \\    `. \s
-                '   ; : .'|;  : | '   ;   /|  ," .--.; |  |  | '.'|'  : |_|   :    ||   | |  |/  `----.   \\\s
-                '   | '/  :|  , ; '   |  / | /  /  ,.  |  ;  :    ;|  | '.'\\   \\  / |   | |--'  /  /`--'  /\s
-                |   :    /  ---'  |   :    |;  :   .'   \\ |  ,   / ;  :    ;`----'  |   |/     '--'.     / \s
-                 \\   \\ .'          \\   \\  / |  ,     .-./  ---`-'  |  ,   /         '---'        `--'---'  \s
-                  `---`             `----'   `--`---'               ---`-'                                 \s
-                """);*/
+        clearScreen();
         new PrintStream(System.out, true, System.console() != null
                 ? System.console().charset()
                 : Charset.defaultCharset()
