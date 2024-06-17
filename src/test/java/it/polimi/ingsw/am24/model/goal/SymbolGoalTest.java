@@ -1,5 +1,6 @@
 package it.polimi.ingsw.am24.model.goal;
 
+import it.polimi.ingsw.am24.model.Player;
 import it.polimi.ingsw.am24.model.Symbol;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -37,42 +38,55 @@ public class SymbolGoalTest {
     @Test
     @DisplayName("Check correct point calculation")
     public void testCalculatePoints1() {
-        visibleSymbolsK.put(Symbol.ANIMAL, 3);
-        visibleSymbolsG.put(Symbol.QUILL, 2);
-        visibleSymbolsT.put(Symbol.INK, 1);
-        visibleSymbolsT.put(Symbol.MANUSCRIPT, 1);
-        visibleSymbolsT.put(Symbol.QUILL, 1);
+        Player playerK = new Player("ciao");
+        Player playerG = new Player("ciao1");
+        Player playerT = new Player("ciao2");
 
-        assertEquals(2,symbolgoalK.calculatePoints(visibleSymbolsK));
-        assertEquals(2,symbolgoalG.calculatePoints(visibleSymbolsG));
-        assertEquals(2,symbolgoalT.calculatePoints(visibleSymbolsT));
+        playerK.getVisibleSymbols().put(Symbol.ANIMAL, 3);
+        playerG.getVisibleSymbols().put(Symbol.QUILL, 2);
+        playerT.getVisibleSymbols().put(Symbol.INK, 1);
+        playerT.getVisibleSymbols().put(Symbol.MANUSCRIPT, 1);
+        playerT.getVisibleSymbols().put(Symbol.QUILL, 1);
+
+
+        assertEquals(2,symbolgoalK.calculatePoints(playerK));
+        assertEquals(2,symbolgoalG.calculatePoints(playerG));
+        assertEquals(2,symbolgoalT.calculatePoints(playerT));
     }
 
     @Test
     @DisplayName("Ensure each card is counted once when calculating points")
     public void testCalculatePoints2(){
-        visibleSymbolsK.put(Symbol.ANIMAL, 5);
-        visibleSymbolsG.put(Symbol.QUILL, 3);
-        visibleSymbolsT.put(Symbol.INK, 2);
-        visibleSymbolsT.put(Symbol.MANUSCRIPT, 1);
-        visibleSymbolsT.put(Symbol.QUILL, 2);
+        Player playerK = new Player("ciao");
+        Player playerG = new Player("ciao1");
+        Player playerT = new Player("ciao2");
 
-        assertEquals(2,symbolgoalK.calculatePoints(visibleSymbolsK));
-        assertEquals(2,symbolgoalG.calculatePoints(visibleSymbolsG));
-        assertEquals(2,symbolgoalT.calculatePoints(visibleSymbolsT));
+        playerK.getVisibleSymbols().put(Symbol.ANIMAL, 5);
+        playerG.getVisibleSymbols().put(Symbol.QUILL, 3);
+        playerT.getVisibleSymbols().put(Symbol.INK, 2);
+        playerT.getVisibleSymbols().put(Symbol.MANUSCRIPT, 1);
+        playerT.getVisibleSymbols().put(Symbol.QUILL, 2);
+
+        assertEquals(2,symbolgoalK.calculatePoints(playerK));
+        assertEquals(2,symbolgoalG.calculatePoints(playerG));
+        assertEquals(2,symbolgoalT.calculatePoints(playerT));
     }
 
     @Test
     @DisplayName("Ensure accurate detection of two achieved goals")
     public void testCalculatePoints3(){
-        visibleSymbolsK.put(Symbol.ANIMAL, 6);
-        visibleSymbolsG.put(Symbol.QUILL, 4);
-        visibleSymbolsT.put(Symbol.INK, 2);
-        visibleSymbolsT.put(Symbol.MANUSCRIPT, 2);
-        visibleSymbolsT.put(Symbol.QUILL, 3);
+        Player playerK = new Player("ciao");
+        Player playerG = new Player("ciao1");
+        Player playerT = new Player("ciao2");
 
-        assertEquals(4,symbolgoalK.calculatePoints(visibleSymbolsK));
-        assertEquals(4,symbolgoalG.calculatePoints(visibleSymbolsG));
-        assertEquals(4,symbolgoalT.calculatePoints(visibleSymbolsT));
+        playerK.getVisibleSymbols().put(Symbol.ANIMAL, 6);
+        playerG.getVisibleSymbols().put(Symbol.QUILL, 4);
+        playerT.getVisibleSymbols().put(Symbol.INK, 2);
+        playerT.getVisibleSymbols().put(Symbol.MANUSCRIPT, 2);
+        playerT.getVisibleSymbols().put(Symbol.QUILL, 3);
+
+        assertEquals(4,symbolgoalK.calculatePoints(playerK));
+        assertEquals(4,symbolgoalG.calculatePoints(playerG));
+        assertEquals(4,symbolgoalT.calculatePoints(playerT));
     }
 }

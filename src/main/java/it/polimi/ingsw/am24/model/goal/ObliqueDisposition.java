@@ -25,7 +25,7 @@ public class ObliqueDisposition extends GoalCard{
         int points = 0;
         for(int i = 1-direction; i < p.getGameBoard().length - (1+direction); i++){
             for(int j = 0; j < p.getGameBoard()[i].length - 2; j++){
-                if(!alreadyUsed[i][j] && !alreadyUsed[i+direction][j+1] && !alreadyUsed[i+2*direction][j+2] && kingdom.equals(p.getGameBoard()[i][j].getKingdom()) && kingdom.equals(p.getGameBoard()[i+direction][j+1].getKingdom()) && kingdom.equals(p.getGameBoard()[i+2*direction][j+2].getKingdom())) {
+                if(!alreadyUsed[i][j] && p.getGameBoard()[i][j] != null && p.getGameBoard()[i+2*direction][j+2] != null && p.getGameBoard()[i+direction][j+1] != null && !alreadyUsed[i+direction][j+1] && !alreadyUsed[i+2*direction][j+2] && kingdom.equals(p.getGameBoard()[i][j].getKingdom()) && kingdom.equals(p.getGameBoard()[i+direction][j+1].getKingdom()) && kingdom.equals(p.getGameBoard()[i+2*direction][j+2].getKingdom())) {
                     points += getPoints();
                     alreadyUsed[i][j] = true;
                     alreadyUsed[i+direction][j+1] = true;

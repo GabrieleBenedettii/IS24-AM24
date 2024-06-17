@@ -23,7 +23,7 @@ public class VerticalDisposition extends GoalCard{
         boolean[][] alreadyUsed = new boolean[21][41];
         for(int i = (secondaryKingdomCorner <= 1 ? 1 : 0); i < p.getGameBoard().length - (secondaryKingdomCorner <= 1 ? 0 : 1); i++){
             for(int j = (secondaryKingdomCorner % 2 == 0 ? 1 : 0); j < p.getGameBoard()[i].length - (secondaryKingdomCorner % 2 == 0 ? 0 : 1); j++){
-                if(!alreadyUsed[i][j] && mainKingdom.equals(p.getGameBoard()[i][j].getKingdom()) && mainKingdom.equals(p.getGameBoard()[i+2][j].getKingdom()) && secondaryKingdom.equals(p.getGameBoard()[i+(secondaryKingdomCorner <= 1 ? -1 : 3)][j+(secondaryKingdomCorner % 2 == 0 ? -1 : 1)].getKingdom())){
+                if(!alreadyUsed[i][j] && p.getGameBoard()[i][j]!= null && p.getGameBoard()[i+2][j]!= null && p.getGameBoard()[i+(secondaryKingdomCorner <= 1 ? -1 : 3)][j+(secondaryKingdomCorner % 2 == 0 ? -1 : 1)] != null && mainKingdom.equals(p.getGameBoard()[i][j].getKingdom()) && mainKingdom.equals(p.getGameBoard()[i+2][j].getKingdom()) && secondaryKingdom.equals(p.getGameBoard()[i+(secondaryKingdomCorner <= 1 ? -1 : 3)][j+(secondaryKingdomCorner % 2 == 0 ? -1 : 1)].getKingdom())){
                     points = points + 3;
                     alreadyUsed[i][j] = true;
                     alreadyUsed[i+2][j] = true;

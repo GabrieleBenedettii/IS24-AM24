@@ -1,6 +1,7 @@
 package it.polimi.ingsw.am24.model.goal;
 
 import it.polimi.ingsw.am24.model.Kingdom;
+import it.polimi.ingsw.am24.model.Player;
 import it.polimi.ingsw.am24.model.Symbol;
 import it.polimi.ingsw.am24.model.card.ResourceCard;
 import org.junit.jupiter.api.BeforeEach;
@@ -43,38 +44,50 @@ public class ObliqueDispositionTest {
     @Test
     @DisplayName("Check correct point calculation")
     public void testCalculatePoints1() {
-        for (int i = 0; i < 3; i++)
-            boardTL[i][i] = fungiCard;
+
+        Player playerTL = new Player("ciao");
+        Player playerTR = new Player("ciao1");
 
         for (int i = 0; i < 3; i++)
-            boardTR[i][2 - i] = fungiCard;
+            playerTL.getGameBoard()[i][i] = fungiCard;
 
-        assertEquals(5,topLeft.calculatePoints(boardTL));
-        assertEquals(1,topRight.calculatePoints(boardTR));
+        for (int i = 0; i < 3; i++)
+            playerTR.getGameBoard()[i][2 - i] = fungiCard;
+
+        assertEquals(5,topLeft.calculatePoints(playerTL));
+        assertEquals(1,topRight.calculatePoints(playerTR));
     }
 
     @Test
     @DisplayName("Ensure each card is counted once when calculating points")
     public void testCalculatePoints2() {
-        for (int i = 0; i < 5; i++)
-            boardTL[i][i] = fungiCard;
+
+        Player playerTL = new Player("ciao");
+        Player playerTR = new Player("ciao1");
 
         for (int i = 0; i < 5; i++)
-            boardTR[i][4 - i] = fungiCard;
+            playerTL.getGameBoard()[i][i] = fungiCard;
 
-        assertEquals(5,topLeft.calculatePoints(boardTL));
-        assertEquals(1,topRight.calculatePoints(boardTR));
+        for (int i = 0; i < 5; i++)
+            playerTR.getGameBoard()[i][4 - i] = fungiCard;
+
+        assertEquals(5,topLeft.calculatePoints(playerTL));
+        assertEquals(1,topRight.calculatePoints(playerTR));
     }
     @Test
     @DisplayName("Ensure accurate detection of two achieved goals")
     void testCalculatePoints3() {
-        for (int i = 0; i < 6; i++)
-            boardTL[i][i] = fungiCard;
+
+        Player playerTL = new Player("ciao");
+        Player playerTR = new Player("ciao1");
 
         for (int i = 0; i < 6; i++)
-            boardTR[i][5 - i] = fungiCard;
+            playerTL.getGameBoard()[i][i] = fungiCard;
 
-        assertEquals(10,topLeft.calculatePoints(boardTL));
-        assertEquals(2,topRight.calculatePoints(boardTR));
+        for (int i = 0; i < 6; i++)
+            playerTR.getGameBoard()[i][5 - i] = fungiCard;
+
+        assertEquals(10,topLeft.calculatePoints(playerTL));
+        assertEquals(2,topRight.calculatePoints(playerTR));
     }
 }
