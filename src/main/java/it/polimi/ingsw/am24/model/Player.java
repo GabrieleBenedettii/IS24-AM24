@@ -162,6 +162,10 @@ public class Player {
         return visibleSymbols;
     }
 
+    public GameCard[][] getGameBoard() {
+        return gameBoard;
+    }
+
     public PrivatePlayerView getPrivatePlayerView(){
         ArrayList<GameCardView> hand = new ArrayList<>();
         for(PlayableCard c : playingHand){
