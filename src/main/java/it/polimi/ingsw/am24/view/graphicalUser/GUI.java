@@ -76,6 +76,11 @@ public class GUI extends UI {
     }
 
     @Override
+    public void show_command() {
+
+    }
+
+    @Override
     public void show_table(GameView gameView, boolean forChoice) {
         callPlatformRunLater(() -> {
             GameBoardController controller = (GameBoardController) this.guiApplication.getController(Scenes.GAME);
@@ -94,13 +99,11 @@ public class GUI extends UI {
 
     @Override
     public void show_lobby() {
-        if (alreadyShowedPublisher) {
-            callPlatformRunLater(() ->  {
-                this.guiApplication.setInputReaderGUItoAllControllers(this.inputReaderGUI);
-                this.guiApplication.createNewWindowWithStyle();
-                this.guiApplication.setActiveScene(Scenes.MENU);
-            });
-        }
+        callPlatformRunLater(() ->  {
+            this.guiApplication.setInputReaderGUItoAllControllers(this.inputReaderGUI);
+            this.guiApplication.createNewWindowWithStyle();
+            this.guiApplication.setActiveScene(Scenes.MENU);
+        });
     }
 
     @Override
@@ -147,6 +150,10 @@ public class GUI extends UI {
             this.show_lobby();
         });
         pause.play();
+    }
+
+    @Override
+    public void show_authors_and_rules() {
 
     }
 
@@ -338,7 +345,7 @@ public class GUI extends UI {
     }
 
     @Override
-    public void show_message() {
+    public void show_messages() {
 
     }
 

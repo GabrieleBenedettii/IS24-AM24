@@ -1,5 +1,6 @@
 package it.polimi.ingsw.am24.model;
 
+import it.polimi.ingsw.am24.Exceptions.AlreadyDrawnException;
 import it.polimi.ingsw.am24.Exceptions.InvalidPositioningException;
 import it.polimi.ingsw.am24.Exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.am24.model.card.GameCard;
@@ -77,10 +78,17 @@ class PlayerTest {
 
 
     @Test
-    public void draw() {
+    public void draw() throws AlreadyDrawnException {
         player.draw(resCard1);
         assertTrue(player.getPlayingHand().contains(resCard1));
+    }
 
+    @Test
+    public void drawtwotimes() throws AlreadyDrawnException {
+        player.draw(resCard1);
+        player.draw(resCard1);
+        player.draw(resCard1);
+        assertThrows(AlreadyDrawnException.class,() -> player.draw(resCard1));
     }
 
     @Test

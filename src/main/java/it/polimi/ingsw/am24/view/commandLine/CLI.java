@@ -108,7 +108,10 @@ public class CLI extends UI {
         for(int i = 0; i <  gameView.getPlayerView().getPlayerHand().size(); i++) {
             out.print("\n" + i + " - " + gameView.getPlayerView().getPlayerHand().get(i).getCardDescription());
         }
+    }
 
+    @Override
+    public void show_command() {
         System.out.print("\nCommand -> ");
     }
 
@@ -135,8 +138,6 @@ public class CLI extends UI {
         i = 4;
         out.println(i + " - Pick a card from RESOURCE CARD DECK, first card color: " + gameView.getCommon().getCommonBoardView().getResourceDeck());
         out.println((i + 1) + " - Pick a card from GOLD CARD DECK, first card color: " + gameView.getCommon().getCommonBoardView().getGoldDeck());
-
-        System.out.print("\nCommand -> ");
     }
 
     public void show_start_table(GameView gameView) {
@@ -168,12 +169,14 @@ public class CLI extends UI {
         out.println("Show table -> /table");
         out.println("Show own visible symbols -> /visible");
         out.println("Draw a card (after play a card) -> /draw <option>");
+        out.println("See the chat messages -> /chat");
         out.println("Help -> /help");
     }
 
     @Override
     public void show_lobby(){
         show_logo();
+        show_authors_and_rules();
         out.println("\nSelect an option: ");
         out.println("\t(1) create a new lobby");
         out.println("\t(2) join an existing lobby");
@@ -270,7 +273,8 @@ public class CLI extends UI {
     }
 
     @Override
-    public void show_message() {
+    public void show_messages() {
+        out.println("\n");
         for (String msg : messages){
             out.println(msg);
         }
@@ -278,12 +282,16 @@ public class CLI extends UI {
 
     @Override
     public void add_message_received(String sender, String receiver, String message, String time) {
-        System.out.println("\n[" + time + "] " + (receiver.equals("") ? "[PUBLIC]" : "[PRIVATE]") + " from " + sender + ": " + message);
+        String parsed_message = "[" + time + "] " + (receiver.equals("") ? "[PUBLIC]" : "[PRIVATE]") + " from " + sender + ": " + message;
+        messages.add(parsed_message);
+        out.println("\n" + parsed_message);
     }
 
     @Override
     public void add_message_sent(String receiver, String message, String time) {
-        System.out.println("\n[" + time + "] " + (receiver.equals("") ? "[PUBLIC] to all" : ("[PRIVATE] to " + receiver)) + ": " + message);
+        String parsed_message = "[" + time + "] " + (receiver.equals("") ? "[PUBLIC] to all" : ("[PRIVATE] to " + receiver)) + ": " + message;
+        messages.add(parsed_message);
+        out.println("\n" + parsed_message);
     }
 
     @Override
@@ -340,27 +348,30 @@ public class CLI extends UI {
         System.exit(-1);
     }
 
-
     @Override
     public void show_logo() {
-        clearScreen();
+        //clearScreen();
         new PrintStream(System.out, true, System.console() != null
                 ? System.console().charset()
                 : Charset.defaultCharset()
         ).println("""
-                ████████╗███████╗██████╗░░███████╗██╗░░░██╗
-                ██╔═════╝██╔══██║██╔══=██║██╔════╝╚██╗░██╔╝
-                ██║░░░░░░██║░░██║██║░░░██║█████╗░░░╚████║░░
-                ██║░░░░░░██║░░██║██║░░░██║██╔══╝░░░██║░██╚╗
-                ████████╗███████║██████╔=╝███████╗██╔╝░░██║
-                ╚═══════╝╚══════╝╚═════╝░░╚══════╝╚═╝░░░╚═╝
-                ███╗░░██╗ █████╗ ████████╗██╗░░░░██╗██████╗░██████╗░██╗░░░░░██╗░██████╗
-                ████╗░██║██╔══██╗╚══██╔══╝██║░░░░██║██╔══██╗██╔══██╗██║░░░░░██║██╔════╝
-                ██╔██╗██║███████║░░░██║░░░██║░░░░██║██████╔╝███████║██║░░░░░██║╚█████╗░
-                ██║╚████║██╔══██║░░░██║░░░██║░░░░██║██╔══██╗██╔══██║██║░░░░░██║░╚═══██╗
-                ██║░╚███║██║░░██║░░░██║░░░█████████║██║░░██║██║░░██║███████╗██║██████╔╝
-                ╚═╝░░╚══╝╚═╝░░╚═╝░░░╚═╝░░░╚═══════=╝╚═╝░░╚═╝╚═╝░░╚═╝╚══════╝╚═╝╚═════╝░
+                ████████╗████████╗██████╗░░████████╗██╗░░░██╗
+                ██╔═════╝██╔═══██║██╔══=██║██╔═════╝╚██╗░██╔╝
+                ██║░░░░░░██║░░░██║██║░░░██║██████╗░░░╚████║░░
+                ██║░░░░░░██║░░░██║██║░░░██║██╔═══╝░░░██║░██╚╗
+                ████████╗████████║██████╔=╝████████╗██╔╝░░██║
+                ╚═══════╝╚══════╝╚══════╝░░╚═══════╝╚═╝░░░╚═╝
+                ███╗░░██╗░██████╗░████████╗██╗░░░██╗███████╗░░██████╗░██╗░░░░░░██╗░███████╗
+                ████╗░██║██╔═══██╗╚══██╔══╝██║░░░██║██╔═══██╗██╔═══██╗██║░░░░░░██║██╔═════╝
+                ██╔██╗██║████████║░░░██║░░░██║░░░██║███████╔╝████████║██║░░░░░░██║╚██████╗░
+                ██║╚████║██╔═══██║░░░██║░░░██║░░░██║██╔═══██╗██╔═══██║██║░░░░░░██║░╚════██╗
+                ██║░╚███║██║░░░██║░░░██║░░░████████║██║░░░██║██║░░░██║████████╗██║███████╔╝
+                ╚═╝░░╚══╝╚═╝░░░╚═╝░░░╚═╝░░░╚══════=╝╚═╝░░░╚═╝╚═╝░░░╚═╝╚═══════╝╚═╝╚══════╝░
                 """);
+    }
+
+    @Override
+    public void show_authors_and_rules() {
         out.println(Constants.AUTHORS);
         out.println(Constants.RULES);
     }

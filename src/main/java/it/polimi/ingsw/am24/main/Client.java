@@ -1,12 +1,12 @@
 package it.polimi.ingsw.am24.main;
 
+import it.polimi.ingsw.am24.constants.Constants;
 import it.polimi.ingsw.am24.view.GameFlow;
 import it.polimi.ingsw.am24.view.commandLine.CLI;
 import it.polimi.ingsw.am24.view.flow.UI;
 import it.polimi.ingsw.am24.view.graphicalUser.GUIapp;
 import javafx.application.Application;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -14,101 +14,53 @@ import java.util.Scanner;
 public class Client {
 
     public static void main(String[] args) {
-        int selection;
-        String selected;
+        int choice;
+        String protocol;
         //Disable javaFX logger
         killLoggers();
 
-        String input;
+        String ip;
 
         UI ui =new CLI();
 
+        Scanner in = new Scanner(System.in);
         do {
             System.out.print("Insert remote IP (leave empty for localhost) -> ");
-            input = new Scanner(System.in).nextLine();
-            if(!input.equals("") && !isValidIP(input)){
-                clearCMD();
+            ip = in.nextLine();
+            if(!ip.equals("") && !checkIP(ip)){
+                Constants.clearScreen();
                 System.out.println("Not valid");
             }
-        } while (!input.equals("") && !isValidIP(input));
-
-        /*if (!input.equals(""))
-            DefaultValue.serverIp = input;*/
-
-        /*do {
-            System.out.print("Insert your IP (leave empty for localhost) -> ");
-            input = new Scanner(System.in).nextLine();
-            if(!input.equals("") && !isValidIP(input)){
-                clearCMD();
-                System.out.println("Not valid");
-            }
-        } while (!input.equals("") && !isValidIP(input));
-
-        if (!input.equals(""))
-            System.setProperty("java.rmi.server.hostname", input);*/
+        } while (!ip.equals("") && !checkIP(ip));
 
         do {
             ui.show_network_type();
-            input = new Scanner(System.in).nextLine();
             try {
-                selection = Integer.parseInt(input);
+                choice = Integer.parseInt(in.nextLine());
             } catch (NumberFormatException e) {
-                selection = -1;
+                choice = -1;
                 System.out.println("Nan");
             }
-        } while (selection != 1 && selection != 2 && selection != 3 && selection != 4);
+        } while (choice < 1 || choice > 4);
 
-        /*do {
-            System.out.println("""
-                Select option:
-                \t (1) CLI
-                \t (2) GUI (not done yet)
-                """);
-            input = new Scanner(System.in).nextLine();
-            try {
-                selection = Integer.parseInt(input);
-            } catch (NumberFormatException e) {
-                selection = -1;
-                System.out.println("Nan");
-            }
-        } while (selection != 1 && selection != 2);
+        if(choice == 1 || choice ==3) protocol = "RMI";
+        else protocol = "SOCKET";
 
-        String conSel = selection == 1 ? "CLI" : "GUI";*/
-        if(selection == 1 || selection ==3){
-            selected = "RMI";
-        }
-        else {
-            selected = "SOCKET";
-        }
         System.out.println("Starting the game!");
-        if(selection == 1 || selection == 2){
-            new GameFlow(selected);
-        }else {
-            //todo verificare che l'opzione 4 (gui + socket) utilizzi davvero le socket (stampa "Client RMI ready")
-            Application.launch(GUIapp.class, selected);
-        }
 
-        //Starts the UI
-        //selection == 1 ? new GameFlow(conSel) : Application.launch(GUIApplication.class, conSel.toString());
+        if(choice == 1 || choice == 2) new GameFlow(protocol, ip);
+        else Application.launch(GUIapp.class, protocol, ip);
     }
 
-    private static void clearCMD() {
-        try {
-            new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-        } catch (IOException | InterruptedException e) {
-            System.out.println("\033\143");   //for Mac
-        }
-    }
-
-    private static boolean isValidIP(String input) {
-        List<String> parsed;
-        parsed = Arrays.stream(input.split("\\.")).toList();
-        if (parsed.size() != 4) {
+    private static boolean checkIP(String input) {
+        List<String> input_split;
+        input_split = Arrays.stream(input.split("\\.")).toList();
+        if (input_split.size() != 4) {
             return false;
         }
-        for (String part : parsed) {
+        for (String num : input_split) {
             try {
-                int dec = Integer.parseInt(part);
+                int dec = Integer.parseInt(num);
                 if(dec < 0 || dec > 255) return false;
             } catch (NumberFormatException e) {
                 return false;

@@ -132,7 +132,7 @@ public class Game {
     }
 
     public List<String> getAvailableColors() {
-        return availableColors.stream().map(c -> c.toString()).toList();
+        return availableColors.stream().map(c -> c != null ? c.toString() : "").toList();
     }
 
     public void chooseColor(PlayerColor color) {

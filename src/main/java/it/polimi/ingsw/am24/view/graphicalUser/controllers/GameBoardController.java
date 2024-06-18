@@ -615,7 +615,7 @@ public class GameBoardController extends Generic{
         drawGameHand(false);
         drawHiddenGoal();
         drawRotation();
-
+        drawScoreBoard();
     }
 
     private void drawScoreBoard() {
@@ -636,15 +636,12 @@ public class GameBoardController extends Generic{
             double y = p.getY()/2.904;
             double radius = 12;
 
-
             if (gameView.getCommon().getPlayerView(s).getColor().equals("RED") ){ x+=5;}
             else if (gameView.getCommon().getPlayerView(s).getColor().equals("BLUE")){ x-=5;}
             else if (gameView.getCommon().getPlayerView(s).getColor().equals("GREEN")){ y+=5;}
             else if (gameView.getCommon().getPlayerView(s).getColor().equals("YELLOW")){ y-=5;}
 
             drawCircle(gc, x, y, radius, gameView.getCommon().getPlayerView(s).getColor());
-
-
         }
         scoreboardContainer.getChildren().addAll(imageView, canvas);
         StackPane.setMargin(imageView, new Insets(0, 0, 0, 30));

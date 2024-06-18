@@ -4,9 +4,14 @@ import it.polimi.ingsw.am24.model.Kingdom;
 import it.polimi.ingsw.am24.model.Symbol;
 
 import java.awt.*;
+import java.io.IOException;
 import java.util.HashMap;
 
 public class Constants {
+    public static final int RMIPort = 1234;
+    public static final int SOCKETPort = 8888;
+    public static final String serverName = "CodexNaturalis-Server";
+    public static final int seconds_between_attempts = 2;
     public static final int MIN_PLAYERS = 2;
     public static final int MAX_PLAYERS = 4;
     public static final String TEXT_UNDERLINE = "\033[4m";
@@ -141,5 +146,13 @@ public class Constants {
         corner.put(1,"top-right");
         corner.put(2,"bottom-left");
         corner.put(3,"bottom-right");
+    }
+
+    public static void clearScreen() {
+        try {
+            new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+        } catch (IOException | InterruptedException e) {
+            System.out.println("\033\143");   //for Mac
+        }
     }
 }
