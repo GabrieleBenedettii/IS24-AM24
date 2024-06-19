@@ -4,18 +4,14 @@ public enum Scenes {
     MENU("Menu.fxml"),
     NICKNAMESELECT("NicknameSelect.fxml"),
     CREATEGAMENICKNAMESELECT("CreateGameNicknameSelect.fxml"),
-    /*REDPLAYERICON("RedPlayerIcon.fxml"),
-    BLUEPLAYERICON("BluePlayerIcon.fxml"),
-    YELLOWPLAYERICON("YellowPlayerIcon.fxml"),
-    GREENPLAYERICON("GreenPlayerIcon.fxml"),
-    DISPLAY("display.fxml"),*/
     ENDGAMESCREEN("EndGameScreen.fxml"),
     SECRETGOALCARDSELECTOR("SecretGoalCardSelector.fxml"),
     LOBBYVIEW("LobbyView.fxml"),
     LOGO("Logo.fxml"),
     COLORSELECTOR("ColorSelector.fxml"),
     GAME("game.fxml"),
-    INITIALCARDSELECTOR("InitialCardSelector.fxml");
+    INITIALCARDSELECTOR("InitialCardSelector.fxml"),
+    SERVERDISCONNECTION("ServerDisconnection.fxml");
 
     private final String fxmlFile;
 

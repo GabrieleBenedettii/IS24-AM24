@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+    <Pane fx:id="container" prefHeight="900.0" prefWidth="1600.0" styleClass="displayGameBoard" stylesheets="@style.css">
+        <Text fx:id="text" fill="black" layoutX="469.0" layoutY="559.0" strokeType="OUTSIDE" strokeWidth="0.0"
+              style="-fx-font-size:70; -fx-font-weight: bold; -fx-font-family: 'Muli'" text="server Disconnected"
+              textAlignment="CENTER">
+            <font>
+                <Font size="24.0"/>
+            </font>
+        </Text>
+        <StackPane layoutX="650.0" layoutY="183.0" prefHeight="150.0" prefWidth="200.0">
+            <ImageView fitHeight="300.0" pickOnBounds="true" preserveRatio="true">
+                <Image url="@../images/misc/alert.png"/>
+            </ImageView>
+        </StackPane>
+    </Pane>
+</AnchorPane>
