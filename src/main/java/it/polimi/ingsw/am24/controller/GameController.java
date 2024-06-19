@@ -27,7 +27,7 @@ public class GameController implements GameControllerInterface, Serializable, Ru
     private final HashMap<String, Player> players;
     private final HashMap<String, GameListener> listeners;
     private String currentPlayer;
-    private final int playerCount;
+    private int playerCount;
     private int readyPlayers;   //used to know how many players have already done the side of initial card choice and start the rotation
     private int readyPlayersForFirstPhase; //used to know how many players have already done the color choice
 
@@ -72,12 +72,6 @@ public class GameController implements GameControllerInterface, Serializable, Ru
             return players.get(nickname);
         }
     }
-
-    /*public void removePlayer(String nickname) {
-        synchronized (lockPlayers){
-            players.remove(nickname);
-        }
-    }*/
 
     //choice of the color by a player
     public boolean chooseColor(String nickname, String color, GameListener listener) throws RemoteException {
@@ -316,7 +310,7 @@ public class GameController implements GameControllerInterface, Serializable, Ru
                             throw new RuntimeException(e);
                         }
                     }).start();
-                    }
+                }
             }
         }
     }
@@ -460,6 +454,7 @@ public class GameController implements GameControllerInterface, Serializable, Ru
         players.remove(nickname);
         rotation.remove(nickname);
         listeners.remove(nickname);
+        playerCount--;
         //Check if there is only one player playing
         if ((status.equals(GameStatus.FIRST_PHASE) || status.equals(GameStatus.RUNNING) || status.equals(GameStatus.LAST_LAST_ROUND) || status.equals(GameStatus.LAST_ROUND)) && players.size() == 1) {
             HashMap<String, Integer> rank = new HashMap<>();
@@ -467,6 +462,10 @@ public class GameController implements GameControllerInterface, Serializable, Ru
             winner = p.getNickname();
             rank.put(winner, players.get(winner).getScore());
             listeners.get(winner).gameEnded(winner, rank);
+        }
+        if(currentPlayer.equals(nickname)) {
+            nextPlayer();
+            notifyAllListeners_beginTurn();
         }
     }
 }
