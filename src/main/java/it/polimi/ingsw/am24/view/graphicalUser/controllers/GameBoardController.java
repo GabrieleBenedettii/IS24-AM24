@@ -166,23 +166,20 @@ public class GameBoardController extends Generic{
 
     @FXML
     public void connectionError() {
-        drawGameHand(false);
-        drawGoldCardsTable(false);
-        drawResourceCardsTable(false);
-        drawGameBoard(false, nickname);
-        //container.setOpacity(0.5);
+
         gameViewContainer.setOpacity(1);
+        ImageView iw=new ImageView();
 
         StackPane pane =new StackPane();
         pane.setOpacity(1);
-        imageView.setImage(new Image(HelloApplication.class.getResource("images/misc/alert.png").toString()));
+        iw.setImage(new Image(HelloApplication.class.getResource("images/misc/alert.png").toString()));
         pane.setAlignment(Pos.CENTER);
         pane.setPrefWidth(700);
         pane.setPrefHeight(300);
         Label label = new Label("SERVER CONNECTION LOST");
         label.setAlignment(Pos.CENTER);
         label.setStyle("-fx-font-family: 'Muli'; -fx-font-size: 30; -fx-font-weight: bold;");
-        pane.getChildren().addAll(imageView,label);
+        pane.getChildren().addAll(iw,label);
         gameViewContainer.getChildren().add(pane);
     }
 

@@ -415,7 +415,7 @@ public class GameController implements GameControllerInterface, Serializable, Ru
     public void run() {
         while (!Thread.interrupted()) {
             //checks all the heartbeat to detect disconnection
-            if (status != null && !status.equals(GameStatus.NOT_STARTED)) {
+            if (status != null) {
                 synchronized (heartbeats) {
                     Iterator<Map.Entry<GameListener, HeartBeat>> heartIter = heartbeats.entrySet().iterator();
 

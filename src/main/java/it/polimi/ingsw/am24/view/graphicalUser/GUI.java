@@ -304,6 +304,7 @@ public class GUI extends UI {
     @Override
     public void show_no_connection_error() {
         callPlatformRunLater(() -> {
+            this.guiApplication.setActiveScene(Scenes.GAME);
             GameBoardController controller = (GameBoardController) this.guiApplication.getController(Scenes.GAME);
             controller.connectionError();
         });
