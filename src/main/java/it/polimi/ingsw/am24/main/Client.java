@@ -25,7 +25,7 @@ public class Client {
 
         Scanner in = new Scanner(System.in);
         do {
-            System.out.print("Insert remote IP (leave empty for localhost) -> ");
+            System.out.print("\nInsert remote IP (leave empty for localhost) -> ");
             ip = in.nextLine();
             if(!ip.equals("") && !checkIP(ip)){
                 Constants.clearScreen();

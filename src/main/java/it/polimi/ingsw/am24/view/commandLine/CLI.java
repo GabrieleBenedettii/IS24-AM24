@@ -30,6 +30,7 @@ public class CLI extends UI {
 
     @Override
     public void show_gameView(GameView gameView) {
+        show_logo();
         GameCardView[][] board = gameView.getCommon().getPlayerView(gameView.getCurrent()).getBoard();
         int firstRow = board.length, lastRow = 0, firstColumn = board[0].length, lastColumn = 0;
         for(int r = 0; r < board.length; r++){
@@ -216,6 +217,7 @@ public class CLI extends UI {
 
     @Override
     public void show_initial_side(ArrayList<GameCardView> views) {
+        show_logo();
         out.println("\nINITIAL CARD SIDES");
         for(int i = 0; i < views.size(); i++) {
             out.println(i + " - " + views.get(i).getCardDescription());
@@ -249,6 +251,7 @@ public class CLI extends UI {
 
     @Override
     public void show_winner_and_rank(boolean winner, HashMap<String, Integer> rank, String winnerNick) {
+        show_logo();
         out.println(winner ? "Congratulation! you Won" : "Game Over, the winner is " + winnerNick+ " !");
         for(String player : rank.keySet()){
             out.println(rank.get(player)+ " : " +player);
@@ -262,6 +265,7 @@ public class CLI extends UI {
 
     @Override
     public void show_joined_players(ArrayList<String> players, String current, int num) {
+        show_logo();
         System.out.println(current);
         out.print("\nPLAYERS IN LOBBY ["+players.size()+"/"+num+"] : ");
         for (String s: players){
@@ -350,7 +354,7 @@ public class CLI extends UI {
 
     @Override
     public void show_logo() {
-        //clearScreen();
+        clearScreen();
         new PrintStream(System.out, true, System.console() != null
                 ? System.console().charset()
                 : Charset.defaultCharset()
