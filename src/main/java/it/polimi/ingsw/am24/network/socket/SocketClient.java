@@ -24,9 +24,9 @@ public class SocketClient extends Thread implements CommonClientActions {
     private final HeartbeatSender heartbeatSender;
     private String nickname;
 
-    public SocketClient(Flow flow, String serverIp) {
+    public SocketClient(Flow flow) {
         this.flow = flow;
-        connect(serverIp, Constants.SOCKETPort);
+        connect(Constants.SERVERIP, Constants.SOCKETPort);
         listener = new GameListenerClient(flow);
         this.start();
         System.out.println("Client SOCKET ready");
@@ -147,5 +147,10 @@ public class SocketClient extends Thread implements CommonClientActions {
         out.writeObject(new HeartBeatMessage(nickname));
         out.flush();
         out.reset();
+    }
+
+    @Override
+    public void stopHeartbeat() {
+        heartbeatSender.interrupt();
     }
 }

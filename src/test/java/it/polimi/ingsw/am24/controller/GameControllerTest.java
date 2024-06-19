@@ -144,8 +144,8 @@ public class GameControllerTest {
         controller.chooseGoal("p3",goalsIds.get(2),gl);
         controller.chooseGoal("p4",goalsIds.get(3),gl);
         assertFalse(controller.playCard("p1", 0, true, 0, 0, gl));
-        assertFalse(controller.playCard("p1", 2, true, 9, 19, gl));
-        assertTrue(controller.playCard("p1", 0, true, 9, 19, gl));
+        assertFalse(controller.playCard("p1", 2, true, 49, 49, gl));
+        assertTrue(controller.playCard("p1", 0, true, 49, 49, gl));
         assertEquals(2, controller.getPlayer("p1").getPlayingHand().size());
         assertFalse(controller.playCard("p5", 0, true, 0, 0, gl));
     }
@@ -166,10 +166,10 @@ public class GameControllerTest {
         controller.chooseGoal("p2",goalsIds.get(1),gl);
         controller.chooseGoal("p3",goalsIds.get(2),gl);
         controller.chooseGoal("p4",goalsIds.get(3),gl);
-        controller.playCard("p1", 0, true, 9, 19, gl);
-        controller.playCard("p2", 0, true, 9, 19, gl);
-        controller.playCard("p3", 0, true, 9, 19, gl);
-        controller.playCard("p4", 0, true, 9, 19, gl);
+        controller.playCard("p1", 0, true, 49, 49, gl);
+        controller.playCard("p2", 0, true, 49, 49, gl);
+        controller.playCard("p3", 0, true, 49, 49, gl);
+        controller.playCard("p4", 0, true, 49, 49, gl);
         assertFalse(controller.drawCard("p5", 0, gl));
         assertTrue(controller.drawCard("p1", 0, gl));
         assertTrue(controller.drawCard("p2", 1, gl));
@@ -275,17 +275,17 @@ public class GameControllerTest {
 
         controller.setCurrentPlayer("p1");
         controller.getPlayer("p1").addPoints(20);
-        controller.playCard("p1",0, true, 9, 19, gl);
+        controller.playCard("p1",0, true, 49, 49, gl);
         assertEquals(GameStatus.LAST_LAST_ROUND, controller.getStatus());
         controller.drawCard("p1", 0, gl);
 
         while(controller.getStatus() == GameStatus.LAST_LAST_ROUND) {
-            controller.playCard(controller.getCurrentPlayer(), 0, true, 9, 19, gl);
+            controller.playCard(controller.getCurrentPlayer(), 0, true, 49, 49, gl);
             controller.drawCard(controller.getCurrentPlayer(), 0, gl);
         }
         assertEquals(GameStatus.LAST_ROUND, controller.getStatus());
         while(controller.getStatus() == GameStatus.LAST_ROUND) {
-            controller.playCard(controller.getCurrentPlayer(), 0, true, 11, 19, gl);
+            controller.playCard(controller.getCurrentPlayer(), 0, true, 51, 49, gl);
             controller.drawCard(controller.getCurrentPlayer(), 0, gl);
         }
         assertEquals(GameStatus.ENDED,controller.getStatus());

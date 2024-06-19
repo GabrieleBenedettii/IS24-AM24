@@ -1,5 +1,6 @@
 package it.polimi.ingsw.am24.model.goal;
 
+import it.polimi.ingsw.am24.constants.Constants;
 import it.polimi.ingsw.am24.model.Kingdom;
 import it.polimi.ingsw.am24.model.Player;
 import it.polimi.ingsw.am24.model.Symbol;
@@ -27,10 +28,10 @@ public class VerticalDispositionTest {
         animalCard = new ResourceCard(7, new Symbol[]{Symbol.INK, Symbol.ANIMAL},Kingdom.ANIMAL,0);
         insectCard = new ResourceCard(8, new Symbol[]{Symbol.INK, Symbol.ANIMAL},Kingdom.INSECT,0);
 
-        boardf = new ResourceCard[21][41];
-        boardp = new ResourceCard[21][41];
-        boardi = new ResourceCard[21][41];
-        boarda = new ResourceCard[21][41];
+        boardf = new ResourceCard[Constants.MATRIX_DIMENSION][Constants.MATRIX_DIMENSION];
+        boardp = new ResourceCard[Constants.MATRIX_DIMENSION][Constants.MATRIX_DIMENSION];
+        boardi = new ResourceCard[Constants.MATRIX_DIMENSION][Constants.MATRIX_DIMENSION];
+        boarda = new ResourceCard[Constants.MATRIX_DIMENSION][Constants.MATRIX_DIMENSION];
 
         for (int i = 0; i < boardf.length; i++) {
             for (int j = 0; j < boardf[i].length; j++) {

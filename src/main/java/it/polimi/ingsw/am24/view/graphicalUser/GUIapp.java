@@ -33,7 +33,7 @@ public class GUIapp extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        gameflow = new GameFlow(this, getParameters().getUnnamed().get(0), getParameters().getUnnamed().get(1));
+        gameflow = new GameFlow(this, getParameters().getUnnamed().get(0));
         loadScenes();
 
         this.mainStage = primaryStage;

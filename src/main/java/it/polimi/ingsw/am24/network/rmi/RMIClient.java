@@ -29,14 +29,12 @@ public class RMIClient implements CommonClientActions {
     private Registry registry;
 
     private final Flow flow;
-    private final String serverIp;
     private HeartbeatSender heartbeatSender;
 
-    public RMIClient(Flow flow, String serverIp) {
+    public RMIClient(Flow flow) {
         super();
         gameListenersHandler = new GameListenerClient(flow);
         this.flow = flow;
-        this.serverIp = serverIp;
         connect();
 
         heartbeatSender =new HeartbeatSender(flow,this);
@@ -49,7 +47,7 @@ public class RMIClient implements CommonClientActions {
         do {
             retry = false;
             try {
-                registry = LocateRegistry.getRegistry(serverIp, Constants.RMIPort);
+                registry = LocateRegistry.getRegistry(Constants.SERVERIP, Constants.RMIPort);
                 server = (LobbyControllerInterface) registry.lookup(Constants.serverName);
 
                 listener = (GameListener) UnicastRemoteObject.exportObject(gameListenersHandler, 0);
@@ -71,14 +69,14 @@ public class RMIClient implements CommonClientActions {
     }
 
     public void createGame(String nickname, int numPlayers) throws RemoteException, NotBoundException {
-        registry = LocateRegistry.getRegistry(serverIp, Constants.RMIPort);
+        registry = LocateRegistry.getRegistry(Constants.SERVERIP, Constants.RMIPort);
         server = (LobbyControllerInterface) registry.lookup(Constants.serverName);
         gameController = server.joinGame(nickname, numPlayers, listener);
         this.nickname = nickname;
     }
 
     public void joinFirstGameAvailable(String nickname) throws RemoteException, NotBoundException {
-        registry = LocateRegistry.getRegistry(serverIp, Constants.RMIPort);
+        registry = LocateRegistry.getRegistry(Constants.SERVERIP, Constants.RMIPort);
         server = (LobbyControllerInterface) registry.lookup(Constants.serverName);
         gameController = server.joinGame(nickname, 1, listener);
         this.nickname = nickname;
@@ -125,6 +123,11 @@ public class RMIClient implements CommonClientActions {
     public void heartbeat() throws RemoteException {
         if(gameController != null)
             gameController.heartbeat(nickname, listener);
+    }
+
+    @Override
+    public void stopHeartbeat() {
+        heartbeatSender.interrupt();
     }
 }
 

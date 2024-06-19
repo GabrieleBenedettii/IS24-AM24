@@ -66,7 +66,7 @@ public class GoldCardTest {
                 Constants.HIDDEN + " " + Constants.EMPTY + " " + Constants.EMPTY + " " + Constants.getText(Symbol.QUILL) + " " +
                 "\n\tRequirements: " + Constants.getText(Symbol.FUNGI) + " -> 2 " + Constants.getText(Symbol.ANIMAL) + " -> 1 " +
                 "\n\tPoints: 1 points for each QUILL";
-        GameCardView Expected = new GameCardView("Gold Card", 0, desc);
+        GameCardView Expected = new GameCardView("Gold Card", 41, desc);
         GameCardView cardView = card1.getView();
         assertEquals(Expected.getCardType(), cardView.getCardType());
         assertEquals(Expected.getCardId(), cardView.getCardId());

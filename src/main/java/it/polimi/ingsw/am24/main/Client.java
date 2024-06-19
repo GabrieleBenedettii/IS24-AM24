@@ -33,6 +33,8 @@ public class Client {
             }
         } while (!ip.equals("") && !checkIP(ip));
 
+        if(!ip.isEmpty()) Constants.SERVERIP = ip;
+
         do {
             ui.show_network_type();
             try {
@@ -48,8 +50,8 @@ public class Client {
 
         System.out.println("Starting the game!");
 
-        if(choice == 1 || choice == 2) new GameFlow(protocol, ip);
-        else Application.launch(GUIapp.class, protocol, ip);
+        if(choice == 1 || choice == 2) new GameFlow(protocol);
+        else Application.launch(GUIapp.class, protocol);
     }
 
     private static boolean checkIP(String input) {

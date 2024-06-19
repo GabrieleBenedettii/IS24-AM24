@@ -1,6 +1,8 @@
 package it.polimi.ingsw.am24.controller;
 
 import it.polimi.ingsw.am24.Exceptions.FullLobbyException;
+import it.polimi.ingsw.am24.Exceptions.NotExistingPlayerException;
+import it.polimi.ingsw.am24.constants.Constants;
 import it.polimi.ingsw.am24.listeners.GameListener;
 import it.polimi.ingsw.am24.network.rmi.GameControllerInterface;
 import it.polimi.ingsw.am24.network.rmi.LobbyControllerInterface;
@@ -37,7 +39,7 @@ public class LobbyController implements Serializable, LobbyControllerInterface {
         System.out.println("Register request for player with nickname:  " + nickname + " and numOfPlayers: " + numOfPlayers);
 
         //todo set min and max num of player on a setting file
-        if(numOfPlayers < 1 || numOfPlayers > 4) {
+        if(numOfPlayers < 1 || numOfPlayers > Constants.MAX_PLAYERS) {
             listener.invalidNumPlayers();
             return null;
         }
@@ -69,6 +71,7 @@ public class LobbyController implements Serializable, LobbyControllerInterface {
                 for(GameController g : games) {
                     try {
                         g.addPlayer(nickname, listener);
+                        playingNicknames.add(nickname);
                         System.out.println("Player added to an existing lobby");
                         return g;
                     } catch (FullLobbyException e) {
@@ -96,11 +99,18 @@ public class LobbyController implements Serializable, LobbyControllerInterface {
         return null;
     }*/
 
+    public void disconnectPlayer(String nickname) throws NotExistingPlayerException {
+        if(!playingNicknames.contains(nickname)) throw new NotExistingPlayerException();
+        synchronized (lock) {
+            playingNicknames.remove(nickname);
+        }
+    }
+
     public synchronized void deleteGame(int gameId) {
         List<GameController> game = games.stream().filter(g -> g.getGameId() == gameId).toList();
         if(!game.isEmpty()) {
             games.remove(game.getFirst());
-            System.out.println("Game " + gameId + "deleted");
+            System.out.println("Game " + gameId + " deleted");
         }
     }
 

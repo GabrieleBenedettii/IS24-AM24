@@ -3,6 +3,7 @@ package it.polimi.ingsw.am24.model;
 import it.polimi.ingsw.am24.Exceptions.AlreadyDrawnException;
 import it.polimi.ingsw.am24.Exceptions.InvalidPositioningException;
 import it.polimi.ingsw.am24.Exceptions.RequirementsNotMetException;
+import it.polimi.ingsw.am24.constants.Constants;
 import it.polimi.ingsw.am24.model.card.*;
 import it.polimi.ingsw.am24.model.goal.GoalCard;
 import it.polimi.ingsw.am24.modelView.GameCardView;
@@ -36,9 +37,9 @@ public class Player {
         for (Symbol s: Symbol.values()) {
             visibleSymbols.put(s,0);
         }
-        this.gameBoard = new GameCard[21][41];
+        this.gameBoard = new GameCard[Constants.MATRIX_DIMENSION][Constants.MATRIX_DIMENSION];
         this.placeOrder = new ArrayList<>();
-        this.possiblePlacements = new int[21][41];
+        this.possiblePlacements = new int[Constants.MATRIX_DIMENSION][Constants.MATRIX_DIMENSION];
         Arrays.stream(possiblePlacements).forEach(row->Arrays.fill(row,-1));
         this.score = 0;
         diagonals = new Pair[4];
@@ -102,12 +103,12 @@ public class Player {
     }
 
     public void playInitialCard(boolean front) {
-        gameBoard[10][20] = front ? initialcard : initialcard.getBackCard();
-        placeOrder.add(new Placement(10,20,gameBoard[10][20].getViewForMatrix(),front));
+        gameBoard[Constants.MATRIX_DIMENSION/2][Constants.MATRIX_DIMENSION/2] = front ? initialcard : initialcard.getBackCard();
+        placeOrder.add(new Placement(Constants.MATRIX_DIMENSION/2,Constants.MATRIX_DIMENSION/2,gameBoard[Constants.MATRIX_DIMENSION/2][Constants.MATRIX_DIMENSION/2].getViewForMatrix(),front));
         for(int k = 0; k < 4; k++) {
-            possiblePlacements[10 + diagonals[k].getKey()][20 + diagonals[k].getValue()] = !gameBoard[10][20].getCornerByIndex(k).isHidden() ? 1 : 0;
-            if(gameBoard[10][20].getCornerByIndex(k).getSymbol() != null && !gameBoard[10][20].getCornerByIndex(k).isHidden())
-                visibleSymbols.merge(gameBoard[10][20].getCornerByIndex(k).getSymbol(), 1, Integer::sum);
+            possiblePlacements[Constants.MATRIX_DIMENSION/2 + diagonals[k].getKey()][Constants.MATRIX_DIMENSION/2 + diagonals[k].getValue()] = !gameBoard[Constants.MATRIX_DIMENSION/2][Constants.MATRIX_DIMENSION/2].getCornerByIndex(k).isHidden() ? 1 : 0;
+            if(gameBoard[Constants.MATRIX_DIMENSION/2][Constants.MATRIX_DIMENSION/2].getCornerByIndex(k).getSymbol() != null && !gameBoard[Constants.MATRIX_DIMENSION/2][Constants.MATRIX_DIMENSION/2].getCornerByIndex(k).isHidden())
+                visibleSymbols.merge(gameBoard[Constants.MATRIX_DIMENSION/2][Constants.MATRIX_DIMENSION/2].getCornerByIndex(k).getSymbol(), 1, Integer::sum);
         }
 
         if(!front) {
@@ -176,9 +177,9 @@ public class Player {
     }
 
     public PublicPlayerView getPublicPlayerView(){
-        GameCardView[][] temp = new GameCardView[21][41];
-        for(int i = 1; i < 20; i++){
-            for(int j = 1; j < 40; j++){
+        GameCardView[][] temp = new GameCardView[Constants.MATRIX_DIMENSION][Constants.MATRIX_DIMENSION];
+        for(int i = 0; i < Constants.MATRIX_DIMENSION; i++){
+            for(int j = 0; j < Constants.MATRIX_DIMENSION; j++){
                 temp[i][j] = gameBoard[i][j] != null ? gameBoard[i][j].getViewForMatrix() : null;
             }
         }
@@ -190,7 +191,7 @@ public class Player {
     }
 
     private boolean[][] getBooleanPossiblePlacements() {
-        boolean[][] pp = new boolean[21][41];
+        boolean[][] pp = new boolean[Constants.MATRIX_DIMENSION][Constants.MATRIX_DIMENSION];
         for(int i = 0; i < possiblePlacements.length; i++) {
             for(int j = 0; j < possiblePlacements[0].length; j++) {
                 pp[i][j] = possiblePlacements[i][j] == 1;

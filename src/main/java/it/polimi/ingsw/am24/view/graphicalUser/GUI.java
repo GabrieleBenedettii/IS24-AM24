@@ -143,7 +143,7 @@ public class GUI extends UI {
     @Override
     public void show_logo() {
         callPlatformRunLater(() -> this.guiApplication.setActiveScene(Scenes.LOGO));
-        PauseTransition pause = new PauseTransition(Duration.seconds(Constants.logoTime));
+        PauseTransition pause = new PauseTransition(Duration.seconds(Constants.LOGOTIME));
         pause.setOnFinished(event -> {
             alreadyShowedPublisher = true;
 

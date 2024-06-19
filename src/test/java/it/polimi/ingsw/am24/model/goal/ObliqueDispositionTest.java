@@ -1,5 +1,6 @@
 package it.polimi.ingsw.am24.model.goal;
 
+import it.polimi.ingsw.am24.constants.Constants;
 import it.polimi.ingsw.am24.model.Kingdom;
 import it.polimi.ingsw.am24.model.Player;
 import it.polimi.ingsw.am24.model.Symbol;
@@ -7,6 +8,8 @@ import it.polimi.ingsw.am24.model.card.ResourceCard;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.lang.constant.Constable;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -23,8 +26,8 @@ public class ObliqueDispositionTest {
         fungiCard = new ResourceCard(3, new Symbol[]{Symbol.INK, Symbol.ANIMAL},Kingdom.FUNGI,0);
         genericCard = new ResourceCard(5,new Symbol[]{Symbol.INK, Symbol.ANIMAL},null,0);
 
-        boardTL = new ResourceCard[21][41];
-        boardTR = new ResourceCard[21][41];
+        boardTL = new ResourceCard[Constants.MATRIX_DIMENSION][Constants.MATRIX_DIMENSION];
+        boardTR = new ResourceCard[Constants.MATRIX_DIMENSION][Constants.MATRIX_DIMENSION];
 
         for (int i = 0; i < boardTL.length; i++) {
             for (int j = 0; j < boardTL[i].length; j++) {

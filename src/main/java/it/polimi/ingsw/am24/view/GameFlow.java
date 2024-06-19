@@ -44,10 +44,10 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
     private boolean colorNotAvailable;
     private HashMap<String,Boolean> colorSelected = new HashMap<>();
 
-    public GameFlow(String connectionType, String ip) {
+    public GameFlow(String connectionType) {
         switch (connectionType) {
-            case "RMI" -> actions = new RMIClient(this, ip);
-            case "SOCKET" -> actions = new SocketClient(this, ip);
+            case "RMI" -> actions = new RMIClient(this);
+            case "SOCKET" -> actions = new SocketClient(this);
         }
 
         this.ui = new CLI();
@@ -60,10 +60,10 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
         this.inputParser = new InputParser(this.inputReader.getBuffer(), this);
         new Thread(this).start();
     }
-    public GameFlow(GUIapp application, String connectionType, String ip) {
+    public GameFlow(GUIapp application, String connectionType) {
         switch (connectionType) {
-            case "RMI" -> actions = new RMIClient(this, ip);
-            case "SOCKET" -> actions = new SocketClient(this, ip);
+            case "RMI" -> actions = new RMIClient(this);
+            case "SOCKET" -> actions = new SocketClient(this);
         }
         this.inputReader = new InputReaderGUI();
 
@@ -197,6 +197,7 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
         this.inputParser.getDataToProcess().pop();
         try {
             this.inputParser.getDataToProcess().pop();
+            stopHeartbeat();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -527,6 +528,11 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
     @Override
     public void heartbeat() throws IOException {
 
+    }
+
+    @Override
+    public void stopHeartbeat() {
+        actions.stopHeartbeat();
     }
 
     //EVENTS RECEIVED FROM THE SERVER

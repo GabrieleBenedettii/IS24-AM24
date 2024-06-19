@@ -27,7 +27,7 @@ public class InitialCardTest {
     @Test
     public void testGetters() {
         // Verifica che i valori restituiti dai metodi getter corrispondano ai valori impostati nel costruttore
-        assertEquals(0, card.getImageId());
+        assertEquals(81, card.getImageId());
         assertTrue(card.getKingdoms().isEmpty());
     }
 
@@ -53,7 +53,7 @@ public class InitialCardTest {
         String expected ="FRONT\n\tKingdoms: " + "\n\tCorners: " +
                 Constants.getText(Symbol.FUNGI) + " " + Constants.getText(Symbol.PLANT) + " " + Constants.getText(Symbol.INSECT) + " "
                 + Constants.getText(Symbol.ANIMAL) + " ";
-        GameCardView expectedView = new GameCardView("Initial Card - front", 0, expected);
+        GameCardView expectedView = new GameCardView("Initial Card - front", 81, expected);
         assertEquals(expectedView.getCardType(), actualView.getCardType());
         assertEquals(expectedView.getCardId(), actualView.getCardId());
         assertEquals(expectedView.getCardDescription(), actualView.getCardDescription());
@@ -65,7 +65,7 @@ public class InitialCardTest {
         String expected ="BACK\n\tKingdoms: " + Constants.getText(Kingdom.INSECT) + " " + "\n\tCorners: " +
                 Constants.EMPTY + " " + Constants.getText(Symbol.PLANT) + " " + Constants.getText(Symbol.INSECT) + " "
                 + Constants.EMPTY + " ";
-        GameCardView expectedView = new GameCardView("Initial Card - back", 0, expected);
+        GameCardView expectedView = new GameCardView("Initial Card - back", 81, expected);
         assertEquals(expectedView.getCardType(), actualView.getCardType());
         assertEquals(expectedView.getCardId(), actualView.getCardId());
         assertEquals(expectedView.getCardDescription(), actualView.getCardDescription());
