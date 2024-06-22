@@ -8,6 +8,7 @@ import it.polimi.ingsw.am24.model.Game;
 import it.polimi.ingsw.am24.model.Player;
 import it.polimi.ingsw.am24.model.PlayerColor;
 import it.polimi.ingsw.am24.model.goal.GoalCard;
+import it.polimi.ingsw.am24.modelView.GameCardView;
 import it.polimi.ingsw.am24.modelView.GameView;
 import it.polimi.ingsw.am24.modelView.PublicBoardView;
 import it.polimi.ingsw.am24.modelView.PublicPlayerView;
@@ -30,7 +31,7 @@ public class GameController implements GameControllerInterface, Serializable, Ru
     private final HashMap<String, Player> players;
     private final HashMap<String, GameListener> listeners;
     private String currentPlayer;
-    private final int playerCount;
+    private int playerCount;
     private int readyPlayers;   //used to know how many players have already done the side of initial card choice and start the rotation
     private int readyPlayersForFirstPhase; //used to know how many players have already done the color choice
 
@@ -90,12 +91,6 @@ public class GameController implements GameControllerInterface, Serializable, Ru
             return players.get(nickname);
         }
     }
-
-    /*public void removePlayer(String nickname) {
-        synchronized (lockPlayers){
-            players.remove(nickname);
-        }
-    }*/
 
     /**
      * Sets a players color attribute with the given color.
@@ -273,7 +268,7 @@ public class GameController implements GameControllerInterface, Serializable, Ru
                     nextPlayer();
                     notifyAllListeners_beginTurn();
                     return true;
-                } catch (EmptyDeckException e) {
+                } catch (EmptyDeckException | AlreadyDrawnException e) {
                     return false;
                 }
             }
@@ -286,17 +281,20 @@ public class GameController implements GameControllerInterface, Serializable, Ru
      * @throws RemoteException if there is a network error.
      */
     public void nextPlayer() throws RemoteException {
+        if(players.isEmpty()) return;
         int nextPlayerIndex = rotation.indexOf(currentPlayer) + 1;
         if(nextPlayerIndex == playerCount) {
             if(status.equals(GameStatus.LAST_ROUND)) {
-                for(String p : players.keySet()) {
-                    status = GameStatus.ENDED;
-                    players.get(p).addPoints(players.get(p).getHiddenGoal().calculatePoints(players.get(p)));
-                    players.get(p).addPoints(game.getCommonGoal(0).calculatePoints(players.get(p)));
-                    players.get(p).addPoints(game.getCommonGoal(1).calculatePoints(players.get(p)));
-                    winner = calculateWinner();
+                synchronized (lockPlayers) {
+                    for (String p : players.keySet()) {
+                        status = GameStatus.ENDED;
+                        players.get(p).addPoints(players.get(p).getHiddenGoal().calculatePoints(players.get(p)));
+                        players.get(p).addPoints(game.getCommonGoal(0).calculatePoints(players.get(p)));
+                        players.get(p).addPoints(game.getCommonGoal(1).calculatePoints(players.get(p)));
+                        winner = calculateWinner();
+                    }
+                    notifyAllListeners_endGame();
                 }
-                notifyAllListeners_endGame();
             }
             else if(status.equals(GameStatus.LAST_LAST_ROUND)) {
                 status = GameStatus.LAST_ROUND;
@@ -387,30 +385,32 @@ public class GameController implements GameControllerInterface, Serializable, Ru
      * @throws RemoteException if there is a network error.
      */
     private void notifyAllListeners() throws RemoteException {
-        synchronized (lockPlayers){
-            if(status == GameStatus.FIRST_PHASE) {
-                startGame();
-                for (String p : listeners.keySet()) {
-                    if (p != null && listeners.get(p) != null)
-                        new Thread(() -> {
-                            try {
-                                listeners.get(p).initialCardSide(players.get(p).getInitialcard().getView(), players.get(p).getInitialcard().getBackView());
-                            } catch (RemoteException e) {
-                                throw new RuntimeException(e);
-                            }
-                        }).start();
+        if(status == GameStatus.FIRST_PHASE) {
+            startGame();
+            for (String p : listeners.keySet()) {
+                if (p != null && listeners.get(p) != null) {
+                    GameCardView front = players.get(p).getInitialcard().getView();
+                    GameCardView back = players.get(p).getInitialcard().getBackView();
+                    new Thread(() -> {
+                        try {
+                            listeners.get(p).initialCardSide(front, back);
+                        } catch (RemoteException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }).start();
                 }
             }
-            else {
-                for(String p : listeners.keySet()){
-                    if(p != null && listeners.get(p) != null)
-                        new Thread(() -> {
-                            try {
-                                listeners.get(p).playerJoined(new ArrayList<>(players.keySet().stream().toList()),players.get(p).getNickname(), playerCount);
-                            } catch (RemoteException e) {
-                                throw new RuntimeException(e);
-                            }
-                        }).start();
+        }
+        else {
+            for(String p : listeners.keySet()){
+                if(p != null && listeners.get(p) != null) {
+                    new Thread(() -> {
+                        try {
+                            listeners.get(p).playerJoined(new ArrayList<>(players.keySet().stream().toList()),players.get(p).getNickname(), playerCount);
+                        } catch (RemoteException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }).start();
                 }
             }
         }
@@ -421,20 +421,20 @@ public class GameController implements GameControllerInterface, Serializable, Ru
      * @throws RemoteException if there is a network error.
      */
     private void notifyAllListeners_beginTurn() throws RemoteException {
-        synchronized (lockPlayers) {
-            HashMap<String, PublicPlayerView> playerViews = new HashMap<>();
-            for(String pl : rotation) {
-                playerViews.put(pl, players.get(pl).getPublicPlayerView());
-            }
-            for (String p : listeners.keySet()) {
-                if (p != null && listeners.get(p) != null)
-                    new Thread(() -> {
-                        try {
-                            listeners.get(p).beginTurn(new GameView(currentPlayer, gameId, players.get(p).getPrivatePlayerView(), new PublicBoardView(game.getCommonBoardView(), rotation, playerViews), status));
-                        } catch (RemoteException e) {
-                            throw new RuntimeException(e);
-                        }
-                    }).start();
+        HashMap<String, PublicPlayerView> playerViews = new HashMap<>();
+        for(String pl : rotation) {
+            playerViews.put(pl, players.get(pl).getPublicPlayerView());
+        }
+        for (String p : listeners.keySet()) {
+            if (p != null && listeners.get(p) != null) {
+                GameView gw = new GameView(currentPlayer, gameId, players.get(p).getPrivatePlayerView(), new PublicBoardView(game.getCommonBoardView(), rotation, playerViews), status);
+                new Thread(() -> {
+                    try {
+                        listeners.get(p).beginTurn(gw);
+                    } catch (RemoteException e) {
+                        throw new RuntimeException(e);
+                    }
+                }).start();
             }
         }
     }
@@ -448,16 +448,16 @@ public class GameController implements GameControllerInterface, Serializable, Ru
         for(String pl : rotation) {
             playerViews.put(pl, players.get(pl).getPublicPlayerView());
         }
-        synchronized (lockPlayers) {
-            for (String p : listeners.keySet()) {
-                if (p != null && listeners.get(p) != null)
-                    new Thread(() -> {
-                        try {
-                            listeners.get(p).beginDraw(new GameView(currentPlayer, gameId, players.get(p).getPrivatePlayerView(), new PublicBoardView(game.getCommonBoardView(), rotation, playerViews), status));
-                        } catch (RemoteException e) {
-                            throw new RuntimeException(e);
-                        }
-                    }).start();
+        for (String p : listeners.keySet()) {
+            if (p != null && listeners.get(p) != null) {
+                GameView gw = new GameView(currentPlayer, gameId, players.get(p).getPrivatePlayerView(), new PublicBoardView(game.getCommonBoardView(), rotation, playerViews), status);
+                new Thread(() -> {
+                    try {
+                        listeners.get(p).beginDraw(gw);
+                    } catch (RemoteException e) {
+                        throw new RuntimeException(e);
+                    }
+                }).start();
             }
         }
     }
@@ -467,21 +467,19 @@ public class GameController implements GameControllerInterface, Serializable, Ru
      * @throws RemoteException if there is a network error during communication with listeners.
      */
     private void notifyAllListeners_endGame() throws RemoteException {
-        synchronized (lockPlayers) {
-            HashMap<String, Integer> rank = new HashMap<>();
-            for (String p : listeners.keySet()) {
-                rank.put(p, players.get(p).getScore());
-            }
-            for (String p : listeners.keySet()) {
-                if (p != null && listeners.get(p) != null)
-                    new Thread(() -> {
-                        try {
-                            listeners.get(p).gameEnded(winner, rank);
-                        } catch (RemoteException e) {
-                            throw new RuntimeException(e);
-                        }
-                    }).start();
-            }
+        HashMap<String, Integer> rank = new HashMap<>();
+        for (String p : listeners.keySet()) {
+            rank.put(p, players.get(p).getScore());
+        }
+        for (String p : listeners.keySet()) {
+            if (p != null && listeners.get(p) != null)
+                new Thread(() -> {
+                    try {
+                        listeners.get(p).gameEnded(winner, rank);
+                    } catch (RemoteException e) {
+                        throw new RuntimeException(e);
+                    }
+                }).start();
         }
     }
 
@@ -510,9 +508,10 @@ public class GameController implements GameControllerInterface, Serializable, Ru
      * @throws RemoteException if there is a network error.
      */
     private void notifyListener(GameListener listener) throws RemoteException {
+        ArrayList<String> ac = new ArrayList<>(game.getAvailableColors());
         new Thread(() -> {
             try {
-                listener.availableColors(new ArrayList<>(game.getAvailableColors()));
+                listener.availableColors(ac);
             } catch (RemoteException e) {
                 throw new RuntimeException(e);
             }
@@ -542,7 +541,7 @@ public class GameController implements GameControllerInterface, Serializable, Ru
     public void run() {
         while (!Thread.interrupted()) {
             //checks all the heartbeat to detect disconnection
-            if (status != null && !status.equals(GameStatus.NOT_STARTED)) {
+            if (status != null) {
                 synchronized (heartbeats) {
                     Iterator<Map.Entry<GameListener, HeartBeat>> heartIter = heartbeats.entrySet().iterator();
 
@@ -558,7 +557,7 @@ public class GameController implements GameControllerInterface, Serializable, Ru
                                     return;
                                 }
 
-                            } catch (RemoteException e) {
+                            } catch (RemoteException | NotExistingPlayerException e) {
                                 throw new RuntimeException(e);
                             }
 
@@ -596,10 +595,17 @@ public class GameController implements GameControllerInterface, Serializable, Ru
      * @throws RemoteException if there is a network error during communication with the listener.
      */
     //@Override
-    public void disconnectPlayer(String nickname) throws RemoteException {
+    public void disconnectPlayer(String nickname) throws RemoteException, NotExistingPlayerException {
         players.remove(nickname);
         rotation.remove(nickname);
         listeners.remove(nickname);
+        playerCount--;
+        LobbyController.getInstance().disconnectPlayer(nickname);
+
+        if(currentPlayer != null && currentPlayer.equals(nickname)) {
+            nextPlayer();
+            notifyAllListeners_beginTurn();
+        }
         //Check if there is only one player playing
         if ((status.equals(GameStatus.FIRST_PHASE) || status.equals(GameStatus.RUNNING) || status.equals(GameStatus.LAST_LAST_ROUND) || status.equals(GameStatus.LAST_ROUND)) && players.size() == 1) {
             HashMap<String, Integer> rank = new HashMap<>();

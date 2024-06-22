@@ -1,5 +1,6 @@
 package it.polimi.ingsw.am24.network.socket;
 
+import it.polimi.ingsw.am24.constants.Constants;
 import it.polimi.ingsw.am24.messages.*;
 import it.polimi.ingsw.am24.messages.clientToServer.*;
 import it.polimi.ingsw.am24.network.GameListenerClient;
@@ -15,7 +16,6 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
 public class SocketClient extends Thread implements CommonClientActions {
-    //todo implement all common client actions methods
     private Socket client;
     private ObjectInputStream in;
     private ObjectOutputStream out;
@@ -26,7 +26,7 @@ public class SocketClient extends Thread implements CommonClientActions {
 
     public SocketClient(Flow flow) {
         this.flow = flow;
-        connect("127.0.0.1", 8888);
+        connect(Constants.SERVERIP, Constants.SOCKETPort);
         listener = new GameListenerClient(flow);
         this.start();
         System.out.println("Client SOCKET ready");
@@ -36,15 +36,22 @@ public class SocketClient extends Thread implements CommonClientActions {
     }
 
     private void connect(String ip, int port) {
-        boolean retry = true;
+        boolean retry;
         do {
+            retry = false;
             try {
                 client = new Socket(ip, port);
                 out = new ObjectOutputStream(client.getOutputStream());
                 in = new ObjectInputStream(client.getInputStream());
-                retry = false;
             } catch (IOException e) {
                 System.out.println("[ERROR] connecting to socket server: \nClient SOCKET exception: " + e + "\n");
+                retry = true;
+
+                try {
+                    Thread.sleep(Constants.seconds_between_attempts*1000);
+                } catch (InterruptedException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         } while(retry);
     }
@@ -56,7 +63,7 @@ public class SocketClient extends Thread implements CommonClientActions {
                 SocketServerMessage message = (SocketServerMessage) in.readObject();
                 message.execute(listener);
             } catch (IOException | ClassNotFoundException e) {
-                //System.out.println("[ERROR] Connection lost: " + e + "\n");
+                System.out.println("[ERROR] Connection lost: " + e + "\n");
                 break;
             }
         }
@@ -140,5 +147,10 @@ public class SocketClient extends Thread implements CommonClientActions {
         out.writeObject(new HeartBeatMessage(nickname));
         out.flush();
         out.reset();
+    }
+
+    @Override
+    public void stopHeartbeat() {
+        heartbeatSender.interrupt();
     }
 }

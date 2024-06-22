@@ -2,7 +2,6 @@ package it.polimi.ingsw.am24.controller;
 
 import it.polimi.ingsw.am24.Exceptions.*;
 import it.polimi.ingsw.am24.listeners.GameListener;
-import it.polimi.ingsw.am24.model.goal.GoalCard;
 import it.polimi.ingsw.am24.modelView.GameCardView;
 import it.polimi.ingsw.am24.modelView.GameView;
 import it.polimi.ingsw.am24.view.flow.utility.GameStatus;
@@ -123,6 +122,7 @@ public class GameControllerTest {
     @DisplayName("A player chooses the initial card side")
     void chooseInitialCardSide() throws RemoteException {
         controller.startGame();
+        controller.chooseColor("p1", "BLUE", gl);
         assertFalse(controller.chooseInitialCardSide("p5", true, gl));
         assertTrue(controller.chooseInitialCardSide("p1", true, gl));
     }
@@ -130,7 +130,10 @@ public class GameControllerTest {
     @Test
     @DisplayName("Check the playing card phase")
     void playCard() throws RemoteException {
-        controller.startGame();
+        controller.chooseColor("p1", "BLUE", gl);
+        controller.chooseColor("p2", "RED", gl);
+        controller.chooseColor("p3", "YELLOW", gl);
+        controller.chooseColor("p4", "GREEN", gl);
         controller.chooseInitialCardSide("p1", true, gl);
         controller.chooseInitialCardSide("p2", true, gl);
         controller.chooseInitialCardSide("p3", true, gl);
@@ -141,21 +144,32 @@ public class GameControllerTest {
         controller.chooseGoal("p3",goalsIds.get(2),gl);
         controller.chooseGoal("p4",goalsIds.get(3),gl);
         assertFalse(controller.playCard("p1", 0, true, 0, 0, gl));
-        assertFalse(controller.playCard("p1", 2, true, 9, 19, gl));
-        assertTrue(controller.playCard("p1", 0, true, 9, 19, gl));
+        assertFalse(controller.playCard("p1", 2, true, 49, 49, gl));
+        assertTrue(controller.playCard("p1", 0, true, 49, 49, gl));
+        assertEquals(2, controller.getPlayer("p1").getPlayingHand().size());
         assertFalse(controller.playCard("p5", 0, true, 0, 0, gl));
     }
 
     @Test
     @DisplayName("Check the drawing card phase")
     void drawCard() throws RemoteException {
-        controller.startGame();
-        ArrayList<GoalCard> cards1 = controller.getGame().drawGoalCards();
-        ArrayList<GoalCard> cards2 = controller.getGame().drawGoalCards();
-        controller.getPlayer("p1").setHiddenGoal(cards1.get(0));
-        controller.getPlayer("p2").setHiddenGoal(cards1.get(1));
-        controller.getPlayer("p3").setHiddenGoal(cards2.get(0));
-        controller.getPlayer("p4").setHiddenGoal(cards2.get(1));
+        controller.chooseColor("p1", "BLUE", gl);
+        controller.chooseColor("p2", "RED", gl);
+        controller.chooseColor("p3", "YELLOW", gl);
+        controller.chooseColor("p4", "GREEN", gl);
+        controller.chooseInitialCardSide("p1", true, gl);
+        controller.chooseInitialCardSide("p2", true, gl);
+        controller.chooseInitialCardSide("p3", true, gl);
+        controller.chooseInitialCardSide("p4", true, gl);
+        List<Integer> goalsIds = controller.getGame().getDrawnGoalCardsIds();
+        controller.chooseGoal("p1",goalsIds.get(0),gl);
+        controller.chooseGoal("p2",goalsIds.get(1),gl);
+        controller.chooseGoal("p3",goalsIds.get(2),gl);
+        controller.chooseGoal("p4",goalsIds.get(3),gl);
+        controller.playCard("p1", 0, true, 49, 49, gl);
+        controller.playCard("p2", 0, true, 49, 49, gl);
+        controller.playCard("p3", 0, true, 49, 49, gl);
+        controller.playCard("p4", 0, true, 49, 49, gl);
         assertFalse(controller.drawCard("p5", 0, gl));
         assertTrue(controller.drawCard("p1", 0, gl));
         assertTrue(controller.drawCard("p2", 1, gl));
@@ -230,7 +244,11 @@ public class GameControllerTest {
 
     @Test
     @DisplayName("Check multiple winners")
-    void calculateMultipleWinner(){
+    void calculateMultipleWinner() throws RemoteException {
+        controller.chooseColor("p1", "BLUE", gl);
+        controller.chooseColor("p2", "RED", gl);
+        controller.chooseColor("p3", "YELLOW", gl);
+        controller.chooseColor("p4", "GREEN", gl);
         controller.getPlayer("p1").addPoints(20);
         controller.getPlayer("p2").addPoints(20);
         controller.getPlayer("p3").addPoints(20);
@@ -241,7 +259,10 @@ public class GameControllerTest {
     @Test
     @DisplayName("Final phase")
     void finalPhase() throws RemoteException {
-        controller.startGame();
+        controller.chooseColor("p1", "BLUE", gl);
+        controller.chooseColor("p2", "RED", gl);
+        controller.chooseColor("p3", "YELLOW", gl);
+        controller.chooseColor("p4", "GREEN", gl);
         controller.chooseInitialCardSide("p1", true, gl);
         controller.chooseInitialCardSide("p2", true, gl);
         controller.chooseInitialCardSide("p3", true, gl);
@@ -254,18 +275,17 @@ public class GameControllerTest {
 
         controller.setCurrentPlayer("p1");
         controller.getPlayer("p1").addPoints(20);
-        controller.playCard("p1",0, true, 9, 19, gl);
+        controller.playCard("p1",0, true, 49, 49, gl);
         assertEquals(GameStatus.LAST_LAST_ROUND, controller.getStatus());
         controller.drawCard("p1", 0, gl);
 
         while(controller.getStatus() == GameStatus.LAST_LAST_ROUND) {
-            controller.playCard(controller.getCurrentPlayer(), 0, true, 9, 19, gl);
+            controller.playCard(controller.getCurrentPlayer(), 0, true, 49, 49, gl);
             controller.drawCard(controller.getCurrentPlayer(), 0, gl);
         }
         assertEquals(GameStatus.LAST_ROUND, controller.getStatus());
-
         while(controller.getStatus() == GameStatus.LAST_ROUND) {
-            controller.playCard(controller.getCurrentPlayer(), 0, true, 11, 19, gl);
+            controller.playCard(controller.getCurrentPlayer(), 0, true, 51, 49, gl);
             controller.drawCard(controller.getCurrentPlayer(), 0, gl);
         }
         assertEquals(GameStatus.ENDED,controller.getStatus());

@@ -1,6 +1,8 @@
 package it.polimi.ingsw.am24.model.goal;
 
+import it.polimi.ingsw.am24.constants.Constants;
 import it.polimi.ingsw.am24.model.Kingdom;
+import it.polimi.ingsw.am24.model.Player;
 import it.polimi.ingsw.am24.model.Symbol;
 import it.polimi.ingsw.am24.model.card.ResourceCard;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,10 +28,10 @@ public class VerticalDispositionTest {
         animalCard = new ResourceCard(7, new Symbol[]{Symbol.INK, Symbol.ANIMAL},Kingdom.ANIMAL,0);
         insectCard = new ResourceCard(8, new Symbol[]{Symbol.INK, Symbol.ANIMAL},Kingdom.INSECT,0);
 
-        boardf = new ResourceCard[21][41];
-        boardp = new ResourceCard[21][41];
-        boardi = new ResourceCard[21][41];
-        boarda = new ResourceCard[21][41];
+        boardf = new ResourceCard[Constants.MATRIX_DIMENSION][Constants.MATRIX_DIMENSION];
+        boardp = new ResourceCard[Constants.MATRIX_DIMENSION][Constants.MATRIX_DIMENSION];
+        boardi = new ResourceCard[Constants.MATRIX_DIMENSION][Constants.MATRIX_DIMENSION];
+        boarda = new ResourceCard[Constants.MATRIX_DIMENSION][Constants.MATRIX_DIMENSION];
 
         for (int i = 0; i < boardf.length; i++) {
             for (int j = 0; j < boardf[i].length; j++) {
@@ -62,98 +64,112 @@ public class VerticalDispositionTest {
     @Test
     @DisplayName("Check correct point calculation")
     public void testCalculatePoints1() {
-        boardf[0][2]=fungiCard;
-        boardf[2][2]=fungiCard;
-        boardf[3][3]=plantCard;
+        Player playerf = new Player("ciao");
+        Player playerp = new Player("ciao1");
+        Player playera = new Player("ciao2");
+        Player playeri = new Player("ciao3");
 
-        boardp[0][2]=plantCard;
-        boardp[2][2]=plantCard;
-        boardp[3][1]=insectCard;
+        playerf.getGameBoard()[0][2]=fungiCard;
+        playerf.getGameBoard()[2][2]=fungiCard;
+        playerf.getGameBoard()[3][3]=plantCard;
 
-        boarda[1][2]=animalCard;
-        boarda[3][2]=animalCard;
-        boarda[0][3]=fungiCard;
+        playerp.getGameBoard()[0][2]=plantCard;
+        playerp.getGameBoard()[2][2]=plantCard;
+        playerp.getGameBoard()[3][1]=insectCard;
 
-        boardi[1][2]=insectCard;
-        boardi[3][2]=insectCard;
-        boardi[0][1]=animalCard;
+        playera.getGameBoard()[1][2]=animalCard;
+        playera.getGameBoard()[3][2]=animalCard;
+        playera.getGameBoard()[0][3]=fungiCard;
 
-        assertEquals(3,fungi.calculatePoints(boardf));
-        assertEquals(3,plant.calculatePoints(boardp));
-        assertEquals(3,animal.calculatePoints(boarda));
-        assertEquals(3,insect.calculatePoints(boardi));
+        playeri.getGameBoard()[1][2]=insectCard;
+        playeri.getGameBoard()[3][2]=insectCard;
+        playeri.getGameBoard()[0][1]=animalCard;
+
+        assertEquals(3,fungi.calculatePoints(playerf));
+        assertEquals(3,plant.calculatePoints(playerp));
+        assertEquals(3,animal.calculatePoints(playera));
+        assertEquals(3,insect.calculatePoints(playeri));
     }
 
     @Test
     @DisplayName("Ensure each card is counted once when calculating points")
     public void testCalculatePoints2() {
 
-        boardf[0][2]=fungiCard;
-        boardf[2][2]=fungiCard;
-        boardf[3][3]=plantCard;
-        boardf[4][2]=fungiCard;
-        boardf[5][3]=plantCard;
+        Player playerf = new Player("ciao");
+        Player playerp = new Player("ciao1");
+        Player playera = new Player("ciao2");
+        Player playeri = new Player("ciao3");
 
-        boardp[0][2]=plantCard;
-        boardp[2][2]=plantCard;
-        boardp[3][1]=insectCard;
-        boardp[4][2]=plantCard;
-        boardp[5][1]=insectCard;
+        playerf.getGameBoard()[0][2]=fungiCard;
+        playerf.getGameBoard()[2][2]=fungiCard;
+        playerf.getGameBoard()[3][3]=plantCard;
+        playerf.getGameBoard()[4][2]=fungiCard;
+        playerf.getGameBoard()[5][3]=plantCard;
 
-        boarda[1][2]=animalCard;
-        boarda[3][2]=animalCard;
-        boarda[0][3]=fungiCard;
-        boarda[5][2]=animalCard;
-        boarda[2][3]=fungiCard;
+        playerp.getGameBoard()[0][2]=plantCard;
+        playerp.getGameBoard()[2][2]=plantCard;
+        playerp.getGameBoard()[3][1]=insectCard;
+        playerp.getGameBoard()[4][2]=plantCard;
+        playerp.getGameBoard()[5][1]=insectCard;
 
-        boardi[1][2]=insectCard;
-        boardi[3][2]=insectCard;
-        boardi[0][1]=animalCard;
-        boardi[5][2]=insectCard;
-        boardi[2][1]=animalCard;
+        playera.getGameBoard()[1][2]=animalCard;
+        playera.getGameBoard()[3][2]=animalCard;
+        playera.getGameBoard()[0][3]=fungiCard;
+        playera.getGameBoard()[5][2]=animalCard;
+        playera.getGameBoard()[2][3]=fungiCard;
+
+        playeri.getGameBoard()[1][2]=insectCard;
+        playeri.getGameBoard()[3][2]=insectCard;
+        playeri.getGameBoard()[0][1]=animalCard;
+        playeri.getGameBoard()[5][2]=insectCard;
+        playeri.getGameBoard()[2][1]=animalCard;
 
 
-        assertEquals(3,fungi.calculatePoints(boardf));
-        assertEquals(3,plant.calculatePoints(boardp));
-        assertEquals(3,animal.calculatePoints(boarda));
-        assertEquals(3,insect.calculatePoints(boardi));
+        assertEquals(3,fungi.calculatePoints(playerf));
+        assertEquals(3,plant.calculatePoints(playerp));
+        assertEquals(3,animal.calculatePoints(playera));
+        assertEquals(3,insect.calculatePoints(playeri));
     }
 
     @Test
     @DisplayName("Ensure accurate detection of two achieved goals")
     public void testCalculatePoints3() {
+        Player playerf = new Player("ciao");
+        Player playerp = new Player("ciao1");
+        Player playera = new Player("ciao2");
+        Player playeri = new Player("ciao3");
 
-        boardf[0][2]=fungiCard;
-        boardf[2][2]=fungiCard;
-        boardf[3][3]=plantCard;
-        boardf[0][0]=fungiCard;
-        boardf[2][0]=fungiCard;
-        boardf[3][1]=plantCard;
+        playerf.getGameBoard()[0][2]=fungiCard;
+        playerf.getGameBoard()[2][2]=fungiCard;
+        playerf.getGameBoard()[3][3]=plantCard;
+        playerf.getGameBoard()[0][0]=fungiCard;
+        playerf.getGameBoard()[2][0]=fungiCard;
+        playerf.getGameBoard()[3][1]=plantCard;
 
-        boardp[0][2]=plantCard;
-        boardp[2][2]=plantCard;
-        boardp[3][1]=insectCard;
-        boardp[0][4]=plantCard;
-        boardp[2][4]=plantCard;
-        boardp[3][3]=insectCard;
+        playerp.getGameBoard()[0][2]=plantCard;
+        playerp.getGameBoard()[2][2]=plantCard;
+        playerp.getGameBoard()[3][1]=insectCard;
+        playerp.getGameBoard()[0][4]=plantCard;
+        playerp.getGameBoard()[2][4]=plantCard;
+        playerp.getGameBoard()[3][3]=insectCard;
 
-        boarda[1][2]=animalCard;
-        boarda[3][2]=animalCard;
-        boarda[0][3]=fungiCard;
-        boarda[1][0]=animalCard;
-        boarda[3][0]=animalCard;
-        boarda[0][1]=fungiCard;
+        playera.getGameBoard()[1][2]=animalCard;
+        playera.getGameBoard()[3][2]=animalCard;
+        playera.getGameBoard()[0][3]=fungiCard;
+        playera.getGameBoard()[1][0]=animalCard;
+        playera.getGameBoard()[3][0]=animalCard;
+        playera.getGameBoard()[0][1]=fungiCard;
 
-        boardi[1][2]=insectCard;
-        boardi[3][2]=insectCard;
-        boardi[0][1]=animalCard;
-        boardi[1][4]=insectCard;
-        boardi[3][4]=insectCard;
-        boardi[0][3]=animalCard;
+        playeri.getGameBoard()[1][2]=insectCard;
+        playeri.getGameBoard()[3][2]=insectCard;
+        playeri.getGameBoard()[0][1]=animalCard;
+        playeri.getGameBoard()[1][4]=insectCard;
+        playeri.getGameBoard()[3][4]=insectCard;
+        playeri.getGameBoard()[0][3]=animalCard;
 
-        assertEquals(6,fungi.calculatePoints(boardf));
-        assertEquals(6,plant.calculatePoints(boardp));
-        assertEquals(6,animal.calculatePoints(boarda));
-        assertEquals(6,insect.calculatePoints(boardi));
+        assertEquals(6,fungi.calculatePoints(playerf));
+        assertEquals(6,plant.calculatePoints(playerp));
+        assertEquals(6,animal.calculatePoints(playera));
+        assertEquals(6,insect.calculatePoints(playeri));
     }
 }

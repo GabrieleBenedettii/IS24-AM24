@@ -7,12 +7,8 @@ import it.polimi.ingsw.am24.view.graphicalUser.controllers.*;
 import it.polimi.ingsw.am24.view.input.InputReaderGUI;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
-import javafx.geometry.Pos;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 
-import java.awt.*;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -76,6 +72,11 @@ public class GUI extends UI {
     }
 
     @Override
+    public void show_command() {
+
+    }
+
+    @Override
     public void show_table(GameView gameView, boolean forChoice) {
         callPlatformRunLater(() -> {
             GameBoardController controller = (GameBoardController) this.guiApplication.getController(Scenes.GAME);
@@ -94,13 +95,11 @@ public class GUI extends UI {
 
     @Override
     public void show_lobby() {
-        if (alreadyShowedPublisher) {
-            callPlatformRunLater(() ->  {
-                this.guiApplication.setInputReaderGUItoAllControllers(this.inputReaderGUI);
-                this.guiApplication.createNewWindowWithStyle();
-                this.guiApplication.setActiveScene(Scenes.MENU);
-            });
-        }
+        callPlatformRunLater(() ->  {
+            this.guiApplication.setInputReaderGUItoAllControllers(this.inputReaderGUI);
+            this.guiApplication.createNewWindowWithStyle();
+            this.guiApplication.setActiveScene(Scenes.MENU);
+        });
     }
 
     @Override
@@ -140,13 +139,17 @@ public class GUI extends UI {
     @Override
     public void show_logo() {
         callPlatformRunLater(() -> this.guiApplication.setActiveScene(Scenes.LOGO));
-        PauseTransition pause = new PauseTransition(Duration.seconds(Constants.logoTime));
+        PauseTransition pause = new PauseTransition(Duration.seconds(Constants.LOGOTIME));
         pause.setOnFinished(event -> {
             alreadyShowedPublisher = true;
 
             this.show_lobby();
         });
         pause.play();
+    }
+
+    @Override
+    public void show_authors_and_rules() {
 
     }
 
@@ -297,8 +300,9 @@ public class GUI extends UI {
     @Override
     public void show_no_connection_error() {
         callPlatformRunLater(() -> {
-            GameBoardController controller = (GameBoardController) this.guiApplication.getController(Scenes.GAME);
-            controller.connectionError();
+            this.guiApplication.setActiveScene(Scenes.SERVERDISCONNECTION);
+            //GameBoardController controller = (GameBoardController) this.guiApplication.getController(Scenes.MENU);
+            //controller.connectionError();
         });
 
 
@@ -338,7 +342,7 @@ public class GUI extends UI {
     }
 
     @Override
-    public void show_message() {
+    public void show_messages() {
 
     }
 

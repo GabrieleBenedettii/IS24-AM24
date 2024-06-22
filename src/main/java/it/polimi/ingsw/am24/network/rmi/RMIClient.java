@@ -1,5 +1,6 @@
 package it.polimi.ingsw.am24.network.rmi;
 
+import it.polimi.ingsw.am24.constants.Constants;
 import it.polimi.ingsw.am24.controller.GameController;
 import it.polimi.ingsw.am24.listeners.GameListener;
 import it.polimi.ingsw.am24.network.GameListenerClient;
@@ -14,10 +15,6 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
 public class RMIClient implements CommonClientActions {
-
-    private final int port = 1234;
-    private final String serverIp = "127.0.0.1";
-    private final String serverName = "CodexNaturalis-Server";
 
     private static LobbyControllerInterface server;
 
@@ -37,21 +34,21 @@ public class RMIClient implements CommonClientActions {
     public RMIClient(Flow flow) {
         super();
         gameListenersHandler = new GameListenerClient(flow);
+        this.flow = flow;
         connect();
 
-        this.flow=flow;
         heartbeatSender =new HeartbeatSender(flow,this);
         heartbeatSender.start();
     }
 
     public void connect() {
-        boolean retry = false;
-        int attempt = 1;
+        boolean retry;
 
         do {
+            retry = false;
             try {
-                registry = LocateRegistry.getRegistry(serverIp, port);
-                server = (LobbyControllerInterface) registry.lookup(serverName);
+                registry = LocateRegistry.getRegistry(Constants.SERVERIP, Constants.RMIPort);
+                server = (LobbyControllerInterface) registry.lookup(Constants.serverName);
 
                 listener = (GameListener) UnicastRemoteObject.exportObject(gameListenersHandler, 0);
 
@@ -60,46 +57,27 @@ public class RMIClient implements CommonClientActions {
                 if (!retry) {
                     System.out.println("[ERROR] CONNECTING TO RMI SERVER: \nClient RMI exception: " + e + "\n");
                 }
-                System.out.print("[#" + attempt + "]Waiting to reconnect to RMI Server on port: '" + port + "' with name: '" + serverName + "'");
                 retry = true;
 
-                /*i = 0;
-                while (i < DefaultValue.seconds_between_reconnection) {
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException ex) {
-                        throw new RuntimeException(ex);
-                    }
-                    printAsyncNoLine(".");
-                    i++;
+                try {
+                    Thread.sleep(Constants.seconds_between_attempts*1000);
+                } catch (InterruptedException ex) {
+                    throw new RuntimeException(ex);
                 }
-                printAsyncNoLine("\n");
-
-                if (attempt >= DefaultValue.num_of_attempt_to_connect_toServer_before_giveup) {
-                    printAsyncNoLine("Give up!");
-                    try {
-                        System.in.read();
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
-                    }
-                    System.exit(-1);
-                }
-                retry = true;
-                attempt++;*/
             }
         } while (retry);
     }
 
     public void createGame(String nickname, int numPlayers) throws RemoteException, NotBoundException {
-        registry = LocateRegistry.getRegistry(serverIp, port);
-        server = (LobbyControllerInterface) registry.lookup(serverName);
+        registry = LocateRegistry.getRegistry(Constants.SERVERIP, Constants.RMIPort);
+        server = (LobbyControllerInterface) registry.lookup(Constants.serverName);
         gameController = server.joinGame(nickname, numPlayers, listener);
         this.nickname = nickname;
     }
 
     public void joinFirstGameAvailable(String nickname) throws RemoteException, NotBoundException {
-        registry = LocateRegistry.getRegistry(serverIp, port);
-        server = (LobbyControllerInterface) registry.lookup(serverName);
+        registry = LocateRegistry.getRegistry(Constants.SERVERIP, Constants.RMIPort);
+        server = (LobbyControllerInterface) registry.lookup(Constants.serverName);
         gameController = server.joinGame(nickname, 1, listener);
         this.nickname = nickname;
     }
@@ -115,15 +93,6 @@ public class RMIClient implements CommonClientActions {
     public void chooseInitialCardSide(String nickname, int choice) throws RemoteException {
         gameController.chooseInitialCardSide(nickname, choice==0, listener);
     }
-
-    /*@Override
-    public void leave(String nick, int idGame) throws IOException, NotBoundException {
-        registry = LocateRegistry.getRegistry(serverIp, port);
-        server = (LobbyControllerInterface) registry.lookup(serverName);
-        server.leaveGame(nickname, idGame, listener);
-        gameController = null;
-        nickname = null;
-    }*/
 
     /*@Override
     public void sendMessage(ChatMessage msg) throws RemoteException {
@@ -154,6 +123,11 @@ public class RMIClient implements CommonClientActions {
     public void heartbeat() throws RemoteException {
         if(gameController != null)
             gameController.heartbeat(nickname, listener);
+    }
+
+    @Override
+    public void stopHeartbeat() {
+        heartbeatSender.interrupt();
     }
 }
 

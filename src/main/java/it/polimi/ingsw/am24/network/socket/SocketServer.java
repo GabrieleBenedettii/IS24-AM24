@@ -10,7 +10,6 @@ public class SocketServer extends Thread {
     private List<ClientHandler> clients;
 
     public void start(int port) {
-
         try {
             server = new ServerSocket(port);
             clients = new ArrayList<>();

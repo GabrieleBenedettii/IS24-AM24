@@ -81,7 +81,6 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
     public void run() {
         Event event;
         addEvent(EventType.APP_MENU);
-        ui.show_logo();
         while (!Thread.interrupted()) {
             if (joined) {
                 //Get one event
@@ -125,16 +124,15 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
             }
         }
     }
+
     private Boolean nicknameAlreadyUsed = false;
     private void statusNotInAGame(Event event) {
         switch (event.getType()) {
             case APP_MENU -> {
                 boolean selectionok;
-
                 do {
                     selectionok = askSelectGame(nicknameAlreadyUsed, current_choice);
                 } while (!selectionok);
-
             }
             case NICKNAME_ALREADY_USED -> {
                 nickname = null;
@@ -165,7 +163,6 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
             case HIDDEN_GOAL_CHOICE -> askSecretGoalDealt();
             case INITIAL_CARD_SIDE -> askInitialCardSide();
         }
-
     }
 
     private void statusRunning(Event event) throws IOException, InterruptedException {
@@ -197,19 +194,12 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
     }
 
     private void statusEnded(Event event) throws InterruptedException {
-        switch (event.getType()) {
-            case GAME_ENDED -> {
-                //new Scanner(System.in).nextLine();
-                this.inputParser.getDataToProcess().pop();
-                try {
-                    this.inputParser.getDataToProcess().pop();
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-
-                /*this.leave(nickname, event.getModel().getGameId());
-                this.youLeft();*/
-            }
+        this.inputParser.getDataToProcess().pop();
+        try {
+            this.inputParser.getDataToProcess().pop();
+            stopHeartbeat();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -238,10 +228,10 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
     public boolean isCreate() {
         return create;
     }
+
     private boolean askSelectGame(Boolean nicknameAlreadyUsed, String previous) {
         String choice;
         if (nicknameAlreadyUsed){
-
             nicknameAlreadyUsed = false;
             choice = previous;
         }
@@ -258,7 +248,6 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
         switch (choice) {
             case "1" -> {
                 create = true;
-                //askNickname();
                 num = askNicknameAndPlayers();
                 createGame(nickname, num);
                 colorSelected.put(nickname,false);
@@ -268,18 +257,10 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
                 joinFirstGameAvailable(nickname);
                 colorSelected.put(nickname,false);
             }
-            /*case "js" -> {
-                Integer gameId = askGameId();
-                if (gameId == -1)
-                    return false;
-                else
-                    joinGame(nickname, gameId);
-            }*/
             default -> {
                 return false;
             }
         }
-
         return true;
     }
 
@@ -292,7 +273,7 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
         ui.show_available_colors(availableColors);
         try {
             color = this.inputParser.getDataToProcess().pop();
-            if (!availableColors.contains(color) && !availableColors.contains(color.toUpperCase())) {
+            if (!availableColors.contains(color.toUpperCase())) {
                 ui.show_color_not_available();
                 askColor();
                 return;
@@ -398,7 +379,7 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
         //ui.show_player_view();
         do {
             try {
-                //System.out.print("\nCommand -> ");
+                ui.show_command();
                 command = this.inputParser.getDataToProcess().pop();
                 String[] command_args = command.split(" ");
 
@@ -437,10 +418,10 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
                         ui.show_start_table(gameView);
                         continue;
                     }
-                    /*case "/visible" -> {
-                        ui.show_visibleSymbols(gameView);
+                    case "/chat" -> {
+                        ui.show_messages();
                         continue;
-                    }*/
+                    }
                     case "/help" -> {
                         ui.show_menu();
                         continue;
@@ -456,37 +437,6 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
             }
             break;
         } while (true);
-//        do {
-//            try {
-//                command = this.inputParser.getDataToProcess().pop();
-//            } catch (Exception e) {
-//                System.out.println("Wrong command");
-//                continue;
-//            }
-//            String[] command_args = command.split(" ");
-//
-//            if(command_args[0].equals("play")) {
-//                if (!command_args[2].equals("front") && !command_args[2].equals("back")) continue;
-//                boolean front = command_args[2].equals("front");
-//
-//                int x;
-//                int y;
-//                int cardIndex;
-//                try {
-//                    cardIndex = Integer.parseInt(command_args[1]);
-//                    x = Integer.parseInt(command_args[3]);
-//                    y = Integer.parseInt(command_args[4]);
-//                } catch (Exception e) {
-//                    System.out.println("Nan");
-//                    continue;
-//                }
-//
-//                if (!gameView.getPlayerView().getPossiblePlacements()[x][y])
-//                    continue;
-//
-//                playCard(nickname,cardIndex,front,x,y);
-//            }
-//        } while(false);
     }
 
     private void askCardDraw() {
@@ -494,7 +444,7 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
         //ui.show_public_board_view();
         do {
             try {
-                //System.out.print("\nCommand -> ");
+                ui.show_command();
                 command = this.inputParser.getDataToProcess().pop();
                 String[] command_args = command.split(" ");
                 if (!command_args[0].equalsIgnoreCase("/draw") || command_args.length < 2) {
@@ -578,6 +528,11 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
     @Override
     public void heartbeat() throws IOException {
 
+    }
+
+    @Override
+    public void stopHeartbeat() {
+        actions.stopHeartbeat();
     }
 
     //EVENTS RECEIVED FROM THE SERVER
@@ -670,7 +625,6 @@ public class GameFlow extends Flow implements Runnable, CommonClientActions {
         //Show the message only if is for everyone or is for me (or I sent it)
         if(sender.equals(nickname)) ui.add_message_sent(receiver, message, time);
         else ui.add_message_received(sender, receiver, message, time);
-
         addEvent(EventType.SENT_MESSAGE);
     }
 

@@ -68,7 +68,7 @@ class GameTest {
     @Test
     public void getPublicBoardViewTest() {
         game.start();
-        assertNotNull(game.getPublicBoardView());
+        assertNotNull(game.getCommonBoardView());
     }
 
 }

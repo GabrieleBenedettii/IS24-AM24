@@ -4,12 +4,17 @@ import it.polimi.ingsw.am24.model.Kingdom;
 import it.polimi.ingsw.am24.model.Symbol;
 
 import java.awt.*;
+import java.io.IOException;
 import java.util.HashMap;
 
 public class Constants {
-    public static final int MIN_PLAYERS = 2;
+    public static final int RMIPort = 1234;
+    public static final int SOCKETPort = 8888;
+    public static final String serverName = "CodexNaturalis-Server";
+    public static final int seconds_between_attempts = 2;
     public static final int MAX_PLAYERS = 4;
-    public static final String TEXT_UNDERLINE = "\033[4m";
+    public static final int MATRIX_DIMENSION = 100;
+
     public static final String TEXT_RESET = "\033[0m";
     public static final String TEXT_RED = "\033[31m";
     public static final String TEXT_GREEN = "\033[32m";
@@ -18,7 +23,7 @@ public class Constants {
     public static final String TEXT_PURPLE = "\033[35m";
     public static final String TEXT_CYAN = "\033[36m";
     public static final String TEXT_WHITE = "\033[37m";
-    public static final int logoTime = 3;
+    public static final int LOGOTIME = 3;
     public static final String TEXT_F = TEXT_RED + "F" + TEXT_RESET;
     public static final String TEXT_A = TEXT_CYAN + "A" + TEXT_RESET;
     public static final String TEXT_I = TEXT_PURPLE + "I" + TEXT_RESET;
@@ -43,8 +48,7 @@ public class Constants {
     public static final String EMPTY = "EMPTY";
     public static final String AUTHORS = "Belfiore Mattia, Benedetti Gabriele, Buccheri Giuseppe, Canepari Michele";
     public static final String RULES = "For the complete rules go to: \nhttps://www.craniocreations.it/prodotto/codex-naturalis";
-    public static int port;
-    public static String ipAddress;
+    public static String SERVERIP = "127.0.0.1";
     private static final HashMap<Character, String> firstLetterMap = new HashMap<Character, String>();
     public final static Object gameIdTime = "Created";
     public final static Object gameIdData = "GameId";
@@ -127,13 +131,6 @@ public class Constants {
         return kingdomColorMap.get(k);
     }
 
-
-    public static void setPort(int port) {
-        Constants.port = port;
-    }
-    public static void setIpAddress(String ip) {
-        Constants.ipAddress = ip;
-    }
     public static  final HashMap<Integer, String> corner =new HashMap<>();
 
     static {
@@ -141,5 +138,13 @@ public class Constants {
         corner.put(1,"top-right");
         corner.put(2,"bottom-left");
         corner.put(3,"bottom-right");
+    }
+
+    public static void clearScreen() {
+        try {
+            new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+        } catch (IOException | InterruptedException e) {
+            System.out.println("\033\143");   //for Mac
+        }
     }
 }
