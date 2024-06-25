@@ -1,8 +1,8 @@
 package it.polimi.ingsw.am24.model;
 
-import it.polimi.ingsw.am24.Exceptions.AlreadyDrawnException;
-import it.polimi.ingsw.am24.Exceptions.InvalidPositioningException;
-import it.polimi.ingsw.am24.Exceptions.RequirementsNotMetException;
+import it.polimi.ingsw.am24.exceptions.AlreadyDrawnException;
+import it.polimi.ingsw.am24.exceptions.InvalidPositioningException;
+import it.polimi.ingsw.am24.exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.am24.model.card.GameCard;
 import it.polimi.ingsw.am24.model.card.GoldCard;
 import it.polimi.ingsw.am24.model.card.InitialCard;

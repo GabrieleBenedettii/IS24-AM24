@@ -1,6 +1,6 @@
 package it.polimi.ingsw.am24.model.deck;
 
-import it.polimi.ingsw.am24.Exceptions.EmptyDeckException;
+import it.polimi.ingsw.am24.exceptions.EmptyDeckException;
 import it.polimi.ingsw.am24.model.Kingdom;
 import it.polimi.ingsw.am24.model.card.ResourceCard;
 import org.junit.Before;

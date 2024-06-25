@@ -1,15 +1,15 @@
 package it.polimi.ingsw.am24.model;
 
-import it.polimi.ingsw.am24.Exceptions.AlreadyDrawnException;
-import it.polimi.ingsw.am24.Exceptions.InvalidPositioningException;
-import it.polimi.ingsw.am24.Exceptions.RequirementsNotMetException;
+import it.polimi.ingsw.am24.exceptions.AlreadyDrawnException;
+import it.polimi.ingsw.am24.exceptions.InvalidPositioningException;
+import it.polimi.ingsw.am24.exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.am24.constants.Constants;
 import it.polimi.ingsw.am24.model.card.*;
 import it.polimi.ingsw.am24.model.goal.GoalCard;
-import it.polimi.ingsw.am24.modelView.GameCardView;
-import it.polimi.ingsw.am24.modelView.Placement;
-import it.polimi.ingsw.am24.modelView.PrivatePlayerView;
-import it.polimi.ingsw.am24.modelView.PublicPlayerView;
+import it.polimi.ingsw.am24.modelview.GameCardView;
+import it.polimi.ingsw.am24.modelview.Placement;
+import it.polimi.ingsw.am24.modelview.PrivatePlayerView;
+import it.polimi.ingsw.am24.modelview.PublicPlayerView;
 import javafx.util.Pair;
 
 import java.util.ArrayList;

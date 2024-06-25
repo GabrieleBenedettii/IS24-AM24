@@ -1,7 +1,7 @@
 package it.polimi.ingsw.am24.model.goal;
 
 import com.google.gson.Gson;
-import it.polimi.ingsw.am24.HelloApplication;
+import it.polimi.ingsw.am24.Root;
 
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -19,13 +19,13 @@ public class GoalDeck {
 
     public void loadCards(){
         Gson gson = new Gson();
-        Reader reader = new InputStreamReader(Objects.requireNonNull(HelloApplication.class.getResourceAsStream("cards/SymbolGoal.json")));
+        Reader reader = new InputStreamReader(Objects.requireNonNull(Root.class.getResourceAsStream("cards/SymbolGoal.json")));
         cards = new ArrayList<>(Arrays.asList(gson.fromJson(reader, SymbolGoal[].class)));
 
-        reader = new InputStreamReader(Objects.requireNonNull(HelloApplication.class.getResourceAsStream("cards/obliqueDisposition.json")));
+        reader = new InputStreamReader(Objects.requireNonNull(Root.class.getResourceAsStream("cards/obliqueDisposition.json")));
         cards.addAll(Arrays.asList(gson.fromJson(reader, ObliqueDisposition[].class)));
 
-        reader = new InputStreamReader(Objects.requireNonNull(HelloApplication.class.getResourceAsStream("cards/verticalDisposition.json")));
+        reader = new InputStreamReader(Objects.requireNonNull(Root.class.getResourceAsStream("cards/verticalDisposition.json")));
         cards.addAll(Arrays.asList(gson.fromJson(reader, VerticalDisposition[].class)));
     }
     public void shuffle(){

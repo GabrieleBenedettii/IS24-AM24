@@ -1,7 +1,7 @@
 package it.polimi.ingsw.am24.model.goal;
 
 import it.polimi.ingsw.am24.model.Player;
-import it.polimi.ingsw.am24.modelView.GameCardView;
+import it.polimi.ingsw.am24.modelview.GameCardView;
 
 public abstract class GoalCard {
     private final int imageId;

@@ -4,16 +4,12 @@ import it.polimi.ingsw.am24.constants.Constants;
 import it.polimi.ingsw.am24.model.Kingdom;
 import it.polimi.ingsw.am24.model.Symbol;
 import it.polimi.ingsw.am24.model.deck.InitialDeck;
-import it.polimi.ingsw.am24.modelView.GameCardView;
+import it.polimi.ingsw.am24.modelview.GameCardView;
 import org.junit.Before;
 import org.junit.Test;
 
-import javax.swing.plaf.PanelUI;
-import java.util.ArrayList;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.runners.model.MultipleFailureException.assertEmpty;
 import static org.testng.AssertJUnit.assertTrue;
 
 public class InitialCardTest {

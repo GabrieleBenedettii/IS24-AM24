@@ -1,19 +1,19 @@
 package it.polimi.ingsw.am24.controller;
 
-import it.polimi.ingsw.am24.Exceptions.*;
+import it.polimi.ingsw.am24.exceptions.*;
 import it.polimi.ingsw.am24.chat.Chat;
-import it.polimi.ingsw.am24.heartbeat.HeartBeat;
+import it.polimi.ingsw.am24.network.heartbeat.HeartBeat;
 import it.polimi.ingsw.am24.listeners.GameListener;
 import it.polimi.ingsw.am24.model.Game;
 import it.polimi.ingsw.am24.model.Player;
 import it.polimi.ingsw.am24.model.PlayerColor;
 import it.polimi.ingsw.am24.model.goal.GoalCard;
-import it.polimi.ingsw.am24.modelView.GameCardView;
-import it.polimi.ingsw.am24.modelView.GameView;
-import it.polimi.ingsw.am24.modelView.PublicBoardView;
-import it.polimi.ingsw.am24.modelView.PublicPlayerView;
-import it.polimi.ingsw.am24.network.common.GameControllerInterface;
-import it.polimi.ingsw.am24.view.flow.utility.GameStatus;
+import it.polimi.ingsw.am24.modelview.GameCardView;
+import it.polimi.ingsw.am24.modelview.GameView;
+import it.polimi.ingsw.am24.modelview.PublicBoardView;
+import it.polimi.ingsw.am24.modelview.PublicPlayerView;
+import it.polimi.ingsw.am24.network.GameControllerInterface;
+import it.polimi.ingsw.am24.view.GameStatus;
 
 import java.io.Serializable;
 import java.rmi.RemoteException;

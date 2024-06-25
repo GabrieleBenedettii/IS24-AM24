@@ -1,7 +1,7 @@
 package it.polimi.ingsw.am24.listeners;
 
-import it.polimi.ingsw.am24.modelView.GameCardView;
-import it.polimi.ingsw.am24.modelView.GameView;
+import it.polimi.ingsw.am24.modelview.GameCardView;
+import it.polimi.ingsw.am24.modelview.GameView;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -19,6 +19,7 @@ public interface GameListener extends Remote {
     void nicknameAlreadyUsed() throws RemoteException;
 
     void availableColors(ArrayList<String> colors) throws RemoteException;
+
     void notAvailableColors(ArrayList<String> colors) throws RemoteException;
 
     void hiddenGoalChoice(ArrayList<GameCardView> cardViews, GameView gameView) throws RemoteException;

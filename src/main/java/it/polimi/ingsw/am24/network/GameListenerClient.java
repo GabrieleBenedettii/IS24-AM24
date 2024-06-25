@@ -1,9 +1,9 @@
 package it.polimi.ingsw.am24.network;
 
 import it.polimi.ingsw.am24.listeners.GameListener;
-import it.polimi.ingsw.am24.modelView.GameCardView;
-import it.polimi.ingsw.am24.modelView.GameView;
-import it.polimi.ingsw.am24.view.flow.Flow;
+import it.polimi.ingsw.am24.modelview.GameCardView;
+import it.polimi.ingsw.am24.modelview.GameView;
+import it.polimi.ingsw.am24.view.Flow;
 
 import java.io.Serializable;
 import java.rmi.RemoteException;

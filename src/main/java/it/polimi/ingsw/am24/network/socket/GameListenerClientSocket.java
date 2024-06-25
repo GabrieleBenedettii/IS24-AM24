@@ -1,9 +1,9 @@
 package it.polimi.ingsw.am24.network.socket;
 
 import it.polimi.ingsw.am24.listeners.GameListener;
-import it.polimi.ingsw.am24.messages.servetToClient.*;
-import it.polimi.ingsw.am24.modelView.GameCardView;
-import it.polimi.ingsw.am24.modelView.GameView;
+import it.polimi.ingsw.am24.modelview.GameCardView;
+import it.polimi.ingsw.am24.modelview.GameView;
+import it.polimi.ingsw.am24.network.socket.messages.servetToClient.*;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class GameListenerClientSocket implements GameListener, Serializable {
-    //todo add all game listener methods
     private final ObjectOutputStream out;
 
     public GameListenerClientSocket(ObjectOutputStream out) {

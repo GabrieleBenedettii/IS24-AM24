@@ -1,6 +1,6 @@
 package it.polimi.ingsw.am24.view.input;
 
-import it.polimi.ingsw.am24.view.GameFlow;
+import it.polimi.ingsw.am24.view.Flow;
 
 import java.rmi.RemoteException;
 
@@ -10,13 +10,13 @@ public class InputParser extends Thread {
 
     private final Buffer dataToProcess;
 
-    private final GameFlow gameFlow;
+    private final Flow gameFlow;
 
     private Integer gameId;
 
     private String nickname;
 
-    public InputParser(Buffer input, GameFlow gameFlow) {
+    public InputParser(Buffer input, Flow gameFlow) {
         this.input = input;
         this.dataToProcess = new Buffer();
         this.gameFlow = gameFlow;
