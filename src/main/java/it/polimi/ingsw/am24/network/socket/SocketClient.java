@@ -48,7 +48,7 @@ public class SocketClient extends Thread implements CommonClientActions {
                 retry = true;
 
                 try {
-                    Thread.sleep(Constants.seconds_between_attempts*1000);
+                    Thread.sleep(Constants.SECONDS_BETWEEN_ATTEMPTS *1000);
                 } catch (InterruptedException ex) {
                     throw new RuntimeException(ex);
                 }

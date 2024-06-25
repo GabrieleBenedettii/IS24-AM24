@@ -1,10 +1,11 @@
 package it.polimi.ingsw.am24.network.rmi;
 
 import it.polimi.ingsw.am24.constants.Constants;
-import it.polimi.ingsw.am24.controller.GameController;
 import it.polimi.ingsw.am24.listeners.GameListener;
 import it.polimi.ingsw.am24.network.GameListenerClient;
 import it.polimi.ingsw.am24.network.HeartbeatSender;
+import it.polimi.ingsw.am24.network.common.GameControllerInterface;
+import it.polimi.ingsw.am24.network.common.LobbyControllerInterface;
 import it.polimi.ingsw.am24.view.flow.CommonClientActions;
 import it.polimi.ingsw.am24.view.flow.Flow;
 
@@ -48,7 +49,7 @@ public class RMIClient implements CommonClientActions {
             retry = false;
             try {
                 registry = LocateRegistry.getRegistry(Constants.SERVERIP, Constants.RMIPort);
-                server = (LobbyControllerInterface) registry.lookup(Constants.serverName);
+                server = (LobbyControllerInterface) registry.lookup(Constants.SERVERNAME);
 
                 listener = (GameListener) UnicastRemoteObject.exportObject(gameListenersHandler, 0);
 
@@ -60,7 +61,7 @@ public class RMIClient implements CommonClientActions {
                 retry = true;
 
                 try {
-                    Thread.sleep(Constants.seconds_between_attempts*1000);
+                    Thread.sleep(Constants.SECONDS_BETWEEN_ATTEMPTS *1000);
                 } catch (InterruptedException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -70,14 +71,14 @@ public class RMIClient implements CommonClientActions {
 
     public void createGame(String nickname, int numPlayers) throws RemoteException, NotBoundException {
         registry = LocateRegistry.getRegistry(Constants.SERVERIP, Constants.RMIPort);
-        server = (LobbyControllerInterface) registry.lookup(Constants.serverName);
+        server = (LobbyControllerInterface) registry.lookup(Constants.SERVERNAME);
         gameController = server.joinGame(nickname, numPlayers, listener);
         this.nickname = nickname;
     }
 
     public void joinFirstGameAvailable(String nickname) throws RemoteException, NotBoundException {
         registry = LocateRegistry.getRegistry(Constants.SERVERIP, Constants.RMIPort);
-        server = (LobbyControllerInterface) registry.lookup(Constants.serverName);
+        server = (LobbyControllerInterface) registry.lookup(Constants.SERVERNAME);
         gameController = server.joinGame(nickname, 1, listener);
         this.nickname = nickname;
     }

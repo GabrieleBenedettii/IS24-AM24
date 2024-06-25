@@ -1,5 +1,6 @@
-package it.polimi.ingsw.am24.network.rmi;
+package it.polimi.ingsw.am24.network.common;
 
+import it.polimi.ingsw.am24.Exceptions.NotExistingPlayerException;
 import it.polimi.ingsw.am24.listeners.GameListener;
 
 import java.rmi.Remote;
@@ -24,7 +25,5 @@ public interface GameControllerInterface extends Remote {
 
     void heartbeat(String nickname, GameListener listener) throws RemoteException;
 
-    //int getNumOnlinePlayers() throws RemoteException;
-
-    //void leave(String nickname, GameListener listener) throws RemoteException;
+    void disconnectPlayer(String nickname) throws RemoteException, NotExistingPlayerException;
 }

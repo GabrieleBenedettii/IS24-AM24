@@ -12,7 +12,7 @@ import it.polimi.ingsw.am24.modelView.GameCardView;
 import it.polimi.ingsw.am24.modelView.GameView;
 import it.polimi.ingsw.am24.modelView.PublicBoardView;
 import it.polimi.ingsw.am24.modelView.PublicPlayerView;
-import it.polimi.ingsw.am24.network.rmi.GameControllerInterface;
+import it.polimi.ingsw.am24.network.common.GameControllerInterface;
 import it.polimi.ingsw.am24.view.flow.utility.GameStatus;
 
 import java.io.Serializable;
@@ -77,7 +77,7 @@ public class GameController implements GameControllerInterface, Serializable, Ru
             rotation.add(nickname);
             players.put(nickname, new Player(nickname));
             listeners.put(nickname, listener);
-            notifyListener(listener);
+            notifyListener_availableColors(listener);
         }
     }
 
@@ -93,7 +93,7 @@ public class GameController implements GameControllerInterface, Serializable, Ru
     }
 
     /**
-     * Sets a players color attribute with the given color.
+     * Sets a player's color attribute with the given color.
      * @param nickname the player's nickname.
      * @param color the color chosen by the player.
      * @param listener the GameListener for the player.
@@ -114,7 +114,7 @@ public class GameController implements GameControllerInterface, Serializable, Ru
                     if(readyPlayersForFirstPhase == playerCount) {
                         status = GameStatus.FIRST_PHASE;
                     }
-                    notifyAllListeners();
+                    notifyAllListeners_firstPhase();
                     return true;
                 } else {
                     //if the color is not available, send the updated list
@@ -303,6 +303,7 @@ public class GameController implements GameControllerInterface, Serializable, Ru
         }
         currentPlayer = rotation.get(nextPlayerIndex);
     }
+
     /**
      * Checks for a game winner and returns its name.
      * @return the winner's nickname.
@@ -384,7 +385,7 @@ public class GameController implements GameControllerInterface, Serializable, Ru
      * Notifies all players of a game update.
      * @throws RemoteException if there is a network error.
      */
-    private void notifyAllListeners() throws RemoteException {
+    private void notifyAllListeners_firstPhase() throws RemoteException {
         if(status == GameStatus.FIRST_PHASE) {
             startGame();
             for (String p : listeners.keySet()) {
@@ -507,7 +508,7 @@ public class GameController implements GameControllerInterface, Serializable, Ru
      * @param listener the GameListener to notify.
      * @throws RemoteException if there is a network error.
      */
-    private void notifyListener(GameListener listener) throws RemoteException {
+    private void notifyListener_availableColors(GameListener listener) throws RemoteException {
         ArrayList<String> ac = new ArrayList<>(game.getAvailableColors());
         new Thread(() -> {
             try {
@@ -546,11 +547,11 @@ public class GameController implements GameControllerInterface, Serializable, Ru
                     Iterator<Map.Entry<GameListener, HeartBeat>> heartIter = heartbeats.entrySet().iterator();
 
                     while (heartIter.hasNext()) {
-                        Map.Entry<GameListener, HeartBeat> el = (Map.Entry<GameListener, HeartBeat>) heartIter.next();
+                        var el = (Map.Entry<GameListener, HeartBeat>) heartIter.next();
                         if (System.currentTimeMillis() - el.getValue().getBeat() > 4000) {
                             try {
                                 this.disconnectPlayer(el.getValue().getNickname());
-                                System.out.println("Disconnection detected by heartbeat of player: "+el.getValue().getNickname()+"");
+                                System.out.println("[" + gameId + "] disconnection detected by heartbeat of player: " + el.getValue().getNickname());
 
                                 if (this.players.isEmpty()) {
                                     LobbyController.getInstance().deleteGame(this.getGameId());
@@ -594,7 +595,7 @@ public class GameController implements GameControllerInterface, Serializable, Ru
      * @param nickname The nickname of the player to disconnect.
      * @throws RemoteException if there is a network error during communication with the listener.
      */
-    //@Override
+    @Override
     public void disconnectPlayer(String nickname) throws RemoteException, NotExistingPlayerException {
         players.remove(nickname);
         rotation.remove(nickname);

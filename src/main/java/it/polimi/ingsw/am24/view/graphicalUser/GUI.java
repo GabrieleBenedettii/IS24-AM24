@@ -139,13 +139,13 @@ public class GUI extends UI {
     @Override
     public void show_logo() {
         callPlatformRunLater(() -> this.guiApplication.setActiveScene(Scenes.LOGO));
-        PauseTransition pause = new PauseTransition(Duration.seconds(Constants.LOGOTIME));
+        /*PauseTransition pause = new PauseTransition(Duration.seconds(Constants.LOGO_TIME));
         pause.setOnFinished(event -> {
             alreadyShowedPublisher = true;
 
             this.show_lobby();
         });
-        pause.play();
+        pause.play();*/
     }
 
     @Override

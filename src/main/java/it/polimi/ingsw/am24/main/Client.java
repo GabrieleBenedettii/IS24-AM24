@@ -7,6 +7,7 @@ import it.polimi.ingsw.am24.view.flow.UI;
 import it.polimi.ingsw.am24.view.graphicalUser.GUIapp;
 import javafx.application.Application;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -28,7 +29,7 @@ public class Client {
             System.out.print("\nInsert remote IP (leave empty for localhost) -> ");
             ip = in.nextLine();
             if(!ip.equals("") && !checkIP(ip)){
-                Constants.clearScreen();
+                clearScreen();
                 System.out.println("Not valid");
             }
         } while (!ip.equals("") && !checkIP(ip));
@@ -78,6 +79,14 @@ public class Client {
         com.sun.javafx.util.Logging.getFocusLogger().disableLogging();
         com.sun.javafx.util.Logging.getInputLogger().disableLogging();
         com.sun.javafx.util.Logging.getLayoutLogger().disableLogging();
+    }
+
+    private static void clearScreen() {
+        try {
+            new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+        } catch (IOException | InterruptedException e) {
+            System.out.println("\033\143");   //for Mac
+        }
     }
 }
 

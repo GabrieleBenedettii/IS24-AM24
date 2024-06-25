@@ -1,7 +1,10 @@
 package it.polimi.ingsw.am24.network.rmi;
 
+import it.polimi.ingsw.am24.constants.Constants;
 import it.polimi.ingsw.am24.controller.LobbyController;
 import it.polimi.ingsw.am24.listeners.GameListener;
+import it.polimi.ingsw.am24.network.common.GameControllerInterface;
+import it.polimi.ingsw.am24.network.common.LobbyControllerInterface;
 
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -17,14 +20,11 @@ public class RMIServer extends UnicastRemoteObject implements LobbyControllerInt
     private static Registry registry = null;
 
     public static RMIServer bind() {
-        int port = 1234;
-        String serverName = "CodexNaturalis-Server";
-
         try {
             server = new RMIServer();
             // Bind the remote object's stub in the registry
-            registry = LocateRegistry.createRegistry(port);
-            getRegistry().rebind(serverName, server);
+            registry = LocateRegistry.createRegistry(Constants.RMIPort);
+            getRegistry().rebind(Constants.SERVERNAME, server);
             System.out.println("Server RMI ready");
         } catch (RemoteException e) {
             System.err.println("[ERROR] STARTING RMI SERVER: \n\tServer RMI exception: " + e);
@@ -62,8 +62,7 @@ public class RMIServer extends UnicastRemoteObject implements LobbyControllerInt
             }catch (RemoteException e){
 
             }
-            //todo fix (sono invertiti)
-            System.out.println("[RMI] " + nickname + (numPlayers == 1 ? " created a new lobby" : " joined in first available game"));
+            System.out.println("[RMI] " + nickname + (numPlayers != 1 ? " created a new lobby" : " joined in first available game"));
         }
         return ris;
     }

@@ -4,8 +4,8 @@ import it.polimi.ingsw.am24.Exceptions.FullLobbyException;
 import it.polimi.ingsw.am24.Exceptions.NotExistingPlayerException;
 import it.polimi.ingsw.am24.constants.Constants;
 import it.polimi.ingsw.am24.listeners.GameListener;
-import it.polimi.ingsw.am24.network.rmi.GameControllerInterface;
-import it.polimi.ingsw.am24.network.rmi.LobbyControllerInterface;
+import it.polimi.ingsw.am24.network.common.GameControllerInterface;
+import it.polimi.ingsw.am24.network.common.LobbyControllerInterface;
 
 import java.io.Serializable;
 import java.rmi.RemoteException;
@@ -57,7 +57,6 @@ public class LobbyController implements Serializable, LobbyControllerInterface {
 
         System.out.println("Register request for player with nickname:  " + nickname + " and numOfPlayers: " + numOfPlayers);
 
-        //todo set min and max num of player on a setting file
         if(numOfPlayers < 1 || numOfPlayers > Constants.MAX_PLAYERS) {
             listener.invalidNumPlayers();
             return null;
@@ -73,7 +72,7 @@ public class LobbyController implements Serializable, LobbyControllerInterface {
         System.out.println("Register request for player with nickname:  " + nickname + " parameters were valid. Logging player in");
 
         synchronized(lock) {
-            //if the numOfPlayers is more than 1 or there is no lobby-> create a new lobby
+            //if the numOfPlayers is more than 1 -> create a new lobby
             if(numOfPlayers != 1){
                 GameController lobby = new GameController(numOfPlayers);
                 try {
@@ -85,7 +84,7 @@ public class LobbyController implements Serializable, LobbyControllerInterface {
                     //it can't happen
                 }
             }
-            //otherwise add the player in an existing lobby
+            //otherwise add the player in an existing lobby (the first not full)
             else {
                 for(GameController g : games) {
                     try {
@@ -104,20 +103,10 @@ public class LobbyController implements Serializable, LobbyControllerInterface {
         return null;
     }
 
-    /*
-    //Todo cambiare Gamecontroller con un int
-    public synchronized GameControllerInterface leaveGame(String nickname, GameController game){
-        game.removePlayer(nickname);
-        if (game.getNumOfActivePlayers()<1){
-            System.out.println("the are not enough players, game deleted");
-            deleteGame(game);
-        }
-        else
-            System.out.println(nickname+" has left the game");
-
-        return null;
-    }*/
-
+    /**
+     * Remove a player from a game.
+     * @param nickname nickname of the player to delete.
+     */
     public void disconnectPlayer(String nickname) throws NotExistingPlayerException {
         if(!playingNicknames.contains(nickname)) throw new NotExistingPlayerException();
         synchronized (lock) {
@@ -136,16 +125,4 @@ public class LobbyController implements Serializable, LobbyControllerInterface {
             System.out.println("Game " + gameId + " deleted");
         }
     }
-
-    /*public void printGames(){
-        int i = 1;
-        System.out.println("Active games: ");
-        for (GameController g: games){
-            System.out.print(i+" - players:");
-            for (String s: g.getPlayers().keySet()){
-                System.out.print(" "+s);
-            }
-            i++;
-        }
-    }*/
 }

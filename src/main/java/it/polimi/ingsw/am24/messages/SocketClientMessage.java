@@ -3,9 +3,8 @@ package it.polimi.ingsw.am24.messages;
 import it.polimi.ingsw.am24.listeners.GameListener;
 import it.polimi.ingsw.am24.messages.clientToServer.CreateGameMessage;
 import it.polimi.ingsw.am24.messages.clientToServer.JoinFirstGameAvailableMessage;
-import it.polimi.ingsw.am24.network.rmi.GameControllerInterface;
-import it.polimi.ingsw.am24.network.rmi.LobbyControllerInterface;
-import it.polimi.ingsw.am24.network.socket.GameListenerClientSocket;
+import it.polimi.ingsw.am24.network.common.GameControllerInterface;
+import it.polimi.ingsw.am24.network.common.LobbyControllerInterface;
 
 import java.io.Serializable;
 import java.rmi.RemoteException;

@@ -3,7 +3,6 @@ package it.polimi.ingsw.am24.model.goal;
 import it.polimi.ingsw.am24.constants.Constants;
 import it.polimi.ingsw.am24.model.Kingdom;
 import it.polimi.ingsw.am24.model.Player;
-import it.polimi.ingsw.am24.model.card.GameCard;
 import it.polimi.ingsw.am24.modelView.GameCardView;
 
 public class VerticalDisposition extends GoalCard{
@@ -32,17 +31,6 @@ public class VerticalDisposition extends GoalCard{
             }
         }
         return points;
-    }
-
-    public Kingdom getMainKingdom() {
-        return mainKingdom;
-    }
-
-    public Kingdom getSecondaryKingdom() {
-        return secondaryKingdom;
-    }
-    public int getSecondaryKingdomCorner() {
-        return secondaryKingdomCorner;
     }
 
     public String printCard() {
