@@ -4,7 +4,7 @@ import java.util.ArrayDeque;
 import java.util.Queue;
 
 public class Buffer {
-    private Queue<String> data;
+    private final Queue<String> data;
 
     /**
      * init
