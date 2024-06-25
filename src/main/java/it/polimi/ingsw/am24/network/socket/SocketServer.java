@@ -5,10 +5,19 @@ import java.net.ServerSocket;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The SocketServer class represents a server that listens for incoming socket connections
+ * from clients and manages multiple client connections using multithreading.
+ */
 public class SocketServer extends Thread {
     private ServerSocket server;
     private List<ClientHandler> clients;
 
+    /**
+     * Starts the socket server on the specified port.
+     *
+     * @param port The port number on which the server will listen for incoming connections.
+     */
     public void start(int port) {
         try {
             server = new ServerSocket(port);
@@ -20,6 +29,10 @@ public class SocketServer extends Thread {
         }
     }
 
+    /**
+     * Continuously accepts incoming client connections and starts a new ClientHandler thread
+     * for each client.
+     */
     @Override
     public void run() {
         try {

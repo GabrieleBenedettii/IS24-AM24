@@ -12,6 +12,10 @@ import java.rmi.RemoteException;
 import java.util.LinkedList;
 import java.util.Queue;
 
+/**
+ * The ClientHandler class manages communication with a single client connected to the server.
+ * It handles incoming messages, processes them, and sends appropriate responses.
+ */
 public class ClientHandler extends Thread {
     private Socket client;
     private ObjectInputStream in;
@@ -22,6 +26,12 @@ public class ClientHandler extends Thread {
 
     private Queue<SocketClientMessage> messagesQueue = new LinkedList<SocketClientMessage>();
 
+    /**
+     * Constructs a ClientHandler instance to handle communication with a client.
+     *
+     * @param client The Socket representing the client connection.
+     * @throws IOException if an I/O error occurs when creating the input or output streams.
+     */
     public ClientHandler(Socket client) throws IOException {
         this.client = client;
         this.in = new ObjectInputStream(client.getInputStream());
@@ -29,6 +39,10 @@ public class ClientHandler extends Thread {
         listener = new GameListenerClientSocket(out);
     }
 
+    /**
+     * Starts the thread for executing incoming messages from the client.
+     * This method reads incoming messages, adds them to a queue, and executes them sequentially.
+     */
     @Override
     public void run() {
         Thread executeMessagesThread = new Thread(this::executeMessages);
@@ -48,6 +62,11 @@ public class ClientHandler extends Thread {
         }
     }
 
+    /**
+     * Executes queued messages from the client.
+     * Depending on the type of message, it either interacts with the LobbyController or
+     * the active GameControllerInterface instance.
+     */
     private void executeMessages() {
         SocketClientMessage msg;
 

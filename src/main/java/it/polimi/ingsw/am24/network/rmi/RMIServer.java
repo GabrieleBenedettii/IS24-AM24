@@ -11,6 +11,10 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
+/**
+ * The RMIServer class represents a server implementation using RMI (Remote Method Invocation).
+ * It implements the LobbyControllerInterface and manages game lobby interactions remotely.
+ */
 public class RMIServer extends UnicastRemoteObject implements LobbyControllerInterface {
 
     private final LobbyControllerInterface controller;
@@ -19,6 +23,11 @@ public class RMIServer extends UnicastRemoteObject implements LobbyControllerInt
 
     private static Registry registry = null;
 
+    /**
+     * Binds the RMIServer instance to the RMI registry.
+     *
+     * @return The RMIServer instance that is bound to the registry.
+     */
     public static RMIServer bind() {
         try {
             server = new RMIServer();
@@ -32,6 +41,11 @@ public class RMIServer extends UnicastRemoteObject implements LobbyControllerInt
         return getInstance();
     }
 
+    /**
+     * Returns the singleton instance of RMIServer.
+     *
+     * @return The singleton instance of RMIServer.
+     */
     public synchronized static RMIServer getInstance() {
         if(server == null) {
             try {
@@ -43,16 +57,35 @@ public class RMIServer extends UnicastRemoteObject implements LobbyControllerInt
         return server;
     }
 
+    /**
+     * Retrieves the RMI registry.
+     *
+     * @return The RMI registry instance.
+     * @throws RemoteException if a remote communication issue occurs.
+     */
     public synchronized static Registry getRegistry() throws RemoteException {
         return registry;
     }
 
-
+    /**
+     * Constructs an RMIServer instance.
+     *
+     * @throws RemoteException if a remote communication issue occurs.
+     */
     public RMIServer() throws RemoteException {
         super(0);
         controller = LobbyController.getInstance();
     }
 
+    /**
+     * Allows a player to join a game lobby.
+     *
+     * @param nickname The nickname of the player joining the game.
+     * @param numPlayers The number of players in the game.
+     * @param listener The GameListener instance to receive game-related notifications.
+     * @return The GameControllerInterface instance for interacting with the game.
+     * @throws RemoteException if a remote communication issue occurs.
+     */
     @Override
     public GameControllerInterface joinGame(String nickname, int numPlayers, GameListener listener) throws RemoteException {
         GameControllerInterface ris = server.controller.joinGame(nickname, numPlayers, listener);
