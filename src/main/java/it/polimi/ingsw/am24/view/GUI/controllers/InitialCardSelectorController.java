@@ -10,7 +10,7 @@ import javafx.scene.image.ImageView;
 
 import java.util.ArrayList;
 
-public class InitialCardSelector extends GUIController {
+public class InitialCardSelectorController extends GUIController {
     @FXML
     public void Initialize(ArrayList<GameCardView> views) {
         String path0 = "images/front/"+views.get(0).getCardId()+".jpg";

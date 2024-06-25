@@ -10,7 +10,7 @@ import javafx.scene.text.Text;
 
 import java.io.IOException;
 
-public class CreateGameNicknameSelectController extends GUIController {
+public class CreateGameController extends GUIController {
 
     @FXML
     private Button button;

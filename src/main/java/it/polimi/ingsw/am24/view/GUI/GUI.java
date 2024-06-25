@@ -42,10 +42,10 @@ public class GUI extends UI {
     public void show_insert_nickname() {
         callPlatformRunLater(() -> {
             if(guiApplication.getGameflow().isCreate()){
-                this.guiApplication.setActiveScene(Scenes.CREATEGAMENICKNAMESELECT);
+                this.guiApplication.setActiveScene(Scenes.CREATE_GAME);
             }
             else{
-                this.guiApplication.setActiveScene(Scenes.NICKNAMESELECT);
+                this.guiApplication.setActiveScene(Scenes.JOIN_GAME);
             }
         });
     }
@@ -102,8 +102,8 @@ public class GUI extends UI {
     @Override
     public void show_available_colors(ArrayList<String> colors) {
         callPlatformRunLater(() -> {
-            this.guiApplication.setActiveScene(Scenes.COLORSELECTOR);
-            ColorSelector selector = (ColorSelector) this.guiApplication.getController(Scenes.COLORSELECTOR);
+            this.guiApplication.setActiveScene(Scenes.COLOR_SELECTOR);
+            ColorSelectorController selector = (ColorSelectorController) this.guiApplication.getController(Scenes.COLOR_SELECTOR);
             selector.initialize(colors);
         });
     }
@@ -119,8 +119,8 @@ public class GUI extends UI {
     @Override
     public void show_initial_side(ArrayList<GameCardView> views) {
         callPlatformRunLater(() -> {
-            this.guiApplication.setActiveScene(Scenes.INITIALCARDSELECTOR);
-            InitialCardSelector selector = (InitialCardSelector) this.guiApplication.getController(Scenes.INITIALCARDSELECTOR);
+            this.guiApplication.setActiveScene(Scenes.INITIAL_CARD_SELECTOR);
+            InitialCardSelectorController selector = (InitialCardSelectorController) this.guiApplication.getController(Scenes.INITIAL_CARD_SELECTOR);
             selector.Initialize(views);
         });
     }
@@ -135,14 +135,6 @@ public class GUI extends UI {
 
     @Override
     public void show_logo() {
-        callPlatformRunLater(() -> this.guiApplication.setActiveScene(Scenes.LOGO));
-        /*PauseTransition pause = new PauseTransition(Duration.seconds(Constants.LOGO_TIME));
-        pause.setOnFinished(event -> {
-            alreadyShowedPublisher = true;
-
-            this.show_lobby();
-        });
-        pause.play();*/
     }
 
     @Override
@@ -154,11 +146,11 @@ public class GUI extends UI {
     public void show_invalid_username() {
         callPlatformRunLater(() -> {
             if(guiApplication.getGameflow().isCreate()){
-                CreateGameNicknameSelectController controller = (CreateGameNicknameSelectController) this.guiApplication.getController((Scenes.CREATEGAMENICKNAMESELECT));
+                CreateGameController controller = (CreateGameController) this.guiApplication.getController((Scenes.CREATE_GAME));
                 controller.showInvalidUsername();
             }
             else{
-                NicknameSelectController controller = (NicknameSelectController) this.guiApplication.getController((Scenes.NICKNAMESELECT));
+                JoinGameController controller = (JoinGameController) this.guiApplication.getController((Scenes.JOIN_GAME));
                 controller.showInvalidUsername();
             }
         });
@@ -167,12 +159,12 @@ public class GUI extends UI {
     public void show_nickname_already_used() {
         callPlatformRunLater(() -> {
             if(guiApplication.getGameflow().isCreate()){
-                CreateGameNicknameSelectController controller = (CreateGameNicknameSelectController) this.guiApplication.getController((Scenes.CREATEGAMENICKNAMESELECT));
+                CreateGameController controller = (CreateGameController) this.guiApplication.getController((Scenes.CREATE_GAME));
                 controller.initialize();
                 controller.showNicknameAlreadyUsed();
             }
             else{
-                NicknameSelectController controller = (NicknameSelectController) this.guiApplication.getController((Scenes.NICKNAMESELECT));
+                JoinGameController controller = (JoinGameController) this.guiApplication.getController((Scenes.JOIN_GAME));
                 controller.initialize();
                 controller.showNicknameAlreadyUsed();
             }
@@ -183,11 +175,11 @@ public class GUI extends UI {
     public void show_empty_nickname() {
         callPlatformRunLater(() -> {
             if(guiApplication.getGameflow().isCreate()){
-                CreateGameNicknameSelectController controller = (CreateGameNicknameSelectController) this.guiApplication.getController((Scenes.CREATEGAMENICKNAMESELECT));
+                CreateGameController controller = (CreateGameController) this.guiApplication.getController((Scenes.CREATE_GAME));
                 controller.showEmptyUsername();
             }
             else{
-                NicknameSelectController controller = (NicknameSelectController) this.guiApplication.getController((Scenes.NICKNAMESELECT));
+                JoinGameController controller = (JoinGameController) this.guiApplication.getController((Scenes.JOIN_GAME));
                 controller.showEmptyUsername();
             }
         });
@@ -196,7 +188,7 @@ public class GUI extends UI {
     @Override
     public void show_no_lobby_available() {
         callPlatformRunLater(() -> {
-            NicknameSelectController controller = (NicknameSelectController) this.guiApplication.getController((Scenes.NICKNAMESELECT));
+            JoinGameController controller = (JoinGameController) this.guiApplication.getController((Scenes.JOIN_GAME));
             controller.showNoLobbyAvaiable();
         });
     }
@@ -204,8 +196,8 @@ public class GUI extends UI {
     @Override
     public void show_color_not_available() {
         callPlatformRunLater(() -> {
-            this.guiApplication.setActiveScene(Scenes.COLORSELECTOR);
-            ColorSelector selector = (ColorSelector) this.guiApplication.getController(Scenes.COLORSELECTOR);
+            this.guiApplication.setActiveScene(Scenes.COLOR_SELECTOR);
+            ColorSelectorController selector = (ColorSelectorController) this.guiApplication.getController(Scenes.COLOR_SELECTOR);
             selector.showColorNotAvailable();
         });
     }
@@ -213,7 +205,7 @@ public class GUI extends UI {
     @Override
     public void show_insert_num_player() {
         callPlatformRunLater(() -> {
-            CreateGameNicknameSelectController controller = (CreateGameNicknameSelectController) this.guiApplication.getController((Scenes.CREATEGAMENICKNAMESELECT));
+            CreateGameController controller = (CreateGameController) this.guiApplication.getController((Scenes.CREATE_GAME));
             controller.initialize();
         });
     }
@@ -221,7 +213,7 @@ public class GUI extends UI {
     @Override
     public void show_invalid_num_player() {
         callPlatformRunLater(() -> {
-            CreateGameNicknameSelectController controller = (CreateGameNicknameSelectController) this.guiApplication.getController((Scenes.CREATEGAMENICKNAMESELECT));
+            CreateGameController controller = (CreateGameController) this.guiApplication.getController((Scenes.CREATE_GAME));
             controller.showInvalidNumberOfPlayers();
         });
     }
@@ -297,7 +289,7 @@ public class GUI extends UI {
     @Override
     public void show_no_connection_error() {
         callPlatformRunLater(() -> {
-            this.guiApplication.setActiveScene(Scenes.SERVERDISCONNECTION);
+            this.guiApplication.setActiveScene(Scenes.SERVER_DISCONNECTION);
             //GameBoardController controller = (GameBoardController) this.guiApplication.getController(Scenes.MENU);
             //controller.connectionError();
         });
@@ -318,8 +310,8 @@ public class GUI extends UI {
     @Override
     public void show_winner_and_rank(boolean winner, HashMap<String, Integer> rank, String winnerNick) {
         callPlatformRunLater(() -> {
-            this.guiApplication.setActiveScene(Scenes.ENDGAMESCREEN);
-            EndGameScreenController selector = (EndGameScreenController) this.guiApplication.getController(Scenes.ENDGAMESCREEN);
+            this.guiApplication.setActiveScene(Scenes.END_GAME);
+            EndGameController selector = (EndGameController) this.guiApplication.getController(Scenes.END_GAME);
             selector.rankings(rank,winner,winnerNick);
         });
     }
@@ -332,8 +324,8 @@ public class GUI extends UI {
     @Override
     public void show_joined_players(ArrayList<String> players, String current, int num) {
         callPlatformRunLater(() -> {
-            this.guiApplication.setActiveScene(Scenes.LOBBYVIEW);
-            LobbyViewController controller = (LobbyViewController) this.guiApplication.getController(Scenes.LOBBYVIEW);
+            this.guiApplication.setActiveScene(Scenes.LOBBY);
+            LobbyViewController controller = (LobbyViewController) this.guiApplication.getController(Scenes.LOBBY);
             controller.initialize(players, current, num);
         });
     }
