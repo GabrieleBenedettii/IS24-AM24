@@ -1,0 +1,15 @@
+package it.polimi.ingsw.am24.view;
+
+public enum EventType {
+    APP_MENU,
+    NICKNAME_ALREADY_USED,
+    NO_LOBBY_AVAILABLE,
+    PLAYER_JOINED,
+    AVAILABLE_COLORS,
+    HIDDEN_GOAL_CHOICE,
+    INITIAL_CARD_SIDE,
+    BEGIN_PLAY,
+    BEGIN_DRAW,
+    SENT_MESSAGE,
+    NOT_AVAILABLE_COLORS, GAME_ENDED
+}

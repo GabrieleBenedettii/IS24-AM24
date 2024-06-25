@@ -1,10 +1,10 @@
 package it.polimi.ingsw.am24.main;
 
 import it.polimi.ingsw.am24.constants.Constants;
-import it.polimi.ingsw.am24.view.GameFlow;
-import it.polimi.ingsw.am24.view.commandLine.CLI;
-import it.polimi.ingsw.am24.view.flow.UI;
-import it.polimi.ingsw.am24.view.graphicalUser.GUIapp;
+import it.polimi.ingsw.am24.view.Flow;
+import it.polimi.ingsw.am24.view.TUI.TUI;
+import it.polimi.ingsw.am24.view.UI;
+import it.polimi.ingsw.am24.view.GUI.GUIApplication;
 import javafx.application.Application;
 
 import java.io.IOException;
@@ -22,7 +22,7 @@ public class Client {
 
         String ip;
 
-        UI ui =new CLI();
+        UI ui =new TUI();
 
         Scanner in = new Scanner(System.in);
         do {
@@ -51,8 +51,8 @@ public class Client {
 
         System.out.println("Starting the game!");
 
-        if(choice == 1 || choice == 2) new GameFlow(protocol);
-        else Application.launch(GUIapp.class, protocol);
+        if(choice == 1 || choice == 2) new Flow(protocol);
+        else Application.launch(GUIApplication.class, protocol);
     }
 
     private static boolean checkIP(String input) {

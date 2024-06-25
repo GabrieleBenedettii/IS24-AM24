@@ -1,11 +1,11 @@
 package it.polimi.ingsw.am24.controller;
 
-import it.polimi.ingsw.am24.Exceptions.FullLobbyException;
-import it.polimi.ingsw.am24.Exceptions.NotExistingPlayerException;
+import it.polimi.ingsw.am24.exceptions.FullLobbyException;
+import it.polimi.ingsw.am24.exceptions.NotExistingPlayerException;
 import it.polimi.ingsw.am24.constants.Constants;
 import it.polimi.ingsw.am24.listeners.GameListener;
-import it.polimi.ingsw.am24.network.common.GameControllerInterface;
-import it.polimi.ingsw.am24.network.common.LobbyControllerInterface;
+import it.polimi.ingsw.am24.network.GameControllerInterface;
+import it.polimi.ingsw.am24.network.LobbyControllerInterface;
 
 import java.io.Serializable;
 import java.rmi.RemoteException;

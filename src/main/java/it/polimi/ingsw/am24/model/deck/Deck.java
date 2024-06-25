@@ -12,12 +12,12 @@ public interface Deck {
      * Loads the cards into the deck.
      * This method is responsible for initializing the deck with a set of cards.
      */
-    public void loadCards();
+    void loadCards();
     /**
      * Shuffles the deck to randomize the order of the cards.
      * This method ensures that the cards are in a random order before drawing.
      */
-    public void shuffle();
+    void shuffle();
     /**
      * Draws a card from the deck.
      * This method removes the top card from the deck and returns it.
@@ -25,5 +25,5 @@ public interface Deck {
      * @return the drawn {@code GameCard}
      * @throws EmptyDeckException if the deck is empty and there are no cards to draw
      */
-    public GameCard drawCard() throws EmptyDeckException;
+    GameCard drawCard() throws EmptyDeckException;
 }

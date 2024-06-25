@@ -1,7 +1,7 @@
 package it.polimi.ingsw.am24.model.deck;
 
 import com.google.gson.Gson;
-import it.polimi.ingsw.am24.HelloApplication;
+import it.polimi.ingsw.am24.Root;
 import it.polimi.ingsw.am24.model.card.InitialCard;
 
 import java.io.InputStreamReader;
@@ -31,7 +31,7 @@ public class InitialDeck implements Deck{
      */
     public void loadCards(){
         Gson gson = new Gson();
-        Reader reader = new InputStreamReader(Objects.requireNonNull(HelloApplication.class.getResourceAsStream("cards/initialCards.json")));
+        Reader reader = new InputStreamReader(Objects.requireNonNull(Root.class.getResourceAsStream("cards/initialCards.json")));
         cards = new ArrayList<>(Arrays.asList(gson.fromJson(reader, InitialCard[].class)));
     }
 

@@ -1,7 +1,7 @@
 package it.polimi.ingsw.am24.model.goal;
 
 import it.polimi.ingsw.am24.model.Player;
-import it.polimi.ingsw.am24.modelView.GameCardView;
+import it.polimi.ingsw.am24.modelview.GameCardView;
 
 /**
  * The {@code GoalCard} class represents an abstract goal card in the game.

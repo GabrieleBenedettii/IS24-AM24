@@ -1,12 +1,12 @@
 package it.polimi.ingsw.am24.network.socket;
 
 import it.polimi.ingsw.am24.constants.Constants;
-import it.polimi.ingsw.am24.messages.*;
-import it.polimi.ingsw.am24.messages.clientToServer.*;
 import it.polimi.ingsw.am24.network.GameListenerClient;
-import it.polimi.ingsw.am24.network.HeartbeatSender;
-import it.polimi.ingsw.am24.view.flow.CommonClientActions;
-import it.polimi.ingsw.am24.view.flow.Flow;
+import it.polimi.ingsw.am24.network.heartbeat.HeartbeatSender;
+import it.polimi.ingsw.am24.network.socket.messages.SocketServerMessage;
+import it.polimi.ingsw.am24.network.socket.messages.clientToServer.*;
+import it.polimi.ingsw.am24.view.Flow;
+import it.polimi.ingsw.am24.view.ClientActions;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -15,7 +15,7 @@ import java.net.Socket;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
-public class SocketClient extends Thread implements CommonClientActions {
+public class SocketClient extends Thread implements ClientActions {
     private Socket client;
     private ObjectInputStream in;
     private ObjectOutputStream out;

@@ -1,9 +1,9 @@
 package it.polimi.ingsw.am24.controller;
 
 import it.polimi.ingsw.am24.listeners.GameListener;
-import it.polimi.ingsw.am24.modelView.GameCardView;
-import it.polimi.ingsw.am24.modelView.GameView;
-import it.polimi.ingsw.am24.network.common.GameControllerInterface;
+import it.polimi.ingsw.am24.modelview.GameCardView;
+import it.polimi.ingsw.am24.modelview.GameView;
+import it.polimi.ingsw.am24.network.GameControllerInterface;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

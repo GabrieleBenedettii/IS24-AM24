@@ -4,15 +4,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import it.polimi.ingsw.am24.Exceptions.EmptyDeckException;
-import it.polimi.ingsw.am24.Exceptions.WrongHiddenGoalException;
+import it.polimi.ingsw.am24.exceptions.EmptyDeckException;
+import it.polimi.ingsw.am24.exceptions.WrongHiddenGoalException;
 import it.polimi.ingsw.am24.constants.Constants;
 import it.polimi.ingsw.am24.model.deck.*;
 import it.polimi.ingsw.am24.model.card.*;
 import it.polimi.ingsw.am24.model.goal.GoalDeck;
 import it.polimi.ingsw.am24.model.goal.GoalCard;
-import it.polimi.ingsw.am24.modelView.CommonBoardView;
-import it.polimi.ingsw.am24.modelView.GameCardView;
+import it.polimi.ingsw.am24.modelview.CommonBoardView;
+import it.polimi.ingsw.am24.modelview.GameCardView;
 
 
 /**

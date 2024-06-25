@@ -1,8 +1,8 @@
 package it.polimi.ingsw.am24.network.socket;
 
 import it.polimi.ingsw.am24.controller.LobbyController;
-import it.polimi.ingsw.am24.messages.SocketClientMessage;
-import it.polimi.ingsw.am24.network.common.GameControllerInterface;
+import it.polimi.ingsw.am24.network.socket.messages.SocketClientMessage;
+import it.polimi.ingsw.am24.network.GameControllerInterface;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;

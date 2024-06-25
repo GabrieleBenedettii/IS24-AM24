@@ -3,7 +3,7 @@ package it.polimi.ingsw.am24.model.goal;
 import it.polimi.ingsw.am24.constants.Constants;
 import it.polimi.ingsw.am24.model.Player;
 import it.polimi.ingsw.am24.model.Symbol;
-import it.polimi.ingsw.am24.modelView.GameCardView;
+import it.polimi.ingsw.am24.modelview.GameCardView;
 
 import java.util.ArrayList;
 import java.util.Collections;

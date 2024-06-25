@@ -3,7 +3,7 @@ package it.polimi.ingsw.am24.model.goal;
 import it.polimi.ingsw.am24.constants.Constants;
 import it.polimi.ingsw.am24.model.Kingdom;
 import it.polimi.ingsw.am24.model.Player;
-import it.polimi.ingsw.am24.modelView.GameCardView;
+import it.polimi.ingsw.am24.modelview.GameCardView;
 
 /**
  * The {@code ObliqueDisposition} class represents a specific type of goal card where players score points based on oblique arrangements on their game board.

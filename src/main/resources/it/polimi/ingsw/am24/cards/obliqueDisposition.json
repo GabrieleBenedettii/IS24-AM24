@@ -3,24 +3,24 @@
     "imageId": 87,
     "points":"2",
     "kingdom": "FUNGI",
-    "direction": 1
+    "direction": -1
   },
   {
     "imageId": 88,
     "points":"2",
     "kingdom": "PLANT",
-    "direction": -1
+    "direction": 1
   },
   {
     "imageId": 89,
     "points":"2",
     "kingdom": "ANIMAL",
-    "direction": 1
+    "direction": -1
   },
   {
     "imageId": 90,
     "points":"2",
     "kingdom": "INSECT",
-    "direction": -1
+    "direction": 1
   }
 ]

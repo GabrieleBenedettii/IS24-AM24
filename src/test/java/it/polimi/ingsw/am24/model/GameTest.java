@@ -1,11 +1,9 @@
 package it.polimi.ingsw.am24.model;
 
-import it.polimi.ingsw.am24.Exceptions.EmptyDeckException;
-import it.polimi.ingsw.am24.Exceptions.WrongHiddenGoalException;
-import it.polimi.ingsw.am24.model.deck.ResourceDeck;
+import it.polimi.ingsw.am24.exceptions.EmptyDeckException;
+import it.polimi.ingsw.am24.exceptions.WrongHiddenGoalException;
 import it.polimi.ingsw.am24.model.goal.GoalCard;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.function.Executable;
 
 import java.util.ArrayList;
 

@@ -7,7 +7,7 @@ import it.polimi.ingsw.am24.constants.Constants;
 import it.polimi.ingsw.am24.model.Kingdom;
 import it.polimi.ingsw.am24.model.Symbol;
 import it.polimi.ingsw.am24.model.deck.GoldDeck;
-import it.polimi.ingsw.am24.modelView.GameCardView;
+import it.polimi.ingsw.am24.modelview.GameCardView;
 import org.junit.Before;
 import org.junit.Test;
 

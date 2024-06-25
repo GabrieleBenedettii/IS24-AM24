@@ -3,8 +3,8 @@ package it.polimi.ingsw.am24.network.rmi;
 import it.polimi.ingsw.am24.constants.Constants;
 import it.polimi.ingsw.am24.controller.LobbyController;
 import it.polimi.ingsw.am24.listeners.GameListener;
-import it.polimi.ingsw.am24.network.common.GameControllerInterface;
-import it.polimi.ingsw.am24.network.common.LobbyControllerInterface;
+import it.polimi.ingsw.am24.network.GameControllerInterface;
+import it.polimi.ingsw.am24.network.LobbyControllerInterface;
 
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;

@@ -3,11 +3,11 @@ package it.polimi.ingsw.am24.network.rmi;
 import it.polimi.ingsw.am24.constants.Constants;
 import it.polimi.ingsw.am24.listeners.GameListener;
 import it.polimi.ingsw.am24.network.GameListenerClient;
-import it.polimi.ingsw.am24.network.HeartbeatSender;
-import it.polimi.ingsw.am24.network.common.GameControllerInterface;
-import it.polimi.ingsw.am24.network.common.LobbyControllerInterface;
-import it.polimi.ingsw.am24.view.flow.CommonClientActions;
-import it.polimi.ingsw.am24.view.flow.Flow;
+import it.polimi.ingsw.am24.network.heartbeat.HeartbeatSender;
+import it.polimi.ingsw.am24.network.GameControllerInterface;
+import it.polimi.ingsw.am24.network.LobbyControllerInterface;
+import it.polimi.ingsw.am24.view.Flow;
+import it.polimi.ingsw.am24.view.ClientActions;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -15,7 +15,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
-public class RMIClient implements CommonClientActions {
+public class RMIClient implements ClientActions {
 
     private static LobbyControllerInterface server;
 
@@ -38,7 +38,7 @@ public class RMIClient implements CommonClientActions {
         this.flow = flow;
         connect();
 
-        heartbeatSender =new HeartbeatSender(flow,this);
+        heartbeatSender = new HeartbeatSender(flow,this);
         heartbeatSender.start();
     }
 
