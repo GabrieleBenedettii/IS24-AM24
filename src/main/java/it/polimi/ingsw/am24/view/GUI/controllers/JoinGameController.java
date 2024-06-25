@@ -10,7 +10,7 @@ import javafx.scene.text.Text;
 
 import java.io.IOException;
 
-public class NicknameSelectController extends GUIController {
+public class JoinGameController extends GUIController {
 
     @FXML
     private Button button;

@@ -11,7 +11,7 @@ import javafx.scene.text.Text;
 
 import java.util.ArrayList;
 
-public class ColorSelector extends GUIController implements EventHandler<ActionEvent> {
+public class ColorSelectorController extends GUIController implements EventHandler<ActionEvent> {
     @FXML
     public Text errorText;
     private ArrayList<String> colors;

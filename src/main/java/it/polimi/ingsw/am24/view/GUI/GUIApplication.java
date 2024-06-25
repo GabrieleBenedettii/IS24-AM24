@@ -109,17 +109,10 @@ public class GUIApplication extends Application {
     public void setActiveScene(Scenes scene){
         this.mainStage.setTitle("Codex Naturalis - "+scene.name());
         SceneDesc s = this.scene.get(getSceneIndex(scene));
-        switch (scene) {
-            case LOGO -> {
-                this.mainStage.initStyle(StageStyle.UNDECORATED);
-                this.mainStage.setAlwaysOnTop(true);
-                this.mainStage.centerOnScreen();
-            }
-            case MENU -> {
-                this.mainStage.centerOnScreen();
-                this.mainStage.setAlwaysOnTop(false);
-                MenuController controller = (MenuController) s.getGeneric();
-            }
+        if (scene == Scenes.MENU) {
+            this.mainStage.centerOnScreen();
+            this.mainStage.setAlwaysOnTop(false);
+            MenuController controller = (MenuController) s.getGeneric();
         }
         this.mainStage.setScene(s.getScene());
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();

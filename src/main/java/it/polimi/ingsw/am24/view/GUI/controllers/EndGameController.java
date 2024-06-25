@@ -8,7 +8,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class EndGameScreenController extends GUIController {
+public class EndGameController extends GUIController {
     @FXML
     private Label resultMessage;
     @FXML
