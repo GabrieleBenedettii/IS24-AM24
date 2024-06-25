@@ -6,20 +6,20 @@ import it.polimi.ingsw.am24.messages.SocketServerMessage;
 import java.rmi.RemoteException;
 
 /**
- * The {@code NicknameAlreadyUsedMessage} class represents a message sent from the server to the client
- * to notify about a nickname that is already in use.
+ * The {@code NoLobbyAvailableMessage} class represents a message sent from the server to the client
+ * to notify about the unavailability of any lobby to join.
  */
-public class NicknameAlreadyUsedMessage extends SocketServerMessage {
+public class NoLobbyAvailableMessage extends SocketServerMessage {
 
     /**
-     * Executes the nickname already used message on the client.
-     * This method notifies the client listener that the chosen nickname is already in use.
+     * Executes the no lobby available message on the client.
+     * This method notifies the client listener that there are no lobbies available to join.
      *
      * @param listener the game listener interface on the client
      * @throws RemoteException if there is a communication-related exception during execution
      */
     @Override
     public void execute(GameListener listener) throws RemoteException {
-        listener.nicknameAlreadyUsed();
+        listener.noLobbyAvailable();
     }
 }

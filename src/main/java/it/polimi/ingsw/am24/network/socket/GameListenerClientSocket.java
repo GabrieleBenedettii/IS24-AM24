@@ -43,7 +43,7 @@ public class GameListenerClientSocket implements GameListener, Serializable {
     //@Override
     public void noLobbyAvailable() throws RemoteException {
         try {
-            out.writeObject(new NoLobbyAvaiableMessage());
+            out.writeObject(new NoLobbyAvailableMessage());
             out.flush();
             out.reset();
 
@@ -73,7 +73,7 @@ public class GameListenerClientSocket implements GameListener, Serializable {
     @Override
     public void notAvailableColors(ArrayList<String> colors) throws RemoteException {
         try {
-            out.writeObject(new NotAvaiableColorMessage(colors));
+            out.writeObject(new NotAvailableColorMessage(colors));
             out.flush();
             out.reset();
 
