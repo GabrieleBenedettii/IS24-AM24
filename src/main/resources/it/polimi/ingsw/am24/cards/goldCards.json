@@ -625,7 +625,7 @@
       },
       {
         "symbol":"MANUSCRIPT",
-        "isHidden":"true"
+        "isHidden":"false"
       }
     ]
   },
@@ -1107,7 +1107,7 @@
       },
       {
         "symbol":"QUILL",
-        "isHidden":"true"
+        "isHidden":"false"
       },
       {
         "symbol":"null",
