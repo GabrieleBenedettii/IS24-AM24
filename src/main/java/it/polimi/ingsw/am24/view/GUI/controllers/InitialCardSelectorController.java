@@ -13,8 +13,8 @@ import java.util.ArrayList;
 public class InitialCardSelectorController extends GUIController {
     @FXML
     public void Initialize(ArrayList<GameCardView> views) {
-        String path0 = "images/front/"+views.get(0).getCardId()+".jpg";
-        String path1 = "images/back/"+views.get(1).getCardId()+".jpg";
+        String path0 = "images/front/"+views.get(0).getCardId()+".png";
+        String path1 = "images/back/"+views.get(1).getCardId()+".png";
 
         //todo fix
         Image image0 = new Image(Root.class.getResource(path0).toString());
