@@ -36,6 +36,7 @@ import javafx.scene.control.TextField;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 import it.polimi.ingsw.am24.constants.Constants;
 
@@ -43,21 +44,18 @@ import it.polimi.ingsw.am24.constants.Constants;
 
 public class GameBoardController extends GUIController {
 
-    @FXML private VBox messagesContainer;
     @FXML private ScrollPane chatMessagesReceiver;
     @FXML private HBox playingHandContainer;
     @FXML private HBox hiddenGoalContainer;
     @FXML private VBox resourceCardsContainer;
     @FXML private VBox goldCardsContainer;
     @FXML private HBox commonGoalsContainer;
-    @FXML private VBox rankingContainer;
     @FXML private Pane gameViewContainer;
     @FXML private StackPane scoreboardContainer;
     @FXML private ToggleButton frontBackToggle;
     @FXML private VBox rotationContainer;
     @FXML private HBox visibleSymbolsContainer;
 
-    @FXML private ScrollPane chatMessagesContainer;
     @FXML private ChoiceBox receiver;
     @FXML private TextField messageText;
 
@@ -76,12 +74,12 @@ public class GameBoardController extends GUIController {
     private int id;
     private ImageView[] hand;
     private Font normal, bold;
-    private ObservableList<String> items = FXCollections.observableArrayList();
+    private final ObservableList<String> items = FXCollections.observableArrayList();
     //private MediaPlayer music;
     private int i;
-    private GridPane grid =new GridPane();
+    private final GridPane grid =new GridPane();
 
-    private ArrayList<String> iconsOrder = new ArrayList<>();
+    private final ArrayList<String> iconsOrder = new ArrayList<>();
 
     @FXML
     public void initialize() {
@@ -118,6 +116,7 @@ public class GameBoardController extends GUIController {
         actionMessage.setText("It's your turn. Please, place a card");
         actionMessage.setAlignment(Pos.CENTER);
         playerTableContainer.setText("");
+        gameViewContainer.setStyle("-fx-background-color: #FFF9DFFF; -fx-border-color: #A49849; -fx-border-width: 1px;-fx-border-radius: 10px;");
         Sound.playSound("createjoinsound.wav");
 
         //PLAYING HAND
@@ -210,7 +209,7 @@ public class GameBoardController extends GUIController {
 
         messageText.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
-                if(receiver != null && !messageText.equals("")) {
+                if(receiver != null && !messageText.getText().isEmpty()) {
                     getInputReaderGUI().addString((receiver.getValue().toString().equals("All") ? "/c " : ("/cs " + receiver.getValue().toString() + " ")) + messageText.getText());
                     Sound.playSound("button.wav");
                     messageText.clear();
@@ -295,7 +294,7 @@ public class GameBoardController extends GUIController {
         ArrayList<Placement> order = gameView.getCommon().getPlayerView(nick).getPlaceOrder();
         double size = Math.max(lastRow-firstRow+1, lastColumn-firstColumn+1);
         double cellWidth = size >= 7 ? 125 : 800/size;
-        double cellHeight = size >= 7 ? 66.3125 : 424.4/size;
+        double cellHeight = size >= 7 ? 62.693 : 401.23521/size;
 
         //adding all empty cells
         for (int i = firstRow; i <= lastRow; i++) {
@@ -313,7 +312,7 @@ public class GameBoardController extends GUIController {
             Pane pane = new Pane();
             pane.setPrefSize(cellWidth, cellHeight);
 
-            image = new Image(Root.class.getResource("images/"+(placement.getFront() ? "front" : "back")+"/"+placement.getCard().getCardId()+".jpg").toString());
+            image = new Image(Objects.requireNonNull(Root.class.getResource("images/" + (placement.getFront() ? "front" : "back") + "/" + placement.getCard().getCardId() + ".png")).toString());
             imageView = new ImageView(image);
             imageView.setPreserveRatio(true);
             imageView.setSmooth(true);
@@ -321,7 +320,7 @@ public class GameBoardController extends GUIController {
 
             imageView.setFitWidth(cellWidth/0.78);
             imageView.setLayoutX(-0.11*(cellWidth/0.78));
-            imageView.setLayoutY(-0.2*(cellHeight/0.6));
+            imageView.setLayoutY(-0.205*(cellHeight/0.59));
 
             pane.getChildren().add(imageView);
             stackPane.getChildren().add(pane);
@@ -339,33 +338,31 @@ public class GameBoardController extends GUIController {
                         Pane pane = new Pane();
                         pane.setPrefSize(cellWidth, cellHeight);
 
-                        Rectangle card = new Rectangle(cellWidth / 0.78, cellHeight / 0.6);
+                        Rectangle card = new Rectangle(cellWidth / 0.78, cellHeight / 0.59);
                         card.setId(i + "-" + j);
                         card.setFill(Color.GRAY);
                         card.setOpacity(0.2);
                         card.setTranslateX(-0.11 * (cellWidth / 0.78));
-                        card.setTranslateY(-0.2 * (cellHeight / 0.6));
+                        card.setTranslateY(-0.205 * (cellHeight / 0.59));
 
-                        if (clickable) {
-                            card.setCursor(Cursor.HAND);
-                            card.setOnMouseClicked(event -> {
-                                if (clickedImageView != null) {
-                                    String[] coordinates = card.getId().split("-");
-                                    pane.getChildren().clear();
-                                    clickedImageView.setPreserveRatio(true);
-                                    clickedImageView.setSmooth(true);
-                                    clickedImageView.setCache(true);
+                        card.setCursor(Cursor.HAND);
+                        card.setOnMouseClicked(event -> {
+                            if (clickedImageView != null) {
+                                String[] coordinates = card.getId().split("-");
+                                pane.getChildren().clear();
+                                clickedImageView.setPreserveRatio(true);
+                                clickedImageView.setSmooth(true);
+                                clickedImageView.setCache(true);
 
-                                    clickedImageView.setFitWidth(cellWidth / 0.78);
-                                    clickedImageView.setLayoutX(-0.11 * (cellWidth / 0.78));
-                                    clickedImageView.setLayoutY(-0.2 * (cellHeight / 0.6));
+                                clickedImageView.setFitWidth(cellWidth / 0.78);
+                                clickedImageView.setLayoutX(-0.11 * (cellWidth / 0.78));
+                                clickedImageView.setLayoutY(-0.2 * (cellHeight / 0.6));
 
-                                    pane.getChildren().add(clickedImageView);
-                                    getInputReaderGUI().addString("/play " + clickedImageView.getId() + " " + frontBackToggle.getText() + " " + coordinates[0] + " " + coordinates[1]);
-                                    Sound.playSound("button.wav");
-                                }
-                            });
-                        }
+                                pane.getChildren().add(clickedImageView);
+                                getInputReaderGUI().addString("/play " + clickedImageView.getId() + " " + frontBackToggle.getText() + " " + coordinates[0] + " " + coordinates[1]);
+                                Sound.playSound("button.wav");
+                            }
+                        });
 
                         pane.getChildren().add(card);
                         stackPane.getChildren().add(pane);
@@ -376,8 +373,8 @@ public class GameBoardController extends GUIController {
         }
 
         ScrollPane scrollPane = new ScrollPane(gridPane);
-        scrollPane.setPrefViewportWidth(800);
-        scrollPane.setPrefViewportHeight(424.4);
+        scrollPane.setPrefViewportWidth(810);
+        scrollPane.setPrefViewportHeight(411);
         scrollPane.setPannable(true);
         scrollPane.getStyleClass().add("transparent-scroll-pane");
         gameViewContainer.getChildren().add(scrollPane);
@@ -388,7 +385,7 @@ public class GameBoardController extends GUIController {
         playingHandContainer.getChildren().clear();
         for (int i = 0; i < gameView.getPlayerView().getPlayerHand().size(); i++) {
             id = gameView.getPlayerView().getPlayerHand().get(i).getCardId();
-            image = new Image(Root.class.getResource("images/"+frontBackToggle.getText()+"/"+id+".jpg").toString());
+            image = new Image(Objects.requireNonNull(Root.class.getResource("images/" + frontBackToggle.getText() + "/" + id + ".png")).toString());
             hand[i] = new ImageView(image);
 
             hand[i].setId(""+i);
@@ -415,15 +412,14 @@ public class GameBoardController extends GUIController {
             frontBackToggle.setText(newValue ? "back" : "front");
             for (int i = 0; i < gameView.getPlayerView().getPlayerHand().size(); i++) {
                 id = gameView.getPlayerView().getPlayerHand().get(i).getCardId();
-                image = new Image(Root.class.getResource("images/" + frontBackToggle.getText() + "/" + id + ".jpg").toString());
+                image = new Image(Objects.requireNonNull(Root.class.getResource("images/" + frontBackToggle.getText() + "/" + id + ".png")).toString());
                 hand[i].setImage(image);
             }
         });
     }
 
     private void clearBorders(Parent parent, Node node) {
-        if (parent instanceof HBox) {
-            HBox hbox = (HBox) parent;
+        if (parent instanceof HBox hbox) {
             for (Node n : hbox.getChildren()) {
                 if (node instanceof ImageView && !n.equals(node)) {
                     n.setOpacity(1);
@@ -435,7 +431,7 @@ public class GameBoardController extends GUIController {
     private void drawCommonGoals() {
         for (int i = 0; i < gameView.getCommon().getCommonBoardView().getGoals().size(); i++) {
             id = gameView.getCommon().getCommonBoardView().getGoals().get(i).getCardId(); //
-            image = new Image(Root.class.getResource("images/front/"+id+".jpg").toString());
+            image = new Image(Objects.requireNonNull(Root.class.getResource("images/front/" + id + ".png")).toString());
             imageView = new ImageView(image);
             setImageOptionsH(imageView, 150, 10);
 
@@ -448,7 +444,7 @@ public class GameBoardController extends GUIController {
     private void drawHiddenGoal() {
         hiddenGoalContainer.getChildren().clear();
         id = gameView.getPlayerView().getHiddenGoal().getCardId(); //hidden goal
-        image = new Image(Root.class.getResource("images/front/"+id+".jpg").toString());
+        image = new Image(Objects.requireNonNull(Root.class.getResource("images/front/" + id + ".png")).toString());
         imageView = new ImageView(image);
         setImageOptionsH(imageView,150,25);
 
@@ -460,12 +456,14 @@ public class GameBoardController extends GUIController {
     private void drawResourceCardsTable(boolean clickable) {
         resourceCardsContainer.getChildren().clear();
 
-        if(gameView.getCommon().getCommonBoardView().getResourceDeck().equals(Constants.TEXT_FUNGI)) id = 1;
-        else if (gameView.getCommon().getCommonBoardView().getResourceDeck().equals(Constants.TEXT_PLANT)) id = 11;
-        else if (gameView.getCommon().getCommonBoardView().getResourceDeck().equals(Constants.TEXT_ANIMAL)) id = 21;
-        else if (gameView.getCommon().getCommonBoardView().getResourceDeck().equals(Constants.TEXT_INSECT)) id = 31;
+        switch (gameView.getCommon().getCommonBoardView().getResourceDeck()) {
+            case Constants.TEXT_FUNGI -> id = 1;
+            case Constants.TEXT_PLANT -> id = 11;
+            case Constants.TEXT_ANIMAL -> id = 21;
+            case Constants.TEXT_INSECT -> id = 31;
+        }
 
-        image = new Image(Root.class.getResource("images/back/"+id+".jpg").toString());
+        image = new Image(Objects.requireNonNull(Root.class.getResource("images/back/" + id + ".png")).toString());
         ImageView deck = new ImageView(image);
         setImageOptionsV(deck);
         deck.setId("4");
@@ -485,7 +483,7 @@ public class GameBoardController extends GUIController {
 
         for (int i = 0; i < gameView.getCommon().getCommonBoardView().getResourceCards().size(); i++) {
             id = gameView.getCommon().getCommonBoardView().getResourceCards().get(i).getCardId();
-            image = new Image(Root.class.getResource("images/front/"+id+".jpg").toString());
+            image = new Image(Objects.requireNonNull(Root.class.getResource("images/front/" + id + ".png")).toString());
             ImageView iw = new ImageView(image);
             setImageOptionsV(iw);
             iw.setId(""+i);
@@ -508,12 +506,14 @@ public class GameBoardController extends GUIController {
     private void drawGoldCardsTable(boolean clickable) {
         goldCardsContainer.getChildren().clear();
 
-        if(gameView.getCommon().getCommonBoardView().getGoldDeck().equals(Constants.TEXT_FUNGI)) id = 41;
-        else if (gameView.getCommon().getCommonBoardView().getGoldDeck().equals(Constants.TEXT_PLANT)) id = 51;
-        else if (gameView.getCommon().getCommonBoardView().getGoldDeck().equals(Constants.TEXT_ANIMAL)) id = 61;
-        else if (gameView.getCommon().getCommonBoardView().getGoldDeck().equals(Constants.TEXT_INSECT)) id = 71;
+        switch (gameView.getCommon().getCommonBoardView().getGoldDeck()) {
+            case Constants.TEXT_FUNGI -> id = 41;
+            case Constants.TEXT_PLANT -> id = 51;
+            case Constants.TEXT_ANIMAL -> id = 61;
+            case Constants.TEXT_INSECT -> id = 71;
+        }
 
-        image = new Image(Root.class.getResource("images/back/"+id+".jpg").toString());      //TODO create ID for gold and resource deck
+        image = new Image(Objects.requireNonNull(Root.class.getResource("images/back/" + id + ".png")).toString());      //TODO create ID for gold and resource deck
         ImageView deck = new ImageView(image);
         setImageOptionsV(deck);
         deck.setId("5");
@@ -533,7 +533,7 @@ public class GameBoardController extends GUIController {
 
         for (int i = 0; i < gameView.getCommon().getCommonBoardView().getGoldCards().size(); i++) {
             id = gameView.getCommon().getCommonBoardView().getGoldCards().get(i).getCardId();
-            image = new Image(Root.class.getResource("images/front/"+id+".jpg").toString());
+            image = new Image(Objects.requireNonNull(Root.class.getResource("images/front/" + id + ".png")).toString());
             ImageView iw = new ImageView(image);
             setImageOptionsV(iw);
             iw.setId(""+(i+2));
@@ -559,7 +559,7 @@ public class GameBoardController extends GUIController {
         VBox hidden = new VBox();
         hidden.setPadding(new Insets(0, 0, 0, 0));
         hidden.setAlignment(Pos.CENTER);
-        hidden.setPrefSize(800,424.4);
+        hidden.setPrefSize(800,401.23521);
 
         Label label = new Label();
         label.setStyle("-fx-font-family: 'Muli'; -fx-font-size: 30; -fx-font-weight: bold;");
@@ -579,7 +579,7 @@ public class GameBoardController extends GUIController {
 
         for (int i = 0; i < views.size(); i++) {
             id = views.get(i).getCardId();
-            image = new Image(Root.class.getResource("images/front/"+id+".jpg").toString());
+            image = new Image(Objects.requireNonNull(Root.class.getResource("images/front/" + id + ".png")).toString());
             ImageView iw = new ImageView(image);
             setImageOptionsH(iw,250,25);
             iw.getStyleClass().add("clickableCard");
@@ -629,7 +629,7 @@ public class GameBoardController extends GUIController {
     }
 
     private void drawScoreBoard() {
-        image = new Image(Root.class.getResource("images/misc/scoreboard.png").toString());
+        image = new Image(Objects.requireNonNull(Root.class.getResource("images/misc/scoreboard.png")).toString());
         imageView = new ImageView(image);
         imageView.setPreserveRatio(true);
         imageView.setSmooth(true);
@@ -678,7 +678,7 @@ public class GameBoardController extends GUIController {
             Circle circle = new Circle(12, Paint.valueOf(gameView.getCommon().getPlayerView(p).getColor()));
             stackPane.getChildren().add(circle);
 
-            ImageView imageView = new ImageView(new Image(Root.class.getResource("images/misc/eye_icon.png").toString()));
+            ImageView imageView = new ImageView(new Image(Objects.requireNonNull(Root.class.getResource("images/misc/eye_icon.png")).toString()));
             imageView.setFitWidth(20);
             imageView.setFitHeight(20);
             stackPane.getChildren().add(imageView);
@@ -706,7 +706,7 @@ public class GameBoardController extends GUIController {
             VBox vbox = new VBox(5);
             vbox.setAlignment(Pos.CENTER);
 
-            Image image = new Image(Root.class.getResource("images/icons/" + ip + ".png").toString());
+            Image image = new Image(Objects.requireNonNull(Root.class.getResource("images/icons/" + ip + ".png")).toString());
             ImageView imageView = new ImageView(image);
             imageView.setFitWidth(30);
             imageView.setFitHeight(30);
@@ -714,6 +714,7 @@ public class GameBoardController extends GUIController {
             vbox.getChildren().add(imageView);
 
             Text number = new Text("" + visibleSymbols.get(ip));
+            number.setStyle("-fx-font-family: 'Muli'; -fx-font-size: 15; -fx-font-weight: bold;");
 
             vbox.getChildren().add(number);
 
@@ -725,20 +726,10 @@ public class GameBoardController extends GUIController {
         if(!gameView.getGameStatus().equals(status)) {
             status = gameView.getGameStatus();
             if(status.equals(GameStatus.LAST_LAST_ROUND))
-                statusContainer.setText("Status: 20 points have been reached\nthe penultimate round has begun");
+                statusContainer.setText("Status: 20 points have been reached\nthe next to last round has begun");
             else
                 statusContainer.setText("Status: the last round has finally begun");
         }
-    }
-
-    private void clearContainers() {
-        playingHandContainer.getChildren().clear();
-        hiddenGoalContainer.getChildren().clear();
-        resourceCardsContainer.getChildren().clear();
-        goldCardsContainer.getChildren().clear();
-        commonGoalsContainer.getChildren().clear();
-        rankingContainer.getChildren().clear();
-        gameViewContainer.getChildren().clear();
     }
 
     public void addMessage(String message) {

@@ -241,7 +241,7 @@ public class SocketClient extends Thread implements ClientActions {
                 out.flush();
                 out.reset();
             } catch(IOException e){
-                System.out.println("Cannot send heartbeat");
+                throw new RemoteException();
             }
         }
     }

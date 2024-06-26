@@ -30,7 +30,7 @@
                   <Insets bottom="15.0" right="10.0" top="15.0" />
                </padding>
             </HBox>
-            <Pane fx:id="gameViewContainer" layoutX="400.0" layoutY="186.0" prefHeight="424.4" prefWidth="800.0" />
+            <Pane fx:id="gameViewContainer" layoutX="377.0" layoutY="219.0" prefHeight="401.23521" prefWidth="800.0" />
             <StackPane fx:id="scoreboardContainer" layoutX="42.0" layoutY="201.0" prefHeight="498.6" prefWidth="280.0" />
                <VBox fx:id="resourceCardsContainer" layoutX="1228.0" layoutY="201.0" prefHeight="355.0" prefWidth="165.0">
                   <padding>
@@ -38,8 +38,8 @@
                   </padding>
             </VBox>
             <ToggleButton fx:id="frontBackToggle" layoutX="322.0" layoutY="782.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="80.0" styleClass="toggle-button" text="front" />
-            <Label fx:id="errorLabel" layoutX="400.0" layoutY="630.0" prefHeight="25.0" prefWidth="800.0" style="-fx-font-size: 20; -fx-font-style: 'Muli'; -fx-font-weight: bold; -fx-text-alignment: center;" textAlignment="CENTER" textFill="RED" visible="false" />
-            <Label fx:id="actionMessage" contentDisplay="CENTER" layoutX="400.0" layoutY="118.0" maxHeight="30.0" prefHeight="30.0" prefWidth="800.0" style="-fx-font-size: 20; -fx-font-weight: bold; -fx-font-family: 'Muli';" />
+            <Label fx:id="errorLabel" ellipsisString="" layoutX="377.0" layoutY="621.0" prefHeight="25.0" prefWidth="800.0" style="-fx-font-size: 20; -fx-font-style: 'Muli'; -fx-font-weight: bold; -fx-text-alignment: center;" textAlignment="CENTER" textFill="RED" />
+            <Label fx:id="actionMessage" contentDisplay="CENTER" layoutX="377.0" layoutY="125.0" maxHeight="30.0" prefHeight="30.0" prefWidth="800.0" style="-fx-font-size: 20; -fx-font-weight: bold; -fx-font-family: 'Muli';" />
             <VBox fx:id="rotationContainer" layoutX="42.0" layoutY="43.0" prefHeight="150.0" prefWidth="280.0" />
             <Pane layoutX="1218.0" layoutY="707.0" prefHeight="150.0" prefWidth="340.0">
                <children>
@@ -52,12 +52,12 @@
                   </ScrollPane>
                </children>
             </Pane>
-            <Label fx:id="playerTableContainer" layoutX="400.0" layoutY="165.0" prefHeight="20.0" prefWidth="800.0" style="-fx-font-family: 'Muli'; -fx-font-size: 15;">
+            <Label fx:id="playerTableContainer" layoutX="377.0" layoutY="172.0" prefHeight="20.0" prefWidth="800.0" style="-fx-font-family: 'Muli'; -fx-font-size: 15;">
                <font>
                   <Font size="15.0" />
                </font>
             </Label>
-            <Label fx:id="nameContainer" layoutX="400.0" layoutY="73.0" prefHeight="35.0" prefWidth="800.0" style="-fx-font-family: 'Muli'; -fx-font-weight: bold; -fx-font-size: 30;">
+            <Label fx:id="nameContainer" layoutX="377.0" layoutY="80.0" prefHeight="35.0" prefWidth="800.0" style="-fx-font-family: 'Muli'; -fx-font-weight: bold; -fx-font-size: 30;">
                <font>
                   <Font size="24.0" />
                </font>

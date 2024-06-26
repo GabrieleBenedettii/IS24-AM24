@@ -211,6 +211,7 @@
 }
 
 .transparent-scroll-pane .scroll-bar {
+    -fx-background-color: transparent;
     -fx-opacity: 0;
     -fx-pref-width: 0;
     -fx-pref-height: 0;

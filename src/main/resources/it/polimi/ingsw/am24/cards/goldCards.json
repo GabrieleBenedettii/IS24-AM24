@@ -924,7 +924,7 @@
     },
     "points":1,
     "pointsForCoveringCorners":"false",
-    "coveringSymbol":"QUILL",
+    "coveringSymbol":"INK",
     "corners":[
       {
         "symbol":"null",
