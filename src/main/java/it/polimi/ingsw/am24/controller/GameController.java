@@ -42,7 +42,7 @@ public class GameController implements GameControllerInterface, Serializable, Ru
 
     private final Chat chat;
 
-    private final Map<GameListener, HeartBeat> heartbeats;
+    private final transient Map<GameListener, HeartBeat> heartbeats;
 
     /**
      * Constructor for the GameController class.
@@ -266,7 +266,8 @@ public class GameController implements GameControllerInterface, Serializable, Ru
                     if(game.goldDeckSize() == 0 || game.resDeckSize() == 0) status = GameStatus.LAST_LAST_ROUND;
 
                     nextPlayer();
-                    notifyAllListeners_beginTurn();
+                    if(!status.equals(GameStatus.ENDED))
+                        notifyAllListeners_beginTurn();
                     return true;
                 } catch (EmptyDeckException | AlreadyDrawnException e) {
                     return false;
@@ -294,6 +295,7 @@ public class GameController implements GameControllerInterface, Serializable, Ru
                         winner = calculateWinner();
                     }
                     notifyAllListeners_endGame();
+                    return;
                 }
             }
             else if(status.equals(GameStatus.LAST_LAST_ROUND)) {
@@ -469,6 +471,7 @@ public class GameController implements GameControllerInterface, Serializable, Ru
      */
     private void notifyAllListeners_endGame() throws RemoteException {
         HashMap<String, Integer> rank = new HashMap<>();
+        String win = winner;
         for (String p : listeners.keySet()) {
             rank.put(p, players.get(p).getScore());
         }
@@ -476,7 +479,7 @@ public class GameController implements GameControllerInterface, Serializable, Ru
             if (p != null && listeners.get(p) != null)
                 new Thread(() -> {
                     try {
-                        listeners.get(p).gameEnded(winner, rank);
+                        listeners.get(p).gameEnded(win, rank);
                     } catch (RemoteException e) {
                         throw new RuntimeException(e);
                     }
@@ -541,13 +544,12 @@ public class GameController implements GameControllerInterface, Serializable, Ru
     @Override
     public void run() {
         while (!Thread.interrupted()) {
-            //checks all the heartbeat to detect disconnection
             if (status != null) {
                 synchronized (heartbeats) {
                     Iterator<Map.Entry<GameListener, HeartBeat>> heartIter = heartbeats.entrySet().iterator();
 
                     while (heartIter.hasNext()) {
-                        var el = (Map.Entry<GameListener, HeartBeat>) heartIter.next();
+                        Map.Entry<GameListener, HeartBeat> el = (Map.Entry<GameListener, HeartBeat>) heartIter.next();
                         if (System.currentTimeMillis() - el.getValue().getBeat() > 4000) {
                             try {
                                 this.disconnectPlayer(el.getValue().getNickname());
@@ -603,10 +605,6 @@ public class GameController implements GameControllerInterface, Serializable, Ru
         playerCount--;
         LobbyController.getInstance().disconnectPlayer(nickname);
 
-        if(currentPlayer != null && currentPlayer.equals(nickname)) {
-            nextPlayer();
-            notifyAllListeners_beginTurn();
-        }
         //Check if there is only one player playing
         if ((status.equals(GameStatus.FIRST_PHASE) || status.equals(GameStatus.RUNNING) || status.equals(GameStatus.LAST_LAST_ROUND) || status.equals(GameStatus.LAST_ROUND)) && players.size() == 1) {
             HashMap<String, Integer> rank = new HashMap<>();
@@ -614,6 +612,12 @@ public class GameController implements GameControllerInterface, Serializable, Ru
             winner = p.getNickname();
             rank.put(winner, players.get(winner).getScore());
             listeners.get(winner).gameEnded(winner, rank);
+            return;
+        }
+
+        if(currentPlayer != null && currentPlayer.equals(nickname)) {
+            nextPlayer();
+            notifyAllListeners_beginTurn();
         }
     }
 }

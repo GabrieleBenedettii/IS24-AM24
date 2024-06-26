@@ -3,7 +3,7 @@ package it.polimi.ingsw.am24.network.socket;
 import it.polimi.ingsw.am24.listeners.GameListener;
 import it.polimi.ingsw.am24.modelview.GameCardView;
 import it.polimi.ingsw.am24.modelview.GameView;
-import it.polimi.ingsw.am24.network.socket.messages.servetToClient.*;
+import it.polimi.ingsw.am24.network.socket.messages.serverToClient.*;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -68,7 +68,7 @@ public class GameListenerClientSocket implements GameListener, Serializable {
      */
     public void noLobbyAvailable() throws RemoteException {
         try {
-            out.writeObject(new it.polimi.ingsw.am24.messages.servetToClient.NoLobbyAvailableMessage());
+            out.writeObject(new NoLobbyAvailableMessage());
             out.flush();
             out.reset();
 
@@ -115,7 +115,7 @@ public class GameListenerClientSocket implements GameListener, Serializable {
     @Override
     public void notAvailableColors(ArrayList<String> colors) throws RemoteException {
         try {
-            out.writeObject(new it.polimi.ingsw.am24.messages.servetToClient.NotAvailableColorMessage(colors));
+            out.writeObject(new NotAvailableColorMessage(colors));
             out.flush();
             out.reset();
 

@@ -1,7 +1,7 @@
-package it.polimi.ingsw.am24.messages.servetToClient;
+package it.polimi.ingsw.am24.network.socket.messages.serverToClient;
 
 import it.polimi.ingsw.am24.listeners.GameListener;
-import it.polimi.ingsw.am24.messages.SocketServerMessage;
+import it.polimi.ingsw.am24.network.socket.messages.SocketServerMessage;
 
 import java.rmi.RemoteException;
 

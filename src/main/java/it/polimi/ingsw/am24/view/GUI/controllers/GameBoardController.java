@@ -5,6 +5,7 @@ import it.polimi.ingsw.am24.modelview.GameCardView;
 import it.polimi.ingsw.am24.modelview.GameView;
 import it.polimi.ingsw.am24.modelview.Placement;
 import it.polimi.ingsw.am24.view.GUI.Sound;
+import it.polimi.ingsw.am24.view.GameStatus;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -34,6 +35,8 @@ import javafx.scene.control.TextField;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+
 import it.polimi.ingsw.am24.constants.Constants;
 
 
@@ -52,8 +55,7 @@ public class GameBoardController extends GUIController {
     @FXML private StackPane scoreboardContainer;
     @FXML private ToggleButton frontBackToggle;
     @FXML private VBox rotationContainer;
-    @FXML private Pane container;
-    @FXML private AnchorPane anchorContainer;
+    @FXML private HBox visibleSymbolsContainer;
 
     @FXML private ScrollPane chatMessagesContainer;
     @FXML private ChoiceBox receiver;
@@ -63,9 +65,11 @@ public class GameBoardController extends GUIController {
     @FXML private Label actionMessage;
     @FXML private Label nameContainer;
     @FXML private Label playerTableContainer;
+    @FXML private Label statusContainer;
 
     private String nickname;
     private GameView gameView;
+    private GameStatus status;
     private Image image;
     private ImageView imageView;
     private ImageView clickedImageView;
@@ -77,11 +81,22 @@ public class GameBoardController extends GUIController {
     private int i;
     private GridPane grid =new GridPane();
 
+    private ArrayList<String> iconsOrder = new ArrayList<>();
+
     @FXML
     public void initialize() {
         hand = new ImageView[3];
         normal = Font.loadFont(Root.class.getResourceAsStream("view/fonts/Muli-regular.ttf"), 18);
         bold = Font.loadFont(Root.class.getResourceAsStream("view/fonts/Muli-bold.ttf"), 18);
+
+        iconsOrder.add("FUNGI");
+        iconsOrder.add("PLANT");
+        iconsOrder.add("INSECT");
+        iconsOrder.add("ANIMAL");
+        iconsOrder.add("QUILL");
+        iconsOrder.add("MANUSCRIPT");
+        iconsOrder.add("INK");
+
 //        URL url = GUIapp.class.getResource("/totallyNotOblivionSong1.mp3");
 //        music = new MediaPlayer(new Media(url.toString()));
 //        music.play();
@@ -102,6 +117,7 @@ public class GameBoardController extends GUIController {
         gameViewContainer.setOpacity(1);
         actionMessage.setText("It's your turn. Please, place a card");
         actionMessage.setAlignment(Pos.CENTER);
+        playerTableContainer.setText("");
         Sound.playSound("createjoinsound.wav");
 
         //PLAYING HAND
@@ -127,6 +143,12 @@ public class GameBoardController extends GUIController {
 
         //ROTATION
         drawRotation();
+
+        //VISIBLE SYMBOLS
+        drawVisibleSymbols();
+
+        //STATUS
+        drawStatus();
     }
 
     @FXML
@@ -159,25 +181,12 @@ public class GameBoardController extends GUIController {
 
         //ROTATION
         drawRotation();
-    }
 
-    @FXML
-    public void connectionError() {
+        //VISIBLE SYMBOLS
+        drawVisibleSymbols();
 
-        gameViewContainer.setOpacity(1);
-        ImageView iw=new ImageView();
-
-        StackPane pane =new StackPane();
-        pane.setOpacity(1);
-        iw.setImage(new Image(Root.class.getResource("images/misc/alert.png").toString()));
-        pane.setAlignment(Pos.CENTER);
-        pane.setPrefWidth(700);
-        pane.setPrefHeight(300);
-        Label label = new Label("SERVER CONNECTION LOST");
-        label.setAlignment(Pos.CENTER);
-        label.setStyle("-fx-font-family: 'Muli'; -fx-font-size: 30; -fx-font-weight: bold;");
-        pane.getChildren().addAll(iw,label);
-        gameViewContainer.getChildren().add(pane);
+        //STATUS
+        drawStatus();
     }
 
     @FXML
@@ -188,6 +197,11 @@ public class GameBoardController extends GUIController {
         nameContainer.setText(nickname);
         nameContainer.setAlignment(Pos.CENTER);
         this.gameView = gameView;
+        status = GameStatus.RUNNING;
+        statusContainer.setText("Status: the game has started ");
+        statusContainer.setStyle("-fx-font-family: 'Muli'; -fx-font-size: 15; -fx-font-weight: bold;");
+        statusContainer.setAlignment(Pos.CENTER);
+
         items.add("All");
         items.addAll(gameView.getCommon().getRotation());
         items.remove(nickname);
@@ -610,6 +624,8 @@ public class GameBoardController extends GUIController {
         drawHiddenGoal();
         drawRotation();
         drawScoreBoard();
+        drawVisibleSymbols();
+        drawStatus();
     }
 
     private void drawScoreBoard() {
@@ -679,6 +695,39 @@ public class GameBoardController extends GUIController {
             playerName.setFont(p.equals(gameView.getCurrent()) ? bold : normal);
             hbox.getChildren().addAll(stackPane, playerName);
             rotationContainer.getChildren().add(hbox);
+        }
+    }
+
+    private void drawVisibleSymbols() {
+        visibleSymbolsContainer.getChildren().clear();
+        HashMap<String,Integer> visibleSymbols = gameView.getCommon().getPlayerView(nickname).getVisibleSymbols();
+
+        for (String ip: iconsOrder) {
+            VBox vbox = new VBox(5);
+            vbox.setAlignment(Pos.CENTER);
+
+            Image image = new Image(Root.class.getResource("images/icons/" + ip + ".png").toString());
+            ImageView imageView = new ImageView(image);
+            imageView.setFitWidth(30);
+            imageView.setFitHeight(30);
+
+            vbox.getChildren().add(imageView);
+
+            Text number = new Text("" + visibleSymbols.get(ip));
+
+            vbox.getChildren().add(number);
+
+            visibleSymbolsContainer.getChildren().add(vbox);
+        }
+    }
+
+    private void drawStatus() {
+        if(!gameView.getGameStatus().equals(status)) {
+            status = gameView.getGameStatus();
+            if(status.equals(GameStatus.LAST_LAST_ROUND))
+                statusContainer.setText("Status: 20 points have been reached\nthe penultimate round has begun");
+            else
+                statusContainer.setText("Status: the last round has finally begun");
         }
     }
 

@@ -235,9 +235,15 @@ public class SocketClient extends Thread implements ClientActions {
      */
     @Override
     public void heartbeat() throws IOException {
-        out.writeObject(new HeartBeatMessage(nickname));
-        out.flush();
-        out.reset();
+        if (out != null) {
+            try {
+                out.writeObject(new HeartBeatMessage(nickname));
+                out.flush();
+                out.reset();
+            } catch(IOException e){
+                System.out.println("Cannot send heartbeat");
+            }
+        }
     }
 
     /**

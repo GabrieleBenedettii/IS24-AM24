@@ -1,4 +1,4 @@
-package it.polimi.ingsw.am24.network.socket.messages.servetToClient;
+package it.polimi.ingsw.am24.network.socket.messages.serverToClient;
 
 
 import it.polimi.ingsw.am24.listeners.GameListener;
