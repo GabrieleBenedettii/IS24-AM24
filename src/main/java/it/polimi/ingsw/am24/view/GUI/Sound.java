@@ -8,9 +8,17 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 
+/**
+ * Provides methods for playing audio sounds in a Java application.
+ */
 public class Sound {
     public static boolean play = true;
 
+    /**
+     * Plays a specified sound file asynchronously.
+     *
+     * @param Name The name of the sound file to be played.
+     */
     public static synchronized void playSound(final String Name) {
         if (play) {
             new Thread(() -> {

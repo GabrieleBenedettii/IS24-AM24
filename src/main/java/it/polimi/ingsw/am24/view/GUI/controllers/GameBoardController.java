@@ -40,8 +40,13 @@ import java.util.Objects;
 
 import it.polimi.ingsw.am24.constants.Constants;
 
-
-
+/**
+ * Controller class for managing the game board UI and interactions.
+ * This class handles displaying game elements such as player hand, game board,
+ * resource cards, gold cards, common goals, score board, and chat messages.
+ * It also manages user interactions such as placing cards, drawing cards,
+ * handling errors, and sending messages.
+ */
 public class GameBoardController extends GUIController {
 
     @FXML private ScrollPane chatMessagesReceiver;
@@ -81,6 +86,10 @@ public class GameBoardController extends GUIController {
 
     private final ArrayList<String> iconsOrder = new ArrayList<>();
 
+    /**
+     * Initializes the controller.
+     * Sets up fonts and initializes the hand array for managing player's hand cards.
+     */
     @FXML
     public void initialize() {
         hand = new ImageView[3];
@@ -106,6 +115,13 @@ public class GameBoardController extends GUIController {
 //        music.setCycleCount(MediaPlayer.INDEFINITE);
     }
 
+    /**
+     * Begins the player's turn.
+     * Displays necessary UI elements for the player's turn, including their hand,
+     * game board, score board, rotation information, and possible game actions.
+     *
+     * @param gameView The current state of the game.
+     */
     @FXML
     public void beginTurn(GameView gameView) {
         this.gameView = gameView;
@@ -150,6 +166,13 @@ public class GameBoardController extends GUIController {
         drawStatus();
     }
 
+    /**
+     * Begins the player's draw phase.
+     * Displays necessary UI elements for the player's draw phase, including their hand,
+     * game board, score board, rotation information, and possible game actions.
+     *
+     * @param gameView The current state of the game.
+     */
     @FXML
     public void beginDraw(GameView gameView) {
         this.gameView = gameView;
@@ -188,6 +211,13 @@ public class GameBoardController extends GUIController {
         drawStatus();
     }
 
+    /**
+     * Handles the player's hidden goal choice phase.
+     * Displays UI elements related to hidden goal selection, including common goals,
+     * rotation information, and necessary game actions for selecting a hidden goal.
+     *
+     * @param gameView The current state of the game.
+     */
     @FXML
     public void hiddenGoalChoice(GameView gameView){
         this.nickname = gameView.getCurrent();
@@ -232,7 +262,14 @@ public class GameBoardController extends GUIController {
         //SCORE BOARD
         drawScoreBoard();
     }
-
+    /**
+     * Sets image options for horizontal layout.
+     * Configures the given ImageView for horizontal display with specified width and margins.
+     *
+     * @param imageView The ImageView to configure.
+     * @param width     The width to fit the image.
+     * @param margin    The margin to set around the ImageView within an HBox.
+     */
     private void setImageOptionsH(ImageView imageView, int width, int margin) {
         imageView.setPreserveRatio(true);
         imageView.setSmooth(true);
@@ -243,6 +280,12 @@ public class GameBoardController extends GUIController {
         HBox.setMargin(imageView, new Insets(0,margin,0,margin));
     }
 
+    /**
+     * Sets image options for vertical layout.
+     * Configures the given ImageView for vertical display with default width and margins.
+     *
+     * @param imageView The ImageView to configure.
+     */
     private void setImageOptionsV(ImageView imageView) {
         imageView.setPreserveRatio(true);
         imageView.setSmooth(true);
@@ -250,7 +293,11 @@ public class GameBoardController extends GUIController {
         imageView.setFitWidth(150);
         VBox.setMargin(imageView, new Insets(5,0,5,0));
     }
-
+    /**
+     * Draws the player's hand of cards for the game view.
+     *
+     * @param clickable Indicates if the cards should be clickable (true) or not (false).
+     */
     private void drawGameBoard(boolean clickable, String nick) {
         gameViewContainer.getChildren().clear();
         GridPane gridPane = new GridPane();
@@ -380,7 +427,12 @@ public class GameBoardController extends GUIController {
         gameViewContainer.getChildren().add(scrollPane);
     }
 
-
+    /**
+     * Draws the player's hand.
+     * Displays the cards held by the player's hand on the UI.
+     *
+     * @param clickable Indicates whether the player's hand should be active (clickable).
+     */
     private void drawGameHand(boolean clickable){
         playingHandContainer.getChildren().clear();
         for (int i = 0; i < gameView.getPlayerView().getPlayerHand().size(); i++) {
@@ -418,6 +470,12 @@ public class GameBoardController extends GUIController {
         });
     }
 
+    /**
+     * Clears opacity effects from all nodes in the parent except the specified node.
+     *
+     * @param parent The parent node containing the nodes to clear.
+     * @param node   The node to exclude from clearing opacity.
+     */
     private void clearBorders(Parent parent, Node node) {
         if (parent instanceof HBox hbox) {
             for (Node n : hbox.getChildren()) {
@@ -428,6 +486,10 @@ public class GameBoardController extends GUIController {
         }
     }
 
+    /**
+     * Draws common goals for the game view.
+     * Retrieves the images for common goals and adds them to the commonGoalsContainer.
+     */
     private void drawCommonGoals() {
         for (int i = 0; i < gameView.getCommon().getCommonBoardView().getGoals().size(); i++) {
             id = gameView.getCommon().getCommonBoardView().getGoals().get(i).getCardId(); //
@@ -440,7 +502,10 @@ public class GameBoardController extends GUIController {
             imageView.setFitHeight(Double.MAX_VALUE);
         }
     }
-
+    /**
+     * Draws the hidden goal for the player view.
+     * Retrieves the image for the hidden goal and adds it to the hiddenGoalContainer.
+     */
     private void drawHiddenGoal() {
         hiddenGoalContainer.getChildren().clear();
         id = gameView.getPlayerView().getHiddenGoal().getCardId(); //hidden goal
@@ -452,7 +517,11 @@ public class GameBoardController extends GUIController {
         HBox.setHgrow(imageView, Priority.ALWAYS);
         imageView.setFitHeight(Double.MAX_VALUE);
     }
-
+    /**
+     * Draws the table of resource cards for the game view.
+     *
+     * @param clickable Indicates if the resource cards should be clickable (true) or not (false).
+     */
     private void drawResourceCardsTable(boolean clickable) {
         resourceCardsContainer.getChildren().clear();
 
@@ -502,7 +571,11 @@ public class GameBoardController extends GUIController {
             iw.setFitHeight(Double.MAX_VALUE);
         }
     }
-
+    /**
+     * Draws the table of gold cards for the game view.
+     *
+     * @param clickable Indicates if the gold cards should be clickable (true) or not (false).
+     */
     private void drawGoldCardsTable(boolean clickable) {
         goldCardsContainer.getChildren().clear();
 
@@ -552,7 +625,11 @@ public class GameBoardController extends GUIController {
             iw.setFitHeight(Double.MAX_VALUE);
         }
     }
-
+    /**
+     * Draws the selection of hidden goals for the player to choose from.
+     *
+     * @param views The list of GameCardView objects representing the hidden goals to choose from.
+     */
     @FXML
     public void drawChooseHiddenGoal(ArrayList<GameCardView> views){
 
@@ -600,14 +677,21 @@ public class GameBoardController extends GUIController {
         hidden.getChildren().add(chooseHiddenGoal);
         gameViewContainer.getChildren().add(hidden);
     }
-
+    /**
+     * Displays an error message indicating that the player cannot place a card due to unfulfilled requirements.
+     */
     @FXML
     public void requirementsNotMet() {
         errorLabel.setText("You can't place this card, you don't fulfil the requirements");
         errorLabel.setVisible(true);
         errorLabel.setAlignment(Pos.CENTER);
     }
-
+    /**
+     * Updates the game view when it's not the player's turn.
+     *
+     * @param gameView   The updated GameView object reflecting the current game state.
+     * @param myNickname The nickname of the current player.
+     */
     @FXML
     public void notYourTurn(GameView gameView, String myNickname) {
         this.gameView = gameView;
@@ -627,7 +711,10 @@ public class GameBoardController extends GUIController {
         drawVisibleSymbols();
         drawStatus();
     }
-
+    /**
+     * Draws the scoreboard for the game view.
+     * Displays player scores on a graphical scoreboard representation.
+     */
     private void drawScoreBoard() {
         image = new Image(Objects.requireNonNull(Root.class.getResource("images/misc/scoreboard.png")).toString());
         imageView = new ImageView(image);
@@ -656,12 +743,23 @@ public class GameBoardController extends GUIController {
         scoreboardContainer.getChildren().addAll(imageView, canvas);
         StackPane.setMargin(imageView, new Insets(0, 0, 0, 30));
     }
-
+    /**
+     * Draws a colored circle on the given GraphicsContext.
+     *
+     * @param gc     The GraphicsContext to draw on.
+     * @param x      The x-coordinate of the center of the circle.
+     * @param y      The y-coordinate of the center of the circle.
+     * @param radius The radius of the circle.
+     * @param color  The color of the circle.
+     */
     private void drawCircle(GraphicsContext gc, double x, double y, double radius, String color) {
         gc.setFill(Color.valueOf(color));
         gc.fillOval(x - radius, y - radius, radius * 2, radius * 2);
     }
-
+    /**
+     * Draws the rotation of players in the game view.
+     * Displays player names and their corresponding colors with clickable elements.
+     */
     private void drawRotation() {
         rotationContainer.getChildren().clear();
         rotationContainer.setAlignment(Pos.CENTER);
@@ -697,7 +795,12 @@ public class GameBoardController extends GUIController {
             rotationContainer.getChildren().add(hbox);
         }
     }
-
+    /**
+     * Updates the visible symbols display for the current player.
+     * This method clears the current content of the visibleSymbolsContainer
+     * and repopulates it with the symbols currently visible to the player.
+     * Each symbol is displayed as an icon with a corresponding count beneath it.
+     */
     private void drawVisibleSymbols() {
         visibleSymbolsContainer.getChildren().clear();
         HashMap<String,Integer> visibleSymbols = gameView.getCommon().getPlayerView(nickname).getVisibleSymbols();
@@ -722,6 +825,11 @@ public class GameBoardController extends GUIController {
         }
     }
 
+    /**
+     * Updates the status display based on the current game status.
+     * This method checks if the game status has changed and updates the statusContainer
+     * with the appropriate message indicating the current stage of the game.
+     */
     private void drawStatus() {
         if(!gameView.getGameStatus().equals(status)) {
             status = gameView.getGameStatus();
@@ -732,6 +840,12 @@ public class GameBoardController extends GUIController {
         }
     }
 
+    /**
+     * Adds a message to the chat message receiver in the game view.
+     * Appends the message to the grid and scrolls to the latest message.
+     *
+     * @param message The message to add.
+     */
     public void addMessage(String message) {
         Text text = new Text(message);
         text.setStyle("-fx-font-family: 'Muli'");

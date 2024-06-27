@@ -10,7 +10,12 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 
 import java.util.ArrayList;
-
+/**
+ * Controller class for managing color selection in a graphical user interface (GUI).
+ * Extends GUIController and implements EventHandler for handling button actions.
+ * Handles initialization of color buttons based on provided colors list and responds
+ * to user interaction events such as button clicks by adding selected color to input.
+ */
 public class ColorSelectorController extends GUIController implements EventHandler<ActionEvent> {
     @FXML
     public Text errorText;
@@ -18,6 +23,13 @@ public class ColorSelectorController extends GUIController implements EventHandl
 
     @FXML
     private HBox colorsContainer;
+
+    /**
+     * Initializes the controller with a list of available colors.
+     * Initializes color buttons dynamically based on the provided colors list.
+     *
+     * @param colors List of available colors to display as buttons.
+     */
     @FXML
     public void initialize(ArrayList<String> colors) {
         this.colors = colors;
@@ -36,12 +48,23 @@ public class ColorSelectorController extends GUIController implements EventHandl
             button.setPrefHeight(150);
         }
     }
+
+    /**
+     * Displays an error message indicating that the selected color is not available.
+     * Clears the color selection UI to allow choosing a different color.
+     */
     public void showColorNotAvailable() {
         errorText.setText("Color not available. Please choose a different color.");
         errorText.setVisible(true);
         colorsContainer.getChildren().clear();
     }
 
+    /**
+     * Handles button click events from color selection buttons.
+     * Adds the selected color text to the input reader and plays a button click sound.
+     *
+     * @param event ActionEvent triggered by clicking a color button.
+     */
     @Override
     public void handle(ActionEvent event) {
         Button clickedButton = (Button) event.getSource();

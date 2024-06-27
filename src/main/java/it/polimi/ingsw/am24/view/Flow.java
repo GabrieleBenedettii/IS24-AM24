@@ -20,6 +20,10 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
+/**
+ * The {@code Flow} class implements the game flow logic, handling client actions and game events.
+ * It runs as a separate thread and interacts with the user through the UI.
+ */
 public class Flow implements Runnable, ClientActions, GameListener {
     private int gameId;
     private String nickname;
@@ -39,6 +43,11 @@ public class Flow implements Runnable, ClientActions, GameListener {
     private boolean colorNotAvailable;
     private HashMap<String,Boolean> colorSelected = new HashMap<>();
 
+    /**
+     * Constructs a new {@code Flow} with the specified connection type for CLI.
+     *
+     * @param connectionType the type of connection ("RMI" or "SOCKET")
+     */
     public Flow(String connectionType) {
         switch (connectionType) {
             case "RMI" -> actions = new RMIClient(this);
@@ -55,6 +64,13 @@ public class Flow implements Runnable, ClientActions, GameListener {
         this.inputParser = new InputParser(this.inputReader.getBuffer(), this);
         new Thread(this).start();
     }
+
+    /**
+     * Constructs a new {@code Flow} with the specified connection type for GUI.
+     *
+     * @param application    the GUI application
+     * @param connectionType the type of connection ("RMI" or "SOCKET")
+     */
     public Flow(GUIApplication application, String connectionType) {
         switch (connectionType) {
             case "RMI" -> actions = new RMIClient(this);
@@ -72,6 +88,9 @@ public class Flow implements Runnable, ClientActions, GameListener {
         new Thread(this).start();
     }
 
+    /**
+     * The main run loop of the {@code Flow} thread.
+     */
     @Override
     public void run() {
         EventType event;
@@ -121,6 +140,12 @@ public class Flow implements Runnable, ClientActions, GameListener {
     }
 
     private Boolean nicknameAlreadyUsed = false;
+
+    /**
+     * Handles the events when the player is not currently in a game.
+     *
+     * @param event the event type to be processed
+     */
     private void statusNotInAGame(EventType event) {
         switch (event) {
             case APP_MENU -> {
@@ -148,6 +173,13 @@ public class Flow implements Runnable, ClientActions, GameListener {
         }
     }
 
+    /**
+     * Handles the events during the waiting phase of the game.
+     *
+     * @param event the event type to be processed
+     * @throws IOException if there is an IO error
+     * @throws InterruptedException if the thread is interrupted
+     */
     private void statusWait(EventType event) throws IOException, InterruptedException {
         switch (event) {
             case AVAILABLE_COLORS -> askColor();
@@ -160,6 +192,13 @@ public class Flow implements Runnable, ClientActions, GameListener {
         }
     }
 
+    /**
+     * Handles the events during the running phase of the game.
+     *
+     * @param event the event type to be processed
+     * @throws IOException if there is an IO error
+     * @throws InterruptedException if the thread is interrupted
+     */
     private void statusRunning(EventType event) throws IOException, InterruptedException {
         switch (event) {
             case BEGIN_PLAY -> {
@@ -188,6 +227,11 @@ public class Flow implements Runnable, ClientActions, GameListener {
         }
     }
 
+    /**
+     * Handles the game status when it has ended.
+     *
+     * @throws InterruptedException if the thread is interrupted
+     */
     private void statusEnded() throws InterruptedException {
         this.inputParser.getDataToProcess().pop();
         try {
@@ -198,6 +242,11 @@ public class Flow implements Runnable, ClientActions, GameListener {
         }
     }
 
+    /**
+     * Prompts the user to input a nickname until a valid nickname is provided.
+     * A valid nickname should not contain special characters and should not be empty.
+     * Shows appropriate UI messages for invalid inputs.
+     */
     private void askNickname() {
         boolean validNickname = false;
         String invalidChars = "0123456789~£!@#$%^&*()-_=+[]{}|;:',.<>?";
@@ -220,10 +269,24 @@ public class Flow implements Runnable, ClientActions, GameListener {
         //ui.show_chosenNickname(nickname);
     }
 
+    /**
+     * Returns the current value of the "create" flag.
+     * The "create" flag indicates whether the user intends to create a new game.
+     *
+     * @return true if the user intends to create a new game, false otherwise.
+     */
     public boolean isCreate() {
         return create;
     }
 
+    /**
+     * Asks the user to select between creating a new game or joining an existing one based on input choices.
+     * Handles actions based on user input and updates game state accordingly.
+     *
+     * @param nicknameAlreadyUsed Flag indicating if the nickname has already been used previously.
+     * @param previous            Previous choice made by the user.
+     * @return true if the selection was successful and processed; false otherwise.
+     */
     private boolean askSelectGame(Boolean nicknameAlreadyUsed, String previous) {
         String choice;
         if (nicknameAlreadyUsed){
@@ -259,6 +322,10 @@ public class Flow implements Runnable, ClientActions, GameListener {
         return true;
     }
 
+    /**
+     * Asks the user to choose a color from the available colors.
+     * Handles the selection process and updates the game state accordingly.
+     */
     private void askColor() {
         String color;
         if (colorNotAvailable){
@@ -280,6 +347,11 @@ public class Flow implements Runnable, ClientActions, GameListener {
         }
     }
 
+    /**
+     * Prompts the user to enter a nickname and number of players, ensuring both inputs are valid.
+     * Displays appropriate messages for invalid inputs and updates the game state upon successful input.
+     * @return The number of players chosen by the user.
+     */
     private Integer askNicknameAndPlayers() {
         boolean validInputs = false;
         String invalidChars = "0123456789~£!@#$%^&*()-_=+[]{}|;:',.<>?";
@@ -332,6 +404,12 @@ public class Flow implements Runnable, ClientActions, GameListener {
         return tempNumPlayers;
     }
 
+    /**
+     * Prompts the player to select a secret goal from the dealt cards.
+     * This method displays the start table and hidden goal options to the player,
+     * waits for the player's input, and processes the chosen hidden goal.
+     * If the input is invalid, it prompts the player again until a valid choice is made.
+     */
     private void askSecretGoalDealt() {
         //ui.show_hidden_goal(cards);
         boolean retry;
@@ -349,6 +427,12 @@ public class Flow implements Runnable, ClientActions, GameListener {
         } while(retry);
     }
 
+    /**
+     * Prompts the player to choose the initial side of a card.
+     * This method displays the initial card side options to the player,
+     * waits for the player's input, and processes the chosen card side.
+     * If the input is invalid, it prompts the player again until a valid choice is made.
+     */
     private void askInitialCardSide() {
         ui.show_initial_side(cards);
         boolean retry = true;
@@ -369,6 +453,12 @@ public class Flow implements Runnable, ClientActions, GameListener {
         } while (retry);
     }
 
+    /**
+     * Prompts the player to play a card.
+     * This method displays the command prompt to the player, waits for the player's input,
+     * and processes the play card command. It validates the command and parameters before execution.
+     * If the input is invalid, it prompts the player again until a valid command is given.
+     */
     private void askCardPlay() {
         String command;
         //ui.show_player_view();
@@ -434,6 +524,12 @@ public class Flow implements Runnable, ClientActions, GameListener {
         } while (true);
     }
 
+    /**
+     * Prompts the player to draw a card.
+     * This method displays the command prompt to the player, waits for the player's input,
+     * and processes the draw card command. It validates the command and parameters before execution.
+     * If the input is invalid, it prompts the player again until a valid command is given.
+     */
     private void askCardDraw() {
         String command;
         //ui.show_public_board_view();
@@ -464,7 +560,12 @@ public class Flow implements Runnable, ClientActions, GameListener {
     }
 
     //METHODS THAT THE CLIENT CAN REQUEST TO THE SERVER
-
+    /**
+     * Creates a new game with the specified nickname and number of players.
+     *
+     * @param nickname the nickname of the player creating the game
+     * @param numPlayers the number of players for the game
+     */
     public void createGame(String nickname, int numPlayers) {
         //ui.show_creatingNewGameMsg(nickname);
         try {
@@ -474,6 +575,11 @@ public class Flow implements Runnable, ClientActions, GameListener {
         }
     }
 
+    /**
+     * Joins the first available game with the specified nickname.
+     *
+     * @param nickname the nickname of the player joining the game
+     */
     public void joinFirstGameAvailable(String nickname) {
         //ui.show_joiningFirstAvailableMsg(nickname);
         try {
@@ -483,78 +589,179 @@ public class Flow implements Runnable, ClientActions, GameListener {
         }
     }
 
+    /**
+     * Chooses a color for the player with the specified nickname.
+     *
+     * @param nickname the nickname of the player choosing the color
+     * @param color the color chosen by the player
+     * @throws IOException if an I/O error occurs
+     */
     public void chooseColor(String nickname, String color) throws IOException {
         actions.chooseColor(nickname, color);
     }
 
+    /**
+     * Chooses a hidden goal for the player with the specified nickname.
+     *
+     * @param nickname the nickname of the player choosing the hidden goal
+     * @param choice the index of the chosen hidden goal
+     * @throws IOException if an I/O error occurs
+     */
     public void chooseHiddenGoal(String nickname, int choice) throws IOException {
         actions.chooseHiddenGoal(nickname, choice);
     }
 
+    /**
+     * Chooses the initial card side for the player with the specified nickname.
+     *
+     * @param nickname the nickname of the player choosing the initial card side
+     * @param choice the index of the chosen card side
+     * @throws IOException if an I/O error occurs
+     */
     public void chooseInitialCardSide(String nickname, int choice) throws IOException {
         actions.chooseInitialCardSide(nickname, choice);
     }
 
+    /**
+     * Plays a card for the player with the specified nickname.
+     *
+     * @param nickname the nickname of the player playing the card
+     * @param cardIndex the index of the card to be played
+     * @param front true if the card is to be played face up, false otherwise
+     * @param x the x-coordinate of the placement position
+     * @param y the y-coordinate of the placement position
+     * @throws IOException if an I/O error occurs
+     */
     public void playCard(String nickname, int cardIndex, boolean front, int x, int y) throws IOException {
         actions.playCard(nickname, cardIndex, front, x, y);
     }
 
+    /**
+     * Draws a card for the player with the specified nickname.
+     *
+     * @param nickname the nickname of the player drawing the card
+     * @param choice the index of the chosen card to draw
+     * @throws IOException if an I/O error occurs
+     */
     public void drawCard(String nickname, int choice) throws IOException {
         actions.drawCard(nickname, choice);
     }
 
+    /**
+     * Sends a public message from the specified sender.
+     *
+     * @param sender the nickname of the sender
+     * @param message the message to be sent
+     * @throws RemoteException if a remote communication error occurs
+     */
     public void sendPublicMessage(String sender, String message) throws RemoteException {
         actions.sendPublicMessage(sender, message);
     }
 
+    /**
+     * Sends a private message from the specified sender to the specified receiver.
+     *
+     * @param sender the nickname of the sender
+     * @param receiver the nickname of the receiver
+     * @param message the message to be sent
+     * @throws RemoteException if a remote communication error occurs
+     */
     public void sendPrivateMessage(String sender, String receiver, String message) throws RemoteException {
         actions.sendPrivateMessage(sender, receiver, message);
     }
 
+    /**
+     * Sends a heartbeat signal to maintain the connection.
+     *
+     * @throws IOException if an I/O error occurs
+     */
     public void heartbeat() throws IOException {
 
     }
 
+    /**
+     * Stops sending heartbeat signals.
+     */
     public void stopHeartbeat() {
         actions.stopHeartbeat();
     }
 
     //EVENTS RECEIVED FROM THE SERVER
+
+    /**
+     * Handles the event of an invalid number of players.
+     */
     public void invalidNumPlayers() {
         addEvent(EventType.APP_MENU);
     }
 
+    /**
+     * Handles the event of a player joining the game.
+     *
+     * @param players the list of players in the game
+     * @param current the nickname of the current player
+     * @param num the total number of players in the game
+     */
     public void playerJoined(ArrayList<String> players, String current, int num) {
         if(colorSelected.get(current))
             ui.show_joined_players(players,current, num);
     }
 
+    /**
+     * Handles the event of no lobby being available.
+     */
     public void noLobbyAvailable() {
         events.add(EventType.NO_LOBBY_AVAILABLE);
     }
 
+    /**
+     * Handles the event of a nickname already being used.
+     */
     public void nicknameAlreadyUsed() {
         events.add(EventType.NICKNAME_ALREADY_USED);
     }
 
+    /**
+     * Handles the event of available colors being received.
+     *
+     * @param colors the list of available colors
+     */
     public void availableColors(ArrayList<String> colors) {
         this.availableColors = colors;
         this.status = GameStatus.FIRST_PHASE;
         addEvent(EventType.AVAILABLE_COLORS);
     }
 
+    /**
+     * Handles the event of not available colors being received.
+     *
+     * @param colors the list of not available colors
+     * @throws RemoteException if a remote communication error occurs
+     */
     public void notAvailableColors(ArrayList<String> colors) throws RemoteException {
         this.availableColors = colors;
         this.status = GameStatus.FIRST_PHASE;
         addEvent(EventType.NOT_AVAILABLE_COLORS);
     }
 
+    /**
+     * Handles the event of a hidden goal choice being made.
+     *
+     * @param cardViews the list of card views representing the hidden goals
+     * @param gameView the current state of the game view
+     */
     public void hiddenGoalChoice(ArrayList<GameCardView> cardViews, GameView gameView) {
         this.gameView = gameView;
         this.cards = cardViews;
         addEvent(EventType.HIDDEN_GOAL_CHOICE);
     }
 
+    /**
+     * Handles the event of an initial card side being chosen.
+     *
+     * @param front the front side of the card
+     * @param back the back side of the card
+     */
     public void initialCardSide(GameCardView front, GameCardView back) {
         addEvent(EventType.INITIAL_CARD_SIDE);
         this.cards = new ArrayList<>();
@@ -562,34 +769,67 @@ public class Flow implements Runnable, ClientActions, GameListener {
         cards.add(back);
     }
 
+    /**
+     * Handles the event of a turn beginning.
+     *
+     * @param gameView the current state of the game view
+     */
     public void beginTurn(GameView gameView) {
         this.status = GameStatus.RUNNING;
         addEvent(EventType.BEGIN_PLAY);
         this.gameView = gameView;
     }
 
+    /**
+     * Handles the event of an invalid positioning of a card.
+     */
     public void invalidPositioning() {
         ui.show_invalid_positioning();
         addEvent(EventType.BEGIN_PLAY);
     }
 
+    /**
+     * Handles the event of requirements not being met.
+     */
     public void requirementsNotMet() {
         ui.show_requirements_not_met();
         addEvent(EventType.BEGIN_PLAY);
     }
-
+    /**
+     * Begins the draw phase of the game.
+     * This method sets the game status to running, updates the game view, and triggers the BEGIN_DRAW event.
+     *
+     * @param gameView The current game view to be updated.
+     */
     public void beginDraw(GameView gameView) {
         this.gameView = gameView;
         this.status = GameStatus.RUNNING;
         addEvent(EventType.BEGIN_DRAW);
     }
 
+    /**
+     * Handles an incorrect card play.
+     * This method updates the game view, displays a message indicating the wrong card play,
+     * and triggers the BEGIN_PLAY event.
+     *
+     * @param gameView The current game view to be updated.
+     */
     public void wrongCardPlay(GameView gameView) {
         addEvent(EventType.BEGIN_PLAY);
         this.gameView = gameView;
         ui.show_wrong_card_play();
     }
 
+    /**
+     * Handles sending a message.
+     * This method displays the "sent" or "received" message based on the sender and receiver,
+     * and triggers the SENT_MESSAGE event.
+     *
+     * @param sender The sender of the message.
+     * @param receiver The receiver of the message.
+     * @param message The content of the message.
+     * @param time The time the message was sent.
+     */
     public void sentMessage(String sender, String receiver, String message, String time) {
         //Show the message only if is for everyone or is for me (or I sent it)
         if(sender.equals(nickname)) ui.add_message_sent(receiver, message, time);
@@ -597,6 +837,14 @@ public class Flow implements Runnable, ClientActions, GameListener {
         addEvent(EventType.SENT_MESSAGE);
     }
 
+    /**
+     * Handles the end of the game.
+     * This method updates the game status to ended, displays the winner and rankings,
+     * and triggers the GAME_ENDED event.
+     *
+     * @param winner The nickname of the player who won the game.
+     * @param rank The final rankings of the players.
+     */
     public void gameEnded(String winner, HashMap<String,Integer> rank) {
         this.status = GameStatus.ENDED;
         addEvent(EventType.GAME_ENDED);
@@ -604,6 +852,11 @@ public class Flow implements Runnable, ClientActions, GameListener {
         //resetGameId(fileDisconnection, gameModel);
     }
 
+    /**
+     * Adds an event to the event list and updates the joined status based on the event type.
+     *
+     * @param type The type of event to be added.
+     */
     private void addEvent(EventType type) {
         events.add(type);
         if (type.equals(EventType.AVAILABLE_COLORS) || type.equals(EventType.PLAYER_JOINED) || (status != null && status.equals(GameStatus.RUNNING)))
@@ -613,6 +866,10 @@ public class Flow implements Runnable, ClientActions, GameListener {
             joined = false;
     }
 
+    /**
+     * Handles a no connection error.
+     * This method displays a message indicating that there is no connection.
+     */
     public void noConnectionError() {
         ui.show_no_connection_error();
     }

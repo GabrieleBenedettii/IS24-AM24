@@ -8,6 +8,12 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * Controller class for managing the end game screen in a graphical user interface (GUI).
+ * Extends GUIController and displays the final rankings of players based on points,
+ * including the winner's message.
+ * Provides functionality to update and display player rankings and determine the game winner.
+ */
 public class EndGameController extends GUIController {
     @FXML
     private Label resultMessage;
@@ -20,6 +26,13 @@ public class EndGameController extends GUIController {
     @FXML
     private Label player3;
 
+    /**
+     * Updates the GUI to display player rankings and the winner's message based on the provided data.
+     *
+     * @param rank      A HashMap containing player nicknames as keys and their corresponding points as values.
+     * @param winner    Boolean indicating if the current player is the winner.
+     * @param winnerNick The nickname of the winner.
+     */
     public void rankings(HashMap<String, Integer> rank,Boolean winner,String winnerNick) {
         Label[] playerLabels = {player0, player1, player2, player3};
         for (Label label : playerLabels) {

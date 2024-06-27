@@ -4,6 +4,10 @@ import it.polimi.ingsw.am24.view.Flow;
 
 import java.rmi.RemoteException;
 
+/**
+ * The InputParser class extends the Thread class and processes input commands from a buffer.
+ * It handles commands to send public and private messages and processes other data by adding it to another buffer.
+ */
 public class InputParser extends Thread {
 
     private final Buffer input;
@@ -16,6 +20,12 @@ public class InputParser extends Thread {
 
     private String nickname;
 
+    /**
+     * Initializes a new instance of the InputParser class.
+     *
+     * @param input    The buffer from which input commands are read.
+     * @param gameFlow The Flow instance used to handle game-related operations.
+     */
     public InputParser(Buffer input, Flow gameFlow) {
         this.input = input;
         this.dataToProcess = new Buffer();
@@ -24,6 +34,10 @@ public class InputParser extends Thread {
         this.start();
     }
 
+    /**
+     * The run method contains the main logic of the InputParser thread.
+     * It continuously reads input from the buffer and processes commands for sending messages.
+     */
     public void run() {
         String txt;
         while (!this.isInterrupted()) {
@@ -63,14 +77,29 @@ public class InputParser extends Thread {
         }
     }
 
+    /**
+     * Sets the game ID for the parser.
+     *
+     * @param gameId The ID of the game.
+     */
     public void setIdGame(Integer gameId) {
         this.gameId = gameId;
     }
 
+    /**
+     * Sets the nickname for the parser.
+     *
+     * @param nickname The nickname of the user.
+     */
     public void setNickname(String nickname) {
         this.nickname = nickname;
     }
 
+    /**
+     * Gets the buffer that stores data to be processed.
+     *
+     * @return The buffer containing data to be processed.
+     */
     public Buffer getDataToProcess() {
         return dataToProcess;
     }

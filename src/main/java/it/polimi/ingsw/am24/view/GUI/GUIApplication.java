@@ -18,6 +18,9 @@ import javafx.stage.StageStyle;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * GUIApplication class extends Application and manages the JavaFX application lifecycle and UI scenes.
+ */
 public class GUIApplication extends Application {
 
     private Flow gameflow;
@@ -25,10 +28,20 @@ public class GUIApplication extends Application {
     private StackPane rad;
     private ArrayList<SceneDesc> scene;
 
+    /**
+     * Main method to launch the JavaFX application.
+     *
+     * @param args Command line arguments.
+     */
     public static void main(String[] args) {
         launch(args);
     }
 
+    /**
+     * Initializes the application, including game flow and loading scenes.
+     *
+     * @param primaryStage Primary stage of the application.
+     */
     @Override
     public void start(Stage primaryStage) {
         gameflow = new Flow(this, getParameters().getUnnamed().get(0));
@@ -39,6 +52,10 @@ public class GUIApplication extends Application {
         rad = new StackPane();
         //todo : aggiungere un suono di avvio
     }
+
+    /**
+     * Loads all scenes available for the game and initializes controllers.
+     */
     private void loadScenes() {
         //Loads all the scenes available to be showed during the game
         scene = new ArrayList<>();
@@ -57,11 +74,24 @@ public class GUIApplication extends Application {
             scene.add(new SceneDesc(new Scene(root), Scenes.values()[i], g));
         }
     }
+
+    /**
+     * Sets the InputReaderGUI to all controllers in loaded scenes.
+     *
+     * @param inputReaderGUI InputReaderGUI instance to set.
+     */
     public void setInputReaderGUItoAllControllers(InputReaderGUI inputReaderGUI) {
         for (SceneDesc s : scene) {
             s.setInputReaderGUI(inputReaderGUI);
         }
     }
+
+    /**
+     * Retrieves the controller associated with a specific scene.
+     *
+     * @param scene Scene enumeration value representing the scene.
+     * @return GUIController associated with the specified scene.
+     */
     public GUIController getController(Scenes scene) {
         int index = getSceneIndex(scene);
         if (index != -1) {
@@ -70,6 +100,12 @@ public class GUIApplication extends Application {
         return null;
     }
 
+    /**
+     * Retrieves the index of a specific scene in the list of scenes.
+     *
+     * @param scene Scene enumeration value representing the scene.
+     * @return Index of the scene in the list, or -1 if not found.
+     */
     private int getSceneIndex(Scenes scene) {
         for (int i = 0; i < this.scene.size(); i++) {
             if (this.scene.get(i).getScenes().equals(scene))
@@ -78,6 +114,9 @@ public class GUIApplication extends Application {
         return -1;
     }
 
+    /**
+     * Creates a new window with the specified style.
+     */
     public void createNewWindowWithStyle() {
         // Crea una nuova finestra con lo stile desiderato
         Stage newStage = new Stage();
@@ -106,6 +145,11 @@ public class GUIApplication extends Application {
         });
     }
 
+    /**
+     * Sets the active scene in the application.
+     *
+     * @param scene Scene enumeration value representing the scene to set as active.
+     */
     public void setActiveScene(Scenes scene){
         this.mainStage.setTitle("Codex Naturalis - "+scene.name());
         SceneDesc s = this.scene.get(getSceneIndex(scene));
@@ -123,6 +167,11 @@ public class GUIApplication extends Application {
         mainStage.getIcons().add(new Image("it/polimi/ingsw/am24/images/favicon-1.png"));
     }
 
+    /**
+     * Retrieves the game flow object managing game interactions.
+     *
+     * @return Flow object managing the game flow.
+     */
     public Flow getGameflow() {
         return gameflow;
     }

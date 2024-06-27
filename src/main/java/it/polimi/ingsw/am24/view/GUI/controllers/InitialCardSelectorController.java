@@ -10,7 +10,17 @@ import javafx.scene.image.ImageView;
 
 import java.util.ArrayList;
 
+/**
+ * Controller class for the initial card selection screen.
+ * Extends GUIController to handle user interactions and input.
+ */
 public class InitialCardSelectorController extends GUIController {
+
+    /**
+     * Initializes the initial card selection screen with given card views.
+     *
+     * @param views ArrayList of GameCardView objects representing the cards to display.
+     */
     @FXML
     public void Initialize(ArrayList<GameCardView> views) {
         String path0 = "images/front/"+views.get(0).getCardId()+".png";
@@ -24,16 +34,35 @@ public class InitialCardSelectorController extends GUIController {
         initialCard1.setImage(image1);
     }
 
+    /**
+     * ImageView for displaying the first initial card.
+     */
     @FXML
     private ImageView initialCard0;
 
+    /**
+     * ImageView for displaying the second initial card.
+     */
     @FXML
     private ImageView initialCard1;
 
+    /**
+     * Handles the action when the user chooses the front side of the card.
+     * Adds "0" to the input reader GUI and plays a button sound.
+     *
+     * @param actionEvent The ActionEvent triggered by choosing the front side.
+     */
     public void chooseFront(ActionEvent actionEvent) {
         getInputReaderGUI().addString("0");
         Sound.playSound("button.wav");
     }
+
+    /**
+     * Handles the action when the user chooses the back side of the card.
+     * Adds "1" to the input reader GUI and plays a button sound.
+     *
+     * @param actionEvent The ActionEvent triggered by choosing the back side.
+     */
     public void chooseBack(ActionEvent actionEvent) {
         getInputReaderGUI().addString("1");
         Sound.playSound("button.wav");
