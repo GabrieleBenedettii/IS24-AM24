@@ -700,6 +700,7 @@ public class GameBoardController extends GUIController {
         gameViewContainer.setOpacity(0.5);
         receiver.setDisable(false);
         messageText.setDisable(false);
+        gameViewContainer.setStyle("-fx-background-color: #FFF9DFFF; -fx-border-color: #A49849; -fx-border-width: 1px;-fx-border-radius: 10px;");
 
         drawGameBoard(false, myNickname);
         drawGoldCardsTable(false);

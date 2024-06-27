@@ -40,7 +40,6 @@ public class Flow implements Runnable, ClientActions, GameListener {
     private ArrayList<String> availableColors;
     private ArrayList<GameCardView> cards;
     private GameView gameView;
-    private boolean colorNotAvailable;
     private HashMap<String,Boolean> colorSelected = new HashMap<>();
 
     /**
@@ -58,12 +57,12 @@ public class Flow implements Runnable, ClientActions, GameListener {
 
         this.nickname = "";
         this.joined = false;
-        this.colorNotAvailable = false;
         this.num = 0;
         this.inputReader = new InputReaderCLI();
         this.inputParser = new InputParser(this.inputReader.getBuffer(), this);
         new Thread(this).start();
     }
+
 
     /**
      * Constructs a new {@code Flow} with the specified connection type for GUI.
@@ -82,7 +81,6 @@ public class Flow implements Runnable, ClientActions, GameListener {
 
         this.nickname = "";
         this.joined = false;
-        this.colorNotAvailable = false;
         this.num = 0;
         this.inputParser = new InputParser(this.inputReader.getBuffer(), this);
         new Thread(this).start();
@@ -182,10 +180,9 @@ public class Flow implements Runnable, ClientActions, GameListener {
      */
     private void statusWait(EventType event) throws IOException, InterruptedException {
         switch (event) {
-            case AVAILABLE_COLORS -> askColor();
+            case AVAILABLE_COLORS -> askColor(false);
             case NOT_AVAILABLE_COLORS -> {
-                colorNotAvailable = true;
-                askColor();
+                askColor(true);
             }
             case HIDDEN_GOAL_CHOICE -> askSecretGoalDealt();
             case INITIAL_CARD_SIDE -> askInitialCardSide();
@@ -220,10 +217,6 @@ public class Flow implements Runnable, ClientActions, GameListener {
                 else
                     ui.show_current_player(gameView, nickname);
             }
-            /*case SENT_MESSAGE -> {
-                //todo fix
-                ui.show_sent_message(nickname);
-            }*/
         }
     }
 
@@ -326,7 +319,7 @@ public class Flow implements Runnable, ClientActions, GameListener {
      * Asks the user to choose a color from the available colors.
      * Handles the selection process and updates the game state accordingly.
      */
-    private void askColor() {
+    private void askColor(boolean colorNotAvailable) {
         String color;
         if (colorNotAvailable){
             ui.show_color_not_available();
@@ -337,7 +330,7 @@ public class Flow implements Runnable, ClientActions, GameListener {
             color = this.inputParser.getDataToProcess().pop();
             if (!availableColors.contains(color.toUpperCase())) {
                 ui.show_color_not_available();
-                askColor();
+                askColor(false);
                 return;
             }
             chooseColor(nickname, color);
@@ -356,7 +349,7 @@ public class Flow implements Runnable, ClientActions, GameListener {
         boolean validInputs = false;
         String invalidChars = "0123456789~£!@#$%^&*()-_=+[]{}|;:',.<>?";
 
-        String tempNickname = null;
+        String tempNickname;
         Integer tempNumPlayers = null;
 
         do {
@@ -763,10 +756,10 @@ public class Flow implements Runnable, ClientActions, GameListener {
      * @param back the back side of the card
      */
     public void initialCardSide(GameCardView front, GameCardView back) {
-        addEvent(EventType.INITIAL_CARD_SIDE);
         this.cards = new ArrayList<>();
         cards.add(front);
         cards.add(back);
+        addEvent(EventType.INITIAL_CARD_SIDE);
     }
 
     /**
@@ -775,9 +768,9 @@ public class Flow implements Runnable, ClientActions, GameListener {
      * @param gameView the current state of the game view
      */
     public void beginTurn(GameView gameView) {
+        this.gameView = gameView;
         this.status = GameStatus.RUNNING;
         addEvent(EventType.BEGIN_PLAY);
-        this.gameView = gameView;
     }
 
     /**
@@ -815,9 +808,9 @@ public class Flow implements Runnable, ClientActions, GameListener {
      * @param gameView The current game view to be updated.
      */
     public void wrongCardPlay(GameView gameView) {
-        addEvent(EventType.BEGIN_PLAY);
         this.gameView = gameView;
         ui.show_wrong_card_play();
+        addEvent(EventType.BEGIN_PLAY);
     }
 
     /**
@@ -848,8 +841,7 @@ public class Flow implements Runnable, ClientActions, GameListener {
     public void gameEnded(String winner, HashMap<String,Integer> rank) {
         this.status = GameStatus.ENDED;
         addEvent(EventType.GAME_ENDED);
-        ui.show_winner_and_rank(winner.equals(nickname), rank, winner);
-        //resetGameId(fileDisconnection, gameModel);
+        ui.show_winner_and_rank(Arrays.stream(winner.split(",")).toList().contains(nickname), rank, winner);
     }
 
     /**

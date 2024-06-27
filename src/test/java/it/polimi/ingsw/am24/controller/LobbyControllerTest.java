@@ -1,5 +1,6 @@
 package it.polimi.ingsw.am24.controller;
 
+import it.polimi.ingsw.am24.exceptions.NotExistingPlayerException;
 import it.polimi.ingsw.am24.listeners.GameListener;
 import it.polimi.ingsw.am24.modelview.GameCardView;
 import it.polimi.ingsw.am24.modelview.GameView;
@@ -100,9 +101,15 @@ public class LobbyControllerTest {
     }
 
     @Test
-    @DisplayName("Invalid number of players")
-    void invalidNumPlayers() throws RemoteException {
+    @DisplayName("Invalid number of players, more than max")
+    void invalidNumPlayersMoreThanMax() throws RemoteException {
         assertNull(lobbyController.joinGame("p1",5,gl));
+    }
+
+    @Test
+    @DisplayName("Invalid number of players, less than min")
+    void invalidNumPlayersLessThanMin() throws RemoteException {
+        assertNull(lobbyController.joinGame("p1",-1,gl));
     }
 
     @Test
@@ -116,5 +123,48 @@ public class LobbyControllerTest {
     @DisplayName("Empty nickname")
     void emptyNickname() throws RemoteException {
         assertNull(lobbyController.joinGame("",2,gl));
+    }
+
+    @Test
+    @DisplayName("Null nickname")
+    void nullNickname() throws RemoteException {
+        assertNull(lobbyController.joinGame(null,2,gl));
+    }
+
+    @Test
+    @DisplayName("Disconnect not existing player")
+    void disconnectPlayer() {
+        assertThrows(NotExistingPlayerException.class, () -> lobbyController.disconnectPlayer("p1"));
+    }
+
+    @Test
+    @DisplayName("Disconnect existing player")
+    void disconnectExistingPlayer() {
+        try {
+            lobbyController.joinGame("p1",2,gl);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+        assertDoesNotThrow(() -> lobbyController.disconnectPlayer("p1"));
+    }
+
+    @Test
+    @DisplayName("Delete game")
+    void deleteGame() {
+        try {
+            GameController controller = (GameController) lobbyController.joinGame("p1",2,gl);
+            controller = (GameController) lobbyController.joinGame("p2",1,gl);
+            controller.chooseColor("p1", "BLUE", gl);
+            controller.chooseColor("p2", "RED", gl);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+        assertDoesNotThrow(() -> lobbyController.deleteGame(10000));
+    }
+
+    @Test
+    @DisplayName("Try to delete a game that doesn't exist")
+    void deleteNotExistingGame() {
+        assertDoesNotThrow(() -> lobbyController.deleteGame(10000));
     }
 }

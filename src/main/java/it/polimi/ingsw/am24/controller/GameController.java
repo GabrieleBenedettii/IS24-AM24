@@ -607,6 +607,7 @@ public class GameController implements GameControllerInterface, Serializable, Ru
 
         //Check if there is only one player playing
         if ((status.equals(GameStatus.FIRST_PHASE) || status.equals(GameStatus.RUNNING) || status.equals(GameStatus.LAST_LAST_ROUND) || status.equals(GameStatus.LAST_ROUND)) && players.size() == 1) {
+            status = GameStatus.ENDED;
             HashMap<String, Integer> rank = new HashMap<>();
             Player p = players.values().stream().toList().getFirst();
             winner = p.getNickname();

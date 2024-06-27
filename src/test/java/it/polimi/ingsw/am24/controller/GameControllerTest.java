@@ -4,6 +4,7 @@ import it.polimi.ingsw.am24.exceptions.*;
 import it.polimi.ingsw.am24.listeners.GameListener;
 import it.polimi.ingsw.am24.modelview.GameCardView;
 import it.polimi.ingsw.am24.modelview.GameView;
+import it.polimi.ingsw.am24.network.GameControllerInterface;
 import it.polimi.ingsw.am24.view.GameStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -17,12 +18,13 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class GameControllerTest {
+    private LobbyController lobbyController;
     private GameController controller;
     private GameListener gl;
 
     @BeforeEach
     void setUp() throws FullLobbyException, RemoteException {
-        controller = new GameController(4);
+        lobbyController = new LobbyController();
         gl = new GameListener() {
             @Override
             public void invalidNumPlayers() throws RemoteException {}
@@ -69,10 +71,10 @@ public class GameControllerTest {
             @Override
             public void sentMessage(String sender, String receiver, String message, String time) throws RemoteException {}
         };
-        controller.addPlayer("p1",gl);
-        controller.addPlayer("p2",gl);
-        controller.addPlayer("p3",gl);
-        controller.addPlayer("p4",gl);
+        controller = (GameController) lobbyController.joinGame("p1",4,gl);
+        controller = (GameController) lobbyController.joinGame("p2",1,gl);
+        controller = (GameController) lobbyController.joinGame("p3",1,gl);
+        controller = (GameController) lobbyController.joinGame("p4",1,gl);
     }
 
     @Test
@@ -175,6 +177,27 @@ public class GameControllerTest {
         assertTrue(controller.drawCard("p2", 1, gl));
         assertTrue(controller.drawCard("p3", 2, gl));
         assertTrue(controller.drawCard("p4", 3, gl));
+    }
+
+    @Test
+    @DisplayName("Check that a player can't draw twice")
+    void drawCardTwice() throws RemoteException {
+        controller.chooseColor("p1", "BLUE", gl);
+        controller.chooseColor("p2", "RED", gl);
+        controller.chooseColor("p3", "YELLOW", gl);
+        controller.chooseColor("p4", "GREEN", gl);
+        controller.chooseInitialCardSide("p1", true, gl);
+        controller.chooseInitialCardSide("p2", true, gl);
+        controller.chooseInitialCardSide("p3", true, gl);
+        controller.chooseInitialCardSide("p4", true, gl);
+        List<Integer> goalsIds = controller.getGame().getDrawnGoalCardsIds();
+        controller.chooseGoal("p1",goalsIds.get(0),gl);
+        controller.chooseGoal("p2",goalsIds.get(1),gl);
+        controller.chooseGoal("p3",goalsIds.get(2),gl);
+        controller.chooseGoal("p4",goalsIds.get(3),gl);
+        controller.playCard("p1", 0, true, 49, 49, gl);
+        controller.drawCard("p1",5, gl);
+        assertFalse(controller.drawCard("p1",5, gl));
     }
 
     @Test
@@ -289,5 +312,172 @@ public class GameControllerTest {
             controller.drawCard(controller.getCurrentPlayer(), 0, gl);
         }
         assertEquals(GameStatus.ENDED,controller.getStatus());
+    }
+
+    @Test
+    @DisplayName("Disconnect a player, remains more than 1 player")
+    void disconnectAPlayer() throws RemoteException {
+        controller.chooseColor("p1", "BLUE", gl);
+        controller.chooseColor("p2", "RED", gl);
+        controller.chooseColor("p3", "YELLOW", gl);
+        controller.chooseColor("p4", "GREEN", gl);
+        controller.chooseInitialCardSide("p1", true, gl);
+        controller.chooseInitialCardSide("p2", true, gl);
+        controller.chooseInitialCardSide("p3", true, gl);
+        controller.chooseInitialCardSide("p4", true, gl);
+        List<Integer> goalsIds = controller.getGame().getDrawnGoalCardsIds();
+        controller.chooseGoal("p1",goalsIds.get(0),gl);
+        controller.chooseGoal("p2",goalsIds.get(1),gl);
+        controller.chooseGoal("p3",goalsIds.get(2),gl);
+        controller.chooseGoal("p4",goalsIds.get(3),gl);
+
+        assertDoesNotThrow(() -> controller.disconnectPlayer("p1"));
+        assertNull(controller.getPlayer("p1"));
+    }
+
+    @Test
+    @DisplayName("Disconnection of the current player")
+    void disconnectCurrentPlayer() throws RemoteException, NotExistingPlayerException {
+        controller.chooseColor("p1", "BLUE", gl);
+        controller.chooseColor("p2", "RED", gl);
+        controller.chooseColor("p3", "YELLOW", gl);
+        controller.chooseColor("p4", "GREEN", gl);
+        controller.chooseInitialCardSide("p1", true, gl);
+        controller.chooseInitialCardSide("p2", true, gl);
+        controller.chooseInitialCardSide("p3", true, gl);
+        controller.chooseInitialCardSide("p4", true, gl);
+        List<Integer> goalsIds = controller.getGame().getDrawnGoalCardsIds();
+        controller.chooseGoal("p1",goalsIds.get(0),gl);
+        controller.chooseGoal("p2",goalsIds.get(1),gl);
+        controller.chooseGoal("p3",goalsIds.get(2),gl);
+        controller.chooseGoal("p4",goalsIds.get(3),gl);
+
+        controller.setCurrentPlayer("p1");
+        controller.disconnectPlayer("p1");
+
+        assertNotEquals(controller.getCurrentPlayer(),"p1");
+    }
+
+    @Test
+    @DisplayName("Check that next player method doesn't work when there aren't players left")
+    void NoPlayerNext() throws RemoteException, NotExistingPlayerException {
+        controller.chooseColor("p1", "BLUE", gl);
+        controller.chooseColor("p2", "RED", gl);
+        controller.chooseColor("p3", "YELLOW", gl);
+        controller.chooseColor("p4", "GREEN", gl);
+        controller.chooseInitialCardSide("p1", true, gl);
+        controller.chooseInitialCardSide("p2", true, gl);
+        controller.disconnectPlayer("p1");
+        controller.disconnectPlayer("p2");
+        controller.disconnectPlayer("p3");
+        controller.disconnectPlayer("p4");
+
+        assertDoesNotThrow(() -> controller.nextPlayer());
+    }
+
+    @Test
+    @DisplayName("Remains only 1 player left in first phase")
+    void disconnectAllPlayersFirstPhase() throws RemoteException, NotExistingPlayerException {
+        controller.chooseColor("p1", "BLUE", gl);
+        controller.chooseColor("p2", "RED", gl);
+        controller.chooseColor("p3", "YELLOW", gl);
+        controller.chooseColor("p4", "GREEN", gl);
+        controller.chooseInitialCardSide("p1", true, gl);
+        controller.chooseInitialCardSide("p2", true, gl);
+        controller.disconnectPlayer("p1");
+        controller.disconnectPlayer("p2");
+        controller.disconnectPlayer("p3");
+
+        assertEquals(GameStatus.ENDED,controller.getStatus());
+    }
+
+    @Test
+    @DisplayName("Remains only 1 player left in running phase")
+    void disconnectAllPlayersRunningPhase() throws RemoteException, NotExistingPlayerException {
+        controller.chooseColor("p1", "BLUE", gl);
+        controller.chooseColor("p2", "RED", gl);
+        controller.chooseColor("p3", "YELLOW", gl);
+        controller.chooseColor("p4", "GREEN", gl);
+        controller.chooseInitialCardSide("p1", true, gl);
+        controller.chooseInitialCardSide("p2", true, gl);
+        controller.chooseInitialCardSide("p3", true, gl);
+        controller.chooseInitialCardSide("p4", true, gl);
+        List<Integer> goalsIds = controller.getGame().getDrawnGoalCardsIds();
+        controller.chooseGoal("p1",goalsIds.get(0),gl);
+        controller.chooseGoal("p2",goalsIds.get(1),gl);
+        controller.chooseGoal("p3",goalsIds.get(2),gl);
+        controller.chooseGoal("p4",goalsIds.get(3),gl);
+
+        controller.disconnectPlayer("p1");
+        controller.disconnectPlayer("p2");
+        controller.disconnectPlayer("p3");
+
+        assertEquals(GameStatus.ENDED,controller.getStatus());
+    }
+
+    @Test
+    @DisplayName("Remains only 1 player left in running phase in the next to last round")
+    void disconnectAllPlayersNextToLastRound() throws RemoteException, NotExistingPlayerException {
+        controller.chooseColor("p1", "BLUE", gl);
+        controller.chooseColor("p2", "RED", gl);
+        controller.chooseColor("p3", "YELLOW", gl);
+        controller.chooseColor("p4", "GREEN", gl);
+        controller.chooseInitialCardSide("p1", true, gl);
+        controller.chooseInitialCardSide("p2", true, gl);
+        controller.chooseInitialCardSide("p3", true, gl);
+        controller.chooseInitialCardSide("p4", true, gl);
+        List<Integer> goalsIds = controller.getGame().getDrawnGoalCardsIds();
+        controller.chooseGoal("p1",goalsIds.get(0),gl);
+        controller.chooseGoal("p2",goalsIds.get(1),gl);
+        controller.chooseGoal("p3",goalsIds.get(2),gl);
+        controller.chooseGoal("p4",goalsIds.get(3),gl);
+        controller.setCurrentPlayer("p1");
+        controller.getPlayer("p1").addPoints(20);
+        controller.playCard("p1",0, true, 49, 49, gl);
+
+        controller.disconnectPlayer("p1");
+        controller.disconnectPlayer("p2");
+        controller.disconnectPlayer("p3");
+
+        assertEquals(GameStatus.ENDED,controller.getStatus());
+    }
+
+    @Test
+    @DisplayName("Remains only 1 player left in running phase in the last round")
+    void disconnectAllPlayersLastRound() throws RemoteException, NotExistingPlayerException {
+        controller.chooseColor("p1", "BLUE", gl);
+        controller.chooseColor("p2", "RED", gl);
+        controller.chooseColor("p3", "YELLOW", gl);
+        controller.chooseColor("p4", "GREEN", gl);
+        controller.chooseInitialCardSide("p1", true, gl);
+        controller.chooseInitialCardSide("p2", true, gl);
+        controller.chooseInitialCardSide("p3", true, gl);
+        controller.chooseInitialCardSide("p4", true, gl);
+        List<Integer> goalsIds = controller.getGame().getDrawnGoalCardsIds();
+        controller.chooseGoal("p1",goalsIds.get(0),gl);
+        controller.chooseGoal("p2",goalsIds.get(1),gl);
+        controller.chooseGoal("p3",goalsIds.get(2),gl);
+        controller.chooseGoal("p4",goalsIds.get(3),gl);
+        controller.setCurrentPlayer("p1");
+        controller.getPlayer("p1").addPoints(20);
+        controller.playCard("p1",0, true, 49, 49, gl);
+        controller.drawCard("p1", 0, gl);
+
+        while(controller.getStatus() == GameStatus.LAST_LAST_ROUND) {
+            controller.playCard(controller.getCurrentPlayer(), 0, true, 49, 49, gl);
+            controller.drawCard(controller.getCurrentPlayer(), 0, gl);
+        }
+
+        controller.disconnectPlayer("p1");
+        controller.disconnectPlayer("p2");
+        controller.disconnectPlayer("p3");
+
+        assertEquals(GameStatus.ENDED,controller.getStatus());
+    }
+
+    @Test
+    @DisplayName("HeartBeat adding")
+    void heartbeatAdding() throws RemoteException {
+        controller.heartbeat("p1",gl);
     }
 }
