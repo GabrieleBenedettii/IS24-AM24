@@ -12,8 +12,19 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * The Client class serves as the entry point for the game client application.
+ * It handles user input for IP address and network type, configures the game settings,
+ * and initiates the game flow based on the selected protocol.
+ */
 public class Client {
 
+    /**
+     * The main method is the entry point of the application. It handles user inputs,
+     * configures the server IP address and network protocol, and starts the game.
+     *
+     * @param args Command line arguments (not used).
+     */
     public static void main(String[] args) {
         int choice;
         String protocol;
@@ -55,6 +66,12 @@ public class Client {
         else Application.launch(GUIApplication.class, protocol);
     }
 
+    /**
+     * Validates the format of the given IP address.
+     *
+     * @param input The IP address to be checked.
+     * @return true if the IP address is valid, false otherwise.
+     */
     private static boolean checkIP(String input) {
         List<String> input_split;
         input_split = Arrays.stream(input.split("\\.")).toList();
@@ -72,6 +89,9 @@ public class Client {
         return true;
     }
 
+    /**
+     * Disables logging for various JavaFX loggers to reduce console output.
+     */
     private static void killLoggers(){
         com.sun.javafx.util.Logging.getJavaFXLogger().disableLogging();
         com.sun.javafx.util.Logging.getCSSLogger().disableLogging();
@@ -81,6 +101,11 @@ public class Client {
         com.sun.javafx.util.Logging.getLayoutLogger().disableLogging();
     }
 
+    /**
+     * Clears the console screen.
+     * This method attempts to clear the screen using a command specific to the operating system.
+     * For Windows, it uses 'cls', and for Mac, it uses an ANSI escape code.
+     */
     private static void clearScreen() {
         try {
             new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
