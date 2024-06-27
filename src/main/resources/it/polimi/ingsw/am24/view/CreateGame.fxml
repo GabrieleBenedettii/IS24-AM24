@@ -8,9 +8,9 @@
 
 <AnchorPane prefHeight="735.0" prefWidth="1299.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.am24.view.GUI.controllers.CreateGameController">
    <children>
-      <Pane fx:id="content" prefHeight="735.0" prefWidth="1299.0" styleClass="neutralBackground" stylesheets="@style.css">
+      <Pane fx:id="content" prefHeight="900.0" prefWidth="1600.0" styleClass="neutralBackground" stylesheets="@style.css">
          <children>
-            <Pane layoutX="344.0" layoutY="140.0" maxHeight="441.0" maxWidth="611.0" opacity="0.8" prefHeight="441.0" prefWidth="611.0">
+            <Pane layoutX="495.0" layoutY="216.0" maxHeight="441.0" maxWidth="611.0" opacity="0.8" prefHeight="441.0" prefWidth="611.0">
                <cursor>
                   <Cursor fx:constant="DEFAULT" />
                </cursor>
@@ -30,8 +30,8 @@
                   </Button>
                </children>
             </Pane>
-            <Text fx:id="errorText1" fill="red" layoutX="276.0" layoutY="566.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" visible="false" wrappingWidth="746.8605346679688" style="-fx-font-size:20; -fx-font-weight: black; -fx-font-family: 'Muli' "/>
-            <Text fx:id="errorText2" fill="red" layoutX="276.0" layoutY="602.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" visible="false" wrappingWidth="746.8605346679688" style="-fx-font-size:20; -fx-font-weight: black; -fx-font-family: 'Muli'"/>
+            <Text fx:id="errorText1" fill="red" layoutX="427.0" layoutY="642.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size:20; -fx-font-weight: black; -fx-font-family: 'Muli' " textAlignment="CENTER" visible="false" wrappingWidth="746.8605346679688" />
+            <Text fx:id="errorText2" fill="red" layoutX="427.0" layoutY="678.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size:20; -fx-font-weight: black; -fx-font-family: 'Muli'" textAlignment="CENTER" visible="false" wrappingWidth="746.8605346679688" />
          </children>
       </Pane>
    </children>

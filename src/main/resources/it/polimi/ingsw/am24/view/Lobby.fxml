@@ -11,9 +11,9 @@
          <cursor>
             <Cursor fx:constant="WAIT" />
          </cursor></Pane>
-      <Pane fx:id="content" prefHeight="735.0" prefWidth="1299.0">
+      <Pane fx:id="content" prefHeight="900.0" prefWidth="1600.0">
          <children>
-            <Pane layoutX="132.0" layoutY="191.0" maxHeight="353.0" maxWidth="1036.0" opacity="0.8" prefHeight="353.0" prefWidth="1036.0">
+            <Pane layoutX="282.0" layoutY="274.0" maxHeight="353.0" maxWidth="1036.0" opacity="0.8" prefHeight="353.0" prefWidth="1036.0">
                <cursor>
                   <Cursor fx:constant="WAIT" />
                </cursor>
@@ -21,9 +21,9 @@
                   <Insets top="100.0" />
                </padding>
                <children>
-                  <Text fill="black" layoutX="6.0" layoutY="113.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size:50; -fx-font-family: 'Muli';-fx-font-weight: bold;" text="Waiting for other players..." textAlignment="CENTER" wrappingWidth="1023.8605346679688">
+                  <Text fill="black" layoutX="6.0" layoutY="114.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size:50; -fx-font-family: 'Muli';-fx-font-weight: bold;" text="Waiting for other players..." textAlignment="CENTER" wrappingWidth="1023.8605346679688">
                   </Text>
-                  <Text fx:id="label" fill="black" layoutX="402.0" layoutY="209.0" style="-fx-font-size:30; -fx-font-family: 'Muli';-fx-font-weight: bold;" textAlignment="CENTER">
+                  <Text fx:id="label" fill="black" layoutY="188.0" style="-fx-font-size:30; -fx-font-family: 'Muli';-fx-font-weight: bold;" textAlignment="CENTER" wrappingWidth="1036.0">
                   </Text>
                   <HBox fx:id="playersInLobby" alignment="CENTER" layoutX="68.0" layoutY="261.0" prefHeight="24.0" prefWidth="901.0" spacing="10.0">
                   </HBox>

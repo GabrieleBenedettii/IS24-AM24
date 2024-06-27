@@ -4,23 +4,23 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="735.0" prefWidth="1299.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.am24.view.GUI.controllers.EndGameController">
+<AnchorPane prefHeight="900.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.am24.view.GUI.controllers.EndGameController">
    <children>
-      <Pane prefHeight="735.0" prefWidth="1299.0" styleClass="neutralBackground" stylesheets="@style.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <Pane prefHeight="900.0" prefWidth="1600.0" styleClass="neutralBackground" stylesheets="@style.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Pane layoutX="-3.0" layoutY="-5.0" prefHeight="743.0" prefWidth="1309.0">
+            <Pane layoutY="-7.0" prefHeight="743.0" prefWidth="1600.0">
                <children>
-                  <Text layoutX="429.0" layoutY="113.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size:60; -fx-font-family: 'Muli';-fx-font-weight: bold;" text="Game Ended" textAlignment="CENTER" wrappingWidth="451.13671875" />
-                  <Text layoutX="382.0" layoutY="182.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size:50; -fx-font-family: 'Muli';-fx-font-weight: bold;" text="Ranking:" textAlignment="CENTER" wrappingWidth="544.583984375" />
-                  <VBox layoutX="314.0" layoutY="227.0" prefHeight="412.0" prefWidth="692.0" spacing="20.0">
+                  <Text layoutX="574.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size:60; -fx-font-family: 'Muli';-fx-font-weight: bold;" text="Game Ended" textAlignment="CENTER" wrappingWidth="451.13671875" />
+                  <Text layoutX="528.0" layoutY="220.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size:50; -fx-font-family: 'Muli';-fx-font-weight: bold;" text="Ranking:" textAlignment="CENTER" wrappingWidth="544.583984375" />
+                  <VBox layoutX="454.0" layoutY="254.0" prefHeight="412.0" prefWidth="692.0" spacing="20.0">
                      <Label fx:id="player0" alignment="CENTER" prefHeight="88.0" prefWidth="693.0" style="-fx-font-size:35; -fx-font-family: 'Muli';" textAlignment="CENTER" />
                      <Label fx:id="player1" alignment="CENTER" prefHeight="88.0" prefWidth="694.0" style="-fx-font-size:35; -fx-font-family: 'Muli';" textAlignment="CENTER" />
                      <Label fx:id="player2" alignment="CENTER" prefHeight="88.0" prefWidth="699.0" style="-fx-font-size:35; -fx-font-family: 'Muli';" textAlignment="CENTER" />
                      <Label fx:id="player3" alignment="CENTER" prefHeight="88.0" prefWidth="699.0" style="-fx-font-size:35; -fx-font-family: 'Muli';" textAlignment="CENTER" />
                   </VBox>
-                  <Label fx:id="resultMessage" alignment="CENTER" contentDisplay="CENTER" layoutY="625.0" prefHeight="88.0" prefWidth="1309.0" style="-fx-font-size:50; -fx-font-family: 'Muli';-fx-font-weight: bold;" />
                </children>
             </Pane>
+            <Label fx:id="resultMessage" alignment="CENTER" contentDisplay="CENTER" layoutX="37.0" layoutY="711.0" prefHeight="88.0" prefWidth="1527.0" style="-fx-font-size:50; -fx-font-family: 'Muli';-fx-font-weight: bold;" />
          </children>
       </Pane>
    </children>
