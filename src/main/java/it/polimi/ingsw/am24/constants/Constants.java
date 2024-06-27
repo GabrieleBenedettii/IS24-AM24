@@ -143,4 +143,13 @@ public class Constants {
         corner.put(2,"bottom-left");
         corner.put(3,"bottom-right");
     }
+
+    //colors
+    public static  final HashMap<String, String> colors =new HashMap<>();
+    static {
+        colors.put("blue","#025FA8");
+        colors.put("red","AF0F2E");
+        colors.put("yellow","c8aa2b");
+        colors.put("green","#008026");
+    }
 }

@@ -738,7 +738,7 @@ public class GameBoardController extends GUIController {
             else if (gameView.getCommon().getPlayerView(s).getColor().equals("GREEN")){ y+=5;}
             else if (gameView.getCommon().getPlayerView(s).getColor().equals("YELLOW")){ y-=5;}
 
-            drawCircle(gc, x, y, radius, gameView.getCommon().getPlayerView(s).getColor());
+            drawCircle(gc, x, y, radius, Constants.colors.get(gameView.getCommon().getPlayerView(s).getColor().toLowerCase()));
         }
         scoreboardContainer.getChildren().addAll(imageView, canvas);
         StackPane.setMargin(imageView, new Insets(0, 0, 0, 30));
@@ -773,7 +773,7 @@ public class GameBoardController extends GUIController {
             hbox.setPadding(new Insets(padding, 0, padding, 30));
 
             StackPane stackPane = new StackPane();
-            Circle circle = new Circle(12, Paint.valueOf(gameView.getCommon().getPlayerView(p).getColor()));
+            Circle circle = new Circle(12, Paint.valueOf(Constants.colors.get(gameView.getCommon().getPlayerView(p).getColor().toLowerCase())));
             stackPane.getChildren().add(circle);
 
             ImageView imageView = new ImageView(new Image(Objects.requireNonNull(Root.class.getResource("images/misc/eye_icon.png")).toString()));

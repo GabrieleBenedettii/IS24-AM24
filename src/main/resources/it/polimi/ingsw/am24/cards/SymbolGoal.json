@@ -40,21 +40,21 @@
     "imageId": 100,
     "points":"2",
     "symbols":{
-      "QUILL": 2
+      "MANUSCRIPT": 2
     }
   },
   {
     "imageId": 101,
     "points":"2",
     "symbols":{
-      "MANUSCRIPT": 2
+      "INK": 2
     }
   },
   {
     "imageId": 102,
     "points":"2",
     "symbols":{
-      "INK": 2
+      "QUILL": 2
     }
   }
 ]
