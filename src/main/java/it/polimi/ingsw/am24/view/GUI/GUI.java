@@ -112,6 +112,14 @@ public class GUI extends UI {
     }
 
     /**
+     * Prompts the hidden goal.
+     */
+    @Override
+    public void show_hidden_goal_card(GameCardView card) {
+
+    }
+
+    /**
      * Displays the table UI with game data.
      *
      * @param gameView  GameView object containing the game data.

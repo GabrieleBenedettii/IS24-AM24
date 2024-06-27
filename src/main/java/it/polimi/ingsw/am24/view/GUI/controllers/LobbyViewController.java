@@ -41,6 +41,7 @@ public class LobbyViewController extends GUIController {
      */
     @FXML
     public void initialize(ArrayList<String> players, String current, int num){
+        playersInLobby.getChildren().clear();
         label.setText("Players in lobby ["+players.size()+"/"+num+"] :");
         for (String player : players) {
             if (!playersSet.contains(player) || !playersSet.contains(player+"(you)")) {

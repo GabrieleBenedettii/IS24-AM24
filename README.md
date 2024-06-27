@@ -19,6 +19,8 @@ For more information, visit the [official website](https://www.craniocreations.i
     ```
 4. Each client must enter the Server IP address to connect.
 
+(the resolution of the game is 1600x900)
+
 
 ## Functionalities
 

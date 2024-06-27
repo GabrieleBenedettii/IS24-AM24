@@ -496,6 +496,10 @@ public class Flow implements Runnable, ClientActions, GameListener {
                         ui.show_start_table(gameView);
                         continue;
                     }
+                    case "/hidden" -> {
+                        ui.show_hidden_goal_card(gameView.getPlayerView().getHiddenGoal());
+                        continue;
+                    }
                     case "/chat" -> {
                         ui.show_messages();
                         continue;

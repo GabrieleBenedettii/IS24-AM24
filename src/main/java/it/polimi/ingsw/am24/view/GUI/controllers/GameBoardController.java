@@ -64,6 +64,7 @@ public class GameBoardController extends GUIController {
     @FXML private ChoiceBox receiver;
     @FXML private TextField messageText;
 
+    @FXML private Label waitLabel;
     @FXML private Label errorLabel;
     @FXML private Label actionMessage;
     @FXML private Label nameContainer;
@@ -133,6 +134,7 @@ public class GameBoardController extends GUIController {
         actionMessage.setAlignment(Pos.CENTER);
         playerTableContainer.setText("");
         gameViewContainer.setStyle("-fx-background-color: #FFF9DFFF; -fx-border-color: #A49849; -fx-border-width: 1px;-fx-border-radius: 10px;");
+        waitLabel.setText("");
         Sound.playSound("createjoinsound.wav");
 
         //PLAYING HAND
@@ -667,6 +669,9 @@ public class GameBoardController extends GUIController {
                 iw.setOpacity(0.5);
                 getInputReaderGUI().addString(iw.getId());
                 Sound.playSound("button.wav");
+                gameViewContainer.setOpacity(0.5);
+                waitLabel.setText("Wait for other players");
+                waitLabel.setAlignment(Pos.CENTER);
             });
 
             chooseHiddenGoal.getChildren().add(iw);
@@ -700,6 +705,7 @@ public class GameBoardController extends GUIController {
         gameViewContainer.setOpacity(0.5);
         receiver.setDisable(false);
         messageText.setDisable(false);
+        waitLabel.setText("");
         gameViewContainer.setStyle("-fx-background-color: #FFF9DFFF; -fx-border-color: #A49849; -fx-border-width: 1px;-fx-border-radius: 10px;");
 
         drawGameBoard(false, myNickname);

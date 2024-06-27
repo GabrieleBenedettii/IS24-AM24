@@ -45,6 +45,11 @@ public abstract class UI {
     public abstract void show_command();
 
     /**
+     * Prompts the user to enter a command.
+     */
+    public abstract void show_hidden_goal_card(GameCardView card);
+
+    /**
      * Displays the starting table for the game.
      *
      * @param gameView The current game view.

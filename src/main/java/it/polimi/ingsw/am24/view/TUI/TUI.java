@@ -121,9 +121,13 @@ public class TUI extends UI {
             out.print("~");
         }
 
+        out.print("\n");
+
         for(int i = 0; i <  gameView.getPlayerView().getPlayerHand().size(); i++) {
             out.print("\n" + i + " - " + gameView.getPlayerView().getPlayerHand().get(i).getCardDescription());
         }
+
+        out.print("\n");
     }
 
     /**
@@ -132,6 +136,14 @@ public class TUI extends UI {
     @Override
     public void show_command() {
         System.out.print("\nCommand -> ");
+    }
+
+    /**
+     * Prompts the hidden goal.
+     */
+    @Override
+    public void show_hidden_goal_card(GameCardView card) {
+        System.out.println("\nHIDDEN GOAL\n" + card.getCardDescription());
     }
 
     /**
@@ -159,6 +171,7 @@ public class TUI extends UI {
     @Override
     public void show_table(GameView gameView,boolean forChoice) {
         int i = 0;
+        out.print("\n");
         for(GameCardView gcv : gameView.getCommon().getCommonBoardView().getResourceCards()) {
             out.println(i + " - " + gcv.getCardDescription());
             i++;
@@ -169,7 +182,7 @@ public class TUI extends UI {
             i++;
         }
         i = 4;
-        out.println(i + " - Pick a card from RESOURCE CARD DECK, first card color: " + gameView.getCommon().getCommonBoardView().getResourceDeck());
+        out.println("\n" + i + " - Pick a card from RESOURCE CARD DECK, first card color: " + gameView.getCommon().getCommonBoardView().getResourceDeck());
         out.println((i + 1) + " - Pick a card from GOLD CARD DECK, first card color: " + gameView.getCommon().getCommonBoardView().getGoldDeck());
     }
 
@@ -179,13 +192,14 @@ public class TUI extends UI {
      * @param gameView The current game view.
      */
     public void show_start_table(GameView gameView) {
+        out.print("\n");
         for(GameCardView gcv : gameView.getCommon().getCommonBoardView().getResourceCards()) {
             out.println("R - " + gcv.getCardDescription());
         }
         for(GameCardView gcv : gameView.getCommon().getCommonBoardView().getGoldCards()) {
             out.println("G - " + gcv.getCardDescription());
         }
-        out.println("RESOURCE CARD DECK, first card color: " + gameView.getCommon().getCommonBoardView().getResourceDeck());
+        out.println("\nRESOURCE CARD DECK, first card color: " + gameView.getCommon().getCommonBoardView().getResourceDeck());
         out.println("GOLD CARD DECK, first card color: " + gameView.getCommon().getCommonBoardView().getGoldDeck());
 
         out.println("\nCOMMON GOALS");
@@ -216,6 +230,7 @@ public class TUI extends UI {
         out.println("Show own visible symbols -> /visible");
         out.println("Draw a card (after play a card) -> /draw <option>");
         out.println("See the chat messages -> /chat");
+        out.println("Show the hidden goal -> /hidden");
         out.println("Help -> /help");
     }
 
@@ -276,7 +291,7 @@ public class TUI extends UI {
         for(int i = 0; i < views.size(); i++) {
             out.println(i + " - " + views.get(i).getCardDescription());
         }
-        out.print("Choose your secret goal: ");
+        out.print("\nChoose your secret goal: ");
     }
 
     /**
@@ -292,7 +307,7 @@ public class TUI extends UI {
         for(int i = 0; i < views.size(); i++) {
             out.println(i + " - " + views.get(i).getCardDescription());
         }
-        out.print("Choose your initial card side: ");
+        out.print("\nChoose your initial card side: ");
     }
 
     /**
@@ -366,7 +381,6 @@ public class TUI extends UI {
     @Override
     public void show_joined_players(ArrayList<String> players, String current, int num) {
         show_logo();
-        System.out.println(current);
         out.print("\nPLAYERS IN LOBBY ["+players.size()+"/"+num+"] : ");
         for (String s: players){
             if (s.equals(current))
@@ -577,7 +591,7 @@ public class TUI extends UI {
                 ██╔██╗██║████████║░░░██║░░░██║░░░██║███████╔╝████████║██║░░░░░░██║╚██████╗░
                 ██║╚████║██╔═══██║░░░██║░░░██║░░░██║██╔═══██╗██╔═══██║██║░░░░░░██║░╚════██╗
                 ██║░╚███║██║░░░██║░░░██║░░░████████║██║░░░██║██║░░░██║████████╗██║███████╔╝
-                ╚═╝░░╚══╝╚═╝░░░╚═╝░░░╚═╝░░░╚══════=╝╚═╝░░░╚═╝╚═╝░░░╚═╝╚═══════╝╚═╝╚══════╝░
+                ╚═╝░░╚══╝╚═╝░░░╚═╝░░░╚═╝░░░╚═══════╝╚═╝░░░╚═╝╚═╝░░░╚═╝╚═══════╝╚═╝╚══════╝░
                 """);
     }
 
