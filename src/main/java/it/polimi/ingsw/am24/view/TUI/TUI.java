@@ -87,7 +87,7 @@ public class TUI extends UI {
             out.print(i < 10 ? " " + i : i);
             out.print("  ");
         }
-        out.print("\tVISIBLE SYMBOLS");
+        out.print("     VISIBLE SYMBOLS");
         int visSymbIndex = 0;
         List<String> symbols = gameView.getCommon().getPlayerView(gameView.getCurrent()).getVisibleSymbols().keySet().stream().toList();
         //matrix
@@ -156,7 +156,7 @@ public class TUI extends UI {
      */
     public int show_visible_symbols(int index, GameView gameView, List<String> symbols) {
         if(index < gameView.getCommon().getPlayerView(gameView.getCurrent()).getVisibleSymbols().size()) {
-            out.print("\t\t" + Constants.getText(Symbol.valueOf(symbols.get(index))) + " -> " + gameView.getCommon().getPlayerView(gameView.getCurrent()).getVisibleSymbols().get(symbols.get(index)));
+            out.print("      " + Constants.getText(Symbol.valueOf(symbols.get(index))) + " -> " + gameView.getCommon().getPlayerView(gameView.getCurrent()).getVisibleSymbols().get(symbols.get(index)));
             index++;
         }
         return index;
@@ -338,7 +338,7 @@ public class TUI extends UI {
             if( System.getProperty("os.name").contains("Windows") )
                 new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
             else
-                out.println("\033[H\033[2J");
+                out.println("\033\143");
         }
         catch (Exception e){
 

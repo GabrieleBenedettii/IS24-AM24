@@ -561,7 +561,7 @@ public class GameController implements GameControllerInterface, Serializable, Ru
                                 }
 
                             } catch (RemoteException | NotExistingPlayerException e) {
-                                throw new RuntimeException(e);
+                                System.out.println("[" + gameId + "] disconnection of all players, the game will be deleted");
                             }
 
                             heartIter.remove();
