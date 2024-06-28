@@ -51,7 +51,7 @@ public class Constants {
     public static final String TEXT_MANUSCRIPT = TEXT_YELLOW + "MANUSCRIPT" + TEXT_RESET;
     public static final String TEXT_QUILL = TEXT_YELLOW + "QUILL" + TEXT_RESET;
     public static final String BACKGROUND_RESET = "\033[0m";
-    public static final String BACKGROUND_BLACK = "\033[40m";
+    public static final String BACKGROUND_BLACK = "\033[48;5;244m";
     public static final String HIDDEN = "HIDDEN";
     public static final String EMPTY = "EMPTY";
 

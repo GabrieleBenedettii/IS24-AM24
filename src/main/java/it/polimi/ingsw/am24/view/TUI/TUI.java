@@ -25,7 +25,8 @@ public class TUI extends UI {
      * Sets up the output stream and message queue.
      */
     public TUI() {
-        AnsiConsole.systemInstall();
+        if(!(System.getProperty("os.name").toLowerCase().indexOf("mac") >= 0))
+            AnsiConsole.systemInstall();
         messages = new LinkedList<>();
         out = new PrintStream(System.out, true);
     }
