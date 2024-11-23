@@ -53,4 +53,6 @@ For more information, visit the [official website](https://www.craniocreations.i
 - Giuseppe Buccheri
 - Michele Canepari
 
+## Final grade: 30/30
+
   reference professor: Alessandro Margara
